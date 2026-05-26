@@ -119,6 +119,7 @@
         .hero-badges {
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             gap: 0.5rem;
             margin-bottom: 1.5rem;
         }
@@ -998,6 +999,43 @@
 
         .ind-btn:hover { background: var(--green); color: var(--white); }
 
+        /* ── LAUNCH PRICING ── */
+        .launch-banner {
+            background: rgba(220, 100, 50, 0.12);
+            border: 1px solid rgba(220, 100, 50, 0.35);
+            border-radius: 10px;
+            padding: 0.85rem 1.25rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #e8895a;
+        }
+
+        .launch-badge {
+            display: inline-block;
+            background: rgba(220, 100, 50, 0.15);
+            border: 1px solid rgba(220, 100, 50, 0.4);
+            color: #e8895a;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            margin-bottom: 0.6rem;
+        }
+
+        .price-regular {
+            font-size: 1rem;
+            color: #666;
+            text-decoration: line-through;
+            margin-bottom: 0.2rem;
+        }
+
+        .ind-card .price-regular {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
         /* ── ANIMATIONS ── */
         .fade-in {
             opacity: 0;
@@ -1352,6 +1390,10 @@
             <h2>בחרו איך להתחיל</h2>
         </div>
 
+        <div class="launch-banner fade-in">
+            🔥 מחירי השקה לשלושת הימים הראשונים בלבד
+        </div>
+
         <!-- Bundle -->
         <div class="pricing-bundle-card fade-in">
             <div class="top-badge">✨ הכי משתלם | החבילה המלאה</div>
@@ -1360,8 +1402,9 @@
                 <li><span class="bcheck">✔</span> קורס יצירת סרטוני אנימציה ב-AI</li>
                 <li><span class="bcheck">✔</span> קורס קריינות וליפסינק ב-AI</li>
             </ul>
-            <div class="bundle-price-orig">במקום לשלם בנפרד: <s>₪406</s></div>
-            <div class="bundle-price-big"><span>₪</span>347</div>
+            <div class="bundle-price-orig">מחיר רגיל: <s>₪347</s> &nbsp;|&nbsp; בנפרד: <s>₪406</s></div>
+            <div class="launch-badge">מחיר השקה</div>
+            <div class="bundle-price-big"><span>₪</span>297</div>
             <p class="bundle-price-sub">תשלום חד פעמי · גישה מיידית לכל התוכן</p>
             <a href="https://pay.grow.link/ODg3NjU~da27f642cd765f111efd89150d4e236a-MzM5NTU0OQ" target="_blank" class="bundle-cta">לרכישת החבילה המלאה ←</a>
         </div>
@@ -1373,13 +1416,19 @@
             <div class="ind-card fade-in">
                 <div class="ind-icon">🎬</div>
                 <h4>קורס יצירת סרטוני אנימציה ב-AI</h4>
-                <div class="ind-price"><span>₪</span>287</div>
+                <div class="price-regular">₪287</div>
+                <div class="ind-price"><span>₪</span>227</div>
+                <div class="launch-badge">מחיר השקה</div>
+                <br>
                 <a href="https://pay.grow.link/ODg3NjU~eb8b7319e2fe7bfdec039f4d07c47ef5-MzM2NjAxNw" target="_blank" class="ind-btn">להצטרפות לקורס ←</a>
             </div>
             <div class="ind-card fade-in">
                 <div class="ind-icon">🎙️</div>
                 <h4>קורס קריינות וליפסינק ב-AI</h4>
-                <div class="ind-price"><span>₪</span>119</div>
+                <div class="price-regular">₪119</div>
+                <div class="ind-price"><span>₪</span>97</div>
+                <div class="launch-badge">מחיר השקה</div>
+                <br>
                 <a href="https://pay.grow.link/ODg3NjU~7f51a33b4dec31bd978d86c0c5693830-MzM5NTM2Mw" target="_blank" class="ind-btn">לקבלת גישה לקורס ←</a>
             </div>
         </div>
