@@ -116,6 +116,13 @@
             text-align: center;
         }
 
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -126,7 +133,6 @@
             border-radius: 100px;
             font-size: 0.85rem;
             color: var(--green-light);
-            margin-bottom: 1.5rem;
         }
 
         .hero-badge::before {
@@ -1075,7 +1081,7 @@
         <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
         <span class="logo-text">Ronig<span>.ai</span></span>
     </a>
-    <a href="https://pay.grow.link/ODg3NjU~da27f642cd765f111efd89150d4e236a-MzM5NTU0OQ" target="_blank" class="nav-cta">לרכישת החבילה</a>
+    <a href="#pricing-all" class="nav-cta">לרכישת החבילה</a>
 </header>
 
 <!-- ── HERO ── -->
@@ -1083,7 +1089,10 @@
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content fade-in">
-        <div class="hero-badge">קורס אנימציה ב-AI</div>
+        <div class="hero-badges">
+            <div class="hero-badge">קורס אנימציה ב-AI</div>
+            <div class="hero-badge">קורס קריינות וליפסינק</div>
+        </div>
         <h1>
             איך יצרתי סרטון אנימציה ב-AI<br>
             שהגיע ל<span class="highlight">מיליון צפיות</span> <br>
@@ -1095,7 +1104,7 @@
             מהרעיון ועד אנימציה ועריכה,<br>
             כולל כל הכלים שבהם השתמשתי.
         </p>
-        <a href="https://pay.grow.link/ODg3NjU~eb8b7319e2fe7bfdec039f4d07c47ef5-MzM2NjAxNw" target="_blank" class="hero-cta">להצטרפות לקורס ←</a>
+        <a href="#pricing-all" class="hero-cta">לבחירת קורס ←</a>
         <div class="hero-stats">
             <div class="hero-stat">
                 <span class="hero-stat-num">1M+</span>
@@ -1203,26 +1212,6 @@
     </div>
 </section>
 
-<!-- ── ABOUT ── -->
-<section id="about">
-    <div class="about-inner">
-        <div class="about-photo fade-in">
-            <img src="assets/profile.jpg" alt="רוני גרין">
-        </div>
-        <div class="about-text fade-in">
-            <p class="section-label">מי אני</p>
-            <h2>רוני גרין</h2>
-            <p>
-                יוצרת תוכן ומומחית AI.
-                יצרתי סרטוני אנימציה ב-AI שצברו מיליוני צפיות  והכל מהמחשב הביתי, וללא ציוד מקצועי.
-                <br><br>
-                בקורס הזה אני חושפת בדיוק את ה-workflow שאני עובדת איתו  בלי לקצר, בלי להסתיר.
-                אם עשיתי את זה, אתם יכולים גם.
-            </p>
-        </div>
-    </div>
-</section>
-
 <!-- ══════════════════════════════════════
      קורס 2 — קריינות וליפסינק
 ══════════════════════════════════════ -->
@@ -1230,9 +1219,9 @@
 <!-- ── COURSE 2 DIVIDER ── -->
 <div class="course-divider fade-in">
     <div class="course-divider-inner">
-        <div class="course-divider-badge">קורס 2</div>
-        <h2>הדמויות שלכם עדיין נשמעות כמו רובוטים?</h2>
-        <p class="section-sub">מיני קורס קריינות וליפסינק ב-AI — ElevenLabs + Kling</p>
+        <p class="section-label light">רוצים לקחת את זה צעד נוסף קדימה?</p>
+        <h2 style="display:inline-block; border-bottom: 3px solid var(--green); padding-bottom: 0.3rem;">מיני קורס קריינות וליפסינק ב-AI</h2>
+        <p class="section-sub">ללמוד איך לגרום לדמויות לדבר עם ElevenLabs ו-Kling</p>
     </div>
 </div>
 
@@ -1240,7 +1229,7 @@
 <section id="voice-problem">
     <div class="problem-inner fade-in">
         <p class="section-label">הבעיה</p>
-        <h2>הבעיה לא מתחילה בוויזואל — אלא בסאונד</h2>
+        <h2>הבעיה לא מתחילה בוויזואל, אלא בסאונד</h2>
         <p class="problem-intro">
             אפשר ליצור היום תמונות מטורפות ב-AI.<br>
             אבל ברגע שהדמות מתחילה לדבר...
@@ -1311,7 +1300,7 @@
         <h2>איך הקורס בנוי?</h2>
         <p>
             בלי חפירות ותיאוריה מיותרת.<br><br>
-            אני פשוט פותחת את הכלים ומראה בדיוק איך אני עובדת בזמן אמת —
+            אני פשוט פותחת את הכלים ומראה בדיוק איך אני עובדת בזמן אמת,
             צעד אחרי צעד, על דוגמאות אמיתיות מתוך העבודה שלי.
         </p>
     </div>
@@ -1331,6 +1320,26 @@
     </ul>
 </section>
 
+<!-- ── ABOUT ── -->
+<section id="about">
+    <div class="about-inner">
+        <div class="about-photo fade-in">
+            <img src="assets/profile.jpg" alt="רוני גרין">
+        </div>
+        <div class="about-text fade-in">
+            <p class="section-label">מי אני</p>
+            <h2>רוני גרין</h2>
+            <p>
+                יוצרת תוכן ומומחית AI.
+                יצרתי סרטוני אנימציה ב-AI שצברו מיליוני צפיות. הכל מהמחשב הביתי, ללא ציוד מקצועי.
+                <br><br>
+                בקורסים האלה אני חושפת בדיוק את ה-workflow שאני עובדת איתו, בלי לקצר, בלי להסתיר.
+                אם עשיתי את זה, אתם יכולים גם.
+            </p>
+        </div>
+    </div>
+</section>
+
 <!-- ══════════════════════════════════════
      תמחור
 ══════════════════════════════════════ -->
@@ -1345,7 +1354,7 @@
 
         <!-- Bundle -->
         <div class="pricing-bundle-card fade-in">
-            <div class="top-badge">✨ הכי משתלם — החבילה המלאה</div>
+            <div class="top-badge">✨ הכי משתלם | החבילה המלאה</div>
             <h3>שני הקורסים יחד</h3>
             <ul class="bundle-items">
                 <li><span class="bcheck">✔</span> קורס יצירת סרטוני אנימציה ב-AI</li>
@@ -1432,7 +1441,7 @@
     <div class="transparency-box fade-in">
         <span style="font-size:1.1rem; flex-shrink:0;">ℹ️</span>
         <p>
-            <strong>חשוב לדעת:</strong> הקורסים כוללים עבודה עם כלים חיצוניים כמו Kling, Krea, ElevenLabs — חלקם עשויים לדרוש מנוי בתשלום בהתאם לשימוש.
+            <strong>חשוב לדעת:</strong> הקורסים כוללים עבודה עם כלים חיצוניים כמו Kling, Krea, ElevenLabs. חלקם עשויים לדרוש מנוי בתשלום בהתאם לשימוש.
         </p>
     </div>
 </section>
