@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קורסי AI | Ronig.ai</title>
+    <meta name="description" content="קורסי AI ליצירת סרטוני אנימציה, קריינות וליפסינק — עם רוני גרין">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --green: #6B7F52;
+            --green-light: #8a9e6e;
+            --dark: #222222;
+            --darker: #1a1a1a;
+            --white: #ffffff;
+            --muted: #999999;
+            --border: rgba(107, 127, 82, 0.3);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            direction: rtl;
+            text-align: right;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed;
+            top: 0; right: 0; left: 0;
+            z-index: 100;
+            padding: 1rem clamp(1.5rem, calc((100% - 1100px) / 2), 200px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 26, 26, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img { height: 38px; width: auto; }
+
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            display: none;
+        }
+
+        .logo-text span { color: var(--green); }
+
+        .nav-cta {
+            background: var(--green);
+            color: var(--white);
+            padding: 0.6rem 1.4rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: var(--green-light);
+            transform: translateY(-1px);
+        }
+
+        /* ── HERO ── */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 26, 0.72);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(26, 26, 26, 0.85);
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--green-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            flex-shrink: 0;
+        }
+
+        h1 {
+            font-size: clamp(1.9rem, 3.8vw, 3rem);
+            font-weight: 900;
+            line-height: 1.25;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        h1 .highlight { color: var(--green); }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            line-height: 1.75;
+            color: #cccccc;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--green);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(107, 127, 82, 0.4);
+        }
+
+        .hero-cta:hover {
+            background: var(--green-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(107, 127, 82, 0.5);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            justify-content: center;
+        }
+
+        .hero-stat-num {
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--green);
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+
+        /* ── SECTIONS SHARED ── */
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--green);
+            margin-bottom: 0.6rem;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-sub {
+            font-size: 1rem;
+            color: #aaa;
+            line-height: 1.7;
+        }
+
+        .section-header { text-align: center; margin-bottom: 3rem; }
+
+        /* ── VIDEO ── */
+        #video {
+            padding: 5rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .video-wrapper {
+            position: relative;
+            aspect-ratio: 9/16;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            margin: 2rem auto 0;
+            max-width: 360px;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: 0;
+        }
+
+        /* ── BEHIND THE SCENES ── */
+        #behind {
+            padding: 5rem 2rem;
+            background: var(--darker);
+        }
+
+        .behind-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .step-list { list-style: none; margin-top: 1.25rem; }
+
+        .step-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .step-list li:last-child { border-bottom: none; }
+
+        .step-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(107, 127, 82, 0.12);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .behind-visual {
+            overflow: hidden;
+        }
+
+        .behind-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ── WHAT YOU'LL LEARN ── */
+        #learn {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .learn-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .learn-card:hover {
+            border-color: var(--border);
+            transform: translateY(-4px);
+        }
+
+        .learn-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+
+        .learn-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .learn-card p {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .learn-tagline {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.25rem 1.5rem;
+            background: rgba(107, 127, 82, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--green-light);
+        }
+
+        /* ── ABOUT ── */
+        #about {
+            padding: 5rem 2rem;
+            background: var(--darker);
+        }
+
+        .about-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-photo img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 3px solid var(--green);
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .about-text p {
+            color: #ccc;
+            line-height: 1.85;
+            font-size: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        /* ── PRICING ── */
+        #pricing {
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .price-card {
+            max-width: 460px;
+            margin: 2.5rem auto 0;
+            background: rgba(107, 127, 82, 0.07);
+            border: 2px solid var(--green);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+        }
+
+        .price-badge {
+            display: inline-block;
+            background: var(--green);
+            color: var(--white);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.3rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-num {
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .price-num span {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--green);
+            vertical-align: super;
+        }
+
+        .price-desc {
+            color: var(--muted);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .price-features {
+            list-style: none;
+            text-align: right;
+            margin-bottom: 2.5rem;
+        }
+
+        .price-features li {
+            padding: 0.65rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .price-features li::before {
+            content: '✓';
+            color: var(--green);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .price-cta {
+            display: block;
+            background: var(--green);
+            color: var(--white);
+            padding: 1.1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.15rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(107, 127, 82, 0.4);
+        }
+
+        .price-cta:hover {
+            background: var(--green-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(107, 127, 82, 0.5);
+        }
+
+        /* ── BUNDLE ── */
+        #bundle {
+            padding: 1rem 2rem 5rem;
+        }
+
+        .bundle-card {
+            max-width: 460px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(107,127,82,0.12) 0%, rgba(107,127,82,0.04) 100%);
+            border: 2px solid var(--green);
+            border-radius: 16px;
+            padding: 2.75rem 2.5rem;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(107,127,82,0.15);
+        }
+
+        .bundle-special-badge {
+            display: inline-block;
+            background: var(--green);
+            color: var(--white);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.3rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1.25rem;
+        }
+
+        .bundle-card h3 {
+            font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+            font-weight: 900;
+            margin-bottom: 1.75rem;
+            line-height: 1.3;
+        }
+
+        .bundle-courses {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: right;
+        }
+
+        .bundle-courses li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .bundle-courses li:last-child { margin-bottom: 0; }
+
+        .bundle-check {
+            color: var(--green);
+            font-weight: 900;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .bundle-pricing {
+            margin-bottom: 2rem;
+            padding: 1.25rem;
+            background: rgba(26,26,26,0.5);
+            border-radius: 10px;
+        }
+
+        .bundle-original {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .bundle-original s { color: #888; }
+
+        .bundle-price-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .bundle-arrow { color: var(--green); font-size: 1.2rem; }
+
+        .bundle-price-new {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .bundle-price-new span {
+            font-size: 1.4rem;
+            color: var(--green);
+            vertical-align: super;
+        }
+
+        .bundle-only {
+            font-size: 0.85rem;
+            color: var(--green-light);
+            margin-top: 0.3rem;
+        }
+
+        .bundle-cta {
+            display: block;
+            background: var(--green);
+            color: var(--white);
+            padding: 1.1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(107,127,82,0.4);
+        }
+
+        .bundle-cta:hover {
+            background: var(--green-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(107,127,82,0.5);
+        }
+
+        /* ── TRANSPARENCY ── */
+        #transparency {
+            padding: 1rem 2rem 3rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .transparency-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .transparency-box p {
+            font-size: 0.88rem;
+            color: #999;
+            line-height: 1.75;
+        }
+
+        .transparency-box strong { color: #ccc; }
+
+        /* ── FAQ ── */
+        #faq {
+            padding: 5rem 2rem;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-family: 'Heebo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: right;
+            padding: 1.25rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .faq-toggle {
+            color: var(--green);
+            font-size: 1.4rem;
+            font-weight: 300;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+            color: #aaa;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 200px;
+            padding-bottom: 1.25rem;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 3rem 2rem;
+            background: var(--darker);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-logo img { height: 32px; }
+
+        .footer-brand {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .footer-brand span { color: var(--green); }
+
+        footer p { color: var(--muted); font-size: 0.82rem; }
+
+        /* ── COURSE DIVIDER ── */
+        .course-divider {
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            background: var(--darker);
+        }
+
+        .course-divider-inner {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .course-divider-badge {
+            display: inline-block;
+            background: rgba(107,127,82,0.15);
+            border: 1px solid var(--border);
+            color: var(--green-light);
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .course-divider h2 { color: var(--white); margin-bottom: 0.75rem; }
+        .course-divider .section-sub { color: #aaa; }
+
+        /* ── VOICE: PROBLEM ── */
+        #voice-problem {
+            padding: 3rem 2rem;
+            background: var(--darker);
+        }
+
+        .problem-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .problem-intro { font-size: 1rem; color: #aaa; line-height: 1.7; margin-bottom: 1.5rem; }
+
+        .problem-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .problem-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .problem-solution { font-size: 1rem; color: var(--green-light); font-weight: 600; line-height: 1.7; }
+
+        /* ── VOICE: CONTENT ── */
+        #voice-content {
+            padding: 3rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .content-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .content-card.bonus { border-color: var(--border); }
+
+        .bonus-label {
+            position: absolute;
+            top: -10px; right: 1rem;
+            background: var(--green);
+            color: var(--white);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.2rem 0.75rem;
+            border-radius: 100px;
+        }
+
+        .content-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+
+        .content-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+
+        .content-card ul { list-style: none; }
+
+        .content-card ul li {
+            font-size: 0.88rem;
+            color: #aaa;
+            padding: 0.3rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            line-height: 1.5;
+        }
+
+        .content-card ul li:last-child { border-bottom: none; }
+
+        /* ── VOICE: HOW BUILT ── */
+        #voice-how {
+            padding: 3rem 2rem;
+            background: var(--darker);
+        }
+
+        .how-inner {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .how-inner p { font-size: 1rem; color: #aaa; line-height: 1.85; margin-top: 1rem; }
+
+        /* ── VOICE: WHO FOR ── */
+        #voice-for {
+            padding: 3rem 2rem;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .for-list { list-style: none; margin-top: 1.5rem; }
+
+        .for-list li {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            font-size: 0.97rem;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .for-list li:last-child { border-bottom: none; }
+        .for-check { color: var(--green); font-weight: 900; flex-shrink: 0; font-size: 1.1rem; }
+
+        /* ── NEW PRICING: BUNDLE FIRST + INDIVIDUAL ── */
+        #pricing-all {
+            padding: 5rem 2rem;
+            background: var(--darker);
+        }
+
+        .pricing-all-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-bundle-card {
+            position: relative;
+            background: rgba(107,127,82,0.08);
+            border: 2px solid var(--green);
+            border-radius: 18px;
+            padding: 3rem 2.5rem 2.5rem;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(107,127,82,0.15);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-bundle-card .top-badge {
+            position: absolute;
+            top: -16px; right: 50%;
+            transform: translateX(50%);
+            background: var(--green);
+            color: var(--white);
+            padding: 0.4rem 1.5rem;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .pricing-bundle-card h3 {
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 1.25rem;
+        }
+
+        .bundle-items {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .bundle-items li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ddd;
+        }
+
+        .bcheck { color: var(--green); font-weight: 900; }
+
+        .bundle-price-orig { font-size: 0.88rem; color: #777; margin-bottom: 0.4rem; }
+        .bundle-price-orig s { color: #666; }
+
+        .bundle-price-big {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+
+        .bundle-price-big span { font-size: 1.8rem; color: var(--green-light); vertical-align: super; }
+        .bundle-price-sub { font-size: 0.85rem; color: var(--green-light); margin-bottom: 1.75rem; }
+
+        .or-sep {
+            text-align: center;
+            padding: 1rem 0 1.5rem;
+            font-size: 0.88rem;
+            color: #555;
+        }
+
+        .individual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .ind-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 1.75rem;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        .ind-card:hover { border-color: var(--border); }
+
+        .ind-card .ind-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+
+        .ind-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .ind-price {
+            font-size: 2.6rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 1.25rem;
+        }
+
+        .ind-price span { font-size: 1.2rem; color: var(--green-light); vertical-align: super; }
+
+        .ind-btn {
+            display: block;
+            border: 2px solid var(--green);
+            color: var(--green-light);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .ind-btn:hover { background: var(--green); color: var(--white); }
+
+        /* ── ANIMATIONS ── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            header { padding: 0.85rem 1rem; }
+
+            #hero { padding: 7rem 1.25rem 3rem; }
+
+            .hero-bg {
+                width: 100%;
+                opacity: 1;
+                background-image: url('assets/hero1.png');
+                background-size: contain;
+                background-position: center 30%;
+                background-repeat: no-repeat;
+            }
+
+            .hero-overlay {
+                width: 100%;
+                background: transparent;
+            }
+
+            .hero-content { margin: 0; }
+
+            .hero-stats {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                background: var(--darker);
+                margin: 2rem -1.25rem -3rem;
+                padding: 1.5rem 1.25rem;
+                border-top: none;
+            }
+
+            .behind-inner { grid-template-columns: 1fr; gap: 2rem; }
+
+            .behind-visual { display: none; }
+
+            .about-inner { flex-direction: column; text-align: center; }
+
+            .about-photo img { width: 140px; height: 140px; }
+
+            .learn-grid { grid-template-columns: 1fr; }
+
+            .price-card { padding: 2rem 1.5rem; }
+
+            .price-num { font-size: 3.5rem; }
+
+            #video, #learn, #faq { padding: 3.5rem 1.25rem; }
+
+            .video-wrapper {
+                padding-bottom: 177.78%; /* 9:16 portrait */
+                border-radius: 16px;
+            }
+
+            #behind, #about, #pricing, #bundle, #pricing-all,
+            #voice-problem, #voice-how, .course-divider { padding: 3.5rem 1.25rem; }
+
+            #voice-content, #voice-for { padding: 3.5rem 1.25rem; }
+
+            .problem-list { grid-template-columns: 1fr; }
+            .content-grid { grid-template-columns: 1fr; }
+            .individual-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+    <a href="#" class="logo">
+        <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+        <span class="logo-text">Ronig<span>.ai</span></span>
+    </a>
+    <a href="https://pay.grow.link/ODg3NjU~da27f642cd765f111efd89150d4e236a-MzM5NTU0OQ" target="_blank" class="nav-cta">לרכישת החבילה</a>
+</header>
+
+<!-- ── HERO ── -->
+<section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content fade-in">
+        <div class="hero-badge">קורס אנימציה ב-AI</div>
+        <h1>
+            איך יצרתי סרטון אנימציה ב-AI<br>
+            שהגיע ל<span class="highlight">מיליון צפיות</span> <br>
+            ואיך אתם יכולים לעשות<br>
+            אותו דבר צעד אחרי צעד
+        </h1>
+        <p class="hero-sub">
+            פירוק מלא של סרטון אמיתי <br>
+            מהרעיון ועד אנימציה ועריכה,<br>
+            כולל כל הכלים שבהם השתמשתי.
+        </p>
+        <a href="https://pay.grow.link/ODg3NjU~eb8b7319e2fe7bfdec039f4d07c47ef5-MzM2NjAxNw" target="_blank" class="hero-cta">להצטרפות לקורס ←</a>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-num">1M+</span>
+                <span class="hero-stat-label">צפיות לסרטון</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">100%</span>
+                <span class="hero-stat-label">נבנה ב-AI</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">1</span>
+                <span class="hero-stat-label">workflow אמיתי</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── VIDEO ── -->
+<section id="video">
+    <div class="fade-in">
+        <p class="section-label">צפו בתוצאה</p>
+        <h2>זה הסרטון שתלמדו ליצור</h2>
+        <p class="section-sub">אנימציה שנבנתה לגמרי ב-AI  מאפס, ללא צילום, ללא אולפן</p>
+    </div>
+    <div class="video-wrapper fade-in">
+        <iframe
+            src="https://player.vimeo.com/video/1188977591?badge=0&autopause=0&player_id=0&app_id=58479"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+            title="סרטון אנימציה AI">
+        </iframe>
+    </div>
+</section>
+
+<!-- ── BEHIND THE SCENES ── -->
+<section id="behind">
+    <div class="behind-inner">
+        <div class="behind-text fade-in">
+            <p class="section-label">מאחורי הקלעים</p>
+            <h2>זה לא וידאו רגיל <br>זו אנימציה שנבנתה מאפס</h2>
+            <p style="color:#ccc; margin-top:1rem; line-height:1.8;">
+                בקורס הזה אני לוקחת אתכם מאחורי הקלעים של יצירת הסרטון, שלב אחרי שלב.
+                אני מראה בדיוק איך עבדתי עם הכלים שבהם השתמשתי, כולל
+                <strong style="color:var(--white)">Nano Banana 2 דרך Krea, Kling ו-CapCut</strong>,
+                ואיך שילבתי ביניהם כדי להגיע לתוצאה הסופית.
+            </p>
+            <ul class="step-list">
+                <li>
+                    <span class="step-icon">🎨</span>
+                    <span>יצירת דמויות וסצנות עם Nano Banana 2 דרך Krea</span>
+                </li>
+                <li>
+                    <span class="step-icon">🎬</span>
+                    <span>הנפשה עם Kling, כולל טיפים שלא מדברים עליהם</span>
+                </li>
+                <li>
+                    <span class="step-icon">⬆️</span>
+                    <span>תהליך Upscale דרך Krea לאיכות גבוהה</span>
+                </li>
+                <li>
+                    <span class="step-icon">✂️</span>
+                    <span>עריכה וחיבור הכל לסיפור אחד ב-CapCut</span>
+                </li>
+            </ul>
+            <p style="color:var(--green-light); margin-top:1.5rem; font-weight:600;">
+                רואים את המסך שלי בזמן אמת, כולל קיצורי דרך וטיפים יום-יומיים 👇
+            </p>
+        </div>
+        <div class="behind-visual fade-in">
+            <img src="assets/photo.png" alt="דוגמאות אנימציה ב-AI">
+        </div>
+    </div>
+</section>
+
+<!-- ── WHAT YOU'LL LEARN ── -->
+<section id="learn">
+    <div class="section-header fade-in">
+        <p class="section-label">מה תלמדו</p>
+        <h2>כל מה שתראו  זה בדיוק מה שעשיתי בפועל</h2>
+        <p class="section-sub">לא רשימת כלים  workflow אמיתי שעובד</p>
+    </div>
+    <div class="learn-grid">
+        <div class="learn-card fade-in">
+            <div class="learn-icon">🎨</div>
+            <h3>Nano Banana 2 + Krea</h3>
+            <p>איך יוצרים דמויות וסצנות עקביות, וגם איך עושים Upscale לאיכות גבוהה</p>
+        </div>
+        <div class="learn-card fade-in">
+            <div class="learn-icon">🎬</div>
+            <h3>Kling</h3>
+            <p>הנפשת הדמויות והסצנות, כולל הגדרות, טיפים וטריקים שלא תמיד מדברים עליהם</p>
+        </div>
+        <div class="learn-card fade-in">
+            <div class="learn-icon">✂️</div>
+            <h3>CapCut</h3>
+            <p>עריכה וחיבור כל החלקים לסרטון אחד מוגמר, עם סדר עבודה נכון וקיצורי דרך</p>
+        </div>
+        <div class="learn-card fade-in">
+            <div class="learn-icon">🔁</div>
+            <h3>Workflow שלם</h3>
+            <p>איך מחברים את כל הכלים לתהליך אחד חלק, מהרעיון ועד הסרטון הסופי</p>
+        </div>
+    </div>
+    <div class="learn-tagline fade-in">
+        הקורס מצולם במסך בזמן אמת אפשר לעצור, לחזור אחורה ולצפות שוב בכל שלב
+    </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+    <div class="about-inner">
+        <div class="about-photo fade-in">
+            <img src="assets/profile.jpg" alt="רוני גרין">
+        </div>
+        <div class="about-text fade-in">
+            <p class="section-label">מי אני</p>
+            <h2>רוני גרין</h2>
+            <p>
+                יוצרת תוכן ומומחית AI.
+                יצרתי סרטוני אנימציה ב-AI שצברו מיליוני צפיות  והכל מהמחשב הביתי, וללא ציוד מקצועי.
+                <br><br>
+                בקורס הזה אני חושפת בדיוק את ה-workflow שאני עובדת איתו  בלי לקצר, בלי להסתיר.
+                אם עשיתי את זה, אתם יכולים גם.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     קורס 2 — קריינות וליפסינק
+══════════════════════════════════════ -->
+
+<!-- ── COURSE 2 DIVIDER ── -->
+<div class="course-divider fade-in">
+    <div class="course-divider-inner">
+        <div class="course-divider-badge">קורס 2</div>
+        <h2>הדמויות שלכם עדיין נשמעות כמו רובוטים?</h2>
+        <p class="section-sub">מיני קורס קריינות וליפסינק ב-AI — ElevenLabs + Kling</p>
+    </div>
+</div>
+
+<!-- ── PROBLEM ── -->
+<section id="voice-problem">
+    <div class="problem-inner fade-in">
+        <p class="section-label">הבעיה</p>
+        <h2>הבעיה לא מתחילה בוויזואל — אלא בסאונד</h2>
+        <p class="problem-intro">
+            אפשר ליצור היום תמונות מטורפות ב-AI.<br>
+            אבל ברגע שהדמות מתחילה לדבר...
+        </p>
+        <div class="problem-list">
+            <div class="problem-item">העברית נשמעת מוזר</div>
+            <div class="problem-item">יש טעויות בהגייה</div>
+            <div class="problem-item">הליפסינק לא יושב טוב</div>
+            <div class="problem-item">הכול מרגיש "AI" בצורה לא טובה</div>
+        </div>
+        <p class="problem-solution">
+            בקורס אני מראה בדיוק איך לגרום לדמויות להישמע ולהרגיש הרבה יותר אמינות.
+        </p>
+    </div>
+</section>
+
+<!-- ── VOICE CONTENT ── -->
+<section id="voice-content">
+    <div class="section-header fade-in">
+        <p class="section-label">תוכן הקורס</p>
+        <h2>מה יש בתוך הקורס?</h2>
+    </div>
+    <div class="content-grid">
+        <div class="content-card fade-in">
+            <div class="content-icon">🎙️</div>
+            <h3>יצירת קריינות ב-ElevenLabs</h3>
+            <ul>
+                <li>עבודה עם Text To Speech</li>
+                <li>איך לגרום לעברית להישמע טוב יותר</li>
+                <li>להימנע מטעויות והגיות מוזרות</li>
+                <li>לדייק את הטקסט לפני ההמרה לקול</li>
+            </ul>
+        </div>
+        <div class="content-card fade-in">
+            <div class="content-icon">🎤</div>
+            <h3>שינוי הקול שלכם ב-AI</h3>
+            <ul>
+                <li>ליצור ליפסינק מהקול שלכם</li>
+                <li>העלאת ההקלטה ל-ElevenLabs</li>
+                <li>שמירה על הניואנסים והטון</li>
+            </ul>
+        </div>
+        <div class="content-card fade-in">
+            <div class="content-icon">👄</div>
+            <h3>ליפסינק ב-Kling</h3>
+            <ul>
+                <li>2 שיטות שונות ליצירת ליפסינק</li>
+                <li>יצירת Avatar מדבר</li>
+                <li>הלבשת ליפסינק על וידאו קיים</li>
+            </ul>
+        </div>
+        <div class="content-card bonus fade-in">
+            <span class="bonus-label">בונוס</span>
+            <div class="content-icon">🔊</div>
+            <h3>יצירת סאונד אפקטים ב-AI</h3>
+            <ul>
+                <li>איך מוצאים סאונדים ב-ElevenLabs</li>
+                <li>איך ליצור סאונד אפקטס משלכם</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ── HOW BUILT ── -->
+<section id="voice-how">
+    <div class="how-inner fade-in">
+        <p class="section-label">גישת ההוראה</p>
+        <h2>איך הקורס בנוי?</h2>
+        <p>
+            בלי חפירות ותיאוריה מיותרת.<br><br>
+            אני פשוט פותחת את הכלים ומראה בדיוק איך אני עובדת בזמן אמת —
+            צעד אחרי צעד, על דוגמאות אמיתיות מתוך העבודה שלי.
+        </p>
+    </div>
+</section>
+
+<!-- ── WHO FOR ── -->
+<section id="voice-for">
+    <div class="section-header fade-in">
+        <p class="section-label">למי זה מתאים</p>
+        <h2>למי הקורס מתאים?</h2>
+    </div>
+    <ul class="for-list">
+        <li class="fade-in"><span class="for-check">✓</span><span>ליוצרים שכבר עובדים עם AI ורוצים לשדרג את הסאונד</span></li>
+        <li class="fade-in"><span class="for-check">✓</span><span>למי שיוצר סרטונים ורוצה לקחת אותם רמה קדימה</span></li>
+        <li class="fade-in"><span class="for-check">✓</span><span>למי שהקריינות שלו עדיין נשמעת "AI מדי"</span></li>
+        <li class="fade-in"><span class="for-check">✓</span><span>למי שרוצה ליצור דמויות שמדברות בצורה אמינה יותר</span></li>
+    </ul>
+</section>
+
+<!-- ══════════════════════════════════════
+     תמחור
+══════════════════════════════════════ -->
+
+<!-- ── PRICING (BUNDLE + INDIVIDUAL) ── -->
+<section id="pricing-all">
+    <div class="pricing-all-inner">
+        <div class="section-header fade-in">
+            <p class="section-label">הצטרפות</p>
+            <h2>בחרו איך להתחיל</h2>
+        </div>
+
+        <!-- Bundle -->
+        <div class="pricing-bundle-card fade-in">
+            <div class="top-badge">✨ הכי משתלם — החבילה המלאה</div>
+            <h3>שני הקורסים יחד</h3>
+            <ul class="bundle-items">
+                <li><span class="bcheck">✔</span> קורס יצירת סרטוני אנימציה ב-AI</li>
+                <li><span class="bcheck">✔</span> קורס קריינות וליפסינק ב-AI</li>
+            </ul>
+            <div class="bundle-price-orig">במקום לשלם בנפרד: <s>₪406</s></div>
+            <div class="bundle-price-big"><span>₪</span>347</div>
+            <p class="bundle-price-sub">תשלום חד פעמי · גישה מיידית לכל התוכן</p>
+            <a href="https://pay.grow.link/ODg3NjU~da27f642cd765f111efd89150d4e236a-MzM5NTU0OQ" target="_blank" class="bundle-cta">לרכישת החבילה המלאה ←</a>
+        </div>
+
+        <div class="or-sep">או בחרו קורס בנפרד</div>
+
+        <!-- Individual -->
+        <div class="individual-grid">
+            <div class="ind-card fade-in">
+                <div class="ind-icon">🎬</div>
+                <h4>קורס יצירת סרטוני אנימציה ב-AI</h4>
+                <div class="ind-price"><span>₪</span>287</div>
+                <a href="https://pay.grow.link/ODg3NjU~eb8b7319e2fe7bfdec039f4d07c47ef5-MzM2NjAxNw" target="_blank" class="ind-btn">להצטרפות לקורס ←</a>
+            </div>
+            <div class="ind-card fade-in">
+                <div class="ind-icon">🎙️</div>
+                <h4>קורס קריינות וליפסינק ב-AI</h4>
+                <div class="ind-price"><span>₪</span>119</div>
+                <a href="https://pay.grow.link/ODg3NjU~7f51a33b4dec31bd978d86c0c5693830-MzM5NTM2Mw" target="_blank" class="ind-btn">לקבלת גישה לקורס ←</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REMOVED OLD PRICING SECTION - replaced by #pricing-all above -->
+<section id="pricing" style="display:none;">
+<div>
+    <div class="fade-in section-header">
+        <p class="section-label">הצטרפות לקורס</p>
+        <h2>השקעה חד פעמית, ידע לכל החיים</h2>
+    </div>
+    <div class="price-card fade-in">
+        <span class="price-badge">גישה מלאה לקורס</span>
+        <div class="price-num"><span>₪</span>287</div>
+        <p class="price-desc">תשלום חד פעמי · גישה מיידית לכל התוכן</p>
+        <ul class="price-features">
+            <li>workflow מלא ליצירת אנימציה ב-AI</li>
+            <li>כל הכלים שהשתמשתי בהם  עם הסברים</li>
+            <li>פירוק הסרטון שלב אחרי שלב</li>
+            <li>טיפים וטריקים מעבודה שוטפת</li>
+            <li>מתאים גם למתחילים בלי ניסיון קודם</li>
+            <li>חוסך שעות של ניסוי וטעייה עם כלים שונים</li>
+            <li>גישה לכל התכנים לצפייה חוזרת בכל זמן</li>
+        </ul>
+        <a href="https://pay.grow.link/ODg3NjU~eb8b7319e2fe7bfdec039f4d07c47ef5-MzM2NjAxNw" target="_blank" class="price-cta">להצטרפות עכשיו ←</a>
+    </div>
+</section>
+
+</div></section>
+
+<!-- ── BUNDLE (hidden — replaced by #pricing-all) ── -->
+<section id="bundle" style="display:none;">
+    <div class="bundle-card fade-in">
+        <span class="bundle-special-badge">הצעה מיוחדת</span>
+        <h3>החבילה המלאה ליצירת סרטוני AI</h3>
+        <ul class="bundle-courses">
+            <li><span class="bundle-check">✔</span> קורס יצירת סרטוני אנימציה AI</li>
+            <li><span class="bundle-check">✔</span> קורס קריינות וליפסינק</li>
+        </ul>
+        <div class="bundle-pricing">
+            <p class="bundle-original">במקום לשלם בנפרד: <s>₪406</s></p>
+            <div class="bundle-price-row">
+                
+                <div>
+                    <div class="bundle-price-new"><span>₪</span>347</div>
+                    <div class="bundle-only">בלבד</div>
+                </div>
+            </div>
+        </div>
+        <a href="https://pay.grow.link/ODg3NjU~da27f642cd765f111efd89150d4e236a-MzM5NTU0OQ" target="_blank" class="bundle-cta">לרכישת החבילה המלאה ←</a>
+        <a href="https://rogre1.github.io/ronig-ai-course/voice.html" target="_blank" style="display:block; margin-top:1rem; font-size:0.88rem; color:var(--muted); text-decoration:underline; text-underline-offset:3px;">לפרטים על קורס קריינות וליפסינק ב-AI</a>
+    </div>
+</section>
+
+<!-- ── TRANSPARENCY ── -->
+<section id="transparency">
+    <div class="transparency-box fade-in">
+        <span style="font-size:1.1rem; flex-shrink:0;">ℹ️</span>
+        <p>
+            <strong>חשוב לדעת:</strong> הקורסים כוללים עבודה עם כלים חיצוניים כמו Kling, Krea, ElevenLabs — חלקם עשויים לדרוש מנוי בתשלום בהתאם לשימוש.
+        </p>
+    </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+    <div class="section-header fade-in">
+        <p class="section-label">שאלות נפוצות</p>
+        <h2>יש לכם שאלות?</h2>
+    </div>
+
+    <div class="faq-item fade-in">
+        <button class="faq-question" onclick="toggleFaq(this)">
+            האם צריך לשלם על הכלים?
+            <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+            חלק מהכלים מציעים גרסה חינמית עם מספר קרדיטים מוגבל, וחלק בתשלום.
+        </div>
+    </div>
+
+    <div class="faq-item fade-in">
+        <button class="faq-question" onclick="toggleFaq(this)">
+            כמה עולה לעבוד עם הכלים בערך?
+            <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+            זה תלוי בכמה אתם משתמשים, אבל אפשר להתחיל גם בתקציב נמוך מאוד ולהתקדם משם. יש בקורס המלצות ספציפיות.
+        </div>
+    </div>
+
+    <div class="faq-item fade-in">
+        <button class="faq-question" onclick="toggleFaq(this)">
+            צריך ניסיון קודם ב-AI?
+            <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+            לא. הקורס בנוי כך שגם מי שלא נגע ב-AI יכול להתחיל ולהגיע לתוצאות. כל שלב מוסבר מאפס.
+        </div>
+    </div>
+
+    <div class="faq-item fade-in">
+        <button class="faq-question" onclick="toggleFaq(this)">
+            אפשר לקנות רק קורס אחד?
+            <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+            בהחלט. כל קורס נמכר גם בנפרד. אבל החבילה המלאה משתלמת יותר אם אתם רוצים את שניהם.
+        </div>
+    </div>
+
+    <div class="faq-item fade-in">
+        <button class="faq-question" onclick="toggleFaq(this)">
+            יש גישה לכל החיים?
+            <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+            כן. תשלום חד פעמי ותקבלו גישה לכל תוכן הקורס.
+        </div>
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="footer-logo">
+        <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'">
+    </div>
+    <p>© 2026 Ronig.ai · כל הזכויות שמורות</p>
+</footer>
+
+<script>
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // FAQ accordion
+    function toggleFaq(btn) {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+    }
+</script>
+
+</body>
+</html>

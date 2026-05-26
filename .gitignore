@@ -1,0 +1,8 @@
+# Ignore everything
+*
+
+# Keep only website files
+!.gitignore
+!index.html
+!assets/
+!assets/**
