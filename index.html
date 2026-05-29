@@ -792,6 +792,23 @@
 
         footer p { color: var(--muted); font-size: 0.82rem; }
 
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            margin-top: 0.6rem;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            font-size: 0.78rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--green-light); }
+
         /* ── COURSE DIVIDER ── */
         .course-divider {
             padding: 4rem 2rem 1rem;
@@ -1651,6 +1668,11 @@
         <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'">
     </div>
     <p>© 2026 Ronig.ai · כל הזכויות שמורות</p>
+    <div class="footer-links">
+        <a href="terms.html" target="_blank">תקנון ותנאי שימוש</a>
+        <a href="privacy.html" target="_blank">מדיניות פרטיות</a>
+        <a href="accessibility.html" target="_blank">הצהרת נגישות</a>
+    </div>
 </footer>
 
 <script>
