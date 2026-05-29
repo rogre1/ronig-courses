@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הרכישה בוצעה בהצלחה! | Ronig.ai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --green: #6B7F52;
+            --green-light: #8a9e6e;
+            --dark: #222222;
+            --darker: #1a1a1a;
+            --white: #ffffff;
+            --muted: #999999;
+            --border: rgba(107, 127, 82, 0.3);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            direction: rtl;
+            text-align: right;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed;
+            top: 0; right: 0; left: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(26, 26, 26, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img { height: 38px; width: auto; }
+
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            display: none;
+        }
+
+        .logo-text span { color: var(--green); }
+
+        /* ── HERO ── */
+        #hero {
+            padding: 9rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--darker) 0%, var(--dark) 100%);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(107, 127, 82, 0.2);
+            border: 1px solid var(--green);
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--green-light);
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: #ccc;
+            line-height: 1.75;
+        }
+
+        /* ── CONTENT ── */
+        .content-wrap {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 2rem 5rem;
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 14px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card.green-glow {
+            background: rgba(107,127,82,0.08);
+            border-color: var(--green);
+            box-shadow: 0 0 30px rgba(107,127,82,0.12);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        /* ── STEPS ── */
+        .steps { list-style: none; }
+
+        .steps li {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.97rem;
+            line-height: 1.65;
+        }
+
+        .steps li:last-child { border-bottom: none; }
+
+        .step-num {
+            width: 28px;
+            height: 28px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .spam-note {
+            margin-top: 1rem;
+            padding: 0.85rem 1rem;
+            background: rgba(255,200,50,0.07);
+            border: 1px solid rgba(255,200,50,0.2);
+            border-radius: 8px;
+            font-size: 0.88rem;
+            color: #d4b84a;
+        }
+
+        /* ── NOTES ── */
+        .notes-list { list-style: none; margin-top: 0.5rem; }
+
+        .notes-list li {
+            font-size: 0.93rem;
+            color: #ccc;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            line-height: 1.6;
+        }
+
+        .notes-list li:last-child { border-bottom: none; }
+
+        /* ── IMAGES ── */
+        .images-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .images-grid img {
+            width: 100%;
+            border-radius: 12px;
+            display: block;
+        }
+
+        /* ── TIP ── */
+        .tip-card {
+            background: linear-gradient(135deg, rgba(107,127,82,0.15) 0%, rgba(107,127,82,0.05) 100%);
+            border: 1px solid var(--green);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .tip-emoji { font-size: 1.8rem; flex-shrink: 0; }
+
+        .tip-text h4 {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+        }
+
+        .tip-text p {
+            font-size: 0.93rem;
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        /* ── CLOSING ── */
+        .closing {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .closing p {
+            font-size: 1.05rem;
+            color: #ccc;
+            line-height: 1.75;
+        }
+
+        .closing .heart { color: var(--green-light); }
+
+        /* ── CONTACT ── */
+        .contact-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 14px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .contact-card p {
+            color: #ccc;
+            line-height: 1.75;
+            font-size: 0.97rem;
+        }
+
+        .contact-email {
+            display: inline-block;
+            margin-top: 0.75rem;
+            color: var(--green-light);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .contact-email:hover { text-decoration: underline; }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 2.5rem 2rem;
+            background: var(--darker);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-logo img { height: 30px; }
+
+        footer p { color: var(--muted); font-size: 0.82rem; margin-bottom: 0.4rem; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            font-size: 0.78rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--green-light); }
+
+        /* ── ANIMATIONS ── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            #hero { padding: 8rem 1.5rem 3rem; }
+            .content-wrap { padding: 0 1.25rem 4rem; }
+            .images-grid { grid-template-columns: 1fr; }
+            .tip-card { flex-direction: column; gap: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+    <a href="index.html" class="logo">
+        <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+        <span class="logo-text">Ronig<span>.ai</span></span>
+    </a>
+</header>
+
+<!-- ── HERO ── -->
+<section id="hero">
+    <div class="fade-in">
+        <div class="hero-badge">ברוכים הבאים לקורס ✨</div>
+        <h1 class="hero-title">הרכישה בוצעה בהצלחה! 🚀</h1>
+        <p class="hero-sub">עוד רגע קט ואתם בפנים</p>
+    </div>
+</section>
+
+<!-- ── CONTENT ── -->
+<div class="content-wrap">
+
+    <!-- מה עכשיו -->
+    <div class="card green-glow fade-in">
+        <div class="card-title">✨ מה עכשיו?</div>
+        <ul class="steps">
+            <li>
+                <span class="step-num">1</span>
+                <span>שלחנו לכם <strong>מייל עם פרטי הגישה</strong> למערכת הלימוד 📩<br>
+                <span style="color:var(--muted); font-size:0.9em;">(שם משתמש + סיסמה + קישור כניסה)</span></span>
+            </li>
+            <li>
+                <span class="step-num">2</span>
+                <span>נכנסים דרך הקישור במייל ומתחילים</span>
+            </li>
+        </ul>
+        <div class="spam-note">
+            👉 אם לא מצאתם את המייל, בדקו גם בתיקיית ספאם / קידומי מכירות
+        </div>
+    </div>
+
+    <!-- חשוב לדעת -->
+    <div class="card fade-in">
+        <div class="card-title">⚠️ חשוב לדעת:</div>
+        <ul class="notes-list">
+            <li>המייל נשלח אוטומטית מיד אחרי הרכישה</li>
+            <li>אם כבר נרשמתם בעבר, פשוט התחברו עם הסיסמה הקיימת</li>
+            <li>אפשר לאפס סיסמה דרך עמוד ההתחברות</li>
+        </ul>
+    </div>
+
+    <!-- תמונות -->
+    <div class="images-grid fade-in">
+        <img src="assets/thankyou1.png" alt="צילום מסך מתוך פלטפורמת הקורס">
+        <img src="assets/thankyou2.png" alt="תוכן הקורס בפלטפורמת הלמידה">
+    </div>
+
+    <!-- טיפ -->
+    <div class="tip-card fade-in">
+        <div class="tip-emoji">🧠</div>
+        <div class="tip-text">
+            <h4>טיפ קטן לפני שמתחילים</h4>
+            <p>אל תדלגו, תעברו לפי הסדר.<br>
+            זה יחסוך לכם זמן ויביא תוצאות הרבה יותר טובות.</p>
+        </div>
+    </div>
+
+    <!-- סגירה -->
+    <div class="closing fade-in">
+        <p>מחכה לראות מה תיצרו <span class="heart">🤍</span><br>
+        תייגו אותי באינסטגרם: <strong>@ronig.ai</strong></p>
+    </div>
+
+    <!-- יצירת קשר -->
+    <div class="contact-card fade-in">
+        <div class="card-title" style="justify-content:center;">💬 צריך עזרה?</div>
+        <p>אפשר לפנות אליי כאן:</p>
+        <a href="mailto:ai@roni-green.com" class="contact-email">ai@roni-green.com</a>
+    </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="footer-logo">
+        <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'">
+    </div>
+    <p>© 2026 Ronig.ai · כל הזכויות שמורות</p>
+    <div class="footer-links">
+        <a href="terms.html" target="_blank">תקנון ותנאי שימוש</a>
+        <a href="privacy.html" target="_blank">מדיניות פרטיות</a>
+        <a href="accessibility.html" target="_blank">הצהרת נגישות</a>
+    </div>
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
