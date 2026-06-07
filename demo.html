@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>קורסי AI | Ronig.ai — דמו</title>
+    <title>קורסי AI | Ronig.ai - דמו</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -135,7 +135,7 @@
         .hero-bg {
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
-            background-image: url('assets/hero-bg.jpg');
+            background-image: url('assets/hero-bg2.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -189,10 +189,77 @@
             margin-bottom: 2.25rem;
         }
 
-        .hero-cta {
-            display: inline-flex;
+        /* ── STEPS ── */
+        .hero-steps {
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            gap: 0;
+            margin: 2rem auto 2rem;
+            width: fit-content;
+        }
+
+        .hero-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 0.4rem;
+            transition: color 1.1s ease;
+        }
+
+        .step-box {
+            width: 280px;
+            text-align: center;
+            padding: 0.65rem 1.75rem;
+            border: 1.5px solid rgba(255,255,255,0.18);
+            border-radius: 100px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.03);
+            transition: all 1.1s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .step-arrow {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.15);
+            margin: 0.35rem 0;
+            transition: color 0.5s ease;
+        }
+
+        /* lit state */
+        .hero-step.lit .step-label {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .hero-step.lit .step-box {
+            border-color: rgba(255,255,255,0.8);
+            color: #fff;
+            background: rgba(255,255,255,0.06);
+            box-shadow: none;
+        }
+
+        .hero-step.lit + .step-arrow {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .hero-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 0.75rem;
+            width: 280px;
+            margin: 2.75rem auto 0;
             background: var(--green);
             color: #fff;
             padding: 0.95rem 2.25rem;
@@ -243,7 +310,7 @@
         .video-wrapper {
             position: relative;
             aspect-ratio: 9/16;
-            max-width: 340px;
+            max-width: 220px;
             margin: 2rem auto 0;
             border-radius: 14px;
             overflow: hidden;
@@ -420,7 +487,6 @@
         .behind-photo img {
             width: 100%;
             border-radius: 14px;
-            border: 1px solid rgba(107,127,82,0.25);
         }
 
         /* ── VOICE SECTION (LIGHT) ── */
@@ -867,7 +933,7 @@
 </header>
 
 <!-- ════════════════════════
-     HERO — DARK
+     HERO - DARK
 ════════════════════════ -->
 <section id="hero" class="dark-section">
     <div class="hero-bg"></div>
@@ -877,37 +943,42 @@
             <div class="hero-badge">קורס אנימציה ב-AI</div>
         </div>
         <h1>
-            איך יצרתי סרטון אנימציה ב-AI<br>
-            שהגיע ל<span class="highlight">מיליון צפיות</span><br>
-            ואיך אתם יכולים לעשות<br>
-            אותו דבר צעד אחרי צעד
+            למדו ליצור סרטוני אנימציה ב-<span class="highlight">AI</span>
         </h1>
         <p class="hero-sub fade-in">
-            פירוק מלא של סרטון אמיתי<br>
-            מהרעיון ועד אנימציה ועריכה,<br>
-            כולל מעבר על כל הכלים שבהם השתמשתי.
+            כולל קריינות, ליפסינק והפיכת הקלטות קול לסרטוני AI צעד אחר צעד.
         </p>
+
+        <div class="hero-steps">
+            <div class="hero-step" data-step>
+                <span class="step-label">שלב א׳</span>
+                <a href="#behind" class="step-box">🎬 יצירת סרטוני אנימציה ב־AI</a>
+            </div>
+            <div class="step-arrow">↓</div>
+            <div class="hero-step" data-step>
+                <span class="step-label">שלב ב׳</span>
+                <a href="#voice-section" class="step-box">🎙️ הוספת קריינות וליפסינק</a>
+            </div>
+            <div class="step-arrow">↓</div>
+            <div class="hero-step" data-step>
+                <span class="step-label">שלב ג׳</span>
+                <a href="#course3" class="step-box">🎧 הפיכת הקלטה לסרטון AI</a>
+            </div>
+        </div>
+
         <a href="#pricing-all" class="hero-cta fade-in">להצטרפות לקורס ←</a>
 
         <div class="hero-carousel fade-in">
             <div class="carousel-slide active"><img src="assets/change1.png" alt="דוגמה לסרטון אנימציה שנוצר ב-AI"></div>
             <div class="carousel-slide"><img src="assets/change2.png" alt="תוצאה של סרטון אנימציה ב-AI"></div>
             <div class="carousel-slide"><img src="assets/change3.png" alt="דוגמה לאנימציה עם Kling ו-Krea"></div>
-            <div class="carousel-slide"><img src="assets/change4.png" alt="סרטון אנימציה ב-AI — תוצאה סופית"></div>
+            <div class="carousel-slide"><img src="assets/change4.png" alt="סרטון אנימציה ב-AI - תוצאה סופית"></div>
             <div class="carousel-slide"><img src="assets/change5.png" alt="עוד דוגמה לסרטון אנימציה ב-AI"></div>
         </div>
 
         <div class="hero-stats fade-in">
             <div class="hero-stat">
-                <span class="hero-stat-num">1M</span>
-                <span class="hero-stat-label">צפיות לסרטון</span>
-            </div>
-            <div class="hero-stat">
-                <span class="hero-stat-num">100%</span>
-                <span class="hero-stat-label">נבנה ב-AI</span>
-            </div>
-            <div class="hero-stat">
-                <span class="hero-stat-num">2.5h</span>
+                <span class="hero-stat-num">4h+</span>
                 <span class="hero-stat-label">תוכן מוקלט</span>
             </div>
         </div>
@@ -915,23 +986,26 @@
 </section>
 
 <!-- ════════════════════════
-     VIDEO — WHITE
+     VIDEO - WHITE
 ════════════════════════ -->
-<section id="video" class="white-section">
-    <div class="section-header fade-in">
-        <p class="section-label">צפו בתוצאה</p>
-        <h2>זה הסרטון שתלמדו ליצור</h2>
-        <p class="section-sub">אנימציה שנבנתה לגמרי ב-AI, מאפס</p>
-    </div>
-    <div class="video-wrapper fade-in">
-        <iframe src="https://player.vimeo.com/video/1188977591?badge=0&autopause=0&player_id=0&app_id=58479"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-            title="סרטון אנימציה AI"></iframe>
+<!-- ════════════════════════
+     PREVIEW VIDEO - WHITE
+════════════════════════ -->
+<section class="white-section" style="padding: 4rem 2rem; text-align:center;">
+    <div style="max-width:800px; margin:0 auto;">
+        <div class="video-wrapper-wide fade-in">
+            <iframe src="https://player.vimeo.com/video/1195940893?badge=0&autopause=0&player_id=0&app_id=58479"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                title="הקורס מצולם במסך בזמן אמת"></iframe>
+        </div>
+        <div style="margin-top:1.25rem; padding:1.1rem 1.5rem; background:rgba(107,127,82,0.07); border:1px solid rgba(107,127,82,0.2); border-radius:8px; font-size:0.95rem; color:#555; font-style:italic;">
+            הקורס דיגיטלי ומצולם ואפשר לעצור, לחזור אחורה ולצפות שוב בכל שלב
+        </div>
     </div>
 </section>
 
 <!-- ════════════════════════
-     BEHIND SCENES — DARK
+     BEHIND SCENES - DARK
 ════════════════════════ -->
 <section id="behind" class="dark-section">
     <div class="behind-inner">
@@ -964,40 +1038,39 @@
             </div>
         </div>
         <div class="behind-photo fade-in">
-            <img src="assets/photo.png" alt="צילום מסך מתוך הקורס — תהליך יצירת אנימציה ב-AI">
+            <img src="assets/photo.png" alt="צילום מסך מתוך הקורס - תהליך יצירת אנימציה ב-AI">
         </div>
     </div>
 </section>
 
 <!-- ════════════════════════
-     PREVIEW VIDEO — WHITE
+     VIDEO - WHITE
 ════════════════════════ -->
-<section class="white-section" style="padding: 4rem 2rem; text-align:center;">
-    <div style="max-width:800px; margin:0 auto;">
-        <div class="video-wrapper-wide fade-in">
-            <iframe src="https://player.vimeo.com/video/1195940893?badge=0&autopause=0&player_id=0&app_id=58479"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-                title="הקורס מצולם במסך בזמן אמת"></iframe>
-        </div>
-        <div style="margin-top:1.25rem; padding:1.1rem 1.5rem; background:rgba(107,127,82,0.07); border:1px solid rgba(107,127,82,0.2); border-radius:8px; font-size:0.95rem; color:#555; font-style:italic;">
-            הקורס דיגיטלי ומצולם ואפשר לעצור, לחזור אחורה ולצפות שוב בכל שלב
-        </div>
+<section id="video" class="white-section">
+    <div class="section-header fade-in">
+        <h2>דרך יצירת הסרטון הזה תלמדו את כל יסודות האנימציה ב-AI</h2>
+        <p class="section-sub">אנימציה שנבנתה לגמרי ב-AI והגיעה למיליון צפיות!</p>
+    </div>
+    <div class="video-wrapper fade-in">
+        <iframe src="https://player.vimeo.com/video/1188977591?badge=0&autopause=0&player_id=0&app_id=58479"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+            title="סרטון אנימציה AI"></iframe>
     </div>
 </section>
 
 <!-- ════════════════════════
-     VOICE COURSE — LIGHT
+     VOICE COURSE - LIGHT
 ════════════════════════ -->
 <section id="voice-section" class="light-section">
     <div class="voice-divider-box fade-in">
         <div style="display:flex; justify-content:center;">
             <div class="badge-pill">קורס קריינות וליפסינק</div>
         </div>
-        <h2>מיני קורס קריינות וליפסינק ב-AI</h2>
+        <h2>קריינות וליפסינק ב-AI</h2>
         <div class="info-card" style="margin-top:1rem;">
             <p class="info-label">חשוב לדעת</p>
             <p>קורס האנימציה מתמקד ביצירת סרטוני אנימציה ב-AI ואינו כולל קריינות וליפסינק.</p>
-            <p>אם תרצו שהדמויות שלכם גם ידברו, תוכלו להוסיף את מיני קורס הקריינות והליפסינק — שבו תלמדו ליצור דיבור טבעי, קריינות וליפסינק בעזרת <strong>ElevenLabs</strong> ו-<strong>Kling</strong>.</p>
+            <p>אם תרצו שהדמויות שלכם גם ידברו, תוכלו להוסיף את מיני קורס הקריינות והליפסינק - שבו תלמדו ליצור דיבור טבעי, קריינות וליפסינק בעזרת <strong>ElevenLabs</strong> ו-<strong>Kling</strong>.</p>
         </div>
     </div>
 
@@ -1049,7 +1122,7 @@
 </section>
 
 <!-- ════════════════════════
-     COURSE 3 — DARK
+     COURSE 3 - DARK
 ════════════════════════ -->
 <section id="course3" class="dark-section">
     <div class="c3-inner fade-in">
@@ -1057,10 +1130,11 @@
             <div class="c3-badge">קורס מהקלטה לסרטון ב-AI</div>
         </div>
         <h2>מהקלטה לסרטון ב-AI</h2>
+        <p style="color:#888; font-size:0.88rem; margin-top:0.5rem; margin-bottom:1.5rem; line-height:1.7;">מיני קורס ממוקד באורך שעה ו-7 דקות להפיכת הקלטה קיימת לסרטון AI</p>
 
         <p class="c3-desc">
             יש לכם הקלטה מצחיקה, פודקאסט, קריינות או סתם הודעה קולית בטלפון?<br><br>
-            בקורס הזה אלמד אתכם את כל תהליך ה-Audio to Video — איך לקחת הקלטה קיימת, לעבוד איתה בצורה מסודרת, לחבר את כל התמונות והסרטונים שיצרתם, להתאים אותם לאודיו ולערוך הכל יחד עד לקבלת סרטון AI שלם, זורם ומוכן לפרסום.
+            בקורס הזה אלמד אתכם את כל תהליך ה-Audio to Video - איך לקחת הקלטה קיימת, לעבוד איתה בצורה מסודרת, לחבר את כל התמונות והסרטונים שיצרתם, להתאים אותם לאודיו ולערוך הכל יחד עד לקבלת סרטון AI שלם, זורם ומוכן לפרסום.
         </p>
 
         <div class="c3-audience">
@@ -1070,16 +1144,19 @@
         <div class="c3-rec">
             <p>מומלץ להתחיל ב<strong>קורס סרטוני אנימציה ב-AI</strong>, להמשיך ל<strong>קורס קריינות וליפסינק ב-AI</strong>, ואז להגיע לקורס הזה מוכנים.</p>
         </div>
+        <div class="fade-in" style="margin-top:2rem;">
+            <img src="audio3.png" alt="תהליך הפיכת הקלטה לסרטון AI" style="width:100%; border-radius:14px; display:block;">
+        </div>
     </div>
 </section>
 
 <!-- ════════════════════════
-     ABOUT — WHITE
+     ABOUT - WHITE
 ════════════════════════ -->
 <section id="about" class="white-section">
     <div class="about-inner">
         <div class="about-photo fade-in">
-            <img src="assets/profile.jpg" alt="רוני גרין — יוצרת תוכן ומומחית AI, יוצרת הקורס">
+            <img src="assets/profile.jpg" alt="רוני גרין - יוצרת תוכן ומומחית AI, יוצרת הקורס">
         </div>
         <div class="about-text fade-in">
             <p class="section-label">מי אני</p>
@@ -1095,7 +1172,7 @@
 </section>
 
 <!-- ════════════════════════
-     PRICING — DARK
+     PRICING - DARK
 ════════════════════════ -->
 <section id="pricing-all" class="dark-section">
     <div class="pricing-inner">
@@ -1116,7 +1193,7 @@
             <div class="bundle-pricing-row">
                 <div class="bundle-price-block">
                     <p class="bundle-price-label">תשלום חד פעמי</p>
-                    <div class="bundle-price-num"><span>₪</span>387</div>
+                    <div class="bundle-price-num"><span>₪</span>379</div>
                     <p class="bundle-price-sub">גישה מיידית לכל התוכן</p>
                 </div>
                 <a href="#" class="bundle-cta-new">לרכישת החבילה המלאה ←</a>
@@ -1156,7 +1233,7 @@
 </section>
 
 <!-- ════════════════════════
-     FAQ — LIGHT
+     FAQ - LIGHT
 ════════════════════════ -->
 <section id="faq" class="light-section">
     <div class="faq-wrap">
@@ -1184,7 +1261,7 @@
                 מתי מקבלים גישה לקורס?
                 <span class="faq-toggle">+</span>
             </button>
-            <div class="faq-answer">הקורס דיגיטלי ומצולם — ברגע הרכישה מקבלים תוך מספר דקות מייל עם פרטי גישה. אם לא קיבלתם, שווה לבדוק גם בספאם.</div>
+            <div class="faq-answer">הקורס דיגיטלי ומצולם - ברגע הרכישה מקבלים תוך מספר דקות מייל עם פרטי גישה. אם לא קיבלתם, שווה לבדוק גם בספאם.</div>
         </div>
         <div class="faq-item fade-in">
             <button class="faq-question" onclick="toggleFaq(this)">
@@ -1247,6 +1324,21 @@
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Steps - light up one by one on scroll
+    const steps = document.querySelectorAll('[data-step]');
+    let litCount = 0;
+    function lightNextStep() {
+        if (litCount < steps.length) {
+            steps[litCount].classList.add('lit');
+            litCount++;
+            if (litCount < steps.length) setTimeout(lightNextStep, 900);
+        }
+    }
+    const stepsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting && litCount === 0) lightNextStep(); });
+    }, { threshold: 0.3 });
+    if (steps.length) stepsObserver.observe(steps[0]);
 </script>
 
 </body>
