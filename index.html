@@ -298,7 +298,9 @@
         }
         .carousel-slide {
             flex-shrink: 0;
-            padding: 0 6px;
+            min-width: 82%;
+            width: 82%;
+            padding: 0 3px;
             box-sizing: border-box;
         }
         .carousel-slide img {
@@ -1379,11 +1381,9 @@
         let sw = 0, peek = 0;
 
         function setup() {
-            const cw = carousel.getBoundingClientRect().width;
-            if (!cw) { requestAnimationFrame(setup); return; }
+            const cw = carousel.getBoundingClientRect().width || carousel.offsetWidth || 300;
             sw = Math.round(cw * 0.82);
             peek = Math.round((cw - sw) / 2);
-            Array.from(track.children).forEach(s => { s.style.minWidth = sw + 'px'; s.style.width = sw + 'px'; });
             move(false);
         }
 
