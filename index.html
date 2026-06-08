@@ -287,18 +287,11 @@
             overflow: hidden;
             cursor: grab;
             user-select: none;
+            touch-action: pan-y;
         }
         .hero-carousel:active { cursor: grabbing; }
-        .carousel-track {
-            display: flex;
-            will-change: transform;
-        }
-        .carousel-slide {
-            min-width: 78%;
-            flex-shrink: 0;
-            padding: 0 4%;
-            box-sizing: border-box;
-        }
+        .carousel-track { display: flex; will-change: transform; }
+        .carousel-slide { flex-shrink: 0; padding: 0 5px; box-sizing: border-box; }
         .carousel-slide img { width: 100%; display: block; border-radius: 12px; pointer-events: none; }
 
         .hero-stats {
@@ -1329,72 +1322,68 @@
 <script>
     // Carousel
     // Infinite swipe carousel with peek
-    window.addEventListener('load', function() {
+    (function() {
         const carousel = document.getElementById('heroCarousel');
         const track = document.getElementById('carouselTrack');
         if (!carousel || !track) return;
 
         const origSlides = Array.from(track.children);
         const N = origSlides.length;
-
-        // Clones for infinite loop
         origSlides.forEach(s => track.appendChild(s.cloneNode(true)));
         [...origSlides].reverse().forEach(s => track.insertBefore(s.cloneNode(true), track.firstChild));
 
         let current = N;
+        let slideW = 0, peekOff = 0;
 
-        function init() {
-            const cw = carousel.offsetWidth;
-            const slideW = Math.round(cw * 0.78);
-            const padH = Math.round(cw * 0.04);
-            Array.from(track.children).forEach(s => {
-                s.style.minWidth = slideW + 'px';
-                s.style.paddingLeft = padH + 'px';
-                s.style.paddingRight = padH + 'px';
-                s.style.boxSizing = 'border-box';
-            });
-            return { slideW, peekOff: Math.round((cw - slideW) / 2) };
+        function measure() {
+            const cw = carousel.getBoundingClientRect().width || carousel.offsetWidth;
+            if (!cw) return false;
+            slideW = Math.round(cw * 0.80);
+            peekOff = Math.round((cw - slideW) / 2);
+            Array.from(track.children).forEach(s => { s.style.width = slideW + 'px'; s.style.minWidth = slideW + 'px'; });
+            return true;
         }
-
-        let dims = init();
 
         function setPos(animate) {
             track.style.transition = animate ? 'transform 0.4s ease' : 'none';
             if (!animate) void track.offsetWidth;
-            track.style.transform = `translateX(${dims.peekOff - current * dims.slideW}px)`;
+            track.style.transform = `translateX(${peekOff - current * slideW}px)`;
         }
 
-        setPos(false);
+        function start() {
+            if (!measure()) { setTimeout(start, 50); return; }
+            setPos(false);
 
-        track.addEventListener('transitionend', () => {
-            if (current < N) { current += N; setPos(false); }
-            else if (current >= 2 * N) { current -= N; setPos(false); }
-        });
+            track.addEventListener('transitionend', () => {
+                if (current < N) { current += N; setPos(false); }
+                else if (current >= 2 * N) { current -= N; setPos(false); }
+            });
 
-        function goTo(n) { current = n; setPos(true); }
+            function goTo(n) { current = n; setPos(true); }
 
-        let autoTimer = setInterval(() => goTo(current + 1), 3000);
-        const resetTimer = () => { clearInterval(autoTimer); autoTimer = setInterval(() => goTo(current + 1), 3000); };
+            let auto = setInterval(() => goTo(current + 1), 3000);
+            const reset = () => { clearInterval(auto); auto = setInterval(() => goTo(current + 1), 3000); };
 
-        let startX = 0, dragDelta = 0;
+            let startX = 0, delta = 0;
+            carousel.addEventListener('mousedown', e => { startX = e.clientX; delta = 0; });
+            window.addEventListener('mousemove', e => { if (e.buttons === 1) delta = e.clientX - startX; });
+            window.addEventListener('mouseup', () => {
+                if (delta < -50) { goTo(current + 1); reset(); }
+                else if (delta > 50) { goTo(current - 1); reset(); }
+                delta = 0;
+            });
+            carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            carousel.addEventListener('touchend', e => {
+                const d = e.changedTouches[0].clientX - startX;
+                if (d < -50) { goTo(current + 1); reset(); }
+                else if (d > 50) { goTo(current - 1); reset(); }
+            });
+            window.addEventListener('resize', () => { measure(); setPos(false); });
+        }
 
-        carousel.addEventListener('mousedown', e => { startX = e.clientX; dragDelta = 0; });
-        window.addEventListener('mousemove', e => { if (e.buttons === 1) dragDelta = e.clientX - startX; });
-        window.addEventListener('mouseup', () => {
-            if (dragDelta < -50) { goTo(current + 1); resetTimer(); }
-            else if (dragDelta > 50) { goTo(current - 1); resetTimer(); }
-            dragDelta = 0;
-        });
-
-        carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-        carousel.addEventListener('touchend', e => {
-            const diff = e.changedTouches[0].clientX - startX;
-            if (diff < -50) { goTo(current + 1); resetTimer(); }
-            else if (diff > 50) { goTo(current - 1); resetTimer(); }
-        });
-
-        window.addEventListener('resize', () => { dims = init(); setPos(false); });
-    });
+        if (document.readyState === 'complete') { start(); }
+        else { window.addEventListener('load', start); }
+    })();
 
     // FAQ
     function toggleFaq(btn) {
