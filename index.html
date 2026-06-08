@@ -298,8 +298,6 @@
         }
         .carousel-slide {
             flex-shrink: 0;
-            min-width: 82%;
-            width: 82%;
             padding: 0 3px;
             box-sizing: border-box;
         }
@@ -1373,18 +1371,19 @@
 
         const orig = Array.from(track.children);
         const N = orig.length;
-        // Clone last before first, clone first after last (for infinite)
         track.insertBefore(orig[N-1].cloneNode(true), track.firstChild);
         track.appendChild(orig[0].cloneNode(true));
 
-        let cur = 1; // real first slide
-        let sw = 0, peek = 0;
+        let cur = 1, sw = 0, peek = 0;
 
-        function setup() {
-            const cw = carousel.getBoundingClientRect().width || carousel.offsetWidth || 300;
-            sw = Math.round(cw * 0.82);
+        function calcDims() {
+            const cw = carousel.offsetWidth || 300;
+            sw   = Math.round(cw * 0.84);
             peek = Math.round((cw - sw) / 2);
-            move(false);
+            Array.from(track.children).forEach(s => {
+                s.style.width    = sw + 'px';
+                s.style.minWidth = sw + 'px';
+            });
         }
 
         function move(anim) {
@@ -1393,30 +1392,31 @@
             track.style.transform = `translateX(${peek - cur * sw}px)`;
         }
 
+        calcDims();
+        move(false);
+
         track.addEventListener('transitionend', () => {
-            if (cur === 0)     { cur = N; move(false); }
-            if (cur === N + 1) { cur = 1; move(false); }
+            if (cur === 0)     { cur = N;     move(false); }
+            if (cur === N + 1) { cur = 1;     move(false); }
         });
 
         function go(n) { cur = n; move(true); }
-
-        if (btnPrev) btnPrev.addEventListener('click', () => { go(cur - 1); reset(); });
-        if (btnNext) btnNext.addEventListener('click', () => { go(cur + 1); reset(); });
+        function resetAuto() { clearInterval(auto); auto = setInterval(() => go(cur + 1), 3000); }
 
         let auto = setInterval(() => go(cur + 1), 3000);
-        function reset() { clearInterval(auto); auto = setInterval(() => go(cur + 1), 3000); }
 
-        // Touch/drag
+        if (btnPrev) btnPrev.addEventListener('click', () => { go(cur - 1); resetAuto(); });
+        if (btnNext) btnNext.addEventListener('click', () => { go(cur + 1); resetAuto(); });
+
         let sx = 0;
         carousel.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
         carousel.addEventListener('touchend', e => {
             const d = e.changedTouches[0].clientX - sx;
-            if (d < -40) { go(cur + 1); reset(); }
-            else if (d > 40) { go(cur - 1); reset(); }
+            if (d < -40) { go(cur + 1); resetAuto(); }
+            else if (d > 40) { go(cur - 1); resetAuto(); }
         });
 
-        setup();
-        window.addEventListener('resize', setup);
+        window.addEventListener('resize', () => { calcDims(); move(false); });
     })();
 
     // FAQ
