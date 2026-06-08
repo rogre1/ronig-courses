@@ -279,20 +279,56 @@
         }
         .hero-cta:hover { background: var(--green-light); transform: translateY(-2px); }
 
-        .hero-carousel {
+        /* ── CAROUSEL ── */
+        .carousel-wrap {
+            position: relative;
             margin-top: 2.5rem;
             max-width: 320px;
             margin-left: auto;
             margin-right: auto;
-            overflow: hidden;
-            cursor: grab;
-            user-select: none;
-            touch-action: pan-y;
         }
-        .hero-carousel:active { cursor: grabbing; }
-        .carousel-track { display: flex; will-change: transform; }
-        .carousel-slide { flex-shrink: 0; padding: 0 5px; box-sizing: border-box; }
-        .carousel-slide img { width: 100%; display: block; border-radius: 12px; pointer-events: none; }
+        .hero-carousel {
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        .carousel-track {
+            display: flex;
+            will-change: transform;
+            user-select: none;
+        }
+        .carousel-slide {
+            flex-shrink: 0;
+            padding: 0 6px;
+            box-sizing: border-box;
+        }
+        .carousel-slide img {
+            width: 100%;
+            display: block;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 10;
+            transition: background 0.2s;
+        }
+        .carousel-arrow:hover { background: #fff; }
+        .carousel-arrow.prev { right: -16px; }
+        .carousel-arrow.next { left: -16px; }
 
         .hero-stats {
             display: flex;
@@ -977,17 +1013,21 @@
 
         <a href="#pricing-all" class="hero-cta fade-in">להצטרפות לקורס ←</a>
 
-        <div class="hero-carousel fade-in" id="heroCarousel">
-            <div class="carousel-track" id="carouselTrack">
-                <div class="carousel-slide"><img src="assets/revo1.png" alt="המלצה 1"></div>
-                <div class="carousel-slide"><img src="assets/revo2.png" alt="המלצה 2"></div>
-                <div class="carousel-slide"><img src="assets/revo3.png" alt="המלצה 3"></div>
-                <div class="carousel-slide"><img src="assets/revo4.png" alt="המלצה 4"></div>
-                <div class="carousel-slide"><img src="assets/revo5.png" alt="המלצה 5"></div>
-                <div class="carousel-slide"><img src="assets/revo6.png" alt="המלצה 6"></div>
-                <div class="carousel-slide"><img src="assets/revo7.png" alt="המלצה 7"></div>
-                <div class="carousel-slide"><img src="assets/revo8.png" alt="המלצה 8"></div>
+        <div class="carousel-wrap fade-in">
+            <div class="hero-carousel" id="heroCarousel">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide"><img src="assets/revo1.png" alt="המלצה 1"></div>
+                    <div class="carousel-slide"><img src="assets/revo2.png" alt="המלצה 2"></div>
+                    <div class="carousel-slide"><img src="assets/revo3.png" alt="המלצה 3"></div>
+                    <div class="carousel-slide"><img src="assets/revo4.png" alt="המלצה 4"></div>
+                    <div class="carousel-slide"><img src="assets/revo5.png" alt="המלצה 5"></div>
+                    <div class="carousel-slide"><img src="assets/revo6.png" alt="המלצה 6"></div>
+                    <div class="carousel-slide"><img src="assets/revo7.png" alt="המלצה 7"></div>
+                    <div class="carousel-slide"><img src="assets/revo8.png" alt="המלצה 8"></div>
+                </div>
             </div>
+            <button class="carousel-arrow prev" id="carouselPrev">‹</button>
+            <button class="carousel-arrow next" id="carouselNext">›</button>
         </div>
 
         <div class="hero-stats fade-in">
@@ -1321,68 +1361,62 @@
 
 <script>
     // Carousel
-    // Infinite swipe carousel with peek
+    // Carousel
     (function() {
         const carousel = document.getElementById('heroCarousel');
         const track = document.getElementById('carouselTrack');
+        const btnPrev = document.getElementById('carouselPrev');
+        const btnNext = document.getElementById('carouselNext');
         if (!carousel || !track) return;
 
-        const origSlides = Array.from(track.children);
-        const N = origSlides.length;
-        origSlides.forEach(s => track.appendChild(s.cloneNode(true)));
-        [...origSlides].reverse().forEach(s => track.insertBefore(s.cloneNode(true), track.firstChild));
+        const orig = Array.from(track.children);
+        const N = orig.length;
+        // Clone last before first, clone first after last (for infinite)
+        track.insertBefore(orig[N-1].cloneNode(true), track.firstChild);
+        track.appendChild(orig[0].cloneNode(true));
 
-        let current = N;
-        let slideW = 0, peekOff = 0;
+        let cur = 1; // real first slide
+        let sw = 0, peek = 0;
 
-        function measure() {
-            const cw = carousel.getBoundingClientRect().width || carousel.offsetWidth;
-            if (!cw) return false;
-            slideW = Math.round(cw * 0.80);
-            peekOff = Math.round((cw - slideW) / 2);
-            Array.from(track.children).forEach(s => { s.style.width = slideW + 'px'; s.style.minWidth = slideW + 'px'; });
-            return true;
+        function setup() {
+            const cw = carousel.getBoundingClientRect().width;
+            if (!cw) { requestAnimationFrame(setup); return; }
+            sw = Math.round(cw * 0.82);
+            peek = Math.round((cw - sw) / 2);
+            Array.from(track.children).forEach(s => { s.style.minWidth = sw + 'px'; s.style.width = sw + 'px'; });
+            move(false);
         }
 
-        function setPos(animate) {
-            track.style.transition = animate ? 'transform 0.4s ease' : 'none';
-            if (!animate) void track.offsetWidth;
-            track.style.transform = `translateX(${peekOff - current * slideW}px)`;
+        function move(anim) {
+            track.style.transition = anim ? 'transform 0.38s ease' : 'none';
+            void track.offsetWidth;
+            track.style.transform = `translateX(${peek - cur * sw}px)`;
         }
 
-        function start() {
-            if (!measure()) { setTimeout(start, 50); return; }
-            setPos(false);
+        track.addEventListener('transitionend', () => {
+            if (cur === 0)     { cur = N; move(false); }
+            if (cur === N + 1) { cur = 1; move(false); }
+        });
 
-            track.addEventListener('transitionend', () => {
-                if (current < N) { current += N; setPos(false); }
-                else if (current >= 2 * N) { current -= N; setPos(false); }
-            });
+        function go(n) { cur = n; move(true); }
 
-            function goTo(n) { current = n; setPos(true); }
+        if (btnPrev) btnPrev.addEventListener('click', () => { go(cur - 1); reset(); });
+        if (btnNext) btnNext.addEventListener('click', () => { go(cur + 1); reset(); });
 
-            let auto = setInterval(() => goTo(current + 1), 3000);
-            const reset = () => { clearInterval(auto); auto = setInterval(() => goTo(current + 1), 3000); };
+        let auto = setInterval(() => go(cur + 1), 3000);
+        function reset() { clearInterval(auto); auto = setInterval(() => go(cur + 1), 3000); }
 
-            let startX = 0, delta = 0;
-            carousel.addEventListener('mousedown', e => { startX = e.clientX; delta = 0; });
-            window.addEventListener('mousemove', e => { if (e.buttons === 1) delta = e.clientX - startX; });
-            window.addEventListener('mouseup', () => {
-                if (delta < -50) { goTo(current + 1); reset(); }
-                else if (delta > 50) { goTo(current - 1); reset(); }
-                delta = 0;
-            });
-            carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-            carousel.addEventListener('touchend', e => {
-                const d = e.changedTouches[0].clientX - startX;
-                if (d < -50) { goTo(current + 1); reset(); }
-                else if (d > 50) { goTo(current - 1); reset(); }
-            });
-            window.addEventListener('resize', () => { measure(); setPos(false); });
-        }
+        // Touch/drag
+        let sx = 0;
+        carousel.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+        carousel.addEventListener('touchend', e => {
+            const d = e.changedTouches[0].clientX - sx;
+            if (d < -40) { go(cur + 1); reset(); }
+            else if (d > 40) { go(cur - 1); reset(); }
+        });
 
-        if (document.readyState === 'complete') { start(); }
-        else { window.addEventListener('load', start); }
+        setup();
+        window.addEventListener('resize', setup);
     })();
 
     // FAQ
