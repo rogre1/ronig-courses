@@ -286,14 +286,22 @@
             margin-right: auto;
             border-radius: 12px;
             overflow: hidden;
+            cursor: grab;
+            user-select: none;
         }
-        .carousel-slide { display: none; width: 100%; }
-        .carousel-slide.active { display: block; animation: fadeSlide 0.6s ease; }
-        .carousel-slide img { width: 100%; display: block; border-radius: 12px; }
-        @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(8px); }
-            to   { opacity: 1; transform: translateY(0); }
+        .hero-carousel.dragging { cursor: grabbing; }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s ease;
+            will-change: transform;
         }
+        .carousel-track.no-transition { transition: none; }
+        .carousel-slide {
+            min-width: 100%;
+            width: 100%;
+            flex-shrink: 0;
+        }
+        .carousel-slide img { width: 100%; display: block; border-radius: 12px; pointer-events: none; }
 
         .hero-stats {
             display: flex;
@@ -978,12 +986,17 @@
 
         <a href="#pricing-all" class="hero-cta fade-in">להצטרפות לקורס ←</a>
 
-        <div class="hero-carousel fade-in">
-            <div class="carousel-slide active"><img src="assets/change1.png" alt="דוגמה לסרטון אנימציה שנוצר ב-AI"></div>
-            <div class="carousel-slide"><img src="assets/change2.png" alt="תוצאה של סרטון אנימציה ב-AI"></div>
-            <div class="carousel-slide"><img src="assets/change3.png" alt="דוגמה לאנימציה עם Kling ו-Krea"></div>
-            <div class="carousel-slide"><img src="assets/change4.png" alt="סרטון אנימציה ב-AI - תוצאה סופית"></div>
-            <div class="carousel-slide"><img src="assets/change5.png" alt="עוד דוגמה לסרטון אנימציה ב-AI"></div>
+        <div class="hero-carousel fade-in" id="heroCarousel">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide"><img src="assets/reco1.jpg" alt="המלצה 1"></div>
+                <div class="carousel-slide"><img src="assets/reco2.jpg" alt="המלצה 2"></div>
+                <div class="carousel-slide"><img src="assets/reco3.jpg" alt="המלצה 3"></div>
+                <div class="carousel-slide"><img src="assets/reco4.jpg" alt="המלצה 4"></div>
+                <div class="carousel-slide"><img src="assets/reco5.jpg" alt="המלצה 5"></div>
+                <div class="carousel-slide"><img src="assets/reco6.jpg" alt="המלצה 6"></div>
+                <div class="carousel-slide"><img src="assets/reco7.jpg" alt="המלצה 7"></div>
+                <div class="carousel-slide"><img src="assets/reco8.jpg" alt="המלצה 8"></div>
+            </div>
         </div>
 
         <div class="hero-stats fade-in">
@@ -1317,14 +1330,57 @@
 
 <script>
     // Carousel
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.carousel-slide');
-    function goToSlide(n) {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = n;
-        slides[currentSlide].classList.add('active');
+    // Swipe carousel
+    const carousel = document.getElementById('heroCarousel');
+    const track = document.getElementById('carouselTrack');
+    const totalSlides = track ? track.children.length : 0;
+    let current = 0;
+    let startX = 0;
+    let isDragging = false;
+    let dragDelta = 0;
+
+    function goTo(n) {
+        current = (n + totalSlides) % totalSlides;
+        track.classList.remove('no-transition');
+        track.style.transform = `translateX(-${current * 100}%)`;
     }
-    if (slides.length) setInterval(() => goToSlide((currentSlide + 1) % slides.length), 3000);
+
+    if (carousel && track && totalSlides > 0) {
+        // Auto-advance
+        let autoTimer = setInterval(() => goTo(current + 1), 3000);
+
+        function resetTimer() {
+            clearInterval(autoTimer);
+            autoTimer = setInterval(() => goTo(current + 1), 3000);
+        }
+
+        // Mouse drag
+        carousel.addEventListener('mousedown', e => {
+            isDragging = true;
+            startX = e.clientX;
+            carousel.classList.add('dragging');
+        });
+        window.addEventListener('mousemove', e => {
+            if (!isDragging) return;
+            dragDelta = e.clientX - startX;
+        });
+        window.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            carousel.classList.remove('dragging');
+            if (dragDelta < -50) { goTo(current + 1); resetTimer(); }
+            else if (dragDelta > 50) { goTo(current - 1); resetTimer(); }
+            dragDelta = 0;
+        });
+
+        // Touch swipe
+        carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+        carousel.addEventListener('touchend', e => {
+            const diff = e.changedTouches[0].clientX - startX;
+            if (diff < -50) { goTo(current + 1); resetTimer(); }
+            else if (diff > 50) { goTo(current - 1); resetTimer(); }
+        });
+    }
 
     // FAQ
     function toggleFaq(btn) {
