@@ -1329,7 +1329,7 @@
 <script>
     // Carousel
     // Infinite swipe carousel with peek
-    (function() {
+    window.addEventListener('load', function() {
         const carousel = document.getElementById('heroCarousel');
         const track = document.getElementById('carouselTrack');
         if (!carousel || !track) return;
@@ -1337,19 +1337,31 @@
         const origSlides = Array.from(track.children);
         const N = origSlides.length;
 
-        // Append clones at end, prepend clones at start (for infinite)
+        // Clones for infinite loop
         origSlides.forEach(s => track.appendChild(s.cloneNode(true)));
         [...origSlides].reverse().forEach(s => track.insertBefore(s.cloneNode(true), track.firstChild));
 
-        let current = N; // start at real first slide
+        let current = N;
 
-        function sw() { return carousel.offsetWidth * 0.78; }
-        function peek() { return (carousel.offsetWidth - sw()) / 2; }
+        function init() {
+            const cw = carousel.offsetWidth;
+            const slideW = Math.round(cw * 0.78);
+            const padH = Math.round(cw * 0.04);
+            Array.from(track.children).forEach(s => {
+                s.style.minWidth = slideW + 'px';
+                s.style.paddingLeft = padH + 'px';
+                s.style.paddingRight = padH + 'px';
+                s.style.boxSizing = 'border-box';
+            });
+            return { slideW, peekOff: Math.round((cw - slideW) / 2) };
+        }
+
+        let dims = init();
 
         function setPos(animate) {
             track.style.transition = animate ? 'transform 0.4s ease' : 'none';
             if (!animate) void track.offsetWidth;
-            track.style.transform = `translateX(${peek() - current * sw()}px)`;
+            track.style.transform = `translateX(${dims.peekOff - current * dims.slideW}px)`;
         }
 
         setPos(false);
@@ -1380,7 +1392,9 @@
             if (diff < -50) { goTo(current + 1); resetTimer(); }
             else if (diff > 50) { goTo(current - 1); resetTimer(); }
         });
-    })();
+
+        window.addEventListener('resize', () => { dims = init(); setPos(false); });
+    });
 
     // FAQ
     function toggleFaq(btn) {
