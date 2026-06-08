@@ -281,25 +281,23 @@
 
         .hero-carousel {
             margin-top: 2.5rem;
-            max-width: 300px;
+            max-width: 320px;
             margin-left: auto;
             margin-right: auto;
-            border-radius: 12px;
             overflow: hidden;
             cursor: grab;
             user-select: none;
         }
-        .hero-carousel.dragging { cursor: grabbing; }
+        .hero-carousel:active { cursor: grabbing; }
         .carousel-track {
             display: flex;
-            transition: transform 0.4s ease;
             will-change: transform;
         }
-        .carousel-track.no-transition { transition: none; }
         .carousel-slide {
-            min-width: 100%;
-            width: 100%;
+            min-width: 78%;
             flex-shrink: 0;
+            padding: 0 4%;
+            box-sizing: border-box;
         }
         .carousel-slide img { width: 100%; display: block; border-radius: 12px; pointer-events: none; }
 
@@ -1330,57 +1328,59 @@
 
 <script>
     // Carousel
-    // Swipe carousel
-    const carousel = document.getElementById('heroCarousel');
-    const track = document.getElementById('carouselTrack');
-    const totalSlides = track ? track.children.length : 0;
-    let current = 0;
-    let startX = 0;
-    let isDragging = false;
-    let dragDelta = 0;
+    // Infinite swipe carousel with peek
+    (function() {
+        const carousel = document.getElementById('heroCarousel');
+        const track = document.getElementById('carouselTrack');
+        if (!carousel || !track) return;
 
-    function goTo(n) {
-        current = (n + totalSlides) % totalSlides;
-        track.classList.remove('no-transition');
-        track.style.transform = `translateX(-${current * 100}%)`;
-    }
+        const origSlides = Array.from(track.children);
+        const N = origSlides.length;
 
-    if (carousel && track && totalSlides > 0) {
-        // Auto-advance
-        let autoTimer = setInterval(() => goTo(current + 1), 3000);
+        // Append clones at end, prepend clones at start (for infinite)
+        origSlides.forEach(s => track.appendChild(s.cloneNode(true)));
+        [...origSlides].reverse().forEach(s => track.insertBefore(s.cloneNode(true), track.firstChild));
 
-        function resetTimer() {
-            clearInterval(autoTimer);
-            autoTimer = setInterval(() => goTo(current + 1), 3000);
+        let current = N; // start at real first slide
+
+        function sw() { return carousel.offsetWidth * 0.78; }
+        function peek() { return (carousel.offsetWidth - sw()) / 2; }
+
+        function setPos(animate) {
+            track.style.transition = animate ? 'transform 0.4s ease' : 'none';
+            if (!animate) void track.offsetWidth;
+            track.style.transform = `translateX(${peek() - current * sw()}px)`;
         }
 
-        // Mouse drag
-        carousel.addEventListener('mousedown', e => {
-            isDragging = true;
-            startX = e.clientX;
-            carousel.classList.add('dragging');
+        setPos(false);
+
+        track.addEventListener('transitionend', () => {
+            if (current < N) { current += N; setPos(false); }
+            else if (current >= 2 * N) { current -= N; setPos(false); }
         });
-        window.addEventListener('mousemove', e => {
-            if (!isDragging) return;
-            dragDelta = e.clientX - startX;
-        });
+
+        function goTo(n) { current = n; setPos(true); }
+
+        let autoTimer = setInterval(() => goTo(current + 1), 3000);
+        const resetTimer = () => { clearInterval(autoTimer); autoTimer = setInterval(() => goTo(current + 1), 3000); };
+
+        let startX = 0, dragDelta = 0;
+
+        carousel.addEventListener('mousedown', e => { startX = e.clientX; dragDelta = 0; });
+        window.addEventListener('mousemove', e => { if (e.buttons === 1) dragDelta = e.clientX - startX; });
         window.addEventListener('mouseup', () => {
-            if (!isDragging) return;
-            isDragging = false;
-            carousel.classList.remove('dragging');
             if (dragDelta < -50) { goTo(current + 1); resetTimer(); }
             else if (dragDelta > 50) { goTo(current - 1); resetTimer(); }
             dragDelta = 0;
         });
 
-        // Touch swipe
         carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
         carousel.addEventListener('touchend', e => {
             const diff = e.changedTouches[0].clientX - startX;
             if (diff < -50) { goTo(current + 1); resetTimer(); }
             else if (diff > 50) { goTo(current - 1); resetTimer(); }
         });
-    }
+    })();
 
     // FAQ
     function toggleFaq(btn) {
