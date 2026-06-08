@@ -293,18 +293,18 @@
         }
         .carousel-track {
             display: flex;
+            direction: ltr;
             will-change: transform;
             user-select: none;
         }
         .carousel-slide {
+            min-width: 100%;
             flex-shrink: 0;
-            padding: 0 3px;
-            box-sizing: border-box;
         }
         .carousel-slide img {
             width: 100%;
             display: block;
-            border-radius: 10px;
+            border-radius: 12px;
             pointer-events: none;
         }
         .carousel-arrow {
@@ -1361,62 +1361,42 @@
 
 <script>
     // Carousel
-    // Carousel
+    // Carousel — simple & reliable
     (function() {
         const carousel = document.getElementById('heroCarousel');
-        const track = document.getElementById('carouselTrack');
-        const btnPrev = document.getElementById('carouselPrev');
-        const btnNext = document.getElementById('carouselNext');
+        const track    = document.getElementById('carouselTrack');
+        const btnPrev  = document.getElementById('carouselPrev');
+        const btnNext  = document.getElementById('carouselNext');
         if (!carousel || !track) return;
 
-        const orig = Array.from(track.children);
-        const N = orig.length;
-        track.insertBefore(orig[N-1].cloneNode(true), track.firstChild);
-        track.appendChild(orig[0].cloneNode(true));
+        const N = track.children.length;
+        let cur = 0;
 
-        let cur = 1, sw = 0, peek = 0;
-
-        function calcDims() {
-            const cw = carousel.offsetWidth || 300;
-            sw   = Math.round(cw * 0.84);
-            peek = Math.round((cw - sw) / 2);
-            Array.from(track.children).forEach(s => {
-                s.style.width    = sw + 'px';
-                s.style.minWidth = sw + 'px';
-            });
-        }
-
-        function move(anim) {
-            track.style.transition = anim ? 'transform 0.38s ease' : 'none';
+        function go(n, anim) {
+            cur = ((n % N) + N) % N;
+            const w = carousel.offsetWidth;
+            track.style.transition = anim !== false ? 'transform 0.4s ease' : 'none';
             void track.offsetWidth;
-            track.style.transform = `translateX(${peek - cur * sw}px)`;
+            track.style.transform  = 'translateX(-' + (cur * w) + 'px)';
         }
 
-        calcDims();
-        move(false);
+        go(0, false);
 
-        track.addEventListener('transitionend', () => {
-            if (cur === 0)     { cur = N;     move(false); }
-            if (cur === N + 1) { cur = 1;     move(false); }
+        let auto = setInterval(function() { go(cur + 1, true); }, 3000);
+        function resetAuto() { clearInterval(auto); auto = setInterval(function() { go(cur + 1, true); }, 3000); }
+
+        if (btnPrev) btnPrev.addEventListener('click', function() { go(cur - 1, true); resetAuto(); });
+        if (btnNext) btnNext.addEventListener('click', function() { go(cur + 1, true); resetAuto(); });
+
+        var sx = 0;
+        carousel.addEventListener('touchstart', function(e) { sx = e.touches[0].clientX; }, { passive: true });
+        carousel.addEventListener('touchend',   function(e) {
+            var d = e.changedTouches[0].clientX - sx;
+            if (d < -40) { go(cur + 1, true); resetAuto(); }
+            else if (d > 40) { go(cur - 1, true); resetAuto(); }
         });
 
-        function go(n) { cur = n; move(true); }
-        function resetAuto() { clearInterval(auto); auto = setInterval(() => go(cur + 1), 3000); }
-
-        let auto = setInterval(() => go(cur + 1), 3000);
-
-        if (btnPrev) btnPrev.addEventListener('click', () => { go(cur - 1); resetAuto(); });
-        if (btnNext) btnNext.addEventListener('click', () => { go(cur + 1); resetAuto(); });
-
-        let sx = 0;
-        carousel.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
-        carousel.addEventListener('touchend', e => {
-            const d = e.changedTouches[0].clientX - sx;
-            if (d < -40) { go(cur + 1); resetAuto(); }
-            else if (d > 40) { go(cur - 1); resetAuto(); }
-        });
-
-        window.addEventListener('resize', () => { calcDims(); move(false); });
+        window.addEventListener('resize', function() { go(cur, false); });
     })();
 
     // FAQ
