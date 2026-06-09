@@ -280,6 +280,23 @@
         .hero-cta:hover { background: var(--green-light); transform: translateY(-2px); }
 
         /* ── CAROUSEL ── */
+        .hero-carousel {
+            margin-top: 1.25rem;
+            position: relative;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        .carousel-slide { display: none; width: 100%; }
+        .carousel-slide.active { display: block; animation: fadeSlide 0.6s ease; }
+        .carousel-slide img { width: 100%; display: block; border-radius: 14px; }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
         .testimonials-strip {
             background: #121212;
             padding: 2rem 0;
@@ -981,6 +998,16 @@
 
         <a href="#pricing-all" class="hero-cta fade-in">לצפייה בכל התוכן ←</a>
 
+        <div class="hero-carousel fade-in">
+            <div class="carousel-slide active"><img src="assets/revo1.png" alt="המלצה 1"></div>
+            <div class="carousel-slide"><img src="assets/revo2.png" alt="המלצה 2"></div>
+            <div class="carousel-slide"><img src="assets/revo3.png" alt="המלצה 3"></div>
+            <div class="carousel-slide"><img src="assets/revo4.png" alt="המלצה 4"></div>
+            <div class="carousel-slide"><img src="assets/revo5.png" alt="המלצה 5"></div>
+            <div class="carousel-slide"><img src="assets/revo6.png" alt="המלצה 6"></div>
+            <div class="carousel-slide"><img src="assets/revo7.png" alt="המלצה 7"></div>
+            <div class="carousel-slide"><img src="assets/revo8.png" alt="המלצה 8"></div>
+        </div>
 
         <div class="hero-stats fade-in">
             <div class="hero-stat">
@@ -1367,6 +1394,16 @@
         entries.forEach(e => { if (e.isIntersecting && litCount === 0) lightNextStep(); });
     }, { threshold: 0.3 });
     if (steps.length) stepsObserver.observe(steps[0]);
+
+    // Carousel
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    function goToSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = n;
+        slides[currentSlide].classList.add('active');
+    }
+    if (slides.length) setInterval(() => goToSlide((currentSlide + 1) % slides.length), 3000);
 </script>
 
 </body>
