@@ -169,47 +169,116 @@
             color: var(--green-light);
         }
 
-        /* ── PRICE ── */
-        .card-price {
-            margin-top: 1.1rem;
+        /* ── COURSE ITEMS ── */
+        .course-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .course-item:last-of-type { border-bottom: none; }
+
+        /* ── PRICE BLOCK ── */
+        .price-block {
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
             display: flex;
-            align-items: baseline;
-            gap: 0.75rem;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .orig-price {
-            font-size: 0.82rem;
-            color: #777;
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 0.2rem;
         }
 
         .orig-price s {
-            font-size: 1.1rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            color: #666;
+            color: #777;
             text-decoration-thickness: 2px;
         }
 
         .new-price {
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             color: var(--white);
+            line-height: 1;
         }
 
         .new-price span {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: var(--green-light);
             vertical-align: super;
         }
 
-        /* ── CTA ── */
-        .cta-area {
-            margin-top: 2rem;
-            text-align: center;
+        /* ── WIDE TOGGLE ── */
+        .wide-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            background: rgba(255,255,255,0.05);
+            border: 1.5px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 0.85rem 1.25rem;
+            margin-top: 1.25rem;
+            transition: border-color 0.3s, background 0.3s;
         }
 
+        .wide-toggle:has(.toggle-input:checked) {
+            border-color: var(--green);
+            background: rgba(107,127,82,0.1);
+        }
+
+        .wide-toggle-text {
+            flex: 1;
+            font-size: 0.97rem;
+            font-weight: 700;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+        .wide-toggle:has(.toggle-input:checked) .wide-toggle-text {
+            color: var(--white);
+        }
+
+        .toggle-input { display: none; }
+
+        .toggle-slider {
+            width: 54px;
+            height: 30px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 100px;
+            position: relative;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+
+        .toggle-slider::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fff;
+            top: 3px;
+            right: 3px;
+            transition: transform 0.3s;
+        }
+
+        .toggle-input:checked ~ .toggle-slider { background: var(--green); }
+        .toggle-input:checked ~ .toggle-slider::after { transform: translateX(-24px); }
+
+        /* ── CTA ── */
+        .cta-area { margin-top: 1.75rem; }
+
         .cta-btn {
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.75rem;
             background: var(--green);
             color: var(--white);
@@ -221,31 +290,18 @@
             box-shadow: 0 4px 20px rgba(107,127,82,0.35);
             transition: background 0.2s, transform 0.2s;
             width: 100%;
-            justify-content: center;
-            margin-bottom: 0.75rem;
         }
 
         .cta-btn:hover { background: var(--green-light); transform: translateY(-1px); }
 
-        .cta-btn.secondary {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: #aaa;
-            box-shadow: none;
-            font-size: 0.88rem;
-        }
-
-        .cta-btn.secondary:hover { background: rgba(255,255,255,0.05); transform: none; }
-
         .skip-link {
             display: block;
-            margin-top: 0.75rem;
+            margin-top: 1rem;
             font-size: 0.82rem;
             color: #666;
             text-decoration: none;
             text-align: center;
         }
-
         .skip-link:hover { color: #999; }
 
         /* ── FOOTER ── */
@@ -288,44 +344,41 @@
     <!-- Package card -->
     <div class="upsell-card" id="card-package">
 
-        <!-- Course 1 -->
-        <div class="card-row" style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.07);">
-            <div class="card-info">
-                <span class="card-icon">🎙️</span>
-                <h3>קורס קריינות וליפסינק ב-AI</h3>
-                <p>לגרום לדמויות לדבר בעברית טבעית, קריינות ב-ElevenLabs וליפסינק ב-Kling.</p>
-            </div>
+        <div class="course-item">
+            <span class="card-icon">🎙️</span>
+            <h3>קורס קריינות וליפסינק ב-AI</h3>
+            <p style="color:#999; font-size:0.85rem; margin-top:0.35rem; line-height:1.6;">לגרום לדמויות לדבר בעברית טבעית, קריינות ב-ElevenLabs וליפסינק ב-Kling.</p>
         </div>
 
-        <!-- Course 2 -->
-        <div class="card-row" style="margin-bottom:1.25rem;">
-            <div class="card-info">
-                <span class="card-icon">🎧</span>
-                <h3>קורס מהקלטה לסרטון ב-AI</h3>
-                <p>לקחת הקלטה קיימת ולהפוך אותה לסרטון AI מוכן לפרסום.</p>
-            </div>
+        <div class="course-item">
+            <span class="card-icon">🎧</span>
+            <h3>קורס מהקלטה לסרטון ב-AI</h3>
+            <p style="color:#999; font-size:0.85rem; margin-top:0.35rem; line-height:1.6;">לקחת הקלטה קיימת ולהפוך אותה לסרטון AI מוכן לפרסום.</p>
         </div>
 
-        <!-- Price + Toggle -->
-        <div class="card-row" style="align-items:center;">
-            <div class="card-price" style="margin-top:0;">
-                <span class="orig-price">במקום <s>₪238</s></span>
+        <!-- Price -->
+        <div class="price-block">
+            <div>
+                <div class="orig-price">במקום <s>₪238</s></div>
                 <div class="new-price"><span>₪</span>79</div>
+                <div style="font-size:0.78rem; color:var(--green-light); margin-top:0.2rem;">לשני הקורסים יחד</div>
             </div>
-            <label class="toggle-wrap" for="toggle-package">
-                <input type="checkbox" class="toggle-input" id="toggle-package" onchange="updateSelection()">
-                <div class="toggle-slider"></div>
-                <span class="toggle-label">להוספה לסל</span>
-            </label>
         </div>
+
+        <!-- Wide toggle -->
+        <label class="wide-toggle" for="toggle-package">
+            <input type="checkbox" class="toggle-input" id="toggle-package" onchange="updateSelection()">
+            <span class="wide-toggle-text">הוסיפו את שני הקורסים לחבילה</span>
+            <div class="toggle-slider"></div>
+        </label>
     </div>
 
-    <!-- CTA -->
-    <div class="cta-area" id="ctaArea" style="display:none;">
-        <a href="#" class="cta-btn" id="ctaBtn" target="_blank">להמשיך לרכישה ←</a>
+    <!-- CTA — always visible -->
+    <div class="cta-area">
+        <a href="thankyou.html" class="cta-btn" id="ctaBtn">המשיכו לקורס האנימציה ←</a>
     </div>
 
-    <a href="thankyou.html" class="skip-link">דלגו על השדרוג — המשיכו לקורס האנימציה</a>
+    <a href="thankyou.html" class="skip-link" id="skipLink" style="display:none;">דלגו על השדרוג</a>
 </main>
 
 <footer>
@@ -336,10 +389,21 @@
 </footer>
 
 <script>
+    const LINK_UPSELL = 'https://pay.grow.link/ODg3NjU~7f51a33b4dec31bd978d86c0c5693830-MzM5NTM2Mw';
+
     function updateSelection() {
         const checked = document.getElementById('toggle-package').checked;
+        const btn = document.getElementById('ctaBtn');
         document.getElementById('card-package').classList.toggle('selected', checked);
-        document.getElementById('ctaArea').style.display = checked ? 'block' : 'none';
+        if (checked) {
+            btn.textContent = 'להוספת שני הקורסים לחבילה ←';
+            btn.href = LINK_UPSELL;
+            btn.target = '_blank';
+        } else {
+            btn.textContent = 'המשיכו לקורס האנימציה ←';
+            btn.href = 'thankyou.html';
+            btn.target = '_self';
+        }
     }
 </script>
 
