@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>רגע לפני שממשיכים | Ronig.ai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --green: #6B7F52;
+            --green-light: #8a9e6e;
+            --dark: #1e1e1e;
+            --darker: #141414;
+            --white: #ffffff;
+            --muted: #999999;
+            --border: rgba(107, 127, 82, 0.3);
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            direction: rtl;
+            text-align: right;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── HEADER ── */
+        header {
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: center;
+            background: var(--darker);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .logo img { height: 36px; width: auto; }
+        .logo-text { font-size: 1.15rem; font-weight: 700; color: var(--white); display: none; }
+        .logo-text span { color: var(--green); }
+
+        /* ── MAIN ── */
+        main {
+            flex: 1;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+            width: 100%;
+        }
+
+        .page-top {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .confetti { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+
+        h1 {
+            font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .page-sub {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #bbb;
+        }
+
+        /* ── CARDS ── */
+        .upsell-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .upsell-card.selected {
+            border-color: var(--green);
+            background: rgba(107,127,82,0.08);
+        }
+
+        .card-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .card-info { flex: 1; }
+
+        .card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; display: block; }
+
+        .card-info h3 {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.4rem;
+            line-height: 1.3;
+        }
+
+        .card-info p {
+            font-size: 0.85rem;
+            color: #999;
+            line-height: 1.6;
+        }
+
+        /* ── TOGGLE ── */
+        .toggle-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .toggle-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #888;
+            white-space: nowrap;
+            transition: color 0.3s;
+        }
+
+        .toggle-input { display: none; }
+
+        .toggle-slider {
+            width: 48px;
+            height: 26px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 100px;
+            position: relative;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+
+        .toggle-slider::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            top: 3px;
+            right: 3px;
+            transition: transform 0.3s;
+        }
+
+        .toggle-input:checked ~ .toggle-slider {
+            background: var(--green);
+        }
+
+        .toggle-input:checked ~ .toggle-slider::after {
+            transform: translateX(-22px);
+        }
+
+        .toggle-input:checked ~ .toggle-label {
+            color: var(--green-light);
+        }
+
+        /* ── PRICE ── */
+        .card-price {
+            margin-top: 1.1rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+        }
+
+        .orig-price {
+            font-size: 0.82rem;
+            color: #777;
+        }
+
+        .orig-price s {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #666;
+            text-decoration-thickness: 2px;
+        }
+
+        .new-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--white);
+        }
+
+        .new-price span {
+            font-size: 1rem;
+            color: var(--green-light);
+            vertical-align: super;
+        }
+
+        /* ── CTA ── */
+        .cta-area {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--green);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 20px rgba(107,127,82,0.35);
+            transition: background 0.2s, transform 0.2s;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-btn:hover { background: var(--green-light); transform: translateY(-1px); }
+
+        .cta-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: #aaa;
+            box-shadow: none;
+            font-size: 0.88rem;
+        }
+
+        .cta-btn.secondary:hover { background: rgba(255,255,255,0.05); transform: none; }
+
+        .skip-link {
+            display: block;
+            margin-top: 0.75rem;
+            font-size: 0.82rem;
+            color: #666;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .skip-link:hover { color: #999; }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 2rem;
+            background: var(--darker);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .footer-logo { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 0.5rem; }
+        .footer-logo img { height: 26px; }
+        footer p { color: var(--muted); font-size: 0.78rem; }
+
+        @media (max-width: 480px) {
+            main { padding: 2rem 1.25rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="https://www.instagram.com/ronig.ai" target="_blank" class="logo">
+        <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+        <span class="logo-text">Ronig<span>.ai</span></span>
+    </a>
+</header>
+
+<main>
+    <div class="page-top">
+        <span class="confetti">🎉</span>
+        <h1>איזה כיף שבחרתם לרכוש את הקורס!</h1>
+        <p class="page-sub">
+            אם אתם רוצים לשדרג את החוויה ולייצר סרטון עם ליפסינק וקריינות
+            או על בסיס הקלטה קיימת - אני מציעה לכם את קורסי ההשלמה
+            כתוספת במחיר מושלם!
+        </p>
+    </div>
+
+    <!-- Card 1: Voice -->
+    <div class="upsell-card" id="card-voice">
+        <div class="card-row">
+            <div class="card-info">
+                <span class="card-icon">🎙️</span>
+                <h3>קורס קריינות וליפסינק ב-AI</h3>
+                <p>תלמדו לגרום לדמויות לדבר בעברית טבעית, ליצור קריינות ב-ElevenLabs וליפסינק ב-Kling.</p>
+            </div>
+            <label class="toggle-wrap" for="toggle-voice">
+                <input type="checkbox" class="toggle-input" id="toggle-voice" onchange="updateSelection()">
+                <div class="toggle-slider"></div>
+                <span class="toggle-label">להוספה לסל</span>
+            </label>
+        </div>
+        <div class="card-price">
+            <span class="orig-price">במקום <s>₪119</s></span>
+            <div class="new-price"><span>₪</span>79</div>
+        </div>
+    </div>
+
+    <!-- Card 2: Audio -->
+    <div class="upsell-card" id="card-audio">
+        <div class="card-row">
+            <div class="card-info">
+                <span class="card-icon">🎧</span>
+                <h3>קורס מהקלטה לסרטון ב-AI</h3>
+                <p>תלמדו לקחת הקלטה קיימת - פודקאסט, קריינות או הודעה קולית - ולהפוך אותה לסרטון AI מוכן לפרסום.</p>
+            </div>
+            <label class="toggle-wrap" for="toggle-audio">
+                <input type="checkbox" class="toggle-input" id="toggle-audio" onchange="updateSelection()">
+                <div class="toggle-slider"></div>
+                <span class="toggle-label">להוספה לסל</span>
+            </label>
+        </div>
+        <div class="card-price">
+            <span class="orig-price">במקום <s>₪119</s></span>
+            <div class="new-price"><span>₪</span>79</div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-area" id="ctaArea" style="display:none;">
+        <a href="#" class="cta-btn" id="ctaBtn">להמשיך לרכישה ←</a>
+    </div>
+
+    <a href="thankyou.html" class="skip-link" id="skipLink">דלגו על השדרוג — המשיכו לקורס האנימציה</a>
+</main>
+
+<footer>
+    <div class="footer-logo">
+        <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'">
+    </div>
+    <p>© 2026 Ronig.ai · כל הזכויות שמורות</p>
+</footer>
+
+<script>
+    const LINK_VOICE = 'https://pay.grow.link/ODg3NjU~7f51a33b4dec31bd978d86c0c5693830-MzM5NTM2Mw';
+    const LINK_AUDIO = 'https://pay.grow.link/ODg3NjU~bd0f5f81eece12b730798bbf13defe0b-MzUxMjIzMw';
+
+    function updateSelection() {
+        const voice = document.getElementById('toggle-voice').checked;
+        const audio = document.getElementById('toggle-audio').checked;
+
+        document.getElementById('card-voice').classList.toggle('selected', voice);
+        document.getElementById('card-audio').classList.toggle('selected', audio);
+
+        const ctaArea = document.getElementById('ctaArea');
+        const ctaBtn  = document.getElementById('ctaBtn');
+
+        if (voice || audio) {
+            ctaArea.style.display = 'block';
+            if (voice && audio) {
+                ctaBtn.textContent = 'להוספת שני הקורסים לרכישה ←';
+                ctaBtn.href = LINK_VOICE; // first course; second opens separately
+                ctaBtn.onclick = function(e) {
+                    e.preventDefault();
+                    window.open(LINK_AUDIO, '_blank');
+                    window.open(LINK_VOICE, '_blank');
+                };
+            } else if (voice) {
+                ctaBtn.textContent = 'להוספת קורס הקריינות לרכישה ←';
+                ctaBtn.href = LINK_VOICE;
+                ctaBtn.onclick = null;
+            } else {
+                ctaBtn.textContent = 'להוספת קורס ההקלטה לרכישה ←';
+                ctaBtn.href = LINK_AUDIO;
+                ctaBtn.onclick = null;
+            }
+        } else {
+            ctaArea.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
