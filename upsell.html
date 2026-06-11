@@ -285,52 +285,47 @@
         </p>
     </div>
 
-    <!-- Card 1: Voice -->
-    <div class="upsell-card" id="card-voice">
-        <div class="card-row">
+    <!-- Package card -->
+    <div class="upsell-card" id="card-package">
+
+        <!-- Course 1 -->
+        <div class="card-row" style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.07);">
             <div class="card-info">
                 <span class="card-icon">🎙️</span>
                 <h3>קורס קריינות וליפסינק ב-AI</h3>
-                <p>תלמדו לגרום לדמויות לדבר בעברית טבעית, ליצור קריינות ב-ElevenLabs וליפסינק ב-Kling.</p>
+                <p>לגרום לדמויות לדבר בעברית טבעית, קריינות ב-ElevenLabs וליפסינק ב-Kling.</p>
             </div>
-            <label class="toggle-wrap" for="toggle-voice">
-                <input type="checkbox" class="toggle-input" id="toggle-voice" onchange="updateSelection()">
-                <div class="toggle-slider"></div>
-                <span class="toggle-label">להוספה לסל</span>
-            </label>
         </div>
-        <div class="card-price">
-            <span class="orig-price">במקום <s>₪119</s></span>
-            <div class="new-price"><span>₪</span>79</div>
-        </div>
-    </div>
 
-    <!-- Card 2: Audio -->
-    <div class="upsell-card" id="card-audio">
-        <div class="card-row">
+        <!-- Course 2 -->
+        <div class="card-row" style="margin-bottom:1.25rem;">
             <div class="card-info">
                 <span class="card-icon">🎧</span>
                 <h3>קורס מהקלטה לסרטון ב-AI</h3>
-                <p>תלמדו לקחת הקלטה קיימת - פודקאסט, קריינות או הודעה קולית - ולהפוך אותה לסרטון AI מוכן לפרסום.</p>
+                <p>לקחת הקלטה קיימת ולהפוך אותה לסרטון AI מוכן לפרסום.</p>
             </div>
-            <label class="toggle-wrap" for="toggle-audio">
-                <input type="checkbox" class="toggle-input" id="toggle-audio" onchange="updateSelection()">
+        </div>
+
+        <!-- Price + Toggle -->
+        <div class="card-row" style="align-items:center;">
+            <div class="card-price" style="margin-top:0;">
+                <span class="orig-price">במקום <s>₪238</s></span>
+                <div class="new-price"><span>₪</span>79</div>
+            </div>
+            <label class="toggle-wrap" for="toggle-package">
+                <input type="checkbox" class="toggle-input" id="toggle-package" onchange="updateSelection()">
                 <div class="toggle-slider"></div>
                 <span class="toggle-label">להוספה לסל</span>
             </label>
-        </div>
-        <div class="card-price">
-            <span class="orig-price">במקום <s>₪119</s></span>
-            <div class="new-price"><span>₪</span>79</div>
         </div>
     </div>
 
     <!-- CTA -->
     <div class="cta-area" id="ctaArea" style="display:none;">
-        <a href="#" class="cta-btn" id="ctaBtn">להמשיך לרכישה ←</a>
+        <a href="#" class="cta-btn" id="ctaBtn" target="_blank">להמשיך לרכישה ←</a>
     </div>
 
-    <a href="thankyou.html" class="skip-link" id="skipLink">דלגו על השדרוג — המשיכו לקורס האנימציה</a>
+    <a href="thankyou.html" class="skip-link">דלגו על השדרוג — המשיכו לקורס האנימציה</a>
 </main>
 
 <footer>
@@ -341,41 +336,10 @@
 </footer>
 
 <script>
-    const LINK_VOICE = 'https://pay.grow.link/ODg3NjU~7f51a33b4dec31bd978d86c0c5693830-MzM5NTM2Mw';
-    const LINK_AUDIO = 'https://pay.grow.link/ODg3NjU~bd0f5f81eece12b730798bbf13defe0b-MzUxMjIzMw';
-
     function updateSelection() {
-        const voice = document.getElementById('toggle-voice').checked;
-        const audio = document.getElementById('toggle-audio').checked;
-
-        document.getElementById('card-voice').classList.toggle('selected', voice);
-        document.getElementById('card-audio').classList.toggle('selected', audio);
-
-        const ctaArea = document.getElementById('ctaArea');
-        const ctaBtn  = document.getElementById('ctaBtn');
-
-        if (voice || audio) {
-            ctaArea.style.display = 'block';
-            if (voice && audio) {
-                ctaBtn.textContent = 'להוספת שני הקורסים לרכישה ←';
-                ctaBtn.href = LINK_VOICE; // first course; second opens separately
-                ctaBtn.onclick = function(e) {
-                    e.preventDefault();
-                    window.open(LINK_AUDIO, '_blank');
-                    window.open(LINK_VOICE, '_blank');
-                };
-            } else if (voice) {
-                ctaBtn.textContent = 'להוספת קורס הקריינות לרכישה ←';
-                ctaBtn.href = LINK_VOICE;
-                ctaBtn.onclick = null;
-            } else {
-                ctaBtn.textContent = 'להוספת קורס ההקלטה לרכישה ←';
-                ctaBtn.href = LINK_AUDIO;
-                ctaBtn.onclick = null;
-            }
-        } else {
-            ctaArea.style.display = 'none';
-        }
+        const checked = document.getElementById('toggle-package').checked;
+        document.getElementById('card-package').classList.toggle('selected', checked);
+        document.getElementById('ctaArea').style.display = checked ? 'block' : 'none';
     }
 </script>
 
