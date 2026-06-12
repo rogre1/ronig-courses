@@ -311,7 +311,7 @@
                 <div class="purchased-sub">נוסף לסל</div>
             </div>
         </div>
-        <a href="thankyou.html" class="btn-continue-top" id="btnTop">המשך לרכישה</a>
+        <a href="https://pay.grow.link/ODg3NjU~eb8b7319e2fe7bfdec039f4d07c47ef5-MzM2NjAxNw" target="_blank" class="btn-continue-top" id="btnTop">המשך לרכישה</a>
     </div>
 
     <!-- Upsell text -->
@@ -361,32 +361,29 @@
 </footer>
 
 <script>
-    const LINK_UPSELL = 'https://pay.grow.link/ODg3NjU~7f51a33b4dec31bd978d86c0c5693830-MzM5NTM2Mw';
+    const LINK_ANIM   = 'https://pay.grow.link/ODg3NjU~eb8b7319e2fe7bfdec039f4d07c47ef5-MzM2NjAxNw';
+    const LINK_UPSELL = 'https://pay.grow.link/ODg3NjU~93e7e1fbaaa6becadedc79022fad3a20-MzUzOTE3MQ';
 
     function updateUpsell() {
         const checked = document.getElementById('toggleInput').checked;
-        const row = document.getElementById('toggleRow');
+        const row     = document.getElementById('toggleRow');
         const btnMain = document.getElementById('btnMain');
-        const btnTop = document.getElementById('btnTop');
 
         row.classList.toggle('active', checked);
 
         if (checked) {
             btnMain.textContent = 'להוספת שני הקורסים לרכישה ←';
-            btnMain.href = LINK_UPSELL;
+            btnMain.href   = LINK_UPSELL;
             btnMain.target = '_blank';
-            btnTop.textContent = 'המשך לרכישה';
-            btnTop.href = LINK_UPSELL;
-            btnTop.target = '_blank';
         } else {
-            btnMain.textContent = 'המשך לרכישה ←';
-            btnMain.href = 'thankyou.html';
-            btnMain.target = '_self';
-            btnTop.textContent = 'המשך לרכישה';
-            btnTop.href = 'thankyou.html';
-            btnTop.target = '_self';
+            btnMain.textContent = 'המשך לרכישת קורס האנימציה ←';
+            btnMain.href   = LINK_ANIM;
+            btnMain.target = '_blank';
         }
     }
+
+    // init
+    updateUpsell();
 </script>
 
 </body>
