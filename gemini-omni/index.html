@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini Omni – מדריך החלפת אלמנטים בוידאו | Ronig.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green:       #6B7F52;
+      --green-light: #8a9e6e;
+      --green-glow:  rgba(107,127,82,0.18);
+      --dark:        #1e1e1e;
+      --darker:      #141414;
+      --card-dark:   #242424;
+      --light-bg:    #f7f8f5;
+      --border-dark: rgba(107,127,82,0.3);
+      --border-light:rgba(107,127,82,0.18);
+      --text-muted:  #999;
+      --cyan:        #38bdf8;   /* accent for Gemini brand feel */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      direction: rtl;
+      text-align: right;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════ HEADER ═══════════ */
+    header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 2rem;
+      background: rgba(20,20,20,0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .logo-link { display:flex; align-items:center; gap:0.6rem; text-decoration:none; }
+    .logo-link img { height:34px; }
+    .logo-link span { font-size:1.1rem; font-weight:800; color:#fff; }
+    .logo-link span em { color:var(--green); font-style:normal; }
+
+    .header-pill {
+      background: var(--green-glow);
+      border: 1px solid var(--border-dark);
+      color: var(--green-light);
+      font-size: 0.78rem;
+      font-weight:700;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ═══════════ HERO ═══════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 1.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--darker);
+    }
+
+    .hero-bg-gradient {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(107,127,82,0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(56,189,248,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .hero-text {}
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(107,127,82,0.15);
+      border: 1px solid var(--border-dark);
+      padding: 0.38rem 1rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content:''; width:7px; height:7px; border-radius:50%;
+      background:var(--green); flex-shrink:0;
+      box-shadow: 0 0 6px var(--green);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    h1 .hi { color: var(--green); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #bbb;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta-row { display:flex; gap:1rem; flex-wrap:wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 4px 20px rgba(107,127,82,0.4);
+      transition: all 0.25s;
+    }
+    .btn-primary:hover { background:var(--green-light); transform:translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: #bbb;
+      padding: 0.85rem 1.75rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1.5px solid rgba(255,255,255,0.18);
+      transition: all 0.25s;
+    }
+    .btn-ghost:hover { color:#fff; border-color:rgba(255,255,255,0.4); }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-screen {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
+    }
+    .hero-screen img { width:100%; display:block; }
+
+    .hero-screen-label {
+      position: absolute;
+      bottom: -1.2rem;
+      right: 50%;
+      transform: translateX(50%);
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--green-light);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    /* ═══════════ SHARED ═══════════ */
+    section { padding: 5rem 1.5rem; }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--green);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-header { text-align:center; margin-bottom: 3rem; }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    h2 .hi { color: var(--green); }
+
+    .section-desc {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.8;
+      max-width: 580px;
+      margin: 0.75rem auto 0;
+    }
+
+    .dark-section { background:var(--dark); color:#fff; }
+    .dark-section h2 { color:#fff; }
+    .dark-section .section-desc { color:#aaa; }
+    .dark-section .section-label { color:var(--green-light); }
+
+    .light-section { background:var(--light-bg); color:#1a1a1a; }
+    .white-section  { background:#fff; color:#1a1a1a; }
+
+    /* fade-in */
+    .fade-in {
+      opacity:0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+
+    /* ═══════════ WHAT IS SECTION ═══════════ */
+    #what {
+      background: var(--dark);
+      color:#fff;
+    }
+    #what .inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    #what .text h2 { color:#fff; margin-bottom:1.25rem; }
+    #what .text p {
+      color: #bbb;
+      line-height: 1.9;
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-list { list-style:none; display:flex; flex-direction:column; gap:0.75rem; margin-top: 1.5rem; }
+    .feature-list li {
+      display:flex;
+      align-items:flex-start;
+      gap:0.75rem;
+      color:#ccc;
+      font-size:0.95rem;
+      line-height:1.6;
+    }
+    .feature-list li .icon {
+      width:28px; height:28px; border-radius:8px;
+      background:var(--green-glow);
+      border:1px solid var(--border-dark);
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0; margin-top:1px;
+      font-size:0.95rem;
+    }
+
+    .what-visual {
+      border-radius:16px; overflow:hidden;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.07);
+    }
+    .what-visual img { width:100%; display:block; }
+
+    /* ═══════════ TWO WAYS ═══════════ */
+    #ways .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .way-card {
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .way-card::before {
+      content:'';
+      position:absolute; top:0; right:0; left:0; height:3px;
+      background: linear-gradient(90deg, var(--green), var(--green-light));
+      border-radius: 16px 16px 0 0;
+    }
+    .way-card:hover { transform:translateY(-5px); box-shadow:0 16px 40px rgba(0,0,0,0.4); }
+
+    .way-number {
+      font-size: 0.72rem;
+      font-weight:700;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--green-light);
+      margin-bottom:0.5rem;
+    }
+
+    .way-title {
+      font-size:1.3rem;
+      font-weight:800;
+      color:#fff;
+      margin-bottom:1rem;
+    }
+    .way-desc { color:#aaa; line-height:1.8; font-size:0.95rem; }
+
+    .way-tag {
+      display:inline-block;
+      margin-top:1.25rem;
+      background:rgba(107,127,82,0.15);
+      border:1px solid var(--border-dark);
+      color:var(--green-light);
+      font-size:0.75rem;
+      font-weight:700;
+      padding:0.3rem 0.8rem;
+      border-radius:100px;
+    }
+
+    /* ═══════════ REQUIREMENTS ═══════════ */
+    #requirements .req-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .req-card {
+      background:#fff;
+      border:1.5px solid var(--border-light);
+      border-radius:16px;
+      padding: 2rem 1.5rem;
+      text-align:center;
+      transition:transform 0.3s, box-shadow 0.3s;
+    }
+    .req-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(107,127,82,0.12); }
+
+    .req-icon {
+      width:56px; height:56px;
+      border-radius:14px;
+      background:var(--light-bg);
+      border:1px solid var(--border-light);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.5rem;
+      margin:0 auto 1.25rem;
+    }
+    .req-card h3 { font-size:1.1rem; font-weight:800; color:#1a1a1a; margin-bottom:0.6rem; }
+    .req-card p { color:#666; font-size:0.9rem; line-height:1.75; }
+
+    .req-badge {
+      display:inline-block;
+      margin-top:1rem;
+      background:var(--green-glow);
+      color:var(--green);
+      font-size:0.75rem;
+      font-weight:700;
+      padding:0.3rem 0.8rem;
+      border-radius:100px;
+      border:1px solid var(--border-light);
+    }
+
+    /* ═══════════ STEPS ═══════════ */
+    #steps { background:var(--darker); color:#fff; }
+
+    .steps-list { display:flex; flex-direction:column; gap:4.5rem; }
+
+    .step-item {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:3.5rem;
+      align-items:center;
+    }
+    .step-item.reverse { direction:ltr; }
+    .step-item.reverse > * { direction:rtl; }
+
+    .step-number-row {
+      display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;
+    }
+    .step-num {
+      width:36px; height:36px;
+      border-radius:50%;
+      background:var(--green);
+      color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.9rem; font-weight:800;
+      box-shadow:0 0 14px rgba(107,127,82,0.5);
+      flex-shrink:0;
+    }
+    .step-tag {
+      font-size:0.72rem; font-weight:700;
+      text-transform:uppercase; letter-spacing:2px;
+      color:var(--green-light);
+    }
+
+    .step-title {
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-weight:900;
+      color:#fff;
+      margin-bottom:1rem;
+    }
+
+    .step-points { list-style:none; display:flex; flex-direction:column; gap:0.85rem; }
+    .step-points li {
+      display:flex; gap:0.75rem; align-items:flex-start;
+      color:#bbb; font-size:0.95rem; line-height:1.65;
+    }
+    .step-points li .dot {
+      width:20px; height:20px; border-radius:6px;
+      background:var(--green-glow); border:1px solid var(--border-dark);
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.75rem; flex-shrink:0; margin-top:1px;
+    }
+
+    .step-visual {
+      border-radius:16px; overflow:hidden;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.07);
+    }
+    .step-visual img { width:100%; display:block; }
+
+    .step-connector {
+      display:flex; justify-content:center; align-items:center;
+      color:rgba(107,127,82,0.4); font-size:1.5rem;
+      margin:-1.5rem 0;
+    }
+
+    /* ═══════════ PROMPT FORMULA ═══════════ */
+    #prompt .formula-cards {
+      display:grid;
+      grid-template-columns: repeat(3,1fr);
+      gap:1.25rem;
+    }
+
+    .formula-card {
+      background:var(--card-dark);
+      border:1px solid var(--border-dark);
+      border-radius:16px;
+      padding:1.75rem;
+      transition:transform 0.3s, box-shadow 0.3s;
+      position:relative;
+    }
+    .formula-card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,0.4); }
+
+    .formula-step {
+      font-size:0.72rem; font-weight:700; letter-spacing:2px;
+      text-transform:uppercase; color:var(--green-light);
+      margin-bottom:0.5rem;
+    }
+    .formula-title { font-size:1.1rem; font-weight:800; color:#fff; margin-bottom:0.75rem; }
+    .formula-desc { color:#aaa; font-size:0.9rem; line-height:1.75; }
+    .formula-example {
+      margin-top:1rem;
+      background:rgba(107,127,82,0.1);
+      border:1px solid var(--border-dark);
+      border-radius:10px;
+      padding:0.75rem 1rem;
+      font-size:0.85rem;
+      color:#ccc;
+      line-height:1.6;
+      font-style:italic;
+    }
+
+    /* ═══════════ EXAMPLES TABLE ═══════════ */
+    #examples { background:var(--light-bg); }
+
+    .table-wrap {
+      overflow-x:auto;
+      border-radius:16px;
+      box-shadow:0 4px 24px rgba(0,0,0,0.07);
+    }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      font-size:0.93rem;
+    }
+
+    thead tr {
+      background:var(--dark);
+    }
+    thead th {
+      color:#fff;
+      font-weight:700;
+      font-size:0.82rem;
+      letter-spacing:0.5px;
+      padding:1rem 1.5rem;
+      text-align:right;
+      border-bottom:2px solid var(--green);
+    }
+    thead th:first-child { border-radius:0 16px 0 0; }
+    thead th:last-child  { border-radius:16px 0 0 0; }
+
+    tbody tr {
+      border-bottom:1px solid var(--border-light);
+      transition:background 0.2s;
+    }
+    tbody tr:hover { background:var(--light-bg); }
+    tbody tr:last-child { border-bottom:none; }
+
+    tbody td {
+      padding:1.1rem 1.5rem;
+      color:#444;
+      line-height:1.65;
+      vertical-align:top;
+    }
+    tbody td:first-child { font-weight:700; color:#1a1a1a; }
+    tbody td .code {
+      display:inline-block;
+      background:var(--light-bg);
+      border:1px solid var(--border-light);
+      border-radius:8px;
+      padding:0.4rem 0.75rem;
+      font-size:0.85rem;
+      color:#333;
+      margin-top:0.25rem;
+    }
+
+    /* ═══════════ TIPS ═══════════ */
+    #tips .tips-cards {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1.25rem;
+    }
+
+    .tip-card {
+      background:#fff;
+      border:1.5px solid var(--border-light);
+      border-radius:16px;
+      padding:2rem 1.5rem;
+      transition:transform 0.3s, box-shadow 0.3s;
+    }
+    .tip-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(107,127,82,0.12); }
+
+    .tip-icon {
+      width:52px; height:52px;
+      border-radius:13px;
+      background:var(--light-bg);
+      border:1.5px solid var(--border-light);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.4rem;
+      margin-bottom:1.25rem;
+    }
+    .tip-card h3 { font-size:1.05rem; font-weight:800; color:#1a1a1a; margin-bottom:0.6rem; }
+    .tip-card p { color:#666; font-size:0.9rem; line-height:1.8; }
+
+    /* ═══════════ CTA ═══════════ */
+    #cta {
+      background:var(--darker);
+      text-align:center;
+      padding:6rem 1.5rem;
+      position:relative;
+      overflow:hidden;
+    }
+    #cta::before {
+      content:'';
+      position:absolute; inset:0;
+      background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(107,127,82,0.18) 0%, transparent 65%);
+      pointer-events:none;
+    }
+    #cta .inner { position:relative; z-index:2; max-width:620px; margin:0 auto; }
+    #cta h2 { color:#fff; font-size:clamp(1.8rem,3.5vw,2.8rem); margin-bottom:1rem; }
+    #cta p { color:#aaa; font-size:1.05rem; line-height:1.8; margin-bottom:2.5rem; }
+
+    .cta-links { display:flex; gap:1.25rem; justify-content:center; flex-wrap:wrap; }
+
+    .cta-link {
+      display:inline-flex;
+      align-items:center;
+      gap:0.6rem;
+      background:var(--green);
+      color:#fff;
+      padding:0.9rem 2rem;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:1rem;
+      box-shadow:0 4px 22px rgba(107,127,82,0.4);
+      transition:all 0.25s;
+    }
+    .cta-link:hover { background:var(--green-light); transform:translateY(-2px); }
+
+    .cta-link.ghost {
+      background:transparent;
+      border:1.5px solid rgba(255,255,255,0.2);
+      color:#ccc;
+      box-shadow:none;
+    }
+    .cta-link.ghost:hover { border-color:rgba(255,255,255,0.5); color:#fff; }
+
+    /* ═══════════ FREE vs ADVANCED ═══════════ */
+    #free-vs-advanced .compare-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1.5rem;
+      max-width:860px;
+      margin:0 auto;
+    }
+    .compare-card {
+      border-radius:16px;
+      padding:2rem;
+      border:1.5px solid;
+      position:relative;
+    }
+    .compare-card.free {
+      background:#fff;
+      border-color:var(--border-light);
+    }
+    .compare-card.advanced {
+      background:var(--dark);
+      border-color:var(--green);
+    }
+    .compare-card .badge-top {
+      position:absolute; top:-0.7rem; right:1.5rem;
+      font-size:0.72rem; font-weight:700; letter-spacing:1.5px;
+      padding:0.25rem 0.8rem; border-radius:100px;
+      text-transform:uppercase;
+    }
+    .compare-card.free .badge-top { background:var(--light-bg); color:#888; border:1px solid var(--border-light); }
+    .compare-card.advanced .badge-top { background:var(--green); color:#fff; }
+
+    .compare-card h3 { font-size:1.25rem; font-weight:800; margin-bottom:0.5rem; }
+    .compare-card.free h3 { color:#1a1a1a; }
+    .compare-card.advanced h3 { color:#fff; }
+
+    .compare-card .price {
+      font-size:0.85rem; margin-bottom:1.5rem;
+    }
+    .compare-card.free .price { color:#888; }
+    .compare-card.advanced .price { color:var(--green-light); }
+
+    .compare-list { list-style:none; display:flex; flex-direction:column; gap:0.75rem; }
+    .compare-list li { display:flex; gap:0.75rem; align-items:flex-start; font-size:0.9rem; line-height:1.65; }
+    .compare-card.free .compare-list li { color:#555; }
+    .compare-card.advanced .compare-list li { color:#bbb; }
+
+    .check { color:var(--green); font-size:1rem; flex-shrink:0; margin-top:1px; }
+
+    /* ═══════════ FOOTER ═══════════ */
+    footer {
+      background:var(--darker);
+      border-top:1px solid var(--border-dark);
+      padding:1.5rem 2rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:1rem;
+    }
+    footer p { color:#666; font-size:0.83rem; }
+    footer a { color:var(--green-light); text-decoration:none; }
+
+    /* ═══════════ RESPONSIVE ═══════════ */
+    @media (max-width: 860px) {
+      .hero-grid,
+      #what .inner,
+      .step-item,
+      #free-vs-advanced .compare-grid,
+      #ways .cards { grid-template-columns:1fr; }
+
+      .step-item.reverse { direction:rtl; }
+
+      #requirements .req-cards,
+      #prompt .formula-cards,
+      #tips .tips-cards { grid-template-columns:1fr; }
+
+      .hero-visual { order:-1; }
+      .what-visual { order:0; }
+
+      h1 { font-size:2rem; }
+      header { padding: 0.75rem 1rem; }
+      section { padding: 3.5rem 1.25rem; }
+    }
+
+    @media (max-width:520px) {
+      .hero-cta-row { flex-direction:column; }
+      .btn-primary, .btn-ghost { justify-content:center; }
+      .cta-links { flex-direction:column; align-items:center; }
+      thead th, tbody td { padding:0.75rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header>
+  <a href="../" class="logo-link">
+    <img src="../assets/logo.png" alt="Ronig.ai">
+  </a>
+  <span class="header-pill">🎬 Gemini Omni</span>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-grid container">
+    <div class="hero-text fade-in">
+      <div class="hero-badge">מדריך מקצועי · 2025</div>
+      <h1>החלפת אלמנטים<br>בוידאו עם<br><span class="hi">Gemini Omni</span></h1>
+      <p class="hero-sub">
+        הכלי שמאפשר לך להחליף חיות, רקעים ואלמנטים כלשהם בסרטון שלך
+        — מהירה, חכמה, ונגישה לכולם. באמצעות Google Flow וצ'אט Gemini.
+      </p>
+      <div class="hero-cta-row">
+        <a href="https://flow.google.com" target="_blank" rel="noopener" class="btn-primary">
+          → Google Flow
+        </a>
+        <a href="https://gemini.google.com" target="_blank" rel="noopener" class="btn-ghost">
+          Gemini Chat ↗
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual fade-in" style="transition-delay:0.15s">
+      <div class="hero-screen">
+        <img src="screen-flow.png" alt="Google Flow – החלפת אלמנטים בפעולה">
+      </div>
+      <div class="hero-screen-label">Google Flow · גרסאות החלפה</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ מה זה Gemini Omni ═══════════ -->
+<section id="what">
+  <div class="inner">
+    <div class="text fade-in">
+      <div class="section-label">מה זה בכלל?</div>
+      <h2>Gemini Omni –<br>המהפכה <span class="hi">בעריכת וידאו</span></h2>
+      <p>
+        Gemini Omni הוא מודל AI של Google המסוגל לנתח ולשנות וידאו בצורה חכמה. במקום לערוך פריים-פריים,
+        אתם פשוט מסבירים מה אתם רוצים — והוא עושה את השאר.
+      </p>
+      <p>
+        בעזרתו תוכלו להחליף חיה, רקע, פריט או כל אלמנט בסרטון שלכם תוך דקות,
+        תוך שמירה מלאה על הצללים, התאורה והפיזיקה של הסצנה המקורית.
+      </p>
+      <ul class="feature-list">
+        <li>
+          <span class="icon">🦁</span>
+          החלפת אלמנטים — חיות, רקעים, חפצים — בצורה טבעית
+        </li>
+        <li>
+          <span class="icon">⚡</span>
+          עבודה מהירה עם מודל Omni Flash הפתוח לכולם
+        </li>
+        <li>
+          <span class="icon">🎬</span>
+          תמיכה בפורמטים 16:9 (יוטיוב) ו-9:16 (Reels / Shorts)
+        </li>
+        <li>
+          <span class="icon">✨</span>
+          שמירה על תאורה, צללים ואינטראקציה פיזיקלית מקורית
+        </li>
+      </ul>
+    </div>
+    <div class="what-visual fade-in" style="transition-delay:0.15s">
+      <img src="screen-flow.png" alt="תוצאות Google Flow">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ שתי דרכים ═══════════ -->
+<section id="ways" class="dark-section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">איפה עובדים?</div>
+      <h2>שתי <span class="hi">אפשרויות עבודה</span></h2>
+      <p class="section-desc">כלי הוידאו המפורסם נגיש לכם בשני ערוצים שונים — בחרו את זה שמתאים לצורך שלכם</p>
+    </div>
+    <div class="cards">
+      <div class="way-card fade-in">
+        <div class="way-number">אפשרות 01</div>
+        <div class="way-title">🎬 Google Flow סטודיו</div>
+        <p class="way-desc">
+          ממשק עבודה ייעודי המציג את כל הגרסאות שיצרתם בצורה מאורגנת, כולל ניהול מדיה מתקדם.
+          תוכלו לראות את כל הגרסאות, להחליף אלמנטים דוגמה, ולהשוות ביניהן בקלות.
+        </p>
+        <span class="way-tag">⭐ מומלץ למשתמשים מתקדמים</span>
+      </div>
+      <div class="way-card fade-in" style="transition-delay:0.1s">
+        <div class="way-number">אפשרות 02</div>
+        <div class="way-title">💬 Gemini צ'אט הרגיל</div>
+        <p class="way-desc">
+          פשוט מעלים את הסרטון לחלונית השיחה הרגילה של Gemini, כותבים את הפרומפט ומקבלים תוצאה ישירות בצ'אט.
+          מהיר, נוח ומתאים לשימוש יומיומי.
+        </p>
+        <span class="way-tag">✅ נגיש לכולם</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ מה דרוש ═══════════ -->
+<section id="requirements" class="light-section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">דרישות</div>
+      <h2>מה דרוש <span class="hi">ומי יכול להשתמש?</span></h2>
+      <p class="section-desc">הכלי נגיש לכולם — גם ללא מנוי בתשלום</p>
+    </div>
+    <div class="req-cards">
+      <div class="req-card fade-in">
+        <div class="req-icon">🎬</div>
+        <h3>סרטון קצר</h3>
+        <p>מומלץ להכין מראש קליפ קצר (עדיף עד 10 שניות) שבו האובייקט שברצונכם להחליף מופיע בצורה ברורה.</p>
+        <span class="req-badge">תנאי בסיסי</span>
+      </div>
+      <div class="req-card fade-in" style="transition-delay:0.1s">
+        <div class="req-icon">💎</div>
+        <h3>מנויי Advanced</h3>
+        <p>בעלי מנוי בתשלום נהנים מגישה חזקה יותר למודלי Omni המתקדמים, לדיוק מקסימלי ועריכות מורכבות.</p>
+        <span class="req-badge">יתרון מנוי</span>
+      </div>
+      <div class="req-card fade-in" style="transition-delay:0.2s">
+        <div class="req-icon">🆓</div>
+        <h3>אפשר גם בחינם!</h3>
+        <p><strong>לא חייבים מנוי בתשלום.</strong> כל משתמש יכול להתנסות וליצור באמצעות מודל Omni Flash המהיר והנגיש לכולם.</p>
+        <span class="req-badge" style="background:rgba(107,127,82,0.15);color:var(--green);border-color:var(--border-light)">בחינם!</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ Free vs Advanced ═══════════ -->
+<section id="free-vs-advanced" class="white-section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">השוואה</div>
+      <h2>חינם לעומת <span class="hi">Advanced</span></h2>
+      <p class="section-desc">בחרו את המסלול שמתאים לכם</p>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card free fade-in">
+        <span class="badge-top">חינמי</span>
+        <h3>Gemini Free</h3>
+        <p class="price">ללא עלות</p>
+        <ul class="compare-list">
+          <li><span class="check">✓</span> גישה למודל Omni Flash</li>
+          <li><span class="check">✓</span> יצירת וידאו קצרה בצ'אט</li>
+          <li><span class="check">✓</span> עד כמה גרסאות בסיסיות</li>
+          <li><span class="check">✓</span> מתאים לניסוי ולמידה</li>
+        </ul>
+      </div>
+      <div class="compare-card advanced fade-in" style="transition-delay:0.1s">
+        <span class="badge-top">🚀 מומלץ</span>
+        <h3>Gemini Advanced</h3>
+        <p class="price">מנוי חודשי בתשלום</p>
+        <ul class="compare-list">
+          <li><span class="check">✓</span> גישה מלאה למודלי Omni חזקים</li>
+          <li><span class="check">✓</span> דיוק מקסימלי ועריכות מורכבות</li>
+          <li><span class="check">✓</span> Google Flow סטודיו מלא</li>
+          <li><span class="check">✓</span> יותר גרסאות ואפשרויות השוואה</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ STEPS ═══════════ -->
+<section id="steps">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">מדריך שלב-אחר-שלב</div>
+      <h2>איך <span class="hi">מתחילים?</span></h2>
+      <p class="section-desc" style="color:#aaa">שלושה שלבים פשוטים ויש לכם סרטון מוחלף</p>
+    </div>
+
+    <div class="steps-list">
+
+      <!-- Step 1 -->
+      <div class="step-item fade-in">
+        <div class="step-content">
+          <div class="step-number-row">
+            <div class="step-num">1</div>
+            <span class="step-tag">שלב ראשון</span>
+          </div>
+          <h3 class="step-title">הזנת הפרומפט<br>והעלאת הסרטון</h3>
+          <ul class="step-points">
+            <li>
+              <span class="dot">＋</span>
+              לחצו על כפתור ה-<strong>+</strong> שבחלונית כדי להעלות את הסרטון שלכם.
+            </li>
+            <li>
+              <span class="dot">✏️</span>
+              כתבו את הבקשה שלכם בשורת הטקסט: <strong>"מה היית רוצה ליצור?"</strong>
+            </li>
+            <li>
+              <span class="dot">🤖</span>
+              שימוש ב-Agent מאפשר הפעלת סוכני בינה מלאכותית ממוקדים לביצוע המשימה.
+            </li>
+          </ul>
+        </div>
+        <div class="step-visual">
+          <img src="screen-prompt.png" alt="ממשק הפרומפט של Gemini">
+        </div>
+      </div>
+
+      <div class="step-connector">↓</div>
+
+      <!-- Step 2 -->
+      <div class="step-item reverse fade-in">
+        <div class="step-visual">
+          <img src="screen-settings.png" alt="הגדרות הוידאו">
+        </div>
+        <div class="step-content">
+          <div class="step-number-row">
+            <div class="step-num">2</div>
+            <span class="step-tag">שלב שני</span>
+          </div>
+          <h3 class="step-title">קביעת הגדרות<br>הוידאו</h3>
+          <ul class="step-points">
+            <li>
+              <span class="dot">📐</span>
+              <strong>יחס גובה-רוחב:</strong> בחרו בין פורמט לאורך (9:16) לקצר מדיה כמו Reels/Shorts, לבין פורמט לרוחב (16:9) ליוטיוב.
+            </li>
+            <li>
+              <span class="dot">⚡</span>
+              <strong>מהירות יצירה:</strong> בחרו את קצב היצירה (x1, x2, x3, x4) לתוצאה מהירה או מפורטת יותר.
+            </li>
+            <li>
+              <span class="dot">⚙️</span>
+              <strong>בחירת מודל Omni Flash:</strong> מהיר, ייחודי ופתוח לשימוש לכולם — גם בחינם.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-connector">↓</div>
+
+      <!-- Step 3 -->
+      <div class="step-item fade-in">
+        <div class="step-content">
+          <div class="step-number-row">
+            <div class="step-num">3</div>
+            <span class="step-tag">שלב שלישי</span>
+          </div>
+          <h3 class="step-title">הפקת גרסאות<br>והחלפה</h3>
+          <ul class="step-points">
+            <li>
+              <span class="dot">🖼️</span>
+              בתוך ה-Google Flow סטודיו תוכלו לראות את כל הגרסאות שנוצרו עבורכם במקום אחד.
+            </li>
+            <li>
+              <span class="dot">🦁</span>
+              <strong>הוספת חיות פרא</strong> (אריה, נחש קוברה, ג'ירפה, עטלף) — ישירות לסרטון.
+            </li>
+            <li>
+              <span class="dot">🌿</span>
+              <strong>החלפת רקע</strong> — רקע הבית בג'ונגל טרופי עשיר, מדבר ועוד.
+            </li>
+            <li>
+              <span class="dot">🔄</span>
+              <strong>השוואה מהירה</strong> בין הגרסאות השונות כדי לבחור את המושלמת.
+            </li>
+          </ul>
+        </div>
+        <div class="step-visual">
+          <img src="screen-flow.png" alt="Google Flow – גרסאות החלפה">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ כתיבת פרומפט נכון ═══════════ -->
+<section id="prompt" class="dark-section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">פרומפטים</div>
+      <h2>איך לנסח פרומפט<br><span class="hi">החלפה מושלם?</span></h2>
+      <p class="section-desc">שלוש נקודות חיוניות לתוצאה מדויקת</p>
+    </div>
+    <div class="formula-cards">
+      <div class="formula-card fade-in">
+        <div class="formula-step">שלב 1</div>
+        <div class="formula-title">📍 הגדרת המקור</div>
+        <p class="formula-desc">תארו במדויק מה להחליף — לדוגמה, מה הכלב עושה, איפה הוא נמצא בסצנה.</p>
+        <div class="formula-example">
+          "החלף את הכלב החום שיושב בצד שמאל של הסצנה..."
+        </div>
+      </div>
+      <div class="formula-card fade-in" style="transition-delay:0.1s">
+        <div class="formula-step">שלב 2</div>
+        <div class="formula-title">🎯 הגדרת היעד החדש</div>
+        <p class="formula-desc">תארו למה להחליף אותו ובאיזה אופן — לדוגמה, מה החיה החדשה עושה בדיוק.</p>
+        <div class="formula-example">
+          "...בארייה זכר מרשים ששוכב באותה תנוחה בדיוק"
+        </div>
+      </div>
+      <div class="formula-card fade-in" style="transition-delay:0.2s">
+        <div class="formula-step">שלב 3</div>
+        <div class="formula-title">⚖️ שמירה על חוקים</div>
+        <p class="formula-desc">בקשו לשמור על התאורה המקורית, הצללים והאינטראקציה הפיזיקלית עם הסביבה והספה.</p>
+        <div class="formula-example">
+          "שמור על הצללים, האינטראקציה הפיזיקלית, עם הריצוף או הספה"
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ טבלת השראה ═══════════ -->
+<section id="examples" class="light-section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">דוגמאות</div>
+      <h2>טבלת השראה<br><span class="hi">לפרומפטים מנצחים</span></h2>
+      <p class="section-desc">קחו השראה ותתאימו לסרטון שלכם</p>
+    </div>
+    <div class="table-wrap fade-in">
+      <table>
+        <thead>
+          <tr>
+            <th>האובייקט המקורי</th>
+            <th>פרומפט מומלץ לביצוע</th>
+            <th>דגש לעריכה מושלמת</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>עציץ קטן על מדף</td>
+            <td>
+              <span class="code">"החלף את העציץ בפסל קריסטל נוצץ שמשתקף באור"</span>
+            </td>
+            <td>השתקפויות ואור</td>
+          </tr>
+          <tr>
+            <td>כלב מחמד בבית</td>
+            <td>
+              <span class="code">"החלף את הכלב בארייה וידידותי ששוכב על השטיח"</span>
+            </td>
+            <td>שמירה על הצל הפיזיקלי</td>
+          </tr>
+          <tr>
+            <td>רקע של סלון רגיל</td>
+            <td>
+              <span class="code">"החלף את רקע הסלון בג'ונגל פראי וירוק עם עלים גדולים"</span>
+            </td>
+            <td>דיוק קצות השיער של הדמות</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ טיפים ═══════════ -->
+<section id="tips" class="white-section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">טיפים מקצועיים</div>
+      <h2>סודות ה<span class="hi">תוצאה המושלמת</span></h2>
+      <p class="section-desc">שלושה עקרונות שיהפכו כל יצירה שלכם לפרו</p>
+    </div>
+    <div class="tips-cards">
+      <div class="tip-card fade-in">
+        <div class="tip-icon">📷</div>
+        <h3>יציבות המצלמה</h3>
+        <p>
+          סרטונים שצולמו עם מצלמה קבועה או יציבה יקלו מאוד על המודל לעקוב אחרי האלמנטים
+          ולהחליף אותם בצורה חלקה יותר.
+        </p>
+      </div>
+      <div class="tip-card fade-in" style="transition-delay:0.1s">
+        <div class="tip-icon">💡</div>
+        <h3>הסבר על חומרים</h3>
+        <p>
+          כשאתם מבקשים להוסיף חפץ, פרוה, ממתק — כדי שהמחשב ידע כיצד לפזר עליו את האור
+          בסרטון, ציינו מה הוא עשוי — זכוכית, פרווה, מתכת.
+        </p>
+      </div>
+      <div class="tip-card fade-in" style="transition-delay:0.2s">
+        <div class="tip-icon">🔄</div>
+        <h3>עבודה אינטרקטיבית</h3>
+        <p>
+          היתרון הגדול של Google Flow הוא היכולת לנהל שיחה מתמשכת. אם התוצאה לא מושלמת,
+          פשוט כתבו: "שנה את הנחש להיות קטן יותר" — והוא ימשיך.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CTA ═══════════ -->
+<section id="cta">
+  <div class="inner fade-in">
+    <div class="section-label" style="color:var(--green-light);justify-content:center;display:flex">עכשיו תורכם</div>
+    <h2>מוכנים <span class="hi">ליצור?</span></h2>
+    <p>
+      היכנסו ל-Google Flow או לצ'אט Gemini והתחילו לערוך סרטונים כמו מקצוענים.
+      הכלים מחכים לכם — והתוצאות יפתיעו אתכם.
+    </p>
+    <div class="cta-links">
+      <a href="https://flow.google.com" target="_blank" rel="noopener" class="cta-link">
+        🎬 Google Flow
+      </a>
+      <a href="https://gemini.google.com" target="_blank" rel="noopener" class="cta-link ghost">
+        💬 Gemini Chat
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <p>© 2025 <a href="../">Ronig.ai</a> · כל הזכויות שמורות</p>
+  <p>נבנה עם ❤️ ו-AI · <a href="../">חזרה לדף הבית</a></p>
+</footer>
+
+<!-- ═══════════ JS: Scroll Animations ═══════════ -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
