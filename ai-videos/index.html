@@ -77,10 +77,10 @@
 
     /* ═══ HERO ═══ */
     #hero {
-      min-height: 100vh;
+      min-height: 0;
       display: flex;
       align-items: center;
-      padding: 7rem 2rem 5rem;
+      padding: 7rem 6rem 5rem;
       background: var(--dark);
       position: relative;
       overflow: hidden;
@@ -89,13 +89,14 @@
     .hero-bg {
       position: absolute; inset: 0; pointer-events: none;
       background-image: url('../assets/hero-bg2.jpg');
-      background-size: cover;
+      background-size: 100% 100%;
       background-position: center;
+      background-repeat: no-repeat;
     }
     .hero-bg::after {
       content: '';
       position: absolute; inset: 0;
-      background: rgba(10,10,14,0.62);
+      background: rgba(10,10,14,0.55);
     }
 
     .hero-inner {
@@ -669,6 +670,26 @@
 </footer>
 
 <script>
+  // כוון גובה הירו לפי יחס התמונה
+  (function() {
+    const img = new Image();
+    img.src = '../assets/hero-bg2.jpg';
+    img.onload = function() {
+      const ratio = img.naturalHeight / img.naturalWidth;
+      const hero = document.getElementById('hero');
+      if (hero) hero.style.minHeight = (window.innerWidth * ratio) + 'px';
+    };
+    window.addEventListener('resize', function() {
+      const img2 = new Image();
+      img2.src = '../assets/hero-bg2.jpg';
+      img2.onload = function() {
+        const ratio = img2.naturalHeight / img2.naturalWidth;
+        const hero = document.getElementById('hero');
+        if (hero) hero.style.minHeight = (window.innerWidth * ratio) + 'px';
+      };
+    });
+  })();
+
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.08 });
