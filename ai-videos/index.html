@@ -88,7 +88,7 @@
 
     .hero-bg {
       position: absolute; inset: 0; pointer-events: none;
-      background-image: url('../assets/hero4.png');
+      background-image: url('../assets/hero-bg2.jpg');
       background-size: cover;
       background-position: center;
     }
@@ -100,11 +100,13 @@
 
     .hero-inner {
       position: relative; z-index: 2;
-      max-width: 1100px; margin: 0 auto; width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
+      max-width: 700px;
+      margin: 0 0 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
     }
 
     /* הכותרת הגדולה - LTR כי באנגלית */
@@ -114,8 +116,8 @@
       line-height: 1.1;
       color: #fff;
       direction: ltr;
-      text-align: left;
-      margin-bottom: 1.25rem;
+      text-align: right;
+      margin-bottom: 0.5rem;
     }
     .hero-title .box {
       display: inline-block;
@@ -521,9 +523,6 @@
         יוצרת תוכן וסרטוני AI לעסקים,<br>משלבת הומור, שנינות וקסם.
       </p>
       <a href="#contact" class="btn-cta">לחצו לעוד פרטים</a>
-    </div>
-    <div class="hero-imgs fi" style="transition-delay:0.15s">
-      <img src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-166.webp" alt="AI Videos" onerror="this.style.display='none'">
     </div>
   </div>
 </section>
