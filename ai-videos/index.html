@@ -77,10 +77,9 @@
 
     /* ═══ HERO ═══ */
     #hero {
-      min-height: 0;
       display: flex;
       align-items: center;
-      padding: 7rem 6rem 5rem;
+      padding: 8rem 6rem 4rem;
       background: var(--dark);
       position: relative;
       overflow: hidden;
@@ -177,32 +176,27 @@
     }
 
     /* ═══ PROFILE CIRCLE ═══ */
-    .profile-divider {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      position: relative;
-      z-index: 2;
-      margin-top: -60px;
-    }
     .profile-circle {
       width: 180px;
       height: 180px;
       border-radius: 50%;
       object-fit: cover;
+      object-position: top;
       border: 4px solid #fff;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
       display: block;
-      background: var(--dark3);
+      margin: -90px auto 1.5rem;
+      position: relative;
+      z-index: 2;
     }
 
     /* ═══ WHITE SECTION – מה אני מציעה (אישי) ═══ */
     #about {
       background: #fff;
       color: #1a1a1a;
-      padding: 4rem 2rem 4rem;
+      padding: 0 2rem 4rem;
       text-align: center;
+      overflow: visible;
     }
     #about h2 {
       font-size: clamp(1.6rem, 3vw, 2.4rem);
@@ -528,15 +522,9 @@
   </div>
 </section>
 
-<!-- פרופיל עגול בין סקשנים -->
-<div class="profile-divider">
-  <img src="../assets/menew.png"
-       alt="Roni Green"
-       class="profile-circle">
-</div>
-
 <!-- ═══ ABOUT ═══ -->
 <section id="about">
+  <img src="../assets/menew.png" alt="Roni Green" class="profile-circle">
   <h2>סרטוני AI לפרסום, ביחס אישי</h2>
   <p>
     יוצרת סרטוני AI לעסקים בדיוק ברמה גבוהה, כאלה שמנמסים גלילה,
