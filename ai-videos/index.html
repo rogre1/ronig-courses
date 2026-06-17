@@ -441,6 +441,22 @@
     }
     .footer-logo span em { color: var(--green-light); font-style: normal; }
     footer p { font-size: 0.8rem; color: #555; }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: #666;
+      text-decoration: none;
+      font-size: 0.78rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--green-light); }
+    .footer-links span { color: #444; font-size: 0.78rem; }
 
     /* ═══ FADE IN ═══ */
     .fi {
@@ -603,6 +619,13 @@
     <span>Ronig<em>.ai</em></span>
   </div>
   <p>© 2025 Roni Green · כל הזכויות שמורות</p>
+  <div class="footer-links">
+    <a href="../terms.html" target="_blank">תקנון ותנאי שימוש</a>
+    <span>·</span>
+    <a href="../privacy.html" target="_blank">מדיניות פרטיות</a>
+    <span>·</span>
+    <a href="../accessibility.html" target="_blank">הצהרת נגישות</a>
+  </div>
 </footer>
 
 <script>
