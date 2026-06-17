@@ -88,9 +88,14 @@
 
     .hero-bg {
       position: absolute; inset: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(107,127,82,0.12) 0%, transparent 55%),
-        radial-gradient(ellipse 50% 50% at 10% 80%, rgba(107,127,82,0.07) 0%, transparent 50%);
+      background-image: url('../assets/hero4.png');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(10,10,14,0.62);
     }
 
     .hero-inner {
@@ -116,9 +121,16 @@
       display: inline-block;
       background: var(--green);
       color: #fff;
-      padding: 0.1em 0.3em;
+      padding: 0.1em 0.4em;
       border-radius: 6px;
       line-height: 1.2;
+      margin-bottom: 0.15em;
+    }
+    .hero-title .thin {
+      font-weight: 300;
+      color: #fff;
+      display: block;
+      margin-top: 0.1em;
     }
 
     .hero-sub {
@@ -502,10 +514,11 @@
   <div class="hero-inner">
     <div class="fi">
       <h1 class="hero-title">
-        <span class="box">AI<br>Videos</span> That Make<br>People Stop Scrolling
+        <span class="box">AI Videos</span><br>
+        <span class="thin">That Make<br>People Stop Scrolling</span>
       </h1>
       <p class="hero-sub">
-        יוצרת סרטוני AI לפרסום, מקלדת הומור,<br>משלבת הומור וקסם.
+        יוצרת תוכן וסרטוני AI לעסקים,<br>משלבת הומור, שנינות וקסם.
       </p>
       <a href="#contact" class="btn-cta">לחצו לעוד פרטים</a>
     </div>
