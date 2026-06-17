@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Videos That Make People Stop Scrolling | Roni Green</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:          #0a0a0f;
+      --bg2:         #10101a;
+      --bg3:         #14141f;
+      --card:        #16161f;
+      --border:      rgba(255,255,255,0.08);
+      --border-gold: rgba(212,175,55,0.35);
+      --gold:        #d4af37;
+      --gold-light:  #e8c84a;
+      --gold-glow:   rgba(212,175,55,0.15);
+      --white:       #ffffff;
+      --gray:        #a0a0b0;
+      --gray2:       #6a6a7a;
+      --text:        #e8e8f0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      direction: rtl;
+      text-align: right;
+      overflow-x: hidden;
+    }
+
+    /* ═══ HEADER ═══ */
+    header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo { height: 36px; width: auto; display: block; }
+
+    .header-right { display: flex; align-items: center; gap: 1rem; }
+
+    .btn-back {
+      color: var(--gray);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1.5px solid var(--border);
+      transition: all 0.2s;
+      font-family: 'Heebo', sans-serif;
+    }
+    .btn-back:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+    .ig-link {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .ig-link:hover { color: #fff; }
+    .ig-link svg { width: 18px; height: 18px; }
+
+    /* ═══ HERO ═══ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .hero-glow {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 55% at 30% 50%, rgba(212,175,55,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 80% 20%, rgba(212,175,55,0.06) 0%, transparent 55%);
+    }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-text {}
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gold-glow);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-tag::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+      box-shadow: 0 0 6px var(--gold);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 1.25rem;
+      direction: ltr;
+      text-align: right;
+    }
+    h1 .gold { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--gray);
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--gold);
+      color: #0a0a0f;
+      padding: 0.95rem 2.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1rem;
+      box-shadow: 0 4px 24px rgba(212,175,55,0.35);
+      transition: all 0.25s;
+    }
+    .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .hero-img {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.7), 0 0 0 1px var(--border);
+      position: relative;
+    }
+    .hero-img img { width: 100%; display: block; }
+    .hero-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, transparent 60%);
+    }
+
+    /* ═══ SHARED ═══ */
+    section { padding: 5.5rem 2rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    .sec-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .sec-header { text-align: center; margin-bottom: 3.5rem; }
+
+    h2 {
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+    }
+    h2 .gold { color: var(--gold); }
+
+    .sec-desc {
+      font-size: 1rem;
+      color: var(--gray);
+      line-height: 1.8;
+      max-width: 580px;
+      margin: 0.75rem auto 0;
+    }
+
+    /* fade-in */
+    .fi {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fi.visible { opacity: 1; transform: translateY(0); }
+
+    /* ═══ SERVICES ═══ */
+    #services { background: var(--bg2); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .srv-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .srv-card::before {
+      content: '';
+      position: absolute; top: 0; right: 0; left: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 14px 14px 0 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .srv-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(0,0,0,0.4); border-color: var(--border-gold); }
+    .srv-card:hover::before { opacity: 1; }
+
+    .srv-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.9rem;
+      display: block;
+    }
+    .srv-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    /* ═══ HOW IT WORKS ═══ */
+    #process { background: var(--bg); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 2rem; right: 12%; left: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+    }
+
+    .step {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+    }
+    .step:hover { border-color: var(--border-gold); transform: translateY(-4px); }
+
+    .step-num {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--gold-glow);
+      border: 2px solid var(--border-gold);
+      color: var(--gold);
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+      box-shadow: 0 0 16px rgba(212,175,55,0.2);
+    }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+    .step-desc {
+      font-size: 0.87rem;
+      color: var(--gray);
+      line-height: 1.75;
+    }
+
+    /* ═══ RESULTS / WHY ═══ */
+    #why { background: var(--bg2); }
+
+    .why-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .why-img {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .why-img img { width: 100%; display: block; }
+
+    .why-text h2 { text-align: right; margin-bottom: 1.25rem; }
+
+    .why-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .why-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.97rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+    .why-list li .dot {
+      width: 24px; height: 24px; border-radius: 7px;
+      background: var(--gold-glow);
+      border: 1px solid var(--border-gold);
+      color: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ═══ CLIENTS ═══ */
+    #clients { background: var(--bg3); }
+
+    .clients-track {
+      overflow: hidden;
+      -webkit-mask: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+      mask: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+    }
+    .clients-row {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      animation: scroll-logos 22s linear infinite;
+      width: max-content;
+    }
+    .clients-row:hover { animation-play-state: paused; }
+    @keyframes scroll-logos {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .client-logo {
+      height: 48px;
+      width: auto;
+      opacity: 0.55;
+      filter: grayscale(1) brightness(1.5);
+      transition: opacity 0.3s, filter 0.3s;
+      flex-shrink: 0;
+    }
+    .client-logo:hover { opacity: 1; filter: none; }
+
+    /* ═══ CONTACT ═══ */
+    #contact { background: var(--bg); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-text h2 { text-align: right; margin-bottom: 1.25rem; }
+    .contact-text p {
+      color: var(--gray);
+      font-size: 1rem;
+      line-height: 1.85;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-highlight {
+      background: var(--gold-glow);
+      border: 1px solid var(--border-gold);
+      border-radius: 12px;
+      padding: 1.25rem;
+      color: var(--gold-light);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 1.5rem;
+    }
+    .contact-highlight strong { color: var(--gold); font-weight: 800; }
+
+    .form-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.25rem;
+    }
+
+    .form-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+    .form-sub {
+      font-size: 0.88rem;
+      color: var(--gray);
+      margin-bottom: 1.75rem;
+    }
+
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--gray);
+      margin-bottom: 0.4rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      direction: rtl;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--border-gold);
+      background: rgba(212,175,55,0.05);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--gray2); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: #1a1a2e; }
+
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: #0a0a0f;
+      border: none;
+      padding: 0.95rem;
+      border-radius: 9px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.25s;
+      margin-top: 0.5rem;
+      box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+    }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .form-note {
+      font-size: 0.78rem;
+      color: var(--gray2);
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    /* success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .form-success .check {
+      font-size: 3rem; margin-bottom: 1rem;
+    }
+    .form-success h3 { color: var(--gold); font-size: 1.3rem; margin-bottom: 0.5rem; }
+    .form-success p { color: var(--gray); font-size: 0.95rem; line-height: 1.7; }
+
+    /* ═══ INSTAGRAM BANNER ═══ */
+    #ig-banner {
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #0a0a0f 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+    #ig-banner img { width: 100%; display: block; }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p { color: var(--gray2); font-size: 0.82rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 900px) {
+      .hero-inner,
+      .why-inner,
+      .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .steps::before { display: none; }
+      .hero-img { order: -1; }
+      section { padding: 3.5rem 1.25rem; }
+      header { padding: 0.75rem 1rem; }
+    }
+
+    @media (max-width: 520px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      h1 { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="header-right">
+    <a href="https://rogre1.github.io/ronig-courses/" class="btn-back">← חזרה לעמוד הקורסים</a>
+    <a href="https://www.instagram.com/roni_green_ai/" target="_blank" rel="noopener" class="ig-link">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+      </svg>
+      Instagram
+    </a>
+  </div>
+  <a href="https://ai.roni-green.com/" class="logo-link">
+    <img src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-168.png" alt="Roni Green AI" class="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+    <span style="display:none; color:#fff; font-weight:800; font-size:1.1rem;">Roni Green <span style="color:var(--gold)">AI</span></span>
+  </a>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-text fi">
+      <div class="hero-tag">סרטוני AI לעסקים</div>
+      <h1>AI Videos That Make<br>People <span class="gold">Stop Scrolling</span></h1>
+      <p class="hero-sub">
+        אני יוצרת סרטוני AI לפרסום, באופן אישי ומותאם לעסק שלכם.
+        סרטונים שמשלבים הומור, חוכמה ושאר רוח — כדי לעצור את הגלילה
+        ולהביא את המסר שלכם בדיוק לאנשים הנכונים.
+      </p>
+      <a href="#contact" class="hero-cta">לחצו לעוד פרטים ←</a>
+    </div>
+    <div class="hero-img fi" style="transition-delay:0.15s">
+      <img
+        src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-166.webp"
+        alt="AI Video Production"
+        onerror="this.src='https://rogre1.github.io/ronig-courses/assets/hero-bg2.jpg'"
+      >
+      <div class="hero-img-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services">
+  <div class="container">
+    <div class="sec-header fi">
+      <div class="sec-label">מה אני מציעה</div>
+      <h2>כל מה שצריך<br><span class="gold">לסרטון מנצח</span></h2>
+      <p class="sec-desc">חבילה מלאה מהרעיון ועד הסרטון המוגמר - בלי כאבי ראש</p>
+    </div>
+    <div class="services-grid">
+      <div class="srv-card fi">
+        <span class="srv-icon">🎬</span>
+        <div class="srv-title">סרטוני פרסום ומיתוג</div>
+      </div>
+      <div class="srv-card fi" style="transition-delay:0.07s">
+        <span class="srv-icon">⏱️</span>
+        <div class="srv-title">פורמטים של 30 ו-60 שניות</div>
+      </div>
+      <div class="srv-card fi" style="transition-delay:0.14s">
+        <span class="srv-icon">📝</span>
+        <div class="srv-title">כתיבת סקריפט וסטוריבורד</div>
+      </div>
+      <div class="srv-card fi" style="transition-delay:0.21s">
+        <span class="srv-icon">🎵</span>
+        <div class="srv-title">מוזיקה מותאמת אישית לסרטון</div>
+      </div>
+      <div class="srv-card fi" style="transition-delay:0.28s">
+        <span class="srv-icon">🎙️</span>
+        <div class="srv-title">קריינות AI</div>
+      </div>
+      <div class="srv-card fi" style="transition-delay:0.35s">
+        <span class="srv-icon">🤖</span>
+        <div class="srv-title">כלי AI מתקדמים</div>
+      </div>
+      <div class="srv-card fi" style="transition-delay:0.42s">
+        <span class="srv-icon">📱</span>
+        <div class="srv-title">אופטימיזציה לרשתות חברתיות</div>
+      </div>
+      <div class="srv-card fi" style="transition-delay:0.49s">
+        <span class="srv-icon">✨</span>
+        <div class="srv-title">יצירת דמויות מותאמות אישית</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section id="process">
+  <div class="container">
+    <div class="sec-header fi">
+      <div class="sec-label">התהליך</div>
+      <h2>איך <span class="gold">זה עובד?</span></h2>
+      <p class="sec-desc">פשוט וזורם - בלי ימי צילום, בלי צוותים, בלי כאבי ראש</p>
+    </div>
+    <div class="steps">
+      <div class="step fi">
+        <div class="step-num">1</div>
+        <div class="step-title">פגישת היכרות</div>
+        <p class="step-desc">מבינים את העסק שלכם, את הקהל, את המטרות ואת הסגנון שמתאים לכם.</p>
+      </div>
+      <div class="step fi" style="transition-delay:0.1s">
+        <div class="step-num">2</div>
+        <div class="step-title">פגישת סקריפט</div>
+        <p class="step-desc">כותבים יחד את הסקריפט, מציגים כמה כיוונים ובוחרים את הטוב ביותר.</p>
+      </div>
+      <div class="step fi" style="transition-delay:0.2s">
+        <div class="step-num">3</div>
+        <div class="step-title">הפקה וייצור</div>
+        <p class="step-desc">מייצרים את הסרטון - ויזואלים, קריינות, מוזיקה ועריכה - הכל.</p>
+      </div>
+      <div class="step fi" style="transition-delay:0.3s">
+        <div class="step-num">4</div>
+        <div class="step-title">מסירה ותיקונים</div>
+        <p class="step-desc">מגישים את הסרטון המוגמר, מבצעים תיקונים לפי הצורך ומסיימים.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY ME ═══ -->
+<section id="why">
+  <div class="container">
+    <div class="why-inner">
+      <div class="why-img fi">
+        <img
+          src="https://ai.roni-green.com/wp-content/uploads/2024/10/Rectangle-11-2-1024x1024.webp"
+          alt="Roni Green"
+          onerror="this.src='https://rogre1.github.io/ronig-courses/assets/me.png'"
+        >
+      </div>
+      <div class="why-text fi" style="transition-delay:0.15s">
+        <div class="sec-label">למה לבחור בי</div>
+        <h2>לא עוד סרטון גנרי.<br><span class="gold">משהו שבאמת עוצר.</span></h2>
+        <ul class="why-list">
+          <li>
+            <span class="dot">✓</span>
+            סרטונים שמייצרים תוצאות אמיתיות - לידים, מכירות, מודעות
+          </li>
+          <li>
+            <span class="dot">✓</span>
+            תהליך עבודה פשוט ושקוף - תמיד תדעו מה קורה
+          </li>
+          <li>
+            <span class="dot">✓</span>
+            מותאם ב-100% לקהל היעד ולמסר של העסק שלכם
+          </li>
+          <li>
+            <span class="dot">✓</span>
+            זמן הפקה מהיר - כי הזמן שלכם שווה כסף
+          </li>
+          <li>
+            <span class="dot">✓</span>
+            שילוב של יצירתיות ואסטרטגיה שיווקית בכל סרטון
+          </li>
+          <li>
+            <span class="dot">✓</span>
+            ניסיון עם מגוון תעשיות ועסקים בכל הגדלים
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLIENTS ═══ -->
+<section id="clients">
+  <div class="container">
+    <div class="sec-header fi">
+      <div class="sec-label">לקוחות</div>
+      <h2>עסקים שכבר <span class="gold">בחרו בנו</span></h2>
+    </div>
+    <div class="clients-track fi">
+      <div class="clients-row">
+        <img src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-173.png" alt="לקוח" class="client-logo" onerror="this.style.display='none'">
+        <img src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-174.png" alt="לקוח" class="client-logo" onerror="this.style.display='none'">
+        <img src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-175.png" alt="לקוח" class="client-logo" onerror="this.style.display='none'">
+        <img src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-176.png" alt="לקוח" class="client-logo" onerror="this.style.display='none'">
+        <!-- duplicate for infinite loop -->
+        <img src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-173.png" alt="לקוח" class="client-logo" onerror="this.style.display='none'">
+        <img src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-174.png" alt="לקוח" class="client-logo" onerror="this.style.display='none'">
+        <img src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-175.png" alt="לקוח" class="client-logo" onerror="this.style.display='none'">
+        <img src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-176.png" alt="לקוח" class="client-logo" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INSTAGRAM BANNER ═══ -->
+<section id="ig-banner" style="padding:0">
+  <img
+    src="https://ai.roni-green.com/wp-content/uploads/2024/10/Group-150-1024x360.png"
+    alt="Follow on Instagram"
+    onerror="this.style.display='none'"
+  >
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-text fi">
+        <div class="sec-label">צרו קשר</div>
+        <h2>מוכנים <span class="gold">להתחיל?</span></h2>
+        <p>
+          אם אתם רוצים סרטון AI שיגרום לאנשים לעצור ולהקשיב,
+          אתם במקום הנכון. ספרו לי קצת על העסק שלכם ואחזור אליכם
+          בהקדם עם כל הפרטים.
+        </p>
+        <p>
+          התהליך פשוט וזורם: אין ימי צילום, אין צוותים, אין כאבי ראש.
+          רק סרטון מדהים שמגיע ישר לאנשים שחשובים לכם.
+        </p>
+        <div class="contact-highlight">
+          <strong>⚡ זמינות ליוני</strong><br>
+          מקומות מוגבלים - השאירו פרטים עכשיו כדי להבטיח את מקומכם בתור.
+        </div>
+      </div>
+      <div class="fi" style="transition-delay:0.15s">
+        <div class="form-card" id="form-wrapper">
+          <div class="form-title">השאירו לי פרטים</div>
+          <div class="form-sub">ואחזור אליכם בהקדם עם כל המידע</div>
+          <form id="contact-form" novalidate>
+            <div class="form-group">
+              <label>שם מלא *</label>
+              <input type="text" name="name" placeholder="הכנסו שם מלא" required>
+            </div>
+            <div class="form-group">
+              <label>טלפון *</label>
+              <input type="tel" name="phone" placeholder="05X-XXXXXXX" required>
+            </div>
+            <div class="form-group">
+              <label>אימייל</label>
+              <input type="email" name="email" placeholder="example@mail.com">
+            </div>
+            <div class="form-group">
+              <label>סוג העסק</label>
+              <select name="business">
+                <option value="" disabled selected>בחרו סוג עסק</option>
+                <option>מסחר אלקטרוני / חנות אונליין</option>
+                <option>שירותים מקצועיים</option>
+                <option>מסעדה / אוכל</option>
+                <option>בריאות ויופי</option>
+                <option>נדל"ן</option>
+                <option>חינוך והדרכה</option>
+                <option>טכנולוגיה / סטארטאפ</option>
+                <option>אחר</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>ספרו לי על הסרטון שאתם רוצים</label>
+              <textarea name="message" placeholder="מה המסר שאתם רוצים להעביר? מה המטרה של הסרטון?"></textarea>
+            </div>
+            <button type="submit" class="form-submit">שלח ←</button>
+            <p class="form-note">אחזור אליכם תוך יום עסקים אחד 🙌</p>
+          </form>
+        </div>
+        <div class="form-success" id="form-success">
+          <div class="check">✅</div>
+          <h3>קיבלתי! תודה רבה 🙏</h3>
+          <p>אחזור אליכם תוך יום עסקים אחד עם כל הפרטים.<br>בינתיים, בואו נתחבר באינסטגרם!</p>
+          <a href="https://www.instagram.com/roni_green_ai/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.25rem;background:var(--gold);color:#0a0a0f;padding:0.75rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.9rem;">
+            📸 @roni_green_ai
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>© 2025 <a href="https://ai.roni-green.com/">Roni Green AI</a> · כל הזכויות שמורות</p>
+  <a href="https://www.instagram.com/roni_green_ai/" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;font-weight:600;font-size:0.83rem;">
+    📸 Instagram
+  </a>
+</footer>
+
+<script>
+  // Scroll animations
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+  // Form submit
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = this.name.value.trim();
+    const phone = this.phone.value.trim();
+    if (!name || !phone) {
+      alert('אנא מלאו שם וטלפון');
+      return;
+    }
+    // שליחת הנתונים ל-formspree (עדכנו את ה-endpoint שלכם)
+    const data = new FormData(this);
+    fetch('https://formspree.io/f/xpwzkvbj', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(res => {
+      document.getElementById('form-wrapper').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }).catch(() => {
+      document.getElementById('form-wrapper').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    });
+  });
+</script>
+
+</body>
+</html>
