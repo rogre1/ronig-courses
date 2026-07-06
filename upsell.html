@@ -290,7 +290,7 @@
             main { padding: 2rem 1.25rem 4rem; }
         }
     </style>
-</head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VMYHZH483Q"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VMYHZH483Q');</script></head>
 <body>
 
 <header>
@@ -311,7 +311,7 @@
                 <div class="purchased-sub">נוסף לסל</div>
             </div>
         </div>
-        <a href="https://pay.grow.link/ODg3NjU~eb8b7319e2fe7bfdec039f4d07c47ef5-MzM2NjAxNw" target="_blank" class="btn-continue-top" id="btnTop">המשך לרכישה</a>
+        <a href="https://pay.grow.link/ODg3NjU~eb8b7319e2fe7bfdec039f4d07c47ef5-MzM2NjAxNw" target="_blank" class="btn-continue-top" id="btnTop" data-track-cta="upsell_top">המשך לרכישה</a>
     </div>
 
     <!-- Upsell text -->
@@ -349,7 +349,7 @@
     </label>
 
     <!-- Main CTA -->
-    <a href="thankyou.html" class="btn-main" id="btnMain">המשך לרכישה ←</a>
+    <a href="thankyou.html" class="btn-main" id="btnMain" data-track-cta="upsell_final">המשך לרכישה ←</a>
 
 </main>
 
@@ -386,5 +386,5 @@
     updateUpsell();
 </script>
 
-</body>
+<script>function trackCTA(name){if(typeof fbq==='function')fbq('track','InitiateCheckout',{content_name:name});if(typeof gtag==='function')gtag('event','begin_checkout',{content_name:name});}document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-track-cta]').forEach(function(el){el.addEventListener('click',function(){trackCTA(el.getAttribute('data-track-cta'));});});var t=document.getElementById('toggleInput');if(t){t.addEventListener('change',function(){if(typeof fbq==='function')fbq('trackCustom','UpsellToggle',{checked:t.checked});if(typeof gtag==='function')gtag('event','upsell_toggle',{checked:t.checked});});}});</script></body>
 </html>
