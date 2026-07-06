@@ -952,7 +952,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1147995187452011&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-</head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VMYHZH483Q"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VMYHZH483Q');</script></head>
 <body>
 
 <!-- ── HEADER ── -->
@@ -961,7 +961,7 @@ src="https://www.facebook.com/tr?id=1147995187452011&ev=PageView&noscript=1"
         <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
         <span class="logo-text">Ronig<span>.ai</span></span>
     </a>
-    <a href="#pricing-all" class="nav-cta">להצטרפות לקורס ←</a>
+    <a href="#pricing-all" class="nav-cta" data-track-cta="nav_cta">להצטרפות לקורס ←</a>
 </header>
 
 <!-- ════════════════════════
@@ -995,7 +995,7 @@ src="https://www.facebook.com/tr?id=1147995187452011&ev=PageView&noscript=1"
             </div>
         </div>
 
-        <a href="#pricing-all" class="hero-cta fade-in">אני רוצה להתחיל ליצור
+        <a href="#pricing-all" class="hero-cta fade-in" data-track-cta="hero_cta">אני רוצה להתחיל ליצור
  ←</a>
 
         <div class="hero-carousel fade-in">
@@ -1232,7 +1232,7 @@ src="https://www.facebook.com/tr?id=1147995187452011&ev=PageView&noscript=1"
                          
                     </p>
                 </div>
-                <a href="upsell.html" target="_blank" class="bundle-cta-new">להצטרפות ←</a>
+                <a href="upsell.html" data-track-cta="course1" target="_blank" class="bundle-cta-new">להצטרפות ←</a>
             </div>
         </div>
 
@@ -1256,7 +1256,7 @@ src="https://www.facebook.com/tr?id=1147995187452011&ev=PageView&noscript=1"
                     <div class="bundle-price-num"><span>₪</span>367</div>
                     <p class="bundle-price-sub">תשלום חד פעמי · גישה מיידית לכל התוכן</p>
                 </div>
-                <a href="https://pay.grow.link/ODg3NjU~da27f642cd765f111efd89150d4e236a-MzM5NTU0OQ" target="_blank" class="bundle-cta-new">לרכישת החבילה המלאה ←</a>
+                <a href="https://pay.grow.link/ODg3NjU~da27f642cd765f111efd89150d4e236a-MzM5NTU0OQ" target="_blank" class="bundle-cta-new" data-track-cta="bundle">לרכישת החבילה המלאה ←</a>
             </div>
         </div>
 
@@ -1268,13 +1268,13 @@ src="https://www.facebook.com/tr?id=1147995187452011&ev=PageView&noscript=1"
                 <div class="ind-icon-new">🎙️</div>
                 <h4>קורס קריינות וליפסינק ב-AI</h4>
                 <div class="ind-price-new"><span>₪</span>119</div>
-                <a href="https://pay.grow.link/ODg3NjU~7f51a33b4dec31bd978d86c0c5693830-MzM5NTM2Mw" target="_blank" class="ind-btn-new">להצטרפות ←</a>
+                <a href="https://pay.grow.link/ODg3NjU~7f51a33b4dec31bd978d86c0c5693830-MzM5NTM2Mw" target="_blank" class="ind-btn-new" data-track-cta="course2">להצטרפות ←</a>
             </div>
             <div class="ind-card-new fade-in">
                 <div class="ind-icon-new">🎧</div>
                 <h4>מהקלטה לסרטון ב-AI</h4>
                 <div class="ind-price-new"><span>₪</span>119</div>
-                <a href="https://pay.grow.link/ODg3NjU~bd0f5f81eece12b730798bbf13defe0b-MzUxMjIzMw" target="_blank" class="ind-btn-new">להצטרפות ←</a>
+                <a href="https://pay.grow.link/ODg3NjU~bd0f5f81eece12b730798bbf13defe0b-MzUxMjIzMw" target="_blank" class="ind-btn-new" data-track-cta="course3">להצטרפות ←</a>
             </div>
         </div>
 
@@ -1414,5 +1414,5 @@ src="https://www.facebook.com/tr?id=1147995187452011&ev=PageView&noscript=1"
     if (steps.length) stepsObserver.observe(steps[0]);
 </script>
 
-</body>
+<script>function trackCTA(name){if(typeof fbq==='function')fbq('track','InitiateCheckout',{content_name:name});if(typeof gtag==='function')gtag('event','begin_checkout',{content_name:name});}document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-track-cta]').forEach(function(el){el.addEventListener('click',function(){trackCTA(el.getAttribute('data-track-cta'));});});});</script></body>
 </html>
