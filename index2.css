@@ -1,0 +1,491 @@
+/* ============================================================
+   Ronig.ai — index2 (גרסת ניסוי)
+   דף נחיתה כהה־ירוק בתחושת מוצר Premium. Mobile-first.
+   ============================================================ */
+
+:root{
+  --bg:#0e100c;
+  --bg-raised:#131610;
+  --card:#171b13;
+  --card-hover:#1b2016;
+  --line:rgba(154,174,124,.14);
+  --line-strong:rgba(154,174,124,.30);
+  --green:#6b7f52;
+  --green-soft:#8a9e6e;
+  --green-bright:#a8bd85;
+  --ink:#f3f5ee;
+  --ink-2:#c2c8b6;
+  --ink-3:#8f967f;
+  --cta-ink:#10130b;
+  --radius:20px;
+  --radius-sm:14px;
+  --shadow-card:0 20px 60px rgba(0,0,0,.45);
+  --glow:0 0 0 1px rgba(154,174,124,.22), 0 8px 40px rgba(107,127,82,.25);
+  --header-h:64px;
+  --wrap:1140px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:calc(var(--header-h) + 16px)}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink-2);
+  font-family:'Heebo',system-ui,sans-serif;
+  font-size:1.0625rem;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%; height:auto; display:block}
+a{color:var(--green-bright)}
+h1,h2,h3,h4{color:var(--ink); line-height:1.25; margin:0 0 .6em; font-weight:800; letter-spacing:-.01em}
+p{margin:0 0 1em}
+:focus-visible{outline:2px solid var(--green-bright); outline-offset:3px; border-radius:6px}
+::selection{background:rgba(138,158,110,.35)}
+
+.wrap{max-width:var(--wrap); margin-inline:auto; padding-inline:20px}
+.wrap-narrow{max-width:780px; margin-inline:auto; padding-inline:20px}
+
+section{padding-block:clamp(64px,9vw,120px)}
+.section-head{max-width:680px; margin-inline:auto; text-align:center; margin-bottom:clamp(36px,5vw,56px)}
+.section-head h2{font-size:clamp(1.55rem,3.4vw,2.35rem)}
+.section-head p{color:var(--ink-2)}
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:.85rem; font-weight:600; color:var(--green-bright);
+  background:rgba(107,127,82,.13);
+  border:1px solid var(--line);
+  padding:6px 14px; border-radius:999px;
+  margin-bottom:18px;
+}
+
+/* ---------- כפתורים ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family:inherit; font-size:1.05rem; font-weight:700;
+  padding:15px 30px; border-radius:14px; border:none; cursor:pointer;
+  text-decoration:none; transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.btn-primary{
+  background:linear-gradient(180deg,var(--green-bright),var(--green-soft));
+  color:var(--cta-ink);
+  box-shadow:0 1px 0 rgba(255,255,255,.25) inset, 0 10px 30px rgba(107,127,82,.35);
+}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 1px 0 rgba(255,255,255,.25) inset, 0 14px 40px rgba(107,127,82,.45)}
+.btn-primary:active{transform:translateY(0)}
+.btn-ghost{
+  background:transparent; color:var(--ink);
+  border:1px solid var(--line-strong);
+}
+.btn-ghost:hover{border-color:var(--green-soft); background:rgba(107,127,82,.08)}
+.link-arrow{
+  display:inline-flex; align-items:center; gap:6px;
+  color:var(--green-bright); font-weight:600; text-decoration:none;
+  border-bottom:1px solid transparent; transition:border-color .15s;
+}
+.link-arrow:hover{border-color:var(--green-bright)}
+.microcopy{font-size:.85rem; color:var(--ink-3); margin-top:14px}
+
+/* ---------- הדר ---------- */
+.site-header{
+  position:fixed; inset-inline:0; top:0; z-index:100;
+  height:var(--header-h);
+  background:rgba(14,16,12,.82);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.site-header .wrap{height:100%; display:flex; align-items:center; justify-content:space-between; gap:16px}
+.header-logo img{height:36px; width:auto}
+.header-nav{display:none; align-items:center; gap:28px}
+.header-nav a{color:var(--ink-2); text-decoration:none; font-size:.95rem; font-weight:500; transition:color .15s}
+.header-nav a:hover{color:var(--ink)}
+.header-cta{padding:10px 20px; font-size:.95rem; border-radius:11px}
+.menu-toggle{
+  display:inline-flex; flex-direction:column; justify-content:center; gap:5px;
+  width:44px; height:44px; padding:10px;
+  background:transparent; border:1px solid var(--line-strong); border-radius:10px; cursor:pointer;
+}
+.menu-toggle span{display:block; height:2px; width:100%; background:var(--ink); border-radius:2px; transition:transform .2s, opacity .2s}
+.menu-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{
+  position:fixed; top:var(--header-h); inset-inline:0; z-index:99;
+  background:rgba(14,16,12,.97); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  display:none; flex-direction:column; padding:12px 24px 24px;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  color:var(--ink); text-decoration:none; font-size:1.1rem; font-weight:600;
+  padding:14px 4px; border-bottom:1px solid var(--line);
+}
+.mobile-menu a:last-child{border-bottom:none}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;
+  padding-top:calc(var(--header-h) + clamp(40px,7vw,96px));
+  padding-bottom:clamp(48px,6vw,88px);
+  overflow:hidden;
+}
+.hero::before{
+  content:""; position:absolute; inset:-20% -10% auto;
+  height:70%;
+  background:radial-gradient(ellipse 60% 50% at 70% 10%, rgba(107,127,82,.18), transparent 65%);
+  pointer-events:none;
+}
+.hero-grid{position:relative; display:grid; gap:36px; align-items:center}
+.hero-copy{text-align:center}
+.hero h1{font-size:clamp(1.9rem,5.4vw,3.15rem); font-weight:900; margin-bottom:.5em}
+.hero-sub{font-size:clamp(1rem,2.1vw,1.15rem); color:var(--ink-2); max-width:34em; margin-inline:auto}
+.hero-cta-row{margin-top:26px}
+.hero .btn-primary{width:100%; max-width:420px}
+.proof-line{
+  margin-top:22px; font-size:.9rem; color:var(--ink-3);
+  display:flex; flex-wrap:wrap; justify-content:center; gap:6px 14px;
+}
+.proof-line span{display:inline-flex; align-items:center; gap:6px}
+.proof-line span::before{content:""; width:4px; height:4px; border-radius:50%; background:var(--green-soft)}
+.hero-visual{display:flex; justify-content:center}
+.hero-card{
+  position:relative;
+  max-width:420px; width:100%;
+  background:linear-gradient(160deg,#161a11,#101208);
+  border:1px solid var(--line-strong);
+  border-radius:28px;
+  padding:clamp(18px,3vw,30px);
+  box-shadow:var(--shadow-card), 0 0 80px rgba(107,127,82,.14);
+}
+.hero-card::after{
+  content:""; position:absolute; inset:0; border-radius:28px; pointer-events:none;
+  background:radial-gradient(60% 40% at 50% 0%, rgba(168,189,133,.10), transparent 70%);
+}
+.hero-card img{width:100%}
+.hero-card figcaption{margin-top:14px; text-align:center; font-size:.82rem; color:var(--ink-3)}
+
+/* ---------- פס הוכחה ---------- */
+.proof-strip{padding-block:0}
+.proof-strip .wrap{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:var(--radius);
+  overflow:hidden;
+}
+.proof-item{background:var(--bg-raised); padding:22px 16px; text-align:center}
+.proof-item strong{display:block; color:var(--ink); font-size:clamp(1.25rem,2.6vw,1.6rem); font-weight:800}
+.proof-item small{color:var(--ink-3); font-size:.85rem}
+
+/* ---------- וידאו (facade) ---------- */
+.video-facade{
+  position:relative; cursor:pointer; border:none; padding:0; display:block; width:100%;
+  border-radius:var(--radius); overflow:hidden; background:#000;
+  box-shadow:var(--shadow-card);
+}
+.video-facade img{width:100%; height:100%; object-fit:cover}
+.video-facade::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45));
+}
+.play-badge{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:72px; height:72px; border-radius:50%; z-index:2;
+  background:rgba(243,245,238,.95);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .18s ease;
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
+}
+.play-badge svg{width:26px; height:26px; fill:var(--cta-ink); margin-inline-start:-3px}
+.video-facade:hover .play-badge{transform:translate(-50%,-50%) scale(1.08)}
+.video-frame-9x16{max-width:330px; margin-inline:auto; aspect-ratio:9/16}
+.video-frame-16x9{max-width:760px; margin-inline:auto; aspect-ratio:16/9}
+.video-frame-9x16 iframe,.video-frame-16x9 iframe{width:100%; height:100%; border:0; display:block}
+.video-note{text-align:center; font-size:.9rem; color:var(--ink-3); margin-top:16px}
+
+/* ---------- הזדהות עם הבעיה ---------- */
+.pain{background:var(--bg-raised); border-block:1px solid var(--line)}
+.pain-points{display:grid; gap:12px; margin-top:28px}
+.pain-point{
+  display:flex; align-items:center; gap:12px;
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius-sm);
+  padding:16px 20px; color:var(--ink); font-weight:600;
+}
+.pain-point svg{flex:none; width:20px; height:20px; stroke:var(--green-bright)}
+
+/* ---------- תהליך העבודה ---------- */
+.steps-grid{display:grid; gap:16px}
+.step-card{
+  position:relative;
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 24px;
+  transition:transform .18s ease, border-color .18s ease;
+}
+.step-card:hover{transform:translateY(-3px); border-color:var(--line-strong)}
+.step-num{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:34px; height:34px; border-radius:10px;
+  background:rgba(107,127,82,.18); border:1px solid var(--line-strong);
+  color:var(--green-bright); font-weight:800; font-size:.95rem;
+  margin-bottom:14px;
+}
+.step-card h3{font-size:1.1rem; margin-bottom:.4em}
+.step-card p{font-size:.95rem; color:var(--ink-2); margin:0}
+.steps-cta{text-align:center; margin-top:32px}
+
+/* ---------- למי מתאים ---------- */
+.fit-grid{display:grid; gap:16px}
+.fit-col{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:28px 24px;
+}
+.fit-col h3{display:flex; align-items:center; gap:10px; font-size:1.15rem}
+.fit-col ul{list-style:none; margin:18px 0 0; padding:0; display:grid; gap:14px}
+.fit-col li{display:flex; gap:12px; font-size:.97rem}
+.fit-col li svg{flex:none; width:20px; height:20px; margin-top:4px}
+.fit-yes li svg{stroke:var(--green-bright)}
+.fit-no{opacity:.92}
+.fit-no li svg{stroke:var(--ink-3)}
+.fit-summary{
+  text-align:center; margin-top:28px; color:var(--ink);
+  font-weight:600; font-size:1.05rem;
+}
+
+/* ---------- קורס האנימציה ---------- */
+.course-label{
+  display:inline-block; font-size:.82rem; font-weight:700; letter-spacing:.02em;
+  color:var(--green-bright); background:rgba(107,127,82,.13);
+  border:1px solid var(--line); border-radius:999px; padding:5px 14px; margin-bottom:16px;
+}
+.course-main{background:var(--bg-raised); border-block:1px solid var(--line)}
+.course-result{
+  border-right:3px solid var(--green-soft);
+  background:rgba(107,127,82,.10);
+  border-radius:10px;
+  padding:14px 18px; margin:22px 0;
+  color:var(--ink); font-weight:600;
+}
+.course-stats{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px}
+.stat-chip{
+  font-size:.88rem; font-weight:600; color:var(--ink-2);
+  border:1px solid var(--line-strong); border-radius:999px; padding:7px 15px;
+  background:var(--card);
+}
+.course-teaser{margin-top:44px}
+.course-teaser h3{text-align:center; font-size:1.2rem; margin-bottom:20px}
+
+/* ---------- סילבוס ואקורדיונים ---------- */
+.syllabus{margin-top:52px}
+.syllabus h3{text-align:center; font-size:clamp(1.3rem,2.6vw,1.7rem); margin-bottom:26px}
+.accordion{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--card)}
+.acc-item + .acc-item{border-top:1px solid var(--line)}
+.acc-btn{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  width:100%; background:transparent; border:none; cursor:pointer;
+  font-family:inherit; font-size:1.02rem; font-weight:700; color:var(--ink);
+  padding:18px 22px; text-align:right; min-height:56px;
+  transition:background .15s;
+}
+.acc-btn:hover{background:rgba(107,127,82,.07)}
+.acc-icon{
+  flex:none; width:26px; height:26px; border-radius:8px;
+  border:1px solid var(--line-strong);
+  display:inline-flex; align-items:center; justify-content:center;
+  color:var(--green-bright); font-weight:600; font-size:1.1rem; line-height:1;
+  transition:transform .2s ease;
+}
+.acc-btn[aria-expanded="true"] .acc-icon{transform:rotate(45deg)}
+.acc-panel{display:grid; grid-template-rows:0fr; transition:grid-template-rows .25s ease}
+.acc-panel > div{overflow:hidden}
+.acc-panel p{padding:0 22px 20px; margin:0; color:var(--ink-2); font-size:.96rem}
+.acc-item.open .acc-panel{grid-template-rows:1fr}
+.syllabus-note{text-align:center; font-size:.9rem; color:var(--ink-3); margin-top:20px}
+.syllabus-cta{text-align:center; margin-top:30px}
+
+/* ---------- קורסי המשך ---------- */
+.next-grid{display:grid; gap:20px}
+.next-card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:30px 26px; display:flex; flex-direction:column;
+  transition:transform .18s ease, border-color .18s ease;
+}
+.next-card:hover{transform:translateY(-3px); border-color:var(--line-strong)}
+.next-card h3{font-size:1.3rem}
+.next-card ul{list-style:none; margin:16px 0; padding:0; display:grid; gap:10px}
+.next-card li{display:flex; gap:10px; font-size:.94rem}
+.next-card li::before{content:"✓"; color:var(--green-bright); font-weight:700; flex:none}
+.next-fit{
+  margin-top:auto; padding-top:16px; border-top:1px solid var(--line);
+  font-size:.88rem; color:var(--ink-3);
+}
+
+/* ---------- מי אני ---------- */
+.about-grid{display:grid; gap:36px; align-items:center}
+.about-photo{display:flex; justify-content:center}
+.about-photo img{
+  width:min(280px,70vw); border-radius:50%;
+  border:1px solid var(--line-strong);
+  box-shadow:var(--glow);
+}
+.about-copy .course-label{margin-bottom:12px}
+.about-stats{display:flex; flex-wrap:wrap; gap:10px; margin:20px 0 26px}
+
+/* ---------- המלצות ---------- */
+.testimonials-grid{display:grid; gap:18px; max-width:900px; margin-inline:auto}
+.testimonial-card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px; display:flex; align-items:center; justify-content:center;
+}
+.testimonial-card img{width:100%; max-width:420px}
+.testimonials-more{text-align:center; margin-top:26px}
+.testimonials-extra{display:none}
+.testimonials-extra.open{display:contents}
+
+/* ---------- מחירים ---------- */
+.pricing{background:var(--bg-raised); border-block:1px solid var(--line)}
+.pricing-grid{display:grid; gap:22px; align-items:stretch; max-width:960px; margin-inline:auto}
+.price-card{
+  position:relative;
+  background:var(--card); border:1px solid var(--line); border-radius:24px;
+  padding:32px 28px; display:flex; flex-direction:column;
+}
+.price-card h3{font-size:1.35rem}
+.price-card ul{list-style:none; margin:18px 0; padding:0; display:grid; gap:11px}
+.price-card li{display:flex; gap:10px; font-size:.95rem}
+.price-card li::before{content:"✓"; color:var(--green-bright); font-weight:700; flex:none}
+.price-tag{margin:10px 0 4px; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.price-now{font-size:2.6rem; font-weight:900; color:var(--ink); line-height:1}
+.price-was{font-size:1.1rem; color:var(--ink-3); text-decoration:line-through}
+.price-note{font-size:.88rem; color:var(--ink-3); margin-bottom:6px}
+.price-highlight{
+  font-size:.92rem; font-weight:700; color:var(--green-bright);
+  background:rgba(107,127,82,.12); border:1px solid var(--line);
+  border-radius:10px; padding:10px 14px; margin:14px 0;
+}
+.price-card .btn{width:100%; margin-top:auto}
+.card-featured{
+  background:linear-gradient(170deg,#1b2113,#141810);
+  border:1px solid rgba(168,189,133,.45);
+  box-shadow:0 0 0 1px rgba(168,189,133,.12), 0 24px 80px rgba(107,127,82,.22);
+}
+.featured-badge{
+  position:absolute; top:-14px; inset-inline-start:24px;
+  background:linear-gradient(180deg,var(--green-bright),var(--green-soft));
+  color:var(--cta-ink); font-size:.82rem; font-weight:800;
+  border-radius:999px; padding:5px 16px;
+}
+.pricing-mini-head{text-align:center; margin:48px 0 20px; color:var(--ink); font-size:1.1rem; font-weight:700}
+.mini-grid{display:grid; gap:14px; max-width:720px; margin-inline:auto}
+.mini-card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius-sm);
+  padding:22px; display:flex; flex-direction:column; gap:6px; text-align:center;
+}
+.mini-card h4{font-size:1.02rem; margin:0}
+.mini-price{font-size:1.5rem; font-weight:800; color:var(--ink)}
+.mini-card .link-arrow{justify-content:center; margin-top:6px}
+.pricing-legal{text-align:center; font-size:.82rem; color:var(--ink-3); margin-top:34px}
+.pricing-legal a{color:var(--ink-3)}
+
+/* ---------- אחרי הרכישה ---------- */
+.after-grid{display:grid; gap:14px; counter-reset:after}
+.after-step{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius-sm);
+  padding:22px 20px;
+}
+.after-step h3{font-size:1rem; display:flex; align-items:center; gap:10px; margin-bottom:.35em}
+.after-step h3::before{
+  counter-increment:after; content:counter(after);
+  flex:none; width:26px; height:26px; border-radius:8px;
+  background:rgba(107,127,82,.18); border:1px solid var(--line-strong);
+  color:var(--green-bright); font-size:.85rem; font-weight:800;
+  display:inline-flex; align-items:center; justify-content:center;
+}
+.after-step p{margin:0; font-size:.92rem; color:var(--ink-2)}
+.after-summary{text-align:center; margin-top:28px; color:var(--ink-3); font-size:.92rem}
+
+/* ---------- FAQ ---------- */
+.faq .accordion{max-width:780px; margin-inline:auto}
+
+/* ---------- CTA סיום ---------- */
+.final-cta{position:relative; text-align:center; overflow:hidden}
+.final-cta::before{
+  content:""; position:absolute; inset:auto -10% -40%;
+  height:80%;
+  background:radial-gradient(ellipse 55% 55% at 50% 100%, rgba(107,127,82,.20), transparent 70%);
+  pointer-events:none;
+}
+.final-cta .wrap-narrow{position:relative}
+.final-cta h2{font-size:clamp(1.6rem,3.6vw,2.4rem)}
+.final-cta .btn-primary{margin-top:10px; width:100%; max-width:440px}
+.final-secondary{display:block; margin-top:18px}
+
+/* ---------- פוטר ---------- */
+.site-footer{
+  border-top:1px solid var(--line);
+  padding:44px 0 120px; /* מקום ל-sticky bar במובייל */
+  background:var(--bg);
+  font-size:.88rem; color:var(--ink-3);
+}
+.footer-inner{display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center}
+.footer-inner img{height:34px; width:auto}
+.footer-links{display:flex; flex-wrap:wrap; justify-content:center; gap:8px 22px}
+.footer-links a{color:var(--ink-3); text-decoration:none}
+.footer-links a:hover{color:var(--ink)}
+.footer-mail a{color:var(--ink-2); text-decoration:none; unicode-bidi:embed}
+
+/* ---------- Sticky CTA מובייל ---------- */
+.sticky-cta{
+  position:fixed; inset-inline:0; bottom:0; z-index:90;
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(14,16,12,.92); backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);
+  transform:translateY(110%); transition:transform .25s ease;
+}
+.sticky-cta.show{transform:translateY(0)}
+.sticky-cta .btn{width:100%; padding:13px 20px; font-size:.98rem}
+
+/* ---------- Reveal (עדין ומהיר; התוכן גלוי כברירת מחדל בלי JS) ---------- */
+html.js .reveal{opacity:0; transform:translateY(14px); transition:opacity .45s ease, transform .45s ease}
+html.js .reveal.in{opacity:1; transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none !important; animation:none !important}
+  html.js .reveal{opacity:1; transform:none}
+}
+
+/* ============================================================
+   טאבלט ומעלה
+   ============================================================ */
+@media (min-width:768px){
+  .proof-strip .wrap{grid-template-columns:repeat(4,1fr)}
+  .steps-grid{grid-template-columns:repeat(2,1fr)}
+  .fit-grid{grid-template-columns:1fr 1fr}
+  .next-grid{grid-template-columns:1fr 1fr}
+  .after-grid{grid-template-columns:repeat(2,1fr)}
+  .mini-grid{grid-template-columns:1fr 1fr}
+  .testimonials-grid{grid-template-columns:1fr 1fr}
+  .hero .btn-primary{width:auto}
+  .sticky-cta{display:none}
+  .site-footer{padding-bottom:44px}
+}
+
+@media (min-width:1024px){
+  .menu-toggle,.mobile-menu{display:none}
+  .header-nav{display:flex}
+  .hero-grid{grid-template-columns:1.08fr .92fr; gap:56px}
+  .hero-copy{text-align:right}
+  .hero-sub{margin-inline:0}
+  .proof-line{justify-content:flex-start}
+  .steps-grid{grid-template-columns:repeat(4,1fr)}
+  .after-grid{grid-template-columns:repeat(4,1fr)}
+  .about-grid{grid-template-columns:340px 1fr; gap:64px}
+  .pricing-grid{grid-template-columns:1.15fr 1fr}
+  .card-featured{padding:40px 36px}
+}
+
+/* מובייל צר מאוד */
+@media (max-width:420px){
+  .proof-item{padding:16px 10px}
+  .price-now{font-size:2.2rem}
+}

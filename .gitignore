@@ -4,6 +4,9 @@
 # Keep only website files
 !.gitignore
 !index.html
+!index2.html
+!index2.css
+!index2.js
 !old-index.html
 !terms.html
 !privacy.html
