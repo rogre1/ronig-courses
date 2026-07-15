@@ -147,7 +147,18 @@ section{padding-block:clamp(52px,7vw,80px)}
 /* ---------- Hero ---------- */
 .hero{padding-top:calc(var(--header-h) + clamp(24px,4vw,56px)); padding-bottom:clamp(28px,4vw,56px)}
 .hero-grid{display:grid; gap:22px; align-items:center}
-.hero h1{font-size:clamp(1.75rem,4.2vw,2.9rem); font-weight:800; margin:0}
+.hero h1{font-size:clamp(1.7rem,4vw,2.75rem); font-weight:800; margin:0}
+/* הדגשות בכותרת ההירו */
+.hl-marker{
+  background:linear-gradient(180deg,transparent 50%, rgba(139,163,107,.4) 50%, rgba(139,163,107,.4) 86%, transparent 86%);
+  border-radius:6px; padding:0 .1em; box-decoration-break:clone; -webkit-box-decoration-break:clone;
+}
+.hl-wave{
+  color:#4C5A3B; white-space:nowrap;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='9' viewBox='0 0 28 9'%3E%3Cpath d='M0 6.5 Q 7 1 14 6.5 T 28 6.5' fill='none' stroke='%238BA36B' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:repeat-x; background-position:right bottom; background-size:auto .32em;
+  padding-bottom:.22em;
+}
 .hero-sub{font-size:clamp(.95rem,1.6vw,1.07rem); color:var(--ink-2); max-width:30em; margin:0 0 26px}
 .hero-body .cta-row .btn{flex:1}
 .hero-visual{position:relative; border-radius:28px; overflow:hidden; box-shadow:var(--shadow-md)}
