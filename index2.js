@@ -2,23 +2,6 @@
 (function(){
   'use strict';
 
-  /* ---------- תפריט מובייל ---------- */
-  var menuBtn = document.querySelector('.menu-toggle');
-  var mobileMenu = document.getElementById('mobile-menu');
-  if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener('click', function(){
-      var open = mobileMenu.classList.toggle('open');
-      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      menuBtn.setAttribute('aria-label', open ? 'סגירת תפריט' : 'פתיחת תפריט');
-    });
-    mobileMenu.addEventListener('click', function(e){
-      if (e.target.tagName === 'A') {
-        mobileMenu.classList.remove('open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
   /* ---------- אקורדיונים (סילבוס + FAQ) ---------- */
   document.querySelectorAll('.acc-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
