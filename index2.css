@@ -131,6 +131,9 @@ section{padding-block:clamp(52px,7vw,80px)}
   margin:0; text-align:center; color:var(--ink);
 }
 .hl-green{color:var(--olive); font-weight:800}
+@media (max-width:600px){
+  .hero h1{font-size:2.6rem; line-height:1.22}
+}
 .hero-sub{font-size:clamp(.98rem,1.6vw,1.1rem); color:var(--ink-2); max-width:32em; margin:0 auto 24px; text-align:center}
 .hero-body .cta-row .btn{flex:1}
 .hero-body .microcopy{text-align:center}
