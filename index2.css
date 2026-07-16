@@ -244,7 +244,7 @@ section{padding-block:clamp(52px,7vw,80px)}
 .steps-cta{text-align:center; margin-top:26px}
 
 /* ---------- למי מתאים (מנטה) ---------- */
-.fit-grid{display:grid; gap:14px; max-width:1000px; margin-inline:auto}
+.fit-grid{display:grid; gap:14px; max-width:640px; margin-inline:auto}
 .fit-col{background:var(--cream); border-radius:20px; padding:26px 24px; box-shadow:0 4px 14px rgba(35,38,30,.05)}
 .fit-col h3{font-size:.95rem; font-weight:700; margin-bottom:16px}
 .fit-yes h3{color:var(--forest)}
@@ -258,9 +258,12 @@ section{padding-block:clamp(52px,7vw,80px)}
 .fit-no li .m{color:#9a9782}
 .fit-summary{text-align:center; margin:24px auto 0; color:var(--ink-2); font-weight:600; font-size:.98rem; max-width:640px}
 
-/* ---------- קורס האנימציה (ירוק כהה, full-bleed) ---------- */
-.course-main{padding-block:0}
-.course-grid{display:grid}
+/* ---------- קורס האנימציה (כרטיס כהה מעוגל כמו הבאנדל) ---------- */
+.course-grid{
+  display:grid;
+  background:var(--forest-deep); border-radius:28px; overflow:hidden;
+  box-shadow:var(--shadow-lg); max-width:1200px; margin-inline:auto;
+}
 .course-media{position:relative; min-height:300px}
 .course-media .video-facade{height:100%; border-radius:0; box-shadow:none}
 .course-media > img{width:100%; height:100%; object-fit:cover; min-height:300px}
@@ -314,8 +317,8 @@ section{padding-block:clamp(52px,7vw,80px)}
 .about-grid{display:grid; gap:28px; align-items:center}
 .about-photo{text-align:center}
 .about-photo img{
-  width:min(180px,50vw); aspect-ratio:1/1; border-radius:100%; object-fit:cover;
-  margin-inline:auto; box-shadow:var(--shadow-md);
+  width:min(240px,64vw); aspect-ratio:1/1; border-radius:100%; object-fit:cover;
+  margin-inline:auto;
 }
 .about-label{font-weight:600; font-size:.82rem; color:#4C5A3B; margin-bottom:10px}
 .about-copy h2{font-size:clamp(1.5rem,3vw,1.9rem); color:#2B2E23}
@@ -326,14 +329,11 @@ section{padding-block:clamp(52px,7vw,80px)}
 /* ---------- המלצות (קרם) ---------- */
 .testimonials-grid{display:grid; grid-template-columns:1fr; gap:20px; max-width:1000px; margin-inline:auto}
 .testimonial-card{
-  background:#fff; border-radius:16px; padding:16px;
-  box-shadow:var(--shadow-sm);
+  background:transparent; border-radius:0; padding:0; box-shadow:none;
   display:flex; align-items:center; justify-content:center;
 }
-.testimonial-card img{width:100%; max-width:400px}
-.t-rot-a{transform:rotate(-1.5deg)}
-.t-rot-b{transform:rotate(1deg)}
-.t-rot-c{transform:rotate(-.5deg)}
+.testimonial-card img{width:100%; max-width:100%}
+.t-rot-a,.t-rot-b,.t-rot-c{transform:none}
 .testimonials-more{text-align:center; margin-top:26px}
 .testimonials-extra{display:none}
 .testimonials-extra.open{display:contents}
@@ -485,7 +485,6 @@ html.js .reveal.in{opacity:1; transform:none}
     rgba(10,13,7,.14);}
   .step-label{inset:auto 18px 18px; width:auto; padding:0; justify-content:flex-end}
   .step-desc{display:block}
-  .fit-grid{grid-template-columns:1fr 1fr; gap:22px}
   .hook-grid{grid-template-columns:repeat(3,1fr); gap:20px}
   .gallery-grid{grid-template-columns:repeat(3,1fr); gap:20px}
   .next-grid{grid-template-columns:1fr 1fr; gap:22px}
@@ -514,7 +513,7 @@ html.js .reveal.in{opacity:1; transform:none}
   .course-grid{grid-template-columns:1fr 1fr}
   .course-media{min-height:100%}
   .about-grid{grid-template-columns:.8fr 1.2fr; gap:48px}
-  .about-photo img{width:200px}
+  .about-photo img{width:270px}
   .pricing-grid{grid-template-columns:1.35fr 1fr; gap:28px}
   .pricing-divider{display:none}
 }
