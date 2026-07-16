@@ -379,16 +379,8 @@ section{padding-block:clamp(52px,7vw,80px)}
 .anim-media img{width:100%; height:auto; display:block; aspect-ratio:16/9; object-fit:cover}
 .anim-card .next-label{margin-bottom:8px}
 .anim-card h3{font-size:1.15rem; margin-bottom:12px}
-.anim-price-line{margin-bottom:14px}
+.anim-price-line{margin-bottom:18px}
 .anim-price{font-size:1.75rem; font-weight:800; color:var(--ink); line-height:1}
-.anim-list{display:flex; flex-direction:column; margin-bottom:20px}
-.anim-listrow{
-  display:flex; justify-content:space-between; align-items:center; padding:11px 0;
-  border-top:1px solid var(--line);
-  font-size:.93rem; color:#4C5344;
-}
-.anim-listrow:last-child{border-bottom:1px solid var(--line)}
-.anim-listrow .v{color:var(--olive); font-weight:700}
 .anim-card .btn{width:100%; padding:14px 20px; font-size:.9rem}
 .anim-note{font-size:.78rem; color:#7C8570; margin-top:12px; text-align:center}
 
