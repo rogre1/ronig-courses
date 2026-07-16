@@ -195,6 +195,19 @@ section{padding-block:clamp(52px,7vw,80px)}
 .hook-card h3::before{content:""; flex:none; width:9px; height:9px; border-radius:50%; background:var(--olive); transform:translateY(-2px)}
 .hook-card p{margin:0; font-size:.95rem; color:var(--ink-2)}
 
+/* ---------- גלריית סרטונים ---------- */
+.gallery-grid{display:grid; gap:18px; max-width:920px; margin-inline:auto}
+.gallery-grid .video-frame-9x16{max-width:100%; margin:0}
+.video-placeholder{
+  position:relative; width:100%; height:100%; border-radius:24px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  background:repeating-linear-gradient(135deg,#e9e6db,#e9e6db 14px,#f1efe7 14px,#f1efe7 28px);
+  border:1px dashed var(--line-strong,#c9c6ba);
+  color:var(--ink-3);
+}
+.video-placeholder .play-badge{position:static; transform:none; width:56px; height:56px; opacity:.7}
+.video-placeholder .ph-label{font-weight:600; font-size:.9rem}
+
 /* ---------- הזדהות עם הבעיה (ירוק כהה) ---------- */
 .pain-grid{display:grid; gap:26px; align-items:center}
 .pain-grid h2{font-size:clamp(1.4rem,3vw,1.85rem)}
@@ -472,6 +485,7 @@ html.js .reveal.in{opacity:1; transform:none}
   .step-desc{display:block}
   .fit-grid{grid-template-columns:1fr 1fr; gap:22px}
   .hook-grid{grid-template-columns:repeat(3,1fr); gap:20px}
+  .gallery-grid{grid-template-columns:repeat(3,1fr); gap:20px}
   .next-grid{grid-template-columns:1fr 1fr; gap:22px}
   .testimonials-grid{grid-template-columns:repeat(3,1fr)}
   .after-faq-grid{grid-template-columns:1fr 1fr; gap:56px}
