@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>טרנד הסטיקר - פרומפט מוכן להעתקה | Ronig.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green:       #6B7F52;
+      --green-light: #8a9e6e;
+      --green-glow:  rgba(107,127,82,0.18);
+      --dark:        #1e1e1e;
+      --darker:      #141414;
+      --card-dark:   #242424;
+      --border-dark: rgba(107,127,82,0.3);
+      --text-muted:  #999;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--darker);
+      color: #fff;
+      direction: rtl;
+      text-align: right;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ═══════════ HEADER ═══════════ */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 2rem;
+      background: rgba(20,20,20,0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .logo-link { display:flex; align-items:center; gap:0.6rem; text-decoration:none; }
+    .logo-link img { height:34px; }
+
+    .btn-back {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: #ccc;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: 'Heebo', sans-serif;
+    }
+    .btn-back:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
+
+    /* ═══════════ HERO ═══════════ */
+    #hero {
+      padding: 5rem 1.5rem 3rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero-bg-gradient {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(107,127,82,0.22) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(107,127,82,0.15);
+      border: 1px solid var(--border-dark);
+      padding: 0.38rem 1rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content:''; width:7px; height:7px; border-radius:50%;
+      background:var(--green); flex-shrink:0;
+      box-shadow: 0 0 6px var(--green);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    h1 .hi { color: var(--green); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #bbb;
+    }
+
+    /* ═══════════ PROMPT SECTION ═══════════ */
+    #prompt {
+      flex: 1;
+      padding: 1rem 1.5rem 5rem;
+    }
+    .prompt-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 1.75rem;
+      position: relative;
+    }
+    .prompt-wrap::before {
+      content:'';
+      position:absolute; top:0; right:0; left:0; height:3px;
+      background: linear-gradient(90deg, var(--green), var(--green-light));
+      border-radius: 16px 16px 0 0;
+    }
+
+    .prompt-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .prompt-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--green-light);
+    }
+
+    .btn-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      font-family: 'Heebo', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(107,127,82,0.4);
+      transition: all 0.2s;
+    }
+    .btn-copy:hover { background: var(--green-light); transform: translateY(-1px); }
+    .btn-copy.copied { background: #4a5d38; }
+
+    .prompt-box {
+      direction: ltr;
+      text-align: left;
+      background: #181818;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 1.25rem 1.4rem;
+      font-family: 'SFMono-Regular', Menlo, Consolas, monospace;
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #dcdcdc;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    /* ═══════════ FOOTER ═══════════ */
+    footer {
+      background: var(--darker);
+      border-top: 1px solid var(--border-dark);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p { color:#666; font-size:0.83rem; }
+    footer a { color:var(--green-light); text-decoration:none; }
+
+    /* ═══════════ RESPONSIVE ═══════════ */
+    @media (max-width: 520px) {
+      header { padding: 0.75rem 1rem; }
+      #hero { padding: 3.5rem 1.25rem 2.5rem; }
+      .prompt-wrap { padding: 1.25rem; }
+      .prompt-head { flex-direction: column; align-items: flex-start; }
+      .btn-copy { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header>
+  <a href="../" class="logo-link">
+    <img src="../assets/logo.png" alt="Ronig.ai">
+  </a>
+  <a href="https://rogre1.github.io/ronig-courses/" class="btn-back">← חזרה לעמוד הקורסים</a>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">פרומפט</div>
+    <h1>טרנד ה<span class="hi">סטיקר</span></h1>
+    <p class="hero-sub">
+      יד מקלפת את הדמות מהתמונה כאילו הייתה סטיקר מודבק - חושפת את הרקע המקורי מתחתיה,
+      ומשאירה סטיקר חתוך עם קונטור לבן דק. העתיקו את הפרומפט למטה והדביקו אותו בסידנס 2.5.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ PROMPT ═══════════ -->
+<section id="prompt">
+  <div class="prompt-wrap">
+    <div class="prompt-head">
+      <span class="prompt-label">הפרומפט</span>
+      <button class="btn-copy" id="copyBtn" type="button">📋 העתק פרומפט</button>
+    </div>
+    <pre class="prompt-box" id="promptText">Start with the uploaded image as the exact first frame. Keep the camera completely static and preserve the original composition and background.
+A realistic, well-groomed hand enters the frame from the side and reaches toward the person in the center of the image. The feminine hand grabs the upper edge of the person as if the entire character were a flat, removable sticker attached to the scene.
+In one smooth, satisfying motion, the hand begins peeling the person away from the image. The entire figure must come off as one single connected sticker head, hair, torso, arms, hands, legs, clothing and shoes all detach together. Nothing should remain behind and no part of the body should separate.
+As the figure is peeled away, the original background underneath is revealed naturally and remains perfectly intact, as though the person had simply been placed on top of it like a sticker.
+Once fully removed, the person becomes a complete die-cut sticker with a thin clean white outline around the entire silhouette. The hand holds the sticker in front of the camera for a moment, with slight natural paper-like movement and subtle bending.
+The person’s appearance, proportions, clothing and pose must remain exactly the same as in the original image throughout the effect. No morphing, no distortion, no missing body parts, and no changes to the background.</pre>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <p>© 2026 <a href="../">Ronig.ai</a> · כל הזכויות שמורות</p>
+  <p><a href="../">חזרה לדף הבית</a></p>
+</footer>
+
+<!-- ═══════════ JS: Copy to clipboard ═══════════ -->
+<script>
+  const copyBtn = document.getElementById('copyBtn');
+  const promptText = document.getElementById('promptText');
+
+  function withTimeout(promise, ms) {
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
+    ]);
+  }
+
+  copyBtn.addEventListener('click', async () => {
+    let copied = false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await withTimeout(navigator.clipboard.writeText(promptText.innerText), 800);
+        copied = true;
+      }
+    } catch (err) {}
+
+    if (!copied) {
+      try {
+        const range = document.createRange();
+        range.selectNodeContents(promptText);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        copied = document.execCommand('copy');
+        selection.removeAllRanges();
+      } catch (err) {}
+    }
+
+    const original = copyBtn.textContent;
+    copyBtn.textContent = copied ? '✓ הועתק!' : '⚠️ סמנו והעתיקו ידנית';
+    copyBtn.classList.toggle('copied', copied);
+    setTimeout(() => {
+      copyBtn.textContent = original;
+      copyBtn.classList.remove('copied');
+    }, 2000);
+  });
+</script>
+
+</body>
+</html>
