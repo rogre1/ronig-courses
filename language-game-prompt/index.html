@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>פרומפט למשחק לימוד שפה | Ronig.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green:       #6B7F52;
+      --green-light: #8a9e6e;
+      --green-glow:  rgba(107,127,82,0.18);
+      --dark:        #1e1e1e;
+      --darker:      #141414;
+      --card-dark:   #242424;
+      --border-dark: rgba(107,127,82,0.3);
+      --text-muted:  #999;
+      --fill:        #e8836b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--darker);
+      color: #fff;
+      direction: rtl;
+      text-align: right;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ═══════════ HEADER ═══════════ */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 2rem;
+      background: rgba(20,20,20,0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .logo-link { display:flex; align-items:center; gap:0.6rem; text-decoration:none; }
+    .logo-link img { height:34px; }
+
+    .btn-back {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: #ccc;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: 'Heebo', sans-serif;
+    }
+    .btn-back:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
+
+    /* ═══════════ HERO ═══════════ */
+    #hero {
+      padding: 5rem 1.5rem 3rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero-bg-gradient {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(107,127,82,0.22) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(107,127,82,0.15);
+      border: 1px solid var(--border-dark);
+      padding: 0.38rem 1rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content:''; width:7px; height:7px; border-radius:50%;
+      background:var(--green); flex-shrink:0;
+      box-shadow: 0 0 6px var(--green);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    h1 .hi { color: var(--green); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #bbb;
+    }
+    .hero-sub .fill-note { color: var(--fill); font-weight: 700; }
+
+    /* ═══════════ PROMPT SECTION ═══════════ */
+    #prompt {
+      flex: 1;
+      padding: 1rem 1.5rem 5rem;
+    }
+    .prompt-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 1.75rem;
+      position: relative;
+    }
+    .prompt-wrap::before {
+      content:'';
+      position:absolute; top:0; right:0; left:0; height:3px;
+      background: linear-gradient(90deg, var(--green), var(--green-light));
+      border-radius: 16px 16px 0 0;
+    }
+
+    .prompt-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .prompt-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--green-light);
+    }
+
+    .btn-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      font-family: 'Heebo', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(107,127,82,0.4);
+      transition: all 0.2s;
+    }
+    .btn-copy:hover { background: var(--green-light); transform: translateY(-1px); }
+    .btn-copy.copied { background: #4a5d38; }
+
+    .prompt-box {
+      direction: rtl;
+      text-align: right;
+      background: #181818;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 1.25rem 1.4rem;
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.85;
+      color: #dcdcdc;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 65vh;
+      overflow-y: auto;
+    }
+    .prompt-box .fill {
+      color: var(--fill);
+      font-weight: 700;
+    }
+
+    /* ═══════════ FOOTER ═══════════ */
+    footer {
+      background: var(--darker);
+      border-top: 1px solid var(--border-dark);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p { color:#666; font-size:0.83rem; }
+    footer a { color:var(--green-light); text-decoration:none; }
+
+    /* ═══════════ RESPONSIVE ═══════════ */
+    @media (max-width: 520px) {
+      header { padding: 0.75rem 1rem; }
+      #hero { padding: 3.5rem 1.25rem 2.5rem; }
+      .prompt-wrap { padding: 1.25rem; }
+      .prompt-head { flex-direction: column; align-items: flex-start; }
+      .btn-copy { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header>
+  <a href="../" class="logo-link">
+    <img src="../assets/logo.png" alt="Ronig.ai">
+  </a>
+  <a href="https://rogre1.github.io/ronig-courses/" class="btn-back">← חזרה לעמוד הקורסים</a>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">פרומפט</div>
+    <h1>משחק אישי <span class="hi">ללימוד שפה</span></h1>
+    <p class="hero-sub">
+      השלימו את ארבעת השדות <span class="fill-note">המסומנים באדום</span> בתוך הפרומפט,
+      העתיקו את כל הטקסט, והדביקו בשיחה חדשה בקלוד קוד.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ PROMPT ═══════════ -->
+<section id="prompt">
+  <div class="prompt-wrap">
+    <div class="prompt-head">
+      <span class="prompt-label">הפרומפט</span>
+      <button class="btn-copy" id="copyBtn" type="button">📋 העתק פרומפט</button>
+    </div>
+    <pre class="prompt-box" id="promptText">בנה לי משחק אישי ללימוד שפה, שאני אשחק בו בטלפון.
+
+השפה שאני רוצה ללמוד היא <span class="fill">【מלאו כאן — למשל: יוונית מודרנית / ספרדית / איטלקית / יפנית】</span>.
+שפת האם שלי, שאליה יתורגם הכול, היא <span class="fill">【מלאו כאן — למשל: עברית】</span>.
+מי שהולך ללמוד זה <span class="fill">【מלאו כאן — למשל: אני לבד / אני ובן הזוג שלי / אני והילדים】</span>.
+ואני לומד/ת כי <span class="fill">【מלאו כאן — למשל: אנחנו עוברים לגור שם / טיול של חודש בקיץ / עבודה】</span>.
+
+לפני שאתה כותב שורת קוד, שאל אותי 3-4 שאלות קצרות ורק אז תתחיל לבנות: מה הרמה שלי היום בשפה, אילו מילים או משפטים אני כבר מכיר/ה, מה הכי דחוף לי לדעת (מסעדות, קניות, כיוונים, שיחת חולין, חירום), ואם יש משהו ספציפי לחיים שלי שכדאי שייכנס לתוכן. תשתמש בתשובות שלי כדי לבחור את המילים והמשפטים בפועל — אני רוצה תוכן שמתאים לחיים שלי ולא רשימה גנרית מספר לימוד, ואל תבזבז תחנות שלמות על מה שאני כבר יודע/ת.
+
+מה שאני רוצה זה קובץ HTML אחד, עצמאי לגמרי — כל ה-CSS וה-JavaScript בתוכו, בלי ספריות חיצוניות ובלי שרת. שאפתח אותו בדאבל-קליק וזה פשוט יעבוד, גם בלי אינטרנט. שמור את ההתקדמות ב-localStorage כך שהיא תשרוד סגירה של הדפדפן.
+
+בתוך הקובץ אני רוצה מסלול למידה של שלושה פרקים, שלוש תחנות בכל אחד: פרק 1 — מתחילים לקרוא, פרק 2 — שפה שימושית ליום-יום, פרק 3 — מתחילים לדבר. המסך הראשי מציג פרק אחד בכל פעם, עם ניווט בין פרקים, סרגל התקדמות ורשימת התחנות, ולכל תחנה סטטוס ברור: הושלמה, פתוחה או נעולה. תחנה נפתחת כשהקודמת הושלמה בציון 75% ומעלה, ותחנה 1 פתוחה תמיד. אתה לא חייב תוכן מלא לכל תשע התחנות — עדיף שש או שבע תחנות עם תוכן אמיתי וטוב, ושתיים נעולות עם משפט שמסביר מה יהיה שם, מאשר תשע תחנות רדודות.
+
+מנוע השאלות: סיבוב של עד 12 שאלות רב-ברירה, ארבע אפשרויות לכל שאלה. אחרי כל תשובה מוצג מיד מה נכון ולמה, ובסוף הסיבוב ניקוד, הרצף הארוך ביותר ורשימה של מה שפספסתי. לכל תחנה סוגי שאלות משלה — לזהות, לתרגם לשני הכיוונים, להגות, ולהבין משפט שנשמע.
+
+בנוסף אני רוצה מסך לימוד עם טבלה של כל התוכן (אותיות, מילים ומשפטים עם תרגום והגייה), כדי שאפשר יהיה להציץ בו לפני שמתחילים. וכפתור הקראה שמשמיע כל מילה ומשפט בשפה הנלמדת, דרך ה-speechSynthesis של הדפדפן.
+
+אני רוצה גם מצב שיחה: מסך נפרד עם מיקרופון. אני לוחץ/ת, מישהו מדבר אליי בשפה הנלמדת, ואני מקבל/ת את מה שנאמר בכתב, תעתיק הגייה, ותרגום לשפה שלי. וטאב שני להפך — אני כותב/ת או מקליט/ה בשפה שלי ומקבל/ת מה להגיד, עם תעתיק שאפשר להקריא ממנו. לזיהוי הדיבור השתמש ב-webkitSpeechRecognition של הדפדפן, שהוא חינם ובלי מפתח. לתרגום, קודם חפש התאמה במאגר המשפטים של המשחק, ורק אם אין — שירות תרגום ציבורי חינמי שלא דורש מפתח או הרשמה. ואם לא הצלחת לתרגם, תגיד את זה. אל תמציא תרגום.
+
+וווקבולרי אישי: כל מילה או ביטוי שאני שומר/ת, משיחה או מטעות בסיבוב, נשמר ברשימה אישית שאפשר לתקן בה תרגום בלחיצה. המילים האלה נכנסות אוטומטית למאגר של התחנות, כך שאפגוש אותן שוב בתרגול. זה החלק שהופך את זה לאישי — מה ששמעתי ברחוב חוזר אליי.
+
+העיצוב צריך להיות נקי ומינימלי: רקע לבן, צבע הדגשה אחד, הרבה אוויר. מותאם לטלפון קודם כל, עם כפתורים גדולים מספיק לאצבע ובלי גלישה לרוחב. כפתור למעבר בין מצב בהיר לכהה, כשברירת המחדל היא בהיר. הטקסט בשפה הנלמדת צריך להיות האלמנט הכי בולט על המסך.
+
+לגבי התאמה לשפה שבחרתי — המבנה קבוע אבל התוכן של פרק 1 תלוי לגמרי בשפה, ואתה צריך להחליט לפי סוג הכתב. אם זה כתב שונה משלי, כמו יוונית או רוסית או ערבית, פרק 1 מלמד את האותיות: הצורה, השם והצליל, עם דוגמה מוכרת לכל צליל. אם זה כתב לטיני, כמו ספרדית או איטלקית או גרמנית, אין טעם ללמד אותיות — פרק 1 ילמד את כללי ההגייה שמפילים דוברי שפת האם שלי: אותיות שנשמעות אחרת ממה שמצפים, צירופים, והטעמה. ואם זה כתב גדול, כמו יפנית או סינית או קוריאנית, אל תנסה ללמד הכול: התחל מתת-קבוצה שימושית כמו היראגנה או 40-50 סימנים נפוצים, ותגיד לי במפורש שזו התחלה ולא הכתב המלא.
+
+לגבי תעתיק ההגייה: אם הכתיב של השפה סדיר, כתוב פונקציה שממירה טקסט לתעתיק לפי חוקים, כדי שגם משפט חדש מהמיקרופון יקבל הגייה. אם הכתיב לא סדיר, כמו באנגלית או צרפתית, אל תעמיד פנים שיש חוקים — שמור הגייה ידנית לכל פריט, ותגיד לי שבמצב שיחה ההגייה תהיה זמינה רק למה שנמצא במאגר. ובכל מקרה, סמן את ההברה המוטעמת באותיות גדולות. זה הדבר שהכי משנה איך שומעים אותי.
+
+יש כמה דברים שאני מבקש/ת שתתייחס אליהם כדרישות ולא כהמלצות, כי נשרפים עליהם בפועל:
+
+אל תשמיע קול אוטומטית, רק מלחיצה שלי. כרום חוסם הקראה שלא באה מלחיצה, והקריאה החסומה תוקעת את תור הדיבור — ואז גם כפתור ההשמעה מפסיק לעבוד לגמרי.
+
+אל תעבור לשאלה הבאה לבד. התשובה הנכונה וההסבר נשארים על המסך עד שאני לוחץ/ת "המשך". מעבר אוטומטי אחרי שנייה לא מספיק כדי לקרוא.
+
+המסיחים חייבים להיבדל בשדה שנבחן. אם השאלה היא "איזו אות עושה את הצליל הזה" ובשפה יש שלוש אותיות עם אותו צליל, אסור ששתיים מהן יופיעו כאפשרויות — כי אז יש שתי תשובות נכונות ורק אחת נספרת. בדוק את זה לכל סוג שאלה בנפרד.
+
+מאגר קטן אומר סיבוב קצר. אם לקטגוריה יש חמישה פריטים, אל תייצר 12 שאלות עם חזרות — תקצר את הסיבוב.
+
+בטקסט שמערבב שפות, סימני פיסוק קופצים לצד הלא נכון. השתמש ב-unicode-bidi: isolate על כל קטע בשפה הזרה.
+
+וברירת המחדל צריכה להיות בהירה. אל תעקוב אחרי הגדרת המערכת, אחרת מי שמכשירו במצב כהה יקבל רקע כהה בלי לבקש ויחשוב שהעיצוב לא נכנס.
+
+לגבי רף האיכות: תבדוק בעצמך בדפדפן לפני שאתה אומר לי שסיימת. הרץ סיבוב מלא בכל תחנה דרך ה-DOM, וודא לכל שאלה שיש ארבע אפשרויות שונות, שהתשובה הנכונה ביניהן, ושאין שאלה כפולה בסיבוב. בדוק שנעילת התחנות עובדת — שתחנה נעולה לא נפתחת ושהשלמה פותחת את הבאה. בדוק רוחב מסך של טלפון ושאין גלישה לרוחב. דווח לי מספרים אמיתיים מהבדיקות ולא "הכל עובד". ותגיד לי מה לא בדקת — אם אין לך פלט אודיו ולא יכולת לוודא שההקראה נשמעת, תגיד את זה במקום להניח. דיוק התוכן חשוב לי יותר מכמות: כל תרגום, כל תעתיק וכל הטעמה צריכים להיות נכונים, ואם אתה לא בטוח לגבי מילה — תבחר אחרת.
+
+וחשוב לי במיוחד: כשהגרסה הבסיסית מוכנה ובדוקה, תעצור. תראה לי מה נבנה ותשאל אותי במפורש אם אני רוצה להמשיך לשלב המתקדם או להישאר עם מה שיש, ואל תתחיל אף אחד מהשלבים המתקדמים לפני שעניתי לך. זה נכון גם אם אני במצב אישורים אוטומטי ואתה יכול טכנית להמשיך בלי לשאול — אל תתייחס לאישור אוטומטי כהסכמה. אני רוצה להחליט על זה במודע, כי לחלק מהשלבים יש מחיר של חשבונות והתקנות.
+
+וכשתשאל אותי, הצג לי את האפשרויות האלה עם המחיר האמיתי של כל אחת: להעלות לאוויר, כך שיהיה קישור שאפשר לפתוח בכל טלפון ולהוסיף למסך הבית כמו אפליקציה (דורש חשבון גיטהב, חינם). סנכרון בין מכשירים, שאם לומדים כמה אנשים כל אחד יראה את ההתקדמות של השני מהטלפון שלו (דורש חשבון Cloudflare, חינם ובלי כרטיס אשראי) — ואם עושים את זה, השרת צריך למזג מצבים ולא לדרוס, אחרת סיבוב שנשחק במכשיר אחד יימחק על ידי מכשיר אחר שלא הספיק להתעדכן. פרופילים והשוואה, עם ניקוד והתקדמות נפרדים לכל לומד/ת ותצוגה של כולם זה לצד זה במסך הראשי כולל מי מוביל. תמונות פרופיל בעיגול במקום אייקונים. כותרת מעוצבת בפונט מיוחד. ולהרחיב את התחנות הנעולות עם תוכן אמיתי ודיאלוגים שלמים.
+
+תתחיל עכשיו — קודם השאלות, אחר כך הבנייה.</pre>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <p>© 2026 <a href="../">Ronig.ai</a> · כל הזכויות שמורות</p>
+  <p><a href="../">חזרה לדף הבית</a></p>
+</footer>
+
+<!-- ═══════════ JS: Copy to clipboard ═══════════ -->
+<script>
+  const copyBtn = document.getElementById('copyBtn');
+  const promptText = document.getElementById('promptText');
+
+  function withTimeout(promise, ms) {
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
+    ]);
+  }
+
+  copyBtn.addEventListener('click', async () => {
+    let copied = false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await withTimeout(navigator.clipboard.writeText(promptText.innerText), 800);
+        copied = true;
+      }
+    } catch (err) {}
+
+    if (!copied) {
+      try {
+        const range = document.createRange();
+        range.selectNodeContents(promptText);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        copied = document.execCommand('copy');
+        selection.removeAllRanges();
+      } catch (err) {}
+    }
+
+    const original = copyBtn.textContent;
+    copyBtn.textContent = copied ? '✓ הועתק!' : '⚠️ סמנו והעתיקו ידנית';
+    copyBtn.classList.toggle('copied', copied);
+    setTimeout(() => {
+      copyBtn.textContent = original;
+      copyBtn.classList.remove('copied');
+    }, 2000);
+  });
+</script>
+
+</body>
+</html>
