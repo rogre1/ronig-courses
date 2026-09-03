@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>פרומפט לחיפוש בקבוצות פייסבוק ובמרקטפלייס | Ronig.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green:       #6B7F52;
+      --green-light: #8a9e6e;
+      --green-glow:  rgba(107,127,82,0.18);
+      --dark:        #1e1e1e;
+      --darker:      #141414;
+      --card-dark:   #242424;
+      --border-dark: rgba(107,127,82,0.3);
+      --text-muted:  #999;
+      --fill:        #e8836b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--darker);
+      color: #fff;
+      direction: rtl;
+      text-align: right;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ═══════════ HEADER ═══════════ */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 2rem;
+      background: rgba(20,20,20,0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .logo-link { display:flex; align-items:center; gap:0.6rem; text-decoration:none; }
+    .logo-link img { height:34px; }
+
+    .btn-back {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: #ccc;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: 'Heebo', sans-serif;
+    }
+    .btn-back:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
+
+    /* ═══════════ HERO ═══════════ */
+    #hero {
+      padding: 5rem 1.5rem 3rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero-bg-gradient {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(107,127,82,0.22) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(107,127,82,0.15);
+      border: 1px solid var(--border-dark);
+      padding: 0.38rem 1rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content:''; width:7px; height:7px; border-radius:50%;
+      background:var(--green); flex-shrink:0;
+      box-shadow: 0 0 6px var(--green);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    h1 .hi { color: var(--green); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #bbb;
+    }
+    .hero-sub .fill-note { color: var(--fill); font-weight: 700; }
+
+    /* ═══════════ BEFORE YOU START ═══════════ */
+    #before {
+      padding: 0 1.5rem 1rem;
+    }
+    .before-wrap {
+      max-width: 780px;
+      margin: 0 auto 2.5rem;
+    }
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .section-intro {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #aaa;
+      margin-bottom: 1.5rem;
+    }
+
+    .step {
+      background: var(--card-dark);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 0.85rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--green);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 0.15rem;
+    }
+    .step-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+    .step-body p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: #b5b5b5;
+    }
+    .step-body p + p { margin-top: 0.5rem; }
+    .step-body strong { color: var(--green-light); font-weight: 700; }
+
+    .note-box {
+      background: rgba(107,127,82,0.1);
+      border: 1px solid var(--border-dark);
+      border-right: 3px solid var(--green);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-top: 1.25rem;
+    }
+    .note-box p {
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: #c5c5c5;
+    }
+    .note-box p + p { margin-top: 0.5rem; }
+    .note-box strong { color: #fff; }
+
+    /* ═══════════ PROMPT SECTION ═══════════ */
+    #prompt {
+      flex: 1;
+      padding: 1rem 1.5rem 5rem;
+    }
+    .prompt-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 1.75rem;
+      position: relative;
+    }
+    .prompt-wrap::before {
+      content:'';
+      position:absolute; top:0; right:0; left:0; height:3px;
+      background: linear-gradient(90deg, var(--green), var(--green-light));
+      border-radius: 16px 16px 0 0;
+    }
+
+    .prompt-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .prompt-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--green-light);
+    }
+
+    .btn-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      font-family: 'Heebo', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(107,127,82,0.4);
+      transition: all 0.2s;
+    }
+    .btn-copy:hover { background: var(--green-light); transform: translateY(-1px); }
+    .btn-copy.copied { background: #4a5d38; }
+
+    .prompt-box {
+      direction: rtl;
+      text-align: right;
+      background: #181818;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 1.25rem 1.4rem;
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.85;
+      color: #dcdcdc;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 65vh;
+      overflow-y: auto;
+    }
+    .prompt-box .fill {
+      color: var(--fill);
+      font-weight: 700;
+    }
+
+    /* ═══════════ FOOTER ═══════════ */
+    footer {
+      background: var(--darker);
+      border-top: 1px solid var(--border-dark);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p { color:#666; font-size:0.83rem; }
+    footer a { color:var(--green-light); text-decoration:none; }
+
+    /* ═══════════ RESPONSIVE ═══════════ */
+    @media (max-width: 520px) {
+      header { padding: 0.75rem 1rem; }
+      #hero { padding: 3.5rem 1.25rem 2.5rem; }
+      .prompt-wrap { padding: 1.25rem; }
+      .prompt-head { flex-direction: column; align-items: flex-start; }
+      .btn-copy { width: 100%; justify-content: center; }
+      .step { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header>
+  <a href="../" class="logo-link">
+    <img src="../assets/logo.png" alt="Ronig.ai">
+  </a>
+  <a href="https://rogre1.github.io/ronig-courses/" class="btn-back">← חזרה לעמוד הקורסים</a>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">פרומפט</div>
+    <h1>שולחים את קלוד <span class="hi">לחפש בפייסבוק</span></h1>
+    <p class="hero-sub">
+      קבוצות פייסבוק ומרקטפלייס הם המקום שבו אנשים פרטיים מפרסמים - וגם המקום שאי אפשר
+      לחפש בו בגוגל. הפרומפט הזה שולח את קלוד לגלול, לקרוא ולתרגם במקומכם, ולהחזיר עמוד
+      אחד מסודר עם קישור ישר לכל מודעה. קודם קראו את מה שצריך להכין,
+      ואז העתיקו את הפרומפט והחליפו את המקומות
+      <span class="fill-note">המסומנים באדום</span> - אי אפשר להחליף אותם כאן בעמוד.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ BEFORE YOU START ═══════════ -->
+<section id="before">
+  <div class="before-wrap">
+    <h2 class="section-title">מה צריך להכין לפני</h2>
+    <p class="section-intro">
+      חמש דקות של הכנה. בלי זה קלוד לא יוכל לראות את פייסבוק בכלל, והוא גם יגיד לכם את זה.
+    </p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>קלוד שיכול לגלוש - לא הצ'אט הרגיל</h3>
+        <p>
+          זה עובד ב-<strong>Claude Code</strong> (אפליקציית הדסקטופ למק ולווינדוס, או בטרמינל),
+          עם היכולת לשלוט בדפדפן שלכם. הצ'אט הרגיל באתר לא יכול להיכנס לפייסבוק שלכם.
+        </p>
+        <p>
+          אם אתם לא בטוחים מה מותקן אצלכם - זה בסדר. הפרומפט מבקש מקלוד לבדוק את זה
+          ראשון, ולהדריך אתכם שלב-שלב בעברית פשוטה אם משהו חסר.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>להיות מחוברים לפייסבוק בדפדפן</h3>
+        <p>
+          קלוד לא נכנס לחשבון שלכם ולא מקבל סיסמה. הוא גולש ב<strong>דפדפן שלכם, שכבר מחובר</strong>
+          - בדיוק כמו שאתם גוללים בעצמכם. לכן שווה לפתוח את פייסבוק בדפדפן ולוודא שאתם
+          מחוברים לפני שמתחילים.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>המיקום בחשבון הפייסבוק שלכם - זה הדבר שהכי מפיל</h3>
+        <p>
+          מרקטפלייס מציג תוצאות לפי <strong>המיקום שמוגדר בחשבון</strong>, ולא לפי מה שמקלידים
+          בחיפוש. אם אתם מחפשים משהו באזור אחר מזה שמוגדר אצלכם, תקבלו תוצאות מהמקום הלא נכון
+          גם אם תכתבו את שם העיר במפורש.
+        </p>
+        <p>
+          שנו את המיקום בהגדרות פייסבוק לאזור שאתם מחפשים בו. הפרומפט מבקש מקלוד לבדוק את זה
+          לפני שהוא מתחיל, ולהסביר לכם איך לשנות.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>קבוצות ציבוריות לעומת פרטיות</h3>
+        <p>
+          בקבוצה <strong>ציבורית</strong> אפשר לגלול ואפילו להשתמש בחיפוש הפנימי שלה בלי להיות
+          חברים בה. בקבוצה <strong>פרטית</strong> חייבים להיות חברים - ולהצטרף כדאי שתעשו בעצמכם.
+          הפרומפט אומר לקלוד לא להצטרף לשום קבוצה בשמכם.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>לדעת מה אתם מחפשים - במשפט אחד</h3>
+        <p>
+          מה, איפה, תקציב, ומה חייב להיות שם. אל תדאגו לדייק בהתחלה - הפרומפט מבקש מקלוד
+          לשאול אתכם כמה שאלות קצרות לפני שהוא מתחיל, ואחר כך הסימונים שלכם על התוצאות
+          מחדדים לו את הקריטריונים לסבב הבא.
+        </p>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <p>
+        <strong>קריאה בלבד.</strong> הפרומפט מגדיר לקלוד במפורש: לא לפרסם, לא להגיב, לא לשלוח
+        הודעות, לא ללחוץ לייק ולא להצטרף לקבוצות. הוא רק קורא, מתרגם ומסדר.
+      </p>
+      <p>
+        <strong>זה לוקח זמן.</strong> גלילה אמיתית בקבוצות היא עבודה - זה יכול לקחת כמה דקות
+        ארוכות לכל אזור. הפרומפט מבקש מקלוד להעריך מראש כמה זמן זה ייקח.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROMPT ═══════════ -->
+<section id="prompt">
+  <div class="prompt-wrap">
+    <div class="prompt-head">
+      <span class="prompt-label">הפרומפט</span>
+      <button class="btn-copy" id="copyBtn" type="button">📋 העתק פרומפט</button>
+    </div>
+    <pre class="prompt-box" id="promptText">אני רוצה שתחפש בשבילי בפייסבוק - גם בקבוצות וגם במרקטפלייס - ותבנה לי מזה עמוד אחד מסודר שאפשר לעבוד איתו מהטלפון.
+
+מה אני מחפש/ת: <span class="fill">【מלאו כאן — למשל: בית למכירה / רכב יד שנייה / ספה / דירה להשכרה / ציוד צילום】</span>
+איפה: <span class="fill">【מלאו כאן — עיר, אזור או רדיוס. למשל: חיפה והקריות / אי בשם סלמינה ביוון / מרכז הארץ】</span>
+התקציב שלי: <span class="fill">【מלאו כאן — טווח מחירים ומטבע】</span>
+חייב להיות: <span class="fill">【מלאו כאן — 2-4 דברים שבלעדיהם זה לא מעניין אותי】</span>
+לא רלוונטי בשבילי: <span class="fill">【מלאו כאן — למשל: מודעות של מתווכים / מעל 150 אלף ק"מ / משהו שדורש שיפוץ מהיסוד】</span>
+השפה שבה מפרסמים באזור הזה: <span class="fill">【מלאו כאן — למשל: עברית / יוונית / אנגלית ועברית】</span>
+
+לפני שאתה מתחיל לחפש, תעבור על ארבעת הדברים האלה בסדר הזה:
+
+ראשית, בדוק שיש לך גישה לדפדפן שלי - כלומר שאתה יכול לגלוש בדפדפן שבו אני מחובר/ת לפייסבוק. אם אין לך גישה כזאת, עצור. תסביר לי בעברית פשוטה, בצעדים ממוספרים, מה חסר ואיך לחבר את זה, ותחכה שאני אאשר שזה מוכן. אל תנחש ואל תתחיל לעבוד בלי גישה, ואל תנסה לעקוף את זה דרך חיפוש בגוגל - זה לא אותו דבר, וזאת בדיוק הנקודה: את מה שיש בקבוצות פייסבוק אי אפשר למצוא בחיפוש רגיל.
+
+שנית, בדוק שאני מחובר/ת לפייסבוק בדפדפן הזה. אם לא, תגיד לי ותחכה.
+
+שלישית, בדוק מה המיקום שמוגדר בחשבון הפייסבוק שלי. במרקטפלייס התוצאות נקבעות לפי המיקום בחשבון ולא לפי מה שמקלידים בחיפוש, אז אם המיקום המוגדר הוא לא האזור שאני מחפש/ת בו - תסביר לי איך לשנות אותו, ותחכה שאשנה. אל תוותר על המרקטפלייס בלי לבדוק את זה.
+
+רביעית, תשאל אותי 3-4 שאלות קצרות שיעזרו לך לסנן טוב יותר, ורק אחרי שאענה תתחיל. ותגיד לי מראש הערכה גסה של כמה זמן זה ייקח.
+
+איך אני רוצה שתחפש:
+
+תתחיל מלמצוא את הקבוצות הרלוונטיות לאזור שלי לפי מילות מפתח, בשפה שבה אנשים באמת מפרסמים שם - לא בתרגום שלי לעברית. אם השפה המקומית היא לא שפה שאני מדבר/ת, אתה מתרגם את מילות החיפוש בעצמך. תעדיף קבוצות מקומיות ולא קבוצות ארציות גדולות, כי שם יושבות המודעות של אנשים פרטיים.
+
+בקבוצות ציבוריות אפשר גם לגלול וגם להשתמש בשורת החיפוש הפנימית של הקבוצה בלי להיות חבר בה - תשתמש בשתי הדרכים, כי החיפוש הפנימי מפספס מודעות שכתובות בלי מילות מפתח. אל תצטרף לשום קבוצה בשמי; אם קבוצה פרטית נראית לך חשובה, תגיד לי ואני אצטרף בעצמי.
+
+חשוב: אל תסתמך רק על מילות מפתח. אנשים פרטיים כותבים מודעה כמו הודעה לחבר, בלי מחיר בכותרת ובלי מילים מקצועיות. תקרא את הפוסטים עצמם, כולל בשפה זרה, ותחליט לגופו של עניין. מודעה טובה יכולה להיות שורה אחת ותמונה אחת.
+
+תבדוק גם את המרקטפלייס: הקטגוריה הרלוונטית, טווח המחירים, ורדיוס מרחק סביב האזור. אם אין שם כלום - תגיד לי את זה במפורש כתוצאה, ואל תמציא במקום.
+
+מה לאסוף לכל מודעה: מחיר, הפרטים החשובים לפי מה שאני מחפש/ת, המיקום המדויק, מתי היא פורסמה, קישור ישיר לפוסט או למודעה המקורית, פרטי קשר אם הם מופיעים בפוסט, והתמונות. אם המודעה בשפה זרה - גם תרגום לעברית של מה שכתוב. אם פרט חסר, תכתוב "לא צוין". אל תשלים פרטים מהדמיון ואל תעגל מחיר.
+
+מה לסנן החוצה: מודעות שכבר סומנו כנמכר, מודעות ישנות מדי (תגיד לי מאיזה גיל אתה פוסל), אותה מודעה שחוזרת בכמה קבוצות, וכל מה שלא עומד בקריטריונים שנתתי. תגיד לי כמה פסלת ולמה - אני רוצה לדעת שלא איבדתי משהו.
+
+מה אני רוצה לקבל בסוף:
+
+קובץ HTML אחד, עצמאי לגמרי - כל ה-CSS וה-JavaScript בתוכו, בלי ספריות חיצוניות ובלי שרת - שאפתח בדאבל-קליק וגם אשלח לעצמי לטלפון. מותאם לטלפון קודם כל, בעמודה אחת, בלי גלישה לרוחב, עם כפתורים גדולים מספיק לאצבע.
+
+כרטיס אחד לכל מודעה, אחד מתחת לשני: התמונות, המחיר בגדול, הפרטים, מתי פורסם, ותג שאומר מאיפה זה בא - שם הקבוצה או מרקטפלייס. בכל כרטיס כפתור בולט שפותח את המודעה המקורית בפייסבוק בטאב חדש, כדי שאוכל לכתוב למפרסם ישירות. ואם יש טלפון בפוסט - גם כפתור להתקשר.
+
+בכל כרטיס שלושה כפתורי סימון - כן, אולי, לא - ועוד שני סימונים נפרדים: יצרתי קשר, וראיתי. הסימונים נשמרים בדפדפן ב-localStorage כך שהם ישרדו סגירה ורענון. למעלה באנר שאומר מתי הרשימה התעדכנה לאחרונה, כמה פריטים יש בה, ואפשרות לסנן לפי הסימונים ולפי הקריטריון שהכי חשוב לי.
+
+ואחרי שאני אסמן, אני אחזור אליך ואגיד לך מה סימנתי. אז אני רוצה שתסתכל על מה שסימנתי כן ומה סימנתי לא, תבין מה המכנה המשותף, ותעדכן את הקריטריונים בהתאם לפני הסבב הבא. תגיד לי במפורש מה שינית בהבנה שלך - למשל "הבנתי שאתה מוותר על מרפסת אבל לא מתפשר על קרבה לים". ככה כל סבב חוזר יותר מדויק.
+
+רף האיכות והדיווח:
+
+תדווח לי מספרים אמיתיים ולא "עברתי על הכל": אילו קבוצות בדקת ואיך הן נקראות, כמה פוסטים עברת בכל אחת, כמה נכנסו לרשימה וכמה נפלו. תגיד לי במפורש מה לא הצלחת לראות ולמה - קבוצה פרטית, חיפוש פנימי שחסום לחברים, תמונות שלא הצלחת לשלוף. אני מעדיף/ה רשימה קטנה ואמיתית על רשימה גדולה ומנופחת.
+
+אל תמציא מודעה, ואל תכניס פריט בלי קישור למקור. אם אתה לא בטוח שהבנת נכון פוסט בשפה זרה - תסמן אותו כלא ודאי במקום לנחש.
+
+וגבולות שחשובים לי: אתה קורא בלבד. אל תפרסם, אל תגיב, אל תשלח הודעות, אל תלחץ לייק, אל תצטרף לקבוצות ואל תשנה שום הגדרה בחשבון שלי. אם צריך לעשות אחד מהדברים האלה - תגיד לי ואני אעשה את זה בעצמי.
+
+וכשהעמוד הראשון מוכן ובדוק, תעצור. תראה לי אותו ותשאל אותי אם אני רוצה להמשיך, ואל תתחיל שום שלב מתקדם לפני שעניתי - גם אם אני במצב אישורים אוטומטי ואתה יכול טכנית להמשיך בלי לשאול. אל תתייחס לאישור אוטומטי כהסכמה.
+
+וכשתשאל, תציג לי את האפשרויות האלה עם המחיר האמיתי של כל אחת: להעלות את העמוד לאוויר כך שיהיה קישור שאפשר לפתוח בכל טלפון (דורש חשבון גיטהב, חינם). סימונים משותפים בין שני אנשים, כך שאם אני מחפש/ת עם בן/בת זוג או שותף כל אחד יסמן מהטלפון שלו והשני יראה את זה (דורש חשבון Cloudflare, חינם ובלי כרטיס אשראי). וסבב חיפוש חוזר שירוץ שוב על אותן קבוצות ויסמן לי רק מה חדש מאז הפעם הקודמת.
+
+תתחיל עכשיו - קודם הבדיקות והשאלות, אחר כך החיפוש.</pre>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <p>© 2026 <a href="../">Ronig.ai</a> · כל הזכויות שמורות</p>
+  <p><a href="../">חזרה לדף הבית</a></p>
+</footer>
+
+<!-- ═══════════ JS: Copy to clipboard ═══════════ -->
+<script>
+  const copyBtn = document.getElementById('copyBtn');
+  const promptText = document.getElementById('promptText');
+
+  function withTimeout(promise, ms) {
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
+    ]);
+  }
+
+  copyBtn.addEventListener('click', async () => {
+    let copied = false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await withTimeout(navigator.clipboard.writeText(promptText.innerText), 800);
+        copied = true;
+      }
+    } catch (err) {}
+
+    if (!copied) {
+      try {
+        const range = document.createRange();
+        range.selectNodeContents(promptText);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        copied = document.execCommand('copy');
+        selection.removeAllRanges();
+      } catch (err) {}
+    }
+
+    const original = copyBtn.textContent;
+    copyBtn.textContent = copied ? '✓ הועתק!' : '⚠️ סמנו והעתיקו ידנית';
+    copyBtn.classList.toggle('copied', copied);
+    setTimeout(() => {
+      copyBtn.textContent = original;
+      copyBtn.classList.remove('copied');
+    }, 2000);
+  });
+</script>
+
+</body>
+</html>
