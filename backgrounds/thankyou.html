@@ -32,6 +32,7 @@
         .ty-list li::before{content:"·"; color:var(--olive); font-weight:800; flex:none}
         .ty-list strong{color:var(--ink)}
         .ty-list a{color:#4C5A3B; font-weight:700}
+        .ty-imgs{display:grid; gap:18px}
         .ty-img{margin:0}
         .ty-img img{width:100%; border-radius:18px; border:1px solid var(--line); box-shadow:var(--shadow-sm)}
         .ty-img figcaption{text-align:center; font-size:.82rem; color:var(--ink-3); margin-top:10px}
@@ -100,7 +101,7 @@
             </li>
             <li>
                 <span class="n">2</span>
-                <span>נכנסים דרך הקישור במייל, והקורס מחכה לכם בעמוד הראשי.</span>
+                <span>נכנסים דרך הקישור במייל ומחפשים את <strong>"קורס החלפת רקעים ב-AI"</strong> - הוא מחכה לכם בעמוד הראשי.</span>
             </li>
         </ol>
         <div class="ty-note">אם לא מצאתם את המייל - בדקו גם בתיקיית ספאם או "קידומי מכירות".</div>
@@ -116,10 +117,16 @@
         </ul>
     </section>
 
-    <figure class="ty-img">
-        <img src="assets/email-example.webp" alt="דוגמה למייל הגישה: שם משתמש, סיסמה וקישור כניסה למערכת" width="1047" height="923" loading="lazy">
-        <figcaption>ככה נראה המייל שקיבלתם</figcaption>
-    </figure>
+    <div class="ty-imgs">
+        <figure class="ty-img">
+            <img src="assets/email-example.webp" alt="דוגמה למייל הגישה: שם משתמש, סיסמה וקישור כניסה למערכת" width="1047" height="923" loading="lazy">
+            <figcaption>ככה נראה המייל שקיבלתם</figcaption>
+        </figure>
+        <figure class="ty-img">
+            <img src="assets/course-inside.webp" alt="הקורס בתוך מערכת הלימוד: שיעור 1 מתנגן, ורשימת השיעורים בצד" width="1400" height="755" loading="lazy">
+            <figcaption>וככה נראה הקורס מבפנים</figcaption>
+        </figure>
+    </div>
 
     <!-- להכין לפני שמתחילים -->
     <section class="ty-card" aria-labelledby="ty-prep">
