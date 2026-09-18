@@ -15,10 +15,9 @@
     <link rel="icon" href="assets/logo.webp" type="image/webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400&family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
-    <link rel="preload" as="image" href="assets/hero-after.webp" fetchpriority="high">
-    <script>document.documentElement.classList.add('js');</script>
+        <script>document.documentElement.classList.add('js');</script>
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -50,9 +49,9 @@
 <!-- ================= הדר ================= -->
 <header class="site-header">
     <div class="wrap">
-        <a href="#top" class="header-logo" aria-label="רוני גרין - לראש העמוד">
+        <a href="#top" class="header-logo" aria-label="Ronig.ai - לראש העמוד">
             <img src="assets/logo.webp" alt="" width="40" height="40">
-            <span>רוני גרין</span>
+            <span class="brand-name">Ronig.ai</span>
         </a>
         <nav class="header-nav" aria-label="ניווט ראשי">
             <a href="#learn">מה לומדים</a>
@@ -76,16 +75,11 @@
             <p class="hero-sub"><strong>בלי לצאת לחפש לוקיישן ובלי מסך ירוק.</strong></p>
         </div>
         <figure class="hero-visual">
-            <div class="compare" id="hero-compare" style="--pos:50%">
-                <img class="before" src="assets/hero-before.webp" alt="לפני: רוני יושבת על כיסא במטבח ביתי" width="1000" height="1000" fetchpriority="high">
-                <img class="after" src="assets/hero-after.webp" alt="אחרי: אותה הופעה בדיוק, אבל על ענן ורוד בשמיים" width="1000" height="1000" fetchpriority="high">
-                <input type="range" min="0" max="100" value="50" dir="ltr" aria-label="גררו כדי להשוות בין הצילום המקורי לסרטון עם הסביבה החדשה">
-                <div class="divider" aria-hidden="true"></div>
-                <div class="handle" aria-hidden="true"><span>‹</span><span>›</span></div>
-                <span class="label label-before" aria-hidden="true">לפני</span>
-                <span class="label label-after" aria-hidden="true">אחרי</span>
-            </div>
-            <figcaption class="compare-hint">גררו את הידית: אותו צילום, אותה הופעה - סביבה אחרת</figcaption>
+            <img src="assets/hero-collage.webp"
+                 srcset="assets/hero-collage-m.webp 820w, assets/hero-collage.webp 1353w"
+                 sizes="(min-width:1024px) 560px, 92vw"
+                 alt="לפני ואחרי: רוני יושבת על כיסא במטבח ביתי, ואותה הופעה בדיוק על ענן ורוד בשמיים"
+                 width="1353" height="1061" fetchpriority="high">
         </figure>
         <div class="hero-body">
             <div class="hero-facts">
@@ -98,7 +92,6 @@
                 <span class="was" data-launch-only>במקום 169 ₪</span>
                 <span class="tag" data-launch-only>מחיר השקה לחמישה ימים</span>
             </div>
-            <p class="microcopy hero-until" data-launch-only data-launch-end-text>מסתיים בתום חמשת ימי ההשקה, לפי שעון ישראל.</p>
             <a href="#pricing" class="btn btn-primary js-pay" data-track-cta="hero">אני רוצה ללמוד ליצור כאלה</a>
             <p class="microcopy">השימוש בכלי ה-AI כרוך בעלות נפרדת. <a href="#faq-cost" class="js-open-faq">פירוט בשאלות הנפוצות</a>.</p>
         </div>
@@ -268,7 +261,6 @@
                 <span class="price-was" data-launch-only>169 ₪</span>
                 <span class="price-save" data-launch-only>חיסכון של 50 ₪</span>
             </div>
-            <p class="price-until" data-launch-only data-launch-end-text>מחיר ההשקה בתוקף לחמישה ימים, לפי שעון ישראל.</p>
             <a href="#pricing" class="btn btn-bright js-pay" data-track-cta="pricing"><span>לרכישת הקורס ב-<span data-price-now>119</span> ₪</span></a>
             <p class="price-micro">השימוש בכלי ה-AI כרוך בעלות נפרדת. <a href="#faq-cost" class="js-open-faq">פירוט בשאלות הנפוצות</a></p>
             <div class="service">
@@ -336,7 +328,7 @@
 <!-- ================= פוטר ================= -->
 <footer class="site-footer">
     <div class="wrap footer-inner">
-        <div class="footer-brand"><img src="assets/logo.webp" alt="" loading="lazy"><span>רוני גרין</span></div>
+        <div class="footer-brand"><img src="assets/logo.webp" alt="" loading="lazy"><span class="brand-name">Ronig.ai</span></div>
         <nav class="footer-links" aria-label="קישורים משפטיים">
             <a href="../terms.html" target="_blank">תקנון ותנאי שימוש</a>
             <a href="../privacy.html" target="_blank">מדיניות פרטיות</a>

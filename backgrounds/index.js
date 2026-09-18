@@ -38,24 +38,6 @@
   var price = inLaunch ? PRICE_LAUNCH : PRICE_FULL;
   document.querySelectorAll('[data-price-now]').forEach(function(el){ el.textContent = price; });
   document.querySelectorAll('[data-launch-only]').forEach(function(el){ el.hidden = !inLaunch; });
-  if (inLaunch && datesSet) {
-    var endDate = new Date(LAUNCH_END);
-    var fmtDate = new Intl.DateTimeFormat('he-IL', {day:'numeric', month:'numeric', timeZone:'Asia/Jerusalem'}).format(endDate);
-    var fmtTime = new Intl.DateTimeFormat('he-IL', {hour:'2-digit', minute:'2-digit', timeZone:'Asia/Jerusalem'}).format(endDate);
-    document.querySelectorAll('[data-launch-end-text]').forEach(function(el){
-      el.textContent = 'מסתיים ב-' + fmtDate + ' בשעה ' + fmtTime + ', לפי שעון ישראל.';
-    });
-  }
-
-  /* ---------- סליידר לפני/אחרי ---------- */
-  document.querySelectorAll('.compare').forEach(function(box){
-    var range = box.querySelector('input[type=range]');
-    if (!range) return;
-    var set = function(v){ box.style.setProperty('--pos', v + '%'); };
-    range.addEventListener('input', function(){ set(range.value); });
-    set(range.value);
-  });
-
   /* ---------- אקורדיונים (סילבוס + FAQ) ---------- */
   function setOpen(item, open){
     item.classList.toggle('open', open);
