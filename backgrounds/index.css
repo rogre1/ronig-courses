@@ -126,7 +126,11 @@ section{padding-block:clamp(52px,7vw,80px)}
 }
 .hero-price .now{font-size:2rem; font-weight:800; color:var(--ink); line-height:1}
 .hero-price .was{font-size:1.05rem; color:var(--ink-3); text-decoration:line-through}
-.hero-price .tag{font-size:.82rem; font-weight:700; color:#4C5A3B; background:var(--mint); border-radius:100px; padding:4px 12px}
+.hero-price .tag{
+  font-size:.88rem; font-weight:800; color:var(--cta-ink);
+  background:var(--olive-bright); border-radius:100px; padding:6px 14px;
+  box-shadow:0 6px 16px rgba(120,140,93,.32); white-space:nowrap;
+}
 .hero-body .microcopy{margin-top:12px}
 .hero-visual{margin:0; max-width:520px; margin-inline:auto; width:100%}
 .hero-visual img{width:100%; height:auto; filter:drop-shadow(0 14px 30px rgba(35,38,30,.16))}
