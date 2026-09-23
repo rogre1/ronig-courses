@@ -160,7 +160,13 @@ section{padding-block:clamp(52px,7vw,80px)}
 .info-card h3{display:flex; align-items:baseline; gap:10px; font-size:1.1rem; margin-bottom:.4em}
 .info-card h3::before{content:""; flex:none; width:9px; height:9px; border-radius:50%; background:var(--olive); transform:translateY(-2px)}
 .info-card p{margin:0; font-size:.95rem; color:var(--ink-2)}
-.fit-line{text-align:center; font-weight:600; color:var(--ink); margin:26px auto 0; max-width:640px}
+.bonus-line{
+  text-align:center; font-size:.95rem; color:var(--ink-2);
+  background:var(--cream); border:1px dashed var(--olive); border-radius:100px;
+  padding:12px 22px; margin:20px auto 0; max-width:560px;
+}
+.bonus-line strong{color:var(--ink)}
+.fit-line{text-align:center; font-weight:600; color:var(--ink); margin:20px auto 0; max-width:640px}
 
 .pairs{display:grid; gap:28px; max-width:900px; margin:clamp(36px,5vw,56px) auto 0}
 .pair figure{margin:0}
