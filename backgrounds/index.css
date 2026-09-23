@@ -261,6 +261,10 @@ section{padding-block:clamp(52px,7vw,80px)}
 .price-was{font-size:1.1rem; font-weight:500; color:#75806A; text-decoration:line-through}
 .price-save{font-weight:700; font-size:.82rem; color:var(--olive-bright); margin-inline-start:auto}
 .price-card .btn{width:100%}
+.price-launch-note{
+  text-align:center; font-size:1rem; font-weight:800; color:var(--olive-bright);
+  margin:14px 0 0; letter-spacing:.01em;
+}
 .price-micro{text-align:center; font-size:.8rem; color:var(--ink-dark-3); margin-top:12px; font-weight:500}
 .price-micro a{color:var(--leaf)}
 .service{
@@ -270,7 +274,7 @@ section{padding-block:clamp(52px,7vw,80px)}
 .service div{display:flex; gap:10px; align-items:baseline}
 .service .k{color:var(--ink-dark-3); flex:none; min-width:78px; font-weight:500}
 .service .d{color:var(--ink-dark-1); font-weight:600}
-.pricing-legal{text-align:center; font-size:.8rem; color:var(--ink-3); margin:26px auto 0; max-width:560px}
+.pricing-legal{text-align:center; font-size:.8rem; color:var(--ink-3); margin:26px auto 0; max-width:560px; line-height:1.9}
 .pricing-legal a{color:var(--ink-3)}
 
 /* ---------- FAQ ---------- */
