@@ -26,6 +26,16 @@
         .ty-steps strong{color:var(--ink)}
         .ty-steps small{display:block; color:var(--ink-3); font-size:.86rem; margin-top:2px}
         .ty-note{margin-top:16px; padding:12px 14px; background:#FBF3D9; border:1px solid #EAD9A0; border-radius:12px; font-size:.9rem; color:#6B5A1E; font-weight:500}
+        .ty-alert{
+            display:flex; gap:16px; align-items:flex-start;
+            background:#FBF3D9; border:2px solid #E0C56A; border-radius:22px;
+            padding:clamp(20px,3.5vw,28px); box-shadow:0 6px 18px rgba(180,150,50,.15);
+        }
+        .ty-alert-icon{font-size:1.9rem; flex:none; line-height:1.1}
+        .ty-alert h2{font-size:1.15rem; color:#5C4D14; margin-bottom:6px}
+        .ty-alert p{margin:0; font-size:.95rem; color:#6B5A1E; line-height:1.65}
+        .ty-alert strong{color:#4A3D0F}
+        .ty-steps small a{color:#4C5A3B; font-weight:700}
         .ty-list{list-style:none; margin:0; padding:0}
         .ty-list li{padding:9px 0; border-top:1px solid var(--line); font-size:.95rem; color:var(--ink-2); display:flex; gap:10px; align-items:baseline}
         .ty-list li:first-child{border-top:none; padding-top:0}
@@ -99,20 +109,28 @@
 
 <div class="ty-wrap">
 
+    <!-- אזהרת ספאם -->
+    <section class="ty-alert" aria-labelledby="ty-spam">
+        <span class="ty-alert-icon" aria-hidden="true">📩</span>
+        <div>
+            <h2 id="ty-spam">לא רואים את המייל? בדקו בספאם</h2>
+            <p>מייל הגישה נשלח אוטומטית, ולפעמים הוא נוחת ב<strong>ספאם</strong> או בלשונית <strong>"קידומי מכירות"</strong> בג'ימייל. שווה לבדוק שם לפני שממשיכים - וכדאי לסמן אותו כ"לא ספאם" כדי שגם המיילים הבאים יגיעו אליכם.</p>
+        </div>
+    </section>
+
     <!-- מה עכשיו -->
     <section class="ty-card hl" aria-labelledby="ty-now">
         <h2 id="ty-now">מה עכשיו?</h2>
         <ol class="ty-steps">
             <li>
                 <span class="n">1</span>
-                <span><strong>שלחנו לכם מייל עם פרטי הגישה</strong> למערכת הלימוד.<small>שם משתמש, סיסמה וקישור כניסה - נשלח אוטומטית מיד אחרי הרכישה.</small></span>
+                <span><strong>שלחנו לכם מייל עם פרטי הגישה</strong> למערכת הלימוד.<small>שם משתמש, סיסמה וקישור כניסה - נשלח אוטומטית מיד אחרי הרכישה. לא הגיע? <a href="#ty-spam">בדקו בספאם ובקידומי מכירות</a>.</small></span>
             </li>
             <li>
                 <span class="n">2</span>
                 <span>נכנסים דרך הקישור במייל ומחפשים את <strong>"קורס החלפת רקעים ב-AI"</strong> - הוא מחכה לכם בעמוד הראשי.</span>
             </li>
         </ol>
-        <div class="ty-note">אם לא מצאתם את המייל - בדקו גם בתיקיית ספאם או "קידומי מכירות".</div>
     </section>
 
     <!-- חשוב לדעת -->
