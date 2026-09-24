@@ -148,6 +148,9 @@ section{padding-block:clamp(52px,7vw,80px)}
 .video-facade:hover .play-badge{transform:translate(-50%,-50%) scale(1.08)}
 .video-frame-9x16{max-width:320px; margin-inline:auto; aspect-ratio:9/16; border-radius:24px; overflow:hidden}
 .video-frame-9x16 iframe{width:100%; height:100%; border:0; display:block; border-radius:24px}
+.gallery-grid{display:grid; gap:18px; max-width:920px; margin-inline:auto}
+.gallery-grid .video-frame-9x16{max-width:100%; margin:0}
+@media (min-width:768px){ .gallery-grid{grid-template-columns:repeat(3,1fr); gap:20px} }
 .video-caption{text-align:center; font-size:.88rem; color:var(--ink-3); margin:14px 0 0; font-weight:500}
 
 .examples-head{margin-top:clamp(36px,5vw,56px)}
