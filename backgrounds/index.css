@@ -132,10 +132,13 @@ section{padding-block:clamp(52px,7vw,80px)}
 .hero-visual{margin:0; max-width:520px; margin-inline:auto; width:100%}
 .hero-visual img{width:100%; height:auto; filter:drop-shadow(0 14px 30px rgba(35,38,30,.16))}
 
-/* במובייל: כותרת ההירו והטקסט שמתחתיה ממורכזים */
+/* במובייל: כל תוכן ההירו ממורכז */
 @media (max-width:767px){
-  .hero-title{text-align:center}
+  .hero-title,.hero-body{text-align:center}
   .hero-sub{margin-inline:auto}
+  .hero-facts{justify-content:center}
+  .hero-price{justify-content:center}
+  .cta-row{justify-content:center}
 }
 
 /* ---------- דוגמאות ---------- */
