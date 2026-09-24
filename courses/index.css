@@ -103,6 +103,7 @@ p{margin:0 0 1em}
 
 /* המחיר והכפתור נצמדים לתחתית, כדי ששני הכרטיסים ייראו מיושרים */
 .course-foot{margin-top:auto}
+.price-launch{margin:0 0 10px; font-weight:800; font-size:.95rem; color:var(--olive-bright)}
 .price-line{display:flex; align-items:baseline; gap:12px; margin-bottom:20px; flex-wrap:wrap}
 .price-now{font-size:clamp(2.1rem,3.5vw,2.5rem); font-weight:800; color:var(--ink-dark-1); line-height:1}
 .price-was{font-size:1.05rem; font-weight:500; color:#75806A; text-decoration:line-through}
