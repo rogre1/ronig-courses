@@ -1,0 +1,128 @@
+/* ============================================================
+   Ronig.ai — דף הקורסים (שני כרטיסים)
+   עיצוב: Premium Warm Editorial — קרם, מנטה וירוק כהה (כמו הדף הראשי).
+   Mobile-first.
+   ============================================================ */
+
+:root{
+  --cream:#FBF9F4;
+  --cream-deep:#F1EFE7;
+  --mint:#F0F3E8;
+  --forest:#333E27;
+  --forest-deep:#20261A;
+  --olive:#788C5D;
+  --olive-bright:#8BA36B;
+  --leaf:#B7C29F;
+  --ink:#1B1D16;
+  --ink-2:#5B5F52;
+  --ink-3:#8A8672;
+  --ink-dark-1:#F1EFE7;
+  --ink-dark-2:#B9BDA9;
+  --ink-dark-3:#8A9179;
+  --line:#E3E0D5;
+  --shadow-lg:0 16px 34px rgba(35,38,30,.24);
+  --header-h:72px;
+  --wrap:1120px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+@media (max-width:767px){ html{font-size:106.25%} }
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--ink-2);
+  font-family:'Heebo',system-ui,sans-serif;
+  font-size:1.03rem;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%; height:auto; display:block}
+h1,h2{color:var(--ink); line-height:1.28; margin:0 0 .55em; font-weight:800; letter-spacing:-.01em}
+p{margin:0 0 1em}
+:focus-visible{outline:2px solid var(--olive); outline-offset:3px; border-radius:8px}
+::selection{background:rgba(120,140,93,.28)}
+
+.wrap{max-width:var(--wrap); margin-inline:auto; padding-inline:20px}
+
+/* ---------- כפתורים (pill) ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family:inherit; font-size:1.02rem; font-weight:700;
+  min-height:48px; padding:14px 30px; border-radius:100px; border:none; cursor:pointer;
+  text-decoration:none; transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.btn-bright{background:var(--olive-bright); color:#1B2211; font-weight:800; box-shadow:0 10px 24px rgba(27,34,17,.35)}
+.btn-bright:hover{transform:translateY(-2px); background:#97b076}
+
+/* ---------- הדר ---------- */
+.site-header{
+  position:fixed; inset-inline:0; top:0; z-index:100;
+  height:var(--header-h);
+  background:rgba(251,249,244,.88);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.site-header .wrap{height:100%; display:flex; align-items:center}
+.header-logo{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink)}
+.brand-name{font-family:'Assistant','Heebo',system-ui,sans-serif; font-weight:300; font-size:1.25rem; letter-spacing:.01em; direction:ltr}
+.header-logo img{height:40px; width:40px; border-radius:50%}
+
+/* ---------- כותרת ---------- */
+.courses{padding:calc(var(--header-h) + clamp(36px,6vw,64px)) 0 clamp(52px,7vw,80px); background:var(--mint)}
+.section-head{max-width:720px; margin-inline:auto; text-align:center; margin-bottom:clamp(28px,4vw,44px)}
+.section-head h1{font-size:clamp(1.8rem,4vw,2.6rem)}
+.section-head .hl{color:var(--olive)}
+
+/* ---------- כרטיסי קורס ---------- */
+.courses-grid{display:grid; gap:22px; align-items:stretch}
+@media (min-width:860px){ .courses-grid{grid-template-columns:1fr 1fr; gap:28px} }
+
+.course-card{
+  background:var(--forest-deep); border-radius:28px; overflow:hidden;
+  box-shadow:var(--shadow-lg); color:var(--ink-dark-2);
+  display:flex; flex-direction:column;
+}
+.course-media{aspect-ratio:16/9; background:#2A3122}
+.course-media img{width:100%; height:100%; object-fit:cover}
+.course-media-thumbs{display:grid; grid-template-columns:repeat(3,1fr); gap:3px}
+
+.course-body{padding:clamp(24px,3vw,36px); display:flex; flex-direction:column; flex:1}
+.course-top{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px}
+.course-badge{background:var(--olive-bright); color:#1B2211; font-weight:800; font-size:.78rem; padding:8px 16px; border-radius:100px}
+.course-kicker{font-weight:600; font-size:.75rem; color:var(--ink-dark-3)}
+.course-card h2{font-size:clamp(1.4rem,2.5vw,1.7rem); color:var(--ink-dark-1); margin-bottom:.4em}
+.course-sub{font-size:.97rem; color:var(--ink-dark-2)}
+
+.course-list{display:flex; flex-direction:column; margin:6px 0 22px}
+.course-row{
+  display:flex; justify-content:space-between; align-items:center; gap:12px; padding:11px 0;
+  border-top:1px solid rgba(241,239,247,.12); font-size:.93rem; color:#D6D9C9;
+}
+.course-row:last-child{border-bottom:1px solid rgba(241,239,247,.12)}
+.course-row .v{color:var(--leaf); font-weight:700; flex:none}
+
+/* המחיר והכפתור נצמדים לתחתית, כדי ששני הכרטיסים ייראו מיושרים */
+.course-foot{margin-top:auto}
+.price-line{display:flex; align-items:baseline; gap:12px; margin-bottom:20px; flex-wrap:wrap}
+.price-now{font-size:clamp(2.1rem,3.5vw,2.5rem); font-weight:800; color:var(--ink-dark-1); line-height:1}
+.price-was{font-size:1.05rem; font-weight:500; color:#75806A; text-decoration:line-through}
+.price-save{font-weight:700; font-size:.8rem; color:var(--olive-bright); margin-inline-start:auto}
+.course-foot .btn{width:100%}
+.course-direct{
+  display:block; text-align:center; margin-top:13px;
+  font-size:.85rem; font-weight:500; color:var(--leaf);
+  text-underline-offset:3px;
+}
+.course-direct:hover{color:var(--ink-dark-1)}
+
+/* ---------- פוטר ---------- */
+.site-footer{border-top:1px solid var(--line); padding:36px 0 44px; font-size:.85rem; color:var(--ink-3)}
+.footer-inner{display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center}
+.footer-brand{display:flex; align-items:center; gap:8px; color:var(--ink)}
+.footer-brand .brand-name{font-size:1.05rem}
+.footer-brand img{height:28px; width:28px; border-radius:50%}
+.footer-links{display:flex; flex-wrap:wrap; justify-content:center; gap:8px 22px}
+.footer-links a{color:var(--ink-2); text-decoration:none; font-weight:500}
+.footer-links a:hover{color:var(--ink)}
+.footer-mail a{color:var(--ink-2); text-decoration:none}
