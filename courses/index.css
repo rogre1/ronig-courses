@@ -90,7 +90,6 @@ p{margin:0 0 1em}
 .course-body{padding:clamp(24px,3vw,36px); display:flex; flex-direction:column; flex:1}
 .course-top{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px}
 .course-badge{background:var(--olive-bright); color:#1B2211; font-weight:800; font-size:.78rem; padding:8px 16px; border-radius:100px}
-.course-kicker{font-weight:600; font-size:.75rem; color:var(--ink-dark-3)}
 .course-card h2{font-size:clamp(1.4rem,2.5vw,1.7rem); color:var(--ink-dark-1); margin-bottom:.4em}
 .course-sub{font-size:.97rem; color:var(--ink-dark-2)}
 
