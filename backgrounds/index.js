@@ -14,8 +14,8 @@
      שימו לב: זה משנה רק תצוגה. המחיר שנגבה בפועל נקבע ב-Grow.
      ============================================================ */
   var PAY_URL      = 'https://pay.grow.link/ODg3NjU~f71d834055b0cbdc3955f5df7ac1a33d-NDAxNDU4MQ';
-  var LAUNCH_START = '2026-XX-XXT00:00:00+03:00';   // TODO: תאריך תחילת ההשקה
-  var LAUNCH_END   = '2026-XX-XXT23:59:59+03:00';   // TODO: תאריך סיום ההשקה
+  var LAUNCH_START = '2026-09-20T00:00:00+03:00';
+  var LAUNCH_END   = '2026-09-28T23:59:59+03:00';   // יום שני, 12 בלילה
   var PRICE_LAUNCH = 119;
   var PRICE_FULL   = 169;
 
@@ -39,6 +39,20 @@
   var price = inLaunch ? PRICE_LAUNCH : PRICE_FULL;
   document.querySelectorAll('[data-price-now]').forEach(function(el){ el.textContent = price; });
   document.querySelectorAll('[data-launch-only]').forEach(function(el){ el.hidden = !inLaunch; });
+
+  /* ---------- ספירת ימים לסיום ההשקה (בכפתור הצף) ---------- */
+  var countdown = document.getElementById('launch-countdown');
+  if (countdown && inLaunch && datesSet) {
+    var dayOf = function(t){
+      return Date.parse(new Intl.DateTimeFormat('en-CA', {timeZone: 'Asia/Jerusalem'}).format(t));
+    };
+    var daysLeft = Math.round((dayOf(Date.parse(LAUNCH_END)) - dayOf(Date.now())) / 864e5);
+    countdown.textContent =
+      daysLeft <= 0 ? '🔥 היום האחרון ב-' + PRICE_LAUNCH + ' ₪ · מחר ' + PRICE_FULL + ' ₪' :
+      daysLeft === 1 ? '⏳ מחר יום אחרון ב-' + PRICE_LAUNCH + ' ₪ · אחר כך ' + PRICE_FULL + ' ₪' :
+      '⏳ עוד ' + (daysLeft === 2 ? 'יומיים' : daysLeft + ' ימים') + ' המחיר עולה ל-' + PRICE_FULL + ' ₪';
+    countdown.hidden = false;
+  }
   /* ---------- אקורדיונים (סילבוס + FAQ) ---------- */
   function setOpen(item, open){
     item.classList.toggle('open', open);
@@ -86,20 +100,15 @@
 
   /* ---------- Sticky CTA במובייל ---------- */
   var sticky = document.getElementById('sticky-cta');
-  var hero = document.querySelector('.hero');
-  var pricing = document.getElementById('pricing');
-  if (sticky && hero && pricing && 'IntersectionObserver' in window) {
-    var pastHero = false, pricingVisible = false;
+    var pricing = document.getElementById('pricing');
+  if (sticky && pricing && 'IntersectionObserver' in window) {
+    var pricingVisible = false;
     var update = function(){
-      var show = pastHero && !pricingVisible && window.innerWidth < 768;
+      var show = !pricingVisible && window.innerWidth < 768;
       sticky.classList.toggle('show', show);
       sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
       sticky.querySelector('a').tabIndex = show ? 0 : -1;
     };
-    new IntersectionObserver(function(entries){
-      pastHero = !entries[0].isIntersecting;
-      update();
-    }, {rootMargin: '-80px 0px 0px 0px'}).observe(hero);
     new IntersectionObserver(function(entries){
       pricingVisible = entries[0].isIntersecting;
       update();

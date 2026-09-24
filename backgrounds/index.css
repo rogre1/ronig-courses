@@ -316,6 +316,7 @@ section{padding-block:clamp(52px,7vw,80px)}
 }
 .sticky-cta.show{transform:translateY(0)}
 .sticky-cta .btn{width:100%; padding:12px 20px; font-size:.95rem}
+.sticky-countdown{margin:0 0 8px; text-align:center; color:#fff; font-size:.9rem; font-weight:700}
 
 /* ---------- Reveal ---------- */
 html.js .reveal{opacity:0; transform:translateY(14px); transition:opacity .45s ease, transform .45s ease}
