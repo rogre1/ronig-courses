@@ -36,6 +36,23 @@
     });
   });
 
+  /* ---------- סרטונים של תלמידים: נסתר עד אישור, תצוגה מקדימה עם ?students ---------- */
+  var students = document.getElementById('student-videos');
+  if (students && /[?&]students\b/.test(window.location.search)) students.hidden = false;
+  var track = document.getElementById('students-track');
+  if (students && track) {
+    var step = function(){ return track.querySelector('.student-item').offsetWidth + 18; };
+    /* RTL: "הבא" = גלילה שמאלה */
+    students.querySelector('.students-next').addEventListener('click', function(){ track.scrollBy({left:-step(), behavior:'smooth'}); });
+    students.querySelector('.students-prev').addEventListener('click', function(){ track.scrollBy({left:step(), behavior:'smooth'}); });
+    var toggleArrows = function(){
+      var overflow = track.scrollWidth > track.clientWidth + 2;
+      students.querySelectorAll('.students-arrow').forEach(function(a){ a.style.visibility = overflow ? '' : 'hidden'; });
+    };
+    toggleArrows();
+    window.addEventListener('resize', toggleArrows);
+  }
+
   /* ---------- Sticky CTA במובייל ---------- */
   var sticky = document.getElementById('sticky-cta');
   var hero = document.querySelector('.hero');

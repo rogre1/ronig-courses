@@ -201,6 +201,29 @@ section{padding-block:clamp(52px,7vw,80px)}
 /* ---------- גלריית סרטונים ---------- */
 .gallery-grid{display:grid; gap:18px; max-width:920px; margin-inline:auto}
 .gallery-grid .video-frame-9x16{max-width:100%; margin:0}
+
+/* ---------- סרטונים של תלמידים (גלילה הצידה) ---------- */
+.students-carousel{position:relative; max-width:1000px; margin-inline:auto}
+.students-track{
+  display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory;
+  padding:6px 4px 18px; scrollbar-width:thin; -webkit-overflow-scrolling:touch;
+}
+.student-item{flex:0 0 72%; max-width:260px; scroll-snap-align:center; text-align:center}
+.student-item .video-frame-9x16{max-width:100%}
+.student-credit{display:inline-block; margin-top:10px; font-size:.82rem; color:var(--ink-3); text-decoration:underline; text-underline-offset:3px}
+.student-credit:hover{color:var(--olive)}
+.students-arrow{
+  display:none; position:absolute; top:calc(50% - 20px); transform:translateY(-50%); z-index:3;
+  width:44px; height:44px; border-radius:50%; border:1px solid var(--line);
+  background:var(--cream); color:var(--ink); font-size:1.6rem; line-height:1; cursor:pointer;
+  box-shadow:var(--shadow-sm);
+}
+.students-prev{right:-22px}
+.students-next{left:-22px}
+@media (min-width:768px){
+  .student-item{flex-basis:calc((100% - 54px) / 4)}
+  .students-arrow{display:block}
+}
 .video-placeholder{
   position:relative; width:100%; height:100%; border-radius:24px;
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
