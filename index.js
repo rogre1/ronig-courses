@@ -36,9 +36,8 @@
     });
   });
 
-  /* ---------- סרטונים של תלמידים: נסתר עד אישור, תצוגה מקדימה עם ?students ---------- */
+  /* ---------- סרטונים של תלמידים: גלילה הצידה ---------- */
   var students = document.getElementById('student-videos');
-  if (students && /[?&]students\b/.test(window.location.search)) students.hidden = false;
   var track = document.getElementById('students-track');
   if (students && track) {
     var step = function(){ return track.querySelector('.student-item').offsetWidth + 18; };
