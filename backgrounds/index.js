@@ -15,7 +15,7 @@
      ============================================================ */
   var PAY_URL      = 'https://pay.grow.link/ODg3NjU~f71d834055b0cbdc3955f5df7ac1a33d-NDAxNDU4MQ';
   var LAUNCH_START = '2026-09-20T00:00:00+03:00';
-  var LAUNCH_END   = '2026-09-28T23:59:59+03:00';   // יום שני, 12 בלילה
+  var LAUNCH_END   = '2026-09-28T22:00:00+03:00';   // יום שני, 22:00 שעון ישראל
   var PRICE_LAUNCH = 119;
   var PRICE_FULL   = 169;
 
@@ -40,19 +40,31 @@
   document.querySelectorAll('[data-price-now]').forEach(function(el){ el.textContent = price; });
   document.querySelectorAll('[data-launch-only]').forEach(function(el){ el.hidden = !inLaunch; });
 
-  /* ---------- ספירת ימים לסיום ההשקה (בכפתור הצף) ---------- */
+  /* ---------- ספירה לאחור לסיום ההשקה (בכפתור הצף) ---------- */
   var countdown = document.getElementById('launch-countdown');
   if (countdown && inLaunch && datesSet) {
-    var dayOf = function(t){
-      return Date.parse(new Intl.DateTimeFormat('en-CA', {timeZone: 'Asia/Jerusalem'}).format(t));
+    var endMs = Date.parse(LAUNCH_END);
+    var two = function(n){ return n < 10 ? '0' + n : '' + n; };
+    var tick = function(){
+      var left = endMs - Date.now();
+      if (left <= 0) {
+        countdown.textContent = '🔥 מחיר ההשקה הסתיים';
+        clearInterval(timer);
+        return;
+      }
+      var totalSec = Math.floor(left / 1000);
+      var h = Math.floor(totalSec / 3600);
+      var m = Math.floor((totalSec % 3600) / 60);
+      var sec = totalSec % 60;
+      countdown.innerHTML =
+        '<span class="cd-label">⏳ מחיר ההשקה נגמר בעוד</span>' +
+        '<span class="cd-clock" dir="ltr">' + two(h) + ':' + two(m) + ':' + two(sec) + '</span>';
     };
-    var daysLeft = Math.round((dayOf(Date.parse(LAUNCH_END)) - dayOf(Date.now())) / 864e5);
-    countdown.textContent =
-      daysLeft <= 0 ? '🔥 היום האחרון ב-' + PRICE_LAUNCH + ' ₪ · מחר ' + PRICE_FULL + ' ₪' :
-      daysLeft === 1 ? '⏳ מחר יום אחרון ב-' + PRICE_LAUNCH + ' ₪ · אחר כך ' + PRICE_FULL + ' ₪' :
-      '⏳ עוד ' + (daysLeft === 2 ? 'יומיים' : daysLeft + ' ימים') + ' המחיר עולה ל-' + PRICE_FULL + ' ₪';
+    tick();
+    var timer = setInterval(tick, 1000);
     countdown.hidden = false;
   }
+
   /* ---------- אקורדיונים (סילבוס + FAQ) ---------- */
   function setOpen(item, open){
     item.classList.toggle('open', open);

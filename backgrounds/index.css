@@ -325,7 +325,16 @@ section{padding-block:clamp(52px,7vw,80px)}
 }
 .sticky-cta.show{transform:translateY(0)}
 .sticky-cta .btn{width:100%; padding:12px 20px; font-size:.95rem}
-.sticky-countdown{margin:0 0 8px; text-align:center; color:#fff; font-size:.9rem; font-weight:700}
+.sticky-countdown{
+  margin:0 0 10px; display:flex; align-items:center; justify-content:center;
+  gap:10px; flex-wrap:wrap; color:#fff;
+}
+.sticky-countdown .cd-label{font-size:.95rem; font-weight:700}
+.sticky-countdown .cd-clock{
+  font-size:1.5rem; font-weight:800; line-height:1;
+  color:var(--leaf); font-variant-numeric:tabular-nums;
+  letter-spacing:.02em;
+}
 
 /* ---------- Reveal ---------- */
 html.js .reveal{opacity:0; transform:translateY(14px); transition:opacity .45s ease, transform .45s ease}
