@@ -83,11 +83,11 @@
                         <div class="course-row"><span>צפייה בקצב שלכם</span><span class="v">✓</span></div>
                     </div>
                     <div class="course-foot">
-                        <p class="price-launch">🔥 מחיר השקה ל־5 ימים בלבד</p>
+                        <p class="price-launch" data-launch-only>🔥 מחיר השקה ל־5 ימים בלבד</p>
                         <div class="price-line">
-                            <span class="price-now">119 ₪</span>
-                            <span class="price-was">169 ₪</span>
-                            <span class="price-save">חיסכון של 50 ₪</span>
+                            <span class="price-now"><span data-bg-price>119</span> ₪</span>
+                            <span class="price-was" data-launch-only>169 ₪</span>
+                            <span class="price-save" data-launch-only>חיסכון של 50 ₪</span>
                         </div>
                         <a href="../backgrounds/" class="btn btn-bright" data-track-cta="courses-backgrounds">לפרטים על הקורס ←</a>
                         <a href="https://pay.grow.link/ODg3NjU~f71d834055b0cbdc3955f5df7ac1a33d-NDAxNDU4MQ" target="_blank" rel="noopener" class="course-direct" data-track-cta="courses-backgrounds-pay">או מעבר ישיר לתשלום</a>
@@ -148,6 +148,19 @@
 </footer>
 
 <script>
+    /* ---------- מחיר קורס הרקעים: מחיר השקה עד יום שני 22:00 ---------- */
+    (function(){
+        var LAUNCH_END = '2026-09-28T22:00:00+03:00';   /* זהה ל-backgrounds/index.js */
+        var PRICE_LAUNCH = 119, PRICE_FULL = 169;
+        var inLaunch = Date.now() <= Date.parse(LAUNCH_END);
+        document.querySelectorAll('[data-bg-price]').forEach(function(el){
+            el.textContent = inLaunch ? PRICE_LAUNCH : PRICE_FULL;
+        });
+        document.querySelectorAll('[data-launch-only]').forEach(function(el){
+            el.hidden = !inLaunch;
+        });
+    })();
+
     /* מעקב CTA (Meta Pixel + GA4) — לינק תשלום ישיר נספר כ-InitiateCheckout */
     document.querySelectorAll('[data-track-cta]').forEach(function(el){
         el.addEventListener('click', function(){
