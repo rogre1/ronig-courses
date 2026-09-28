@@ -39,6 +39,11 @@
   var price = inLaunch ? PRICE_LAUNCH : PRICE_FULL;
   document.querySelectorAll('[data-price-now]').forEach(function(el){ el.textContent = price; });
   document.querySelectorAll('[data-launch-only]').forEach(function(el){ el.hidden = !inLaunch; });
+  /* נגמרה ההשקה — הכפתור הצף יורד מהדף לגמרי */
+  if (!inLaunch) {
+    var stickyBar = document.getElementById('sticky-cta');
+    if (stickyBar) { stickyBar.classList.remove('show'); stickyBar.hidden = true; }
+  }
 
   /* ---------- ספירה לאחור לסיום ההשקה (בכפתור הצף) ---------- */
   var countdown = document.getElementById('launch-countdown');
@@ -48,8 +53,10 @@
     var tick = function(){
       var left = endMs - Date.now();
       if (left <= 0) {
-        countdown.textContent = '🔥 מחיר ההשקה הסתיים';
         clearInterval(timer);
+        countdown.hidden = true;
+        var bar = document.getElementById('sticky-cta');
+        if (bar) { bar.classList.remove('show'); bar.hidden = true; }
         return;
       }
       var totalSec = Math.floor(left / 1000);
@@ -116,7 +123,8 @@
   if (sticky && pricing && 'IntersectionObserver' in window) {
     var pricingVisible = false;
     var update = function(){
-      var show = !pricingVisible && window.innerWidth < 768;
+      var launchOver = datesSet && Date.now() > Date.parse(LAUNCH_END);
+      var show = !launchOver && !pricingVisible && window.innerWidth < 768;
       sticky.classList.toggle('show', show);
       sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
       sticky.querySelector('a').tabIndex = show ? 0 : -1;
