@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מתחילים עם Claude Code | Ronig.ai</title>
+<meta name="description" content="מדריך קצר בעברית למי שמעולם לא עבד עם Claude Code: התקנה, מושגים, איך ללמד את Claude מי אתם, סקילים ועוד. צעד אחרי צעד.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="מתחילים עם Claude Code | המדריך של Ronig.ai">
+<meta property="og:description" content="צעד אחרי צעד, בעברית ובלי ידע טכני: מהתקנה ועד שClaude עובד בשבילכם.">
+<meta property="og:url" content="https://rogre1.github.io/ronig-courses/claude-code-start/">
+<meta property="og:image" content="https://rogre1.github.io/ronig-courses/claude-code-start/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/logo-dark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FBF9F4;--cream-deep:#F1EFE7;--mint:#F0F3E8;
+  --forest:#333E27;--forest-deep:#20261A;--forest-tile:#2A3122;
+  --olive:#788C5D;--olive-bright:#8BA36B;--leaf:#B7C29F;
+  --ink:#1B1D16;--ink-2:#5B5F52;--ink-3:#8A8672;
+  --ink-dark-1:#F1EFE7;--ink-dark-2:#B9BDA9;
+  --line:#E3E0D5;--coral:#D9785F;
+  --shadow-sm:0 10px 22px rgba(35,38,30,.10);
+  --shadow-md:0 12px 28px rgba(35,38,30,.16);
+  --r:22px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
+a{color:var(--olive);font-weight:600}
+code,.ltr{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em}
+code{background:var(--cream-deep);border:1px solid var(--line);padding:.05em .4em;border-radius:6px;color:var(--forest)}
+b,strong{font-weight:700;color:var(--forest-deep)}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.hwrap img{height:36px;width:auto;display:block}
+.progress{flex:1;max-width:340px;display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--ink-2);font-weight:600}
+.bar{flex:1;height:8px;background:var(--cream-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--olive-bright));border-radius:99px;transition:width .4s}
+.os-switch{display:flex;background:var(--cream-deep);border:1px solid var(--line);border-radius:99px;padding:3px}
+.os-switch button{border:0;background:none;font:inherit;font-size:.8rem;font-weight:700;color:var(--ink-2);padding:5px 12px;border-radius:99px;cursor:pointer}
+.os-switch button[aria-pressed=true]{background:var(--forest);color:var(--cream)}
+
+/* return banner */
+.from-banner{display:none;background:var(--forest);color:var(--cream);text-align:center;padding:10px 16px;font-size:.95rem}
+.from-banner a{color:var(--leaf)}
+.from-banner.show{display:block}
+
+/* layout */
+.layout{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:48px;padding:0 16px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px}
+nav.toc p{font-size:.78rem;font-weight:800;color:var(--ink-3);letter-spacing:.06em;margin-bottom:10px}
+nav.toc a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-2);font-weight:500;font-size:.92rem;padding:6px 12px;border-radius:12px;border-right:3px solid transparent}
+nav.toc a:hover{background:var(--mint)}
+nav.toc a.active{background:var(--mint);color:var(--forest-deep);font-weight:700;border-right-color:var(--olive)}
+nav.toc a .tick{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--leaf);flex:none;display:grid;place-items:center;font-size:10px;color:#fff}
+nav.toc a.done .tick{background:var(--olive);border-color:var(--olive)}
+main{min-width:0;padding-bottom:60px}
+
+/* hero */
+.hero{padding:56px 0 28px}
+.eyebrow{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:700;font-size:.85rem;padding:4px 14px;border-radius:99px;margin-bottom:16px}
+h1{font-size:clamp(2rem,5.4vw,3.3rem);line-height:1.15;font-weight:900;color:var(--forest-deep);letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--olive)}
+.lead{font-size:1.15rem;color:var(--ink-2);margin-top:14px;max-width:640px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;font-weight:600;color:var(--ink-2);box-shadow:var(--shadow-sm)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border:0;font:inherit;font-weight:700;padding:12px 24px;border-radius:99px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--forest-deep)}
+.btn.ghost{background:transparent;color:var(--forest);border:1.5px solid var(--forest);box-shadow:none}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+
+/* sections */
+section.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;margin-top:22px;box-shadow:var(--shadow-sm)}
+.step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px}
+.num{flex:none;width:46px;height:46px;border-radius:50%;background:var(--mint);border:1.5px solid var(--leaf);color:var(--forest);display:grid;place-items:center;font-weight:900;font-size:1.15rem}
+h2{font-size:clamp(1.4rem,3.4vw,1.85rem);line-height:1.25;font-weight:800;color:var(--forest-deep)}
+.step-head p{color:var(--ink-3);font-size:.95rem;margin-top:2px}
+h3{font-size:1.15rem;font-weight:800;color:var(--forest);margin:26px 0 8px}
+section p+p{margin-top:10px}
+ol.steps,ul.dots{margin:12px 0 0;padding-right:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding-right:40px;margin-bottom:12px}
+ol.steps li::before{content:counter(s);position:absolute;right:0;top:1px;width:28px;height:28px;border-radius:50%;background:var(--forest);color:var(--cream);font-weight:800;font-size:.85rem;display:grid;place-items:center}
+ul.dots li{position:relative;padding-right:22px;margin-bottom:8px}
+ul.dots li::before{content:"";position:absolute;right:4px;top:.7em;width:7px;height:7px;border-radius:50%;background:var(--olive)}
+.done-row{margin-top:26px;padding-top:20px;border-top:1px dashed var(--line);display:flex;justify-content:flex-start}
+.done-btn{display:inline-flex;align-items:center;gap:10px;background:var(--cream);border:1.5px solid var(--leaf);color:var(--forest);font:inherit;font-weight:700;padding:10px 20px;border-radius:99px;cursor:pointer;transition:all .2s}
+.done-btn .box{width:20px;height:20px;border-radius:6px;border:2px solid var(--olive);display:grid;place-items:center;font-size:13px;color:#fff}
+.done-btn[aria-pressed=true]{background:var(--olive);border-color:var(--olive);color:#fff}
+.done-btn[aria-pressed=true] .box{background:#fff;color:var(--olive);border-color:#fff}
+
+/* callouts */
+.note{border-radius:16px;padding:16px 18px;margin-top:18px;display:flex;gap:12px;font-size:.97rem}
+.note .ic{flex:none;font-size:1.25rem;line-height:1.4}
+.note.tip{background:var(--mint);border:1px solid var(--leaf)}
+.note.warn{background:#FBEFE9;border:1px solid #EFC9BB}
+.note.why{background:var(--cream);border:1px solid var(--line)}
+
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.compare div{border-radius:16px;padding:18px;border:1px solid var(--line)}
+.compare .a{background:var(--cream)}
+.compare .b{background:var(--forest);color:var(--ink-dark-1);border-color:var(--forest)}
+.compare .b b{color:#fff}
+.compare h4{font-size:1rem;font-weight:800;margin-bottom:6px}
+.compare .b h4{color:var(--leaf)}
+
+/* prompt boxes */
+.prompt{position:relative;background:var(--forest-deep);color:var(--ink-dark-1);border-radius:16px;padding:18px 18px 18px 18px;margin-top:14px;white-space:pre-wrap;font-size:.95rem;line-height:1.75;border:1px solid var(--forest-tile)}
+.prompt .lbl{display:block;font-size:.75rem;font-weight:800;color:var(--leaf);letter-spacing:.05em;margin-bottom:6px}
+.prompt.en{direction:ltr;text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
+.copy{position:absolute;top:12px;left:12px;background:var(--olive);color:#fff;border:0;font:inherit;font-size:.78rem;font-weight:700;padding:5px 12px;border-radius:99px;cursor:pointer;direction:rtl}
+.copy.ok{background:var(--leaf);color:var(--forest-deep)}
+.prompt .lbl{padding-left:80px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tabs button{font:inherit;font-weight:700;font-size:.9rem;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--cream);color:var(--ink-2);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.tabpanel[hidden]{display:none}
+
+/* table */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;margin-top:16px;font-size:.93rem;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.tbl th{background:var(--forest);color:var(--cream);font-weight:700;padding:10px 12px;text-align:right}
+.tbl td{padding:11px 12px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:var(--cream)}
+.tbl td:first-child{font-weight:700;color:var(--forest);white-space:nowrap}
+.tbl-wrap{overflow-x:auto}
+
+/* accordion */
+details.acc{border:1px solid var(--line);border-radius:16px;margin-top:12px;background:var(--cream);overflow:hidden}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-size:1.3rem;color:var(--olive);font-weight:500;transition:transform .2s}
+details.acc[open] summary::after{transform:rotate(45deg)}
+details.acc .in{padding:0 18px 16px;color:var(--ink-2)}
+details.acc .in b{color:var(--forest)}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:16px}
+.gloss details{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.gloss summary{cursor:pointer;list-style:none;font-weight:800;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center}
+.gloss summary::-webkit-details-marker{display:none}
+.gloss summary small{font-weight:500;color:var(--ink-3);font-size:.78rem;direction:ltr}
+.gloss p{margin-top:8px;font-size:.93rem;color:var(--ink-2)}
+dfn{font-style:normal;border-bottom:2px dotted var(--olive);cursor:help;position:relative}
+.tip-pop{position:absolute;z-index:80;max-width:280px;background:var(--forest-deep);color:var(--ink-dark-1);font-size:.85rem;line-height:1.55;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-md);pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.show{opacity:1}
+
+/* ===== UI mockups ===== */
+figure.mock{margin:22px 0 4px}
+.win{direction:ltr;text-align:left;background:#fff;border:1px solid #DDD9CC;border-radius:14px;box-shadow:var(--shadow-md);overflow:hidden;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;color:#2b2b28;position:relative}
+.win-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;background:#F4F2EC;border-bottom:1px solid #E6E2D6}
+.win-bar i{width:11px;height:11px;border-radius:50%;background:#E0DCCF}
+.win-bar i:nth-child(1){background:#EC6A5E}.win-bar i:nth-child(2){background:#F4BF4F}.win-bar i:nth-child(3){background:#61C554}
+.win-bar span{margin-left:10px;color:#8a8672;font-size:12px}
+.win-body{padding:16px;position:relative}
+.ui-tabs{display:inline-flex;background:#EFECE3;border-radius:10px;padding:3px;gap:2px}
+.ui-tabs span{padding:6px 16px;border-radius:8px;color:#6b6a62;font-weight:600}
+.ui-tabs span.on{background:#fff;color:#1b1d16;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ui-row{display:flex;gap:14px}
+.ui-side{width:150px;flex:none;border-right:1px solid #ECE8DD;padding-right:12px;color:#6b6a62;font-size:12px}
+.ui-side div{padding:6px 8px;border-radius:7px;margin-bottom:3px}
+.ui-side .cur{position:relative;background:#F0F3E8;color:#333E27;font-weight:600}
+.ui-main{flex:1;min-width:0}
+.ui-input{border:1px solid #DDD9CC;border-radius:14px;padding:12px;background:#FFFEFB}
+.ui-input .ph{color:#a6a394;min-height:34px}
+.ui-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.pill{display:inline-flex;align-items:center;gap:5px;border:1px solid #E1DDD0;border-radius:99px;padding:4px 10px;font-size:12px;color:#4a4a44;background:#fff;white-space:nowrap}
+.pill.plus{width:28px;height:28px;padding:0;justify-content:center;font-size:16px}
+.send{margin-left:auto;width:30px;height:30px;border-radius:50%;background:#333E27;color:#fff;display:grid;place-items:center;font-size:14px}
+.menu{background:#fff;border:1px solid #DDD9CC;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:6px;width:230px;font-size:12.5px}
+.menu div{padding:7px 10px;border-radius:8px;display:flex;justify-content:space-between;gap:8px}
+.menu div small{color:#9a978a}
+.menu .hl{background:#F0F3E8;color:#333E27;font-weight:600}
+.menu .sep{height:1px;background:#EEE;padding:0;margin:4px 0}
+.card-perm{border:1px solid #E1DDD0;border-radius:12px;padding:12px 14px;background:#FFFEFB}
+.card-perm .t{font-weight:600;margin-bottom:6px}
+.card-perm pre{direction:rtl;text-align:right;font-family:Heebo,sans-serif;background:#F6F4EE;border-radius:8px;padding:8px 10px;font-size:12px;margin:6px 0 10px;white-space:pre-wrap;color:#333}
+.card-perm pre .add{color:#4f7a2b}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.ub{border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;border:1px solid #DDD9CC;background:#fff}
+.ub.pri{background:#333E27;color:#fff;border-color:#333E27}
+.msg{border-radius:12px;padding:9px 12px;margin-bottom:8px;max-width:85%}
+.msg.me{background:#F0F3E8;margin-left:auto;direction:rtl;text-align:right;font-family:'Heebo',sans-serif}
+.msg.cl{background:#fff;border:1px solid #ECE8DD;direction:rtl;text-align:right;font-family:'Heebo',sans-serif}
+.slash-chip{display:inline-block;background:#E5ECD7;color:#333E27;border-radius:6px;padding:1px 6px;font-weight:600}
+.file{font-family:Heebo,sans-serif;font-size:13px;line-height:1.7;white-space:pre-wrap;direction:rtl;text-align:right;color:#333}
+.file .h{color:#788C5D;font-weight:700}
+.finder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:11.5px;color:#4a4a44}
+.finder div{padding:8px 4px;border-radius:10px}
+.finder .ico{font-size:30px;line-height:1.2}
+.finder .sel{background:#F0F3E8;outline:2px solid #B7C29F}
+.pt{position:relative}
+.pin{position:absolute;top:-13px;right:-13px;width:26px;height:26px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(217,120,95,.25);font-family:'Heebo',sans-serif;z-index:3}
+.ring{position:absolute;border:2.5px solid var(--coral);border-radius:12px;pointer-events:none;z-index:2}
+figcaption{margin-top:14px;font-size:.93rem;color:var(--ink-2)}
+figcaption ol{list-style:none;padding:0;counter-reset:c;display:grid;gap:6px}
+figcaption li{counter-increment:c;position:relative;padding-right:32px}
+figcaption li::before{content:counter(c);position:absolute;right:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:.75rem;display:grid;place-items:center}
+.mock-note{font-size:.78rem;color:var(--ink-3);margin-top:6px}
+
+/* OS */
+body.os-win .mac-only{display:none!important}
+body:not(.os-win) .win-only{display:none!important}
+.os-tag{display:none}
+
+/* end */
+.final{background:var(--forest);color:var(--ink-dark-1);border-radius:var(--r);padding:40px 30px;margin-top:22px;text-align:center}
+.final h2{color:#fff}
+.final p{color:var(--ink-dark-2);max-width:560px;margin:10px auto 0}
+.final .btn{background:var(--leaf);color:var(--forest-deep);margin-top:20px}
+footer{border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--ink-3);font-size:.88rem}
+footer img{height:30px;display:block;margin:0 auto 10px}
+
+/* mobile */
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding-top:18px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+  nav.toc::-webkit-scrollbar{display:none}
+  nav.toc p{display:none}
+  nav.toc a{flex:none;border:1px solid var(--line);border-radius:99px;background:#fff;padding:5px 12px;font-size:.84rem}
+  nav.toc a.active{border-right-color:var(--line)}
+  .progress span{display:none}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .hwrap img{height:30px}
+  .progress{max-width:none}
+  section.step{padding:26px 18px}
+  .compare{grid-template-columns:1fr}
+  .hero{padding-top:34px}
+  .ui-side{display:none}
+  .win{font-size:12px}
+  .final{padding:32px 18px}
+}
+
+/* print / PDF */
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  body{background:#fff;font-size:12.5pt}
+  header,.from-banner,nav.toc,.done-row,.copy,.tabs,.hero-cta,.os-switch,.tip-pop{display:none!important}
+  .layout{display:block;padding:0}
+  section.step{box-shadow:none;break-inside:auto;padding:22px 20px;margin-top:14px}
+  .step-head,figure.mock,.prompt,.note,.tbl,.compare{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  .tabpanel[hidden]{display:block!important}
+  .tabpanel{margin-top:10px}
+  .tabpanel::before{content:attr(data-title);display:block;font-weight:800;color:var(--olive);margin-top:10px}
+  details>*:not(summary){display:block}
+  details.acc .in{display:block}
+  .win,.chip{box-shadow:none}
+  body .mac-only,body .win-only{display:inline!important}
+  div.mac-only,div.win-only,p.mac-only,p.win-only,li.mac-only,li.win-only{display:block!important}
+  .os-tag{display:inline;font-weight:800;color:var(--olive)}
+  .print-only{display:block!important}
+  .hero{padding-top:6px}
+  .print-logo{display:block!important;height:38px;margin-bottom:18px}
+  a{text-decoration:none}
+  details.acc summary::after{display:none}
+  .gloss summary{pointer-events:none}
+}
+.print-only,.print-logo{display:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <a href="../" aria-label="Ronig.ai, לדף הבית"><img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36"></a>
+    <div class="progress" aria-live="polite"><span id="progText">0 מתוך 6 שלבים</span><div class="bar"><i id="progBar"></i></div></div>
+    <div class="os-switch" role="group" aria-label="מערכת הפעלה">
+      <button type="button" data-os="mac" aria-pressed="true">Mac</button>
+      <button type="button" data-os="win" aria-pressed="false">Windows</button>
+    </div>
+  </div>
+</header>
+<div class="from-banner" id="fromBanner">הגעתם מפרומפט? עברו על המדריך ואז <a id="fromLink" href="#">חזרו לפרומפט ←</a></div>
+
+<div class="layout">
+<nav class="toc" id="toc" aria-label="תוכן עניינים">
+  <p>תוכן עניינים</p>
+  <a href="#what" data-step="what"><span class="tick">✓</span>מה זה בכלל</a>
+  <a href="#need" data-step="need"><span class="tick">✓</span>מה צריך</a>
+  <a href="#install" data-step="install"><span class="tick">✓</span>התקנה</a>
+  <a href="#folder" data-step="folder"><span class="tick">✓</span>תיקיית עבודה</a>
+  <a href="#first" data-step="first"><span class="tick">✓</span>השיחה הראשונה</a>
+  <a href="#me" data-step="me"><span class="tick">✓</span>ללמד אותו מי אתם</a>
+  <a href="#skills">סקילים</a>
+  <a href="#more">עוד כדאי לדעת</a>
+  <a href="#glossary">מילון מושגים</a>
+  <a href="#tips">טיפים</a>
+</nav>
+
+<main id="top">
+
+<section class="hero">
+  <img class="print-logo" src="../assets/logo-dark.png" alt="Ronig.ai">
+  <span class="eyebrow">מדריך למתחילים · Ronig.ai</span>
+  <h1>מתחילים עם <em>Claude Code</em><br>בלי לדעת לתכנת</h1>
+  <p class="lead">קיבלתם ממני פרומפט ואין לכם מושג איפה מדביקים אותו? הגעתם למקום הנכון. 6 שלבים קצרים, ובסופם יהיה לכם עוזר AI שעובד על הקבצים במחשב שלכם ומכיר אתכם.</p>
+  <div class="hero-meta">
+    <span class="chip">⏱ בערך 20 דקות</span>
+    <span class="chip">💻 Mac או Windows</span>
+    <span class="chip">🙅‍♀️ בלי טרמינל ובלי קוד</span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn" href="#what">יאללה, מתחילים</a>
+    <a class="btn ghost" href="claude-code-start.pdf" download>⬇ הורדה כ-PDF</a>
+  </div>
+  <p class="print-only" style="margin-top:14px;color:var(--ink-3)">הגרסה האינטראקטיבית: rogre1.github.io/ronig-courses/claude-code-start</p>
+</section>
+
+<!-- 1 -->
+<section class="step" id="what" data-step>
+  <div class="step-head"><div class="num">1</div><div><h2>מה זה בכלל Claude Code?</h2><p>דקה אחת של הבנה שתחסוך לכם שעה של בלבול</p></div></div>
+  <p>אתם בטח מכירים את הצ'אט של Claude: שואלים, הוא עונה, ואתם מעתיקים את התשובה למקום אחר. <b>Claude Code הוא Claude עם ידיים.</b> במקום רק לענות, הוא <b>עושה</b>: פותח קבצים במחשב שלכם, יוצר מסמכים, מסדר תיקיות, בונה דפי נחיתה, ממיר קבצים ומריץ בשבילכם משימות שלמות מתחילתן ועד סופן.</p>
+  <div class="compare">
+    <div class="a"><h4>💬 הצ'אט הרגיל</h4>"תכתוב לי טקסט לדף נחיתה"<br>← מקבלים טקסט, מעתיקים, מדביקים, מעצבים לבד.</div>
+    <div class="b"><h4>⚡ Claude Code</h4>"תבנה לי דף נחיתה עם הלוגו שבתיקייה"<br>← <b>הוא בונה את הקובץ</b>, שם את הלוגו, פותח לכם תצוגה ומתקן לפי ההערות שלכם.</div>
+  </div>
+  <p style="margin-top:16px">והחלק הכי טוב: למרות השם, <b>לא צריך לדעת לתכנת.</b> מדברים איתו בעברית רגילה, כמו עם עוזר אישי.</p>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>הבנתי, ממשיכים</button></div>
+</section>
+
+<!-- 2 -->
+<section class="step" id="need" data-step>
+  <div class="step-head"><div class="num">2</div><div><h2>מה צריך לפני שמתחילים</h2><p>שלושה דברים, וזהו</p></div></div>
+  <ul class="dots">
+    <li><b>מחשב Mac או Windows.</b> בטלפון אפשר לשלוט מרחוק, אבל ההתחלה היא במחשב.</li>
+    <li><b>מנוי Claude בתשלום.</b> Claude Code לא עובד בחשבון החינמי. המנוי הבסיסי, <b>Pro</b>, עולה בערך 20 דולר בחודש ומספיק לגמרי כדי להתחיל. אם אתם עובדים איתו הרבה ונתקעים במגבלת שימוש, אפשר לשדרג ל-<b>Max</b>.</li>
+    <li><b>משימה אחת שמציקה לכם.</b> ברצינות. הדרך הכי טובה ללמוד היא להביא משימה אמיתית: לסדר תיקייה, לבנות דף, לנתח קובץ אקסל.</li>
+  </ul>
+  <div class="note tip"><span class="ic">💡</span><div>יש לכם כבר מנוי לצ'אט של Claude? מעולה, זה <b>אותו מנוי</b>. לא צריך לשלם פעמיים.</div></div>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>יש לי מנוי, ממשיכים</button></div>
+</section>
+
+<!-- 3 -->
+<section class="step" id="install" data-step>
+  <div class="step-head"><div class="num">3</div><div><h2>מתקינים את האפליקציה</h2><p>בלי טרמינל, בלי פקודות. כמו כל תוכנה אחרת</p></div></div>
+  <ol class="steps">
+    <li>נכנסים ל-<a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a> ומורידים את הגרסה ל-<span class="mac-only">Mac</span><span class="win-only">Windows</span>.</li>
+    <li class="mac-only">פותחים את הקובץ שירד וגוררים את האייקון של Claude לתיקיית <b>Applications</b>.</li>
+    <li class="win-only">פותחים את קובץ ההתקנה שירד ומאשרים. ההתקנה רצה לבד.</li>
+    <li>פותחים את Claude ומתחברים עם אותו חשבון של המנוי.</li>
+    <li>למעלה יש שלוש לשוניות: <b>Chat</b>, <b>Cowork</b> ו-<b>Code</b>. לוחצים על <b>Code</b>. זהו, אתם בפנים.</li>
+  </ol>
+  <figure class="mock" aria-label="איור: מסך האפליקציה עם לשונית Code מסומנת">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>Claude</span></div>
+      <div class="win-body" style="text-align:center;padding:22px 16px 26px">
+        <div class="ui-tabs"><span>Chat</span><span>Cowork</span><span class="on pt">Code<b class="pin">1</b></span></div>
+        <div style="margin-top:26px;font-size:20px;font-weight:600;color:#333E27">What should we build?</div>
+        <div class="ui-input" style="max-width:420px;margin:16px auto 0;text-align:left"><div class="ph">Describe a task…</div><div class="ui-tools"><span class="pill plus">+</span><span class="pill">📁 Select folder</span><span class="send">↑</span></div></div>
+      </div>
+    </div>
+    <figcaption><ol><li>לשונית <b>Code</b>. כאן עובדים עם Claude Code. (Chat זה הצ'אט הרגיל שאתם מכירים.)</li></ol></figcaption>
+    <p class="mock-note">איור להמחשה. הממשק מתעדכן מדי פעם, אז ייתכן שיהיו הבדלים קטנים בעיצוב.</p>
+  </figure>
+  <div class="note warn"><span class="ic">⚠️</span><div>אם מופיעה שגיאה בכניסה ללשונית Code, בדרך כלל זה אומר שהחשבון שהתחברתם איתו הוא החינמי. התנתקו והתחברו עם החשבון שיש בו מנוי.</div></div>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>מותקן ופתוח</button></div>
+</section>
+
+<!-- 4 -->
+<section class="step" id="folder" data-step>
+  <div class="step-head"><div class="num">4</div><div><h2>בוחרים <dfn data-tip="התיקייה במחשב שבה Claude עובד. הוא רואה ומשנה רק את מה שבתוכה.">תיקיית עבודה</dfn></h2><p>הצעד הכי חשוב שאף אחד לא מסביר</p></div></div>
+  <p>Claude Code תמיד עובד <b>בתוך תיקייה אחת במחשב</b>. מה שבתוכה הוא יכול לקרוא, לשנות וליצור. מה שמחוץ לה, הוא לא נוגע בו בלי לשאול. תחשבו על זה כמו לתת לעוזר מפתח לחדר אחד בבית, ולא לכל הבית.</p>
+  <ol class="steps">
+    <li>צרו תיקייה חדשה <span class="mac-only">בשולחן העבודה (Desktop)</span><span class="win-only">בשולחן העבודה או ב"מסמכים"</span> וקראו לה למשל <b>claude</b>.</li>
+    <li>שימו בה את מה שרלוונטי: הלוגו, מסמך על העסק, תמונות, קבצי אקסל. <b>רק עותקים</b>, לא המקור.</li>
+    <li>באפליקציה, מתחת לתיבת הכתיבה, לוחצים על <b>Select folder</b> ובוחרים את התיקייה.</li>
+  </ol>
+  <figure class="mock" aria-label="איור: בחירת תיקייה">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>Desktop</span></div>
+      <div class="win-body">
+        <div class="finder">
+          <div><div class="ico">📁</div>תמונות 2024</div>
+          <div class="sel pt"><div class="ico">📁</div><b>claude</b><b class="pin">1</b></div>
+          <div><div class="ico">📄</div>חשבוניות.pdf</div>
+          <div><div class="ico">📁</div>מסמכים</div>
+        </div>
+        <div style="border-top:1px solid #EEE;margin-top:12px;padding-top:10px;display:flex;justify-content:flex-end;gap:8px"><span class="ub">Cancel</span><span class="ub pri pt">Open<b class="pin">2</b></span></div>
+      </div>
+    </div>
+    <figcaption><ol><li>התיקייה שיצרתם במיוחד בשביל Claude.</li><li>לוחצים <b>Open</b>, ושם התיקייה יופיע ליד תיבת הכתיבה.</li></ol></figcaption>
+  </figure>
+  <div class="note why"><span class="ic">🧠</span><div><b>למה תיקייה נפרדת?</b> כי ככה Claude לא יתבלבל עם אלפי קבצים לא קשורים, ולא ישנה בטעות משהו חשוב. אפשר ליצור תיקייה לכל פרויקט: אחת לתוכן, אחת לעסק, אחת לאתר.</div></div>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>יש לי תיקייה</button></div>
+</section>
+
+<!-- 5 -->
+<section class="step" id="first" data-step>
+  <div class="step-head"><div class="num">5</div><div><h2>השיחה הראשונה</h2><p>מה כל כפתור עושה, ומה עושים כשקופץ חלון אישור</p></div></div>
+  <p>הנה תיבת הכתיבה. היא נראית כמו צ'אט רגיל, אבל יש לה כמה כפתורים שכדאי להכיר:</p>
+  <figure class="mock" aria-label="איור: תיבת הכתיבה וכפתוריה">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>Claude · Code</span></div>
+      <div class="win-body">
+        <div class="ui-row">
+          <div class="ui-side"><div>+ New session</div><div class="cur pt">דף נחיתה לסדנה<b class="pin">1</b></div><div>סידור תמונות</div><div>ניתוח מכירות</div><div style="margin-top:14px">⚙ Customize</div></div>
+          <div class="ui-main">
+            <div class="msg me">יש בתיקייה לוגו וטקסט על הסדנה</div><div class="msg cl">מעולה, ראיתי את שניהם. איזה סגנון אתם אוהבים?</div>
+            <div class="ui-input"><div class="ph" style="direction:rtl;text-align:right;font-family:Heebo,sans-serif">תבנה לי דף נחיתה לסדנה…</div>
+              <div class="ui-tools"><span class="pill plus pt">+<b class="pin">2</b></span><span class="pill">💻 Local</span><span class="pill pt">📁 claude<b class="pin">3</b></span><span class="pill pt">Manual ▾<b class="pin">4</b></span><span class="pill">Model ▾</span><span class="send pt">↑<b class="pin">5</b></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <figcaption><ol>
+      <li><b>הסרגל בצד</b>: כל <dfn data-tip="שיחה אחת עם Claude Code. לכל אחת היסטוריה ותיקייה משלה.">סשן</dfn> (שיחה) נשמר כאן. אפשר לחזור לכל אחת מהן ולהמשיך.</li>
+      <li><b>הפלוס</b>: צירוף קבצים ותמונות, הפעלת סקילים, חיבורים לגוגל ועוד. נגיע לזה.</li>
+      <li><b>התיקייה</b> שבחרתם בשלב הקודם.</li>
+      <li><b>מצב ההרשאות</b>: כמה חופש Claude מקבל. מסבירה ממש מתחת.</li>
+      <li><b>שליחה</b>. ואם Claude באמצע עבודה, הכפתור הופך לעצירה. אפשר לעצור אותו בכל רגע.</li>
+    </ol></figcaption>
+  </figure>
+
+  <h3>חלון האישור: לא להיבהל</h3>
+  <p>לפני ש-Claude משנה קובץ או מריץ פעולה, הוא <b>עוצר ושואל</b>. זה נראה בערך ככה:</p>
+  <figure class="mock" aria-label="איור: בקשת הרשאה">
+    <div class="win">
+      <div class="win-body">
+        <div class="msg me">תכין לי קובץ עם רשימת המשימות לשבוע</div>
+        <div class="card-perm">
+          <div class="t">Claude wants to create <b>tasks.md</b></div>
+          <pre><span class="add">+ # משימות לשבוע
++ - לצלם רילס חדש
++ - לענות ללקוחות</span></pre>
+          <div class="btnrow"><span class="ub pri pt">Allow<b class="pin">1</b></span><span class="ub pt">Allow for this session<b class="pin">2</b></span><span class="ub">Deny</span></div>
+        </div>
+      </div>
+    </div>
+    <figcaption><ol><li><b>Allow</b>: מאשרים את הפעולה הזו בלבד.</li><li><b>Allow for this session</b>: מאשרים פעולות מהסוג הזה עד סוף השיחה, כדי שלא ישאל כל פעם מחדש.</li></ol></figcaption>
+  </figure>
+  <div class="note tip"><span class="ic">✅</span><div><b>הכלל שלי:</b> קוראים בשורה אחת מה הוא מבקש. יצירה ועריכה של קבצים בתיקייה שלכם? מאשרים. מחיקה של משהו, או פעולה שאתם לא מבינים? לוחצים <b>Deny</b> וכותבים לו "תסביר לי קודם מה זה עושה".</div></div>
+
+  <h3>מצבי עבודה: כמה חופש לתת לו</h3>
+  <p>בכפתור מספר 4 בוחרים את <dfn data-tip="ההגדרה שקובעת אם Claude שואל לפני כל פעולה או עובד לבד.">מצב ההרשאות</dfn>:</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>מצב</th><th>מה קורה</th><th>מתי להשתמש</th></tr>
+    <tr><td>Manual</td><td>שואל לפני כל שינוי ופעולה</td><td>בהתחלה. ככה לומדים מה הוא עושה</td></tr>
+    <tr><td>Accept edits</td><td>עורך קבצים לבד, שואל רק לפני פעולות אחרות</td><td>כשכבר סומכים עליו ורוצים שיזרום</td></tr>
+    <tr><td>Plan</td><td>לא משנה כלום. רק חוקר ומציג תוכנית לאישור</td><td>למשימות גדולות. הכי מומלץ!</td></tr>
+    <tr><td>Auto</td><td>עובד לבד, ומנגנון בטיחות בודק כל פעולה ברקע</td><td>כשאתם מנוסים ורוצים לשחרר</td></tr>
+  </table></div>
+  <div class="note tip"><span class="ic">🗺️</span><div><b>הטריק שהכי שינה לי את העבודה:</b> משימה גדולה? מתחילים במצב <b>Plan</b>. Claude שואל שאלות, מציג תוכנית, אתם מתקנים, ורק אחרי שאתם מאשרים הוא מתחיל לבנות. חוסך המון תיקונים.</div></div>
+
+  <h3>נסו עכשיו: הפרומפט הראשון שלכם</h3>
+  <p>בחרו את מה שהכי מתאים לכם, העתיקו והדביקו בתיבת הכתיבה:</p>
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="t1">יוצרי תוכן</button>
+    <button role="tab" aria-selected="false" data-tab="t2">בעלי עסק</button>
+    <button role="tab" aria-selected="false" data-tab="t3">סתם סקרנים</button>
+  </div>
+  <div class="tabpanel" id="t1" data-title="ליוצרי תוכן">
+    <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>אני יוצר/ת תוכן לאינסטגרם בנושא [הנושא שלכם]. תבנה לי בתיקייה הזו לוח תוכן לחודש הקרוב כקובץ אקסל: תאריך, רעיון לרילס, הוק לשלוש השניות הראשונות, וטקסט לפוסט. לפני שאתה מתחיל, תשאל אותי 3 שאלות על הקהל שלי.</div>
+  </div>
+  <div class="tabpanel" id="t2" data-title="לבעלי עסק" hidden>
+    <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>יש לי עסק של [מה העסק]. תבנה לי דף נחיתה פשוט ויפה בקובץ HTML אחד, שמציג את השירות שלי ויש בו כפתור לוואטסאפ. אם יש בתיקייה לוגו, תשתמש בו. כשתסיים, תפתח לי אותו בדפדפן כדי שאראה.</div>
+  </div>
+  <div class="tabpanel" id="t3" data-title="לסקרנים" hidden>
+    <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>תסתכל על הקבצים בתיקייה הזו ותגיד לי מה יש בה. אחר כך תציע לי 5 דברים שימושיים שאתה יכול לעשות איתם, מהקל אל המסובך, ותסביר כל אחד במשפט.</div>
+  </div>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>שלחתי פרומפט ראשון</button></div>
+</section>
+
+<!-- 6 -->
+<section class="step" id="me" data-step>
+  <div class="step-head"><div class="num">6</div><div><h2>מלמדים את Claude מי אתם</h2><p>ככה הוא מפסיק לענות כמו רובוט ומתחיל לעבוד כמוכם</p></div></div>
+  <p>Claude מתחיל כל שיחה חדשה "נקי". הוא לא יודע מה העסק שלכם, איך אתם כותבים, ומה אתם שונאים. יש ארבע דרכים להכיר לו אתכם, מהחשובה ביותר:</p>
+
+  <h3>1. קובץ CLAUDE.md: דף ההיכרות שלכם</h3>
+  <p>זה קובץ טקסט רגיל שיושב בתיקיית העבודה. <b>Claude קורא אותו אוטומטית בתחילת כל שיחה</b>, בלי שתצטרכו להזכיר. כל מה שכתוב שם, הוא פשוט יודע.</p>
+  <p>הדרך הכי קלה ליצור אותו? מבקשים מ-Claude:</p>
+  <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>תיצור לי קובץ CLAUDE.md בתיקייה הזו. תראיין אותי קודם: תשאל אותי שאלה אחת בכל פעם על מי אני, מה העסק שלי, מי הקהל, איך אני אוהב/ת שכותבים לי, ומה אסור לעשות. בסוף תסכם הכל בקובץ קצר ומסודר.</div>
+  <figure class="mock" aria-label="איור: דוגמה לקובץ CLAUDE.md">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>claude / CLAUDE.md</span></div>
+      <div class="win-body"><div class="file"><span class="h"># מי אני</span>
+דנה, מאפרת כלות מחיפה. 8 שנות ניסיון.
+
+<span class="h"># הקהל שלי</span>
+כלות בנות 25 עד 35, רוב הפניות מאינסטגרם.
+
+<span class="h"># איך לכתוב בשבילי</span>
+- עברית חמה ויומיומית, בגוף ראשון
+- משפטים קצרים, בלי מילים גבוהות
+- בלי אימוג'ים בכלל
+
+<span class="h"># חשוב לדעת</span>
+- הצבעים של המותג: ורוד עתיק ושמנת
+- הלוגו נמצא בקובץ logo.png</div></div>
+    </div>
+    <figcaption>דוגמה לקובץ CLAUDE.md. אפשר לפתוח ולערוך אותו בכל רגע, או פשוט לכתוב ל-Claude "תוסיף ל-CLAUDE.md ש...".</figcaption>
+  </figure>
+
+  <h3>2. זיכרון: "תזכור ש..."</h3>
+  <p>Claude Code יודע לשמור לעצמו הערות בין שיחות. כשאתם מתקנים אותו על משהו שחוזר, פשוט אומרים: <b>"תזכור שאני תמיד רוצה כותרות קצרות"</b>. בפעם הבאה הוא כבר יידע.</p>
+
+  <h3>3. קבצים בתיקייה</h3>
+  <p>כל מה שתשימו בתיקיית העבודה, Claude יכול לקרוא: לוגו, מסמך מיתוג, דוגמאות לפוסטים שהצליחו לכם, מחירון. רוצים להפנות אותו לקובץ מסוים? כותבים <b>@</b> ואת שם הקובץ, או גוררים קובץ או תמונה לתוך תיבת הכתיבה.</p>
+
+  <h3>4. <dfn data-tip="חיבור בין Claude לשירות חיצוני כמו Gmail, יומן גוגל או Notion.">חיבורים</dfn> (Connectors)</h3>
+  <p>אפשר לחבר את Claude לשירותים שאתם עובדים איתם: <b>Gmail, Google Drive, יומן גוגל, Notion, Canva</b> ועוד. ככה הוא יכול לקרוא מיילים, לבדוק את היומן או לשמור קבצים בדרייב.</p>
+  <figure class="mock" aria-label="איור: תפריט הפלוס עם Connectors">
+    <div class="win">
+      <div class="win-body" style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap">
+        <div class="menu">
+          <div>📎 Add files</div>
+          <div>/ Slash commands</div>
+          <div class="hl pt">🔌 Connectors <small>›</small><b class="pin">1</b></div>
+          <div>🧩 Plugins <small>›</small></div>
+        </div>
+        <div class="menu" style="width:200px">
+          <div class="pt">Gmail <small>Connect</small><b class="pin">2</b></div>
+          <div>Google Calendar <small>Connect</small></div>
+          <div>Google Drive <small>Connect</small></div>
+          <div class="sep"></div>
+          <div>Manage connectors</div>
+        </div>
+      </div>
+    </div>
+    <figcaption><ol><li>לוחצים על <b>+</b> ליד תיבת הכתיבה ובוחרים <b>Connectors</b>.</li><li>בוחרים שירות, לוחצים <b>Connect</b> ומתחברים לחשבון. זה הכל.</li></ol></figcaption>
+  </figure>
+  <div class="note warn"><span class="ic">🔒</span><div><b>מה לא שמים:</b> סיסמאות, פרטי אשראי ומספרי תעודת זהות. לא ב-CLAUDE.md, לא בתיקייה ולא בצ'אט. אין בזה צורך, וזה פשוט לא מקום לזה.</div></div>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>יש לי CLAUDE.md</button></div>
+</section>
+
+<!-- skills -->
+<section class="step" id="skills">
+  <div class="step-head"><div class="num">★</div><div><h2>סקילים: ללמד את Claude משימה פעם אחת</h2><p>הכלי שהופך אותו מעוזר כללי למומחה שלכם</p></div></div>
+  <p><dfn data-tip="קובץ הוראות קבוע למשימה מסוימת. Claude שולף אותו כשהמשימה מגיעה.">סקיל</dfn> הוא <b>מתכון</b>. אוסף הוראות למשימה שחוזרת אצלכם, שכתבתם פעם אחת, ומאז Claude פשוט יודע לעשות אותה בדיוק כמו שאתם אוהבים.</p>
+  <p>דוגמה מהחיים שלי: יש לי סקיל לכתיבת תסריטים לרילס. בתוכו כל מה שלמדתי: איך בונים הוק, איפה שמים "רי-הוק" באמצע, איך נשמע הקול שלי. היום אני כותבת "תכתוב לי תסריט לרילס על..." ו-Claude <b>שולף את הסקיל לבד</b> ועובד לפי השיטה שלי, בלי שאסביר שוב.</p>
+
+  <h3>אז מה ההבדל בין CLAUDE.md, זיכרון וסקיל?</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th></th><th>מה זה</th><th>מתי Claude קורא אותו</th><th>מתאים ל</th></tr>
+    <tr><td>CLAUDE.md</td><td>דף היכרות</td><td>תמיד, בתחילת כל שיחה</td><td>מי אתם, העסק, הסגנון</td></tr>
+    <tr><td>זיכרון</td><td>פתקים קטנים</td><td>כשהם רלוונטיים</td><td>העדפות ותיקונים קטנים</td></tr>
+    <tr><td>סקיל</td><td>מתכון למשימה</td><td>רק כשהמשימה מגיעה</td><td>תהליך שחוזר: תסריט, הצעת מחיר, פוסט</td></tr>
+  </table></div>
+  <p style="margin-top:12px">בגלל שסקיל נטען רק כשצריך, הוא יכול להיות ארוך ומפורט, עם דוגמאות וקבצים מצורפים, בלי להעמיס על כל שיחה.</p>
+
+  <h3>איך מפעילים סקיל</h3>
+  <ul class="dots">
+    <li><b>אוטומטית:</b> פשוט מבקשים את המשימה. אם יש סקיל שמתאים, Claude שולף אותו לבד.</li>
+    <li><b>ידנית:</b> מקלידים <code>/</code> בתיבת הכתיבה, ונפתחת רשימה של כל הסקילים. בוחרים אחד וכותבים אחריו את המשימה.</li>
+  </ul>
+  <figure class="mock" aria-label="איור: הפעלת סקיל עם סלאש">
+    <div class="win">
+      <div class="win-body">
+        <div class="menu" style="width:290px;margin-bottom:8px">
+          <div class="hl pt">/reel-script <small>תסריט לרילס בשיטה שלי</small><b class="pin">1</b></div>
+          <div>/price-quote <small>הצעת מחיר</small></div>
+          <div>/weekly-post <small>פוסט שבועי</small></div>
+        </div>
+        <div class="ui-input"><div class="ph" style="color:#333"><span class="slash-chip">/reel-script</span> <span style="font-family:Heebo,sans-serif">על הטעות הכי נפוצה בפרומפטים</span></div><div class="ui-tools"><span class="pill plus">+</span><span class="send pt">↑<b class="pin">2</b></span></div></div>
+      </div>
+    </div>
+    <figcaption><ol><li>מקלידים <code>/</code> ורואים את כל הסקילים שלכם.</li><li>בוחרים, כותבים את המשימה ושולחים.</li></ol></figcaption>
+  </figure>
+
+  <h3>איך משיגים סקילים</h3>
+  <details class="acc" open><summary>🛠️ הדרך הכי טובה: Claude בונה לכם אחד</summary><div class="in">
+    <p>עשיתם משימה עם Claude והתוצאה יצאה מושלמת אחרי כמה תיקונים? בדיוק אז אומרים לו:</p>
+    <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>תהפוך את מה שעשינו עכשיו לסקיל, כדי שבפעם הבאה תעשה את זה בדיוק ככה בלי שאצטרך להסביר. תכלול את כל התיקונים שנתתי לך בדרך. תשמור אותו כסקיל אישי, שיעבוד בכל התיקיות שלי.</div>
+  </div></details>
+  <details class="acc"><summary>📦 מתקינים מוכן מהקטלוג</summary><div class="in">
+    <p>לוחצים על <b>Customize</b> בסרגל הצד (או <b>+</b> ואז <b>Plugins</b>, ואז <b>Add plugin</b>). שם יש סקילים ו<dfn data-tip="חבילה מוכנה שמכילה כמה סקילים, פקודות וחיבורים יחד.">פלאגינים</dfn> מוכנים, כולל של Anthropic עצמה: עבודה עם אקסל, PowerPoint, PDF ועוד. מתקינים בלחיצה.</p>
+    <p><b>פלאגין</b> זה פשוט חבילה: כמה סקילים, חיבורים והגדרות שמגיעים יחד. אם מצאתם פלאגין לתחום שלכם, הוא חוסך הרבה הקמה.</p>
+  </div></details>
+  <details class="acc"><summary>📩 קיבלתם סקיל ממישהו (למשל ממני)</summary><div class="in">
+    <p>סקיל הוא בסך הכל תיקייה עם קובץ בשם <code>SKILL.md</code>. הכי פשוט: גוררים את הקובץ או התיקייה לתיבת הכתיבה וכותבים <b>"תתקין לי את הסקיל הזה כסקיל אישי"</b>. Claude ישים אותו במקום הנכון.</p>
+    <p>ולמי שרוצה לדעת איפה הם יושבים: סקילים אישיים נשמרים ב-<span class="mac-only"><code>~/.claude/skills</code></span><span class="win-only"><code>C:\Users\השם-שלכם\.claude\skills</code></span>, וסקילים של פרויקט מסוים נשמרים בתוך התיקייה שלו, בתת-תיקייה <code>.claude/skills</code>.</p>
+    <div class="note warn" style="margin-top:12px"><span class="ic">⚠️</span><div>סקיל הוא הוראות ש-Claude מבצע. <b>מתקינים רק ממקורות שאתם סומכים עליהם</b>, ואם לא בטוחים, מבקשים מ-Claude: "תקרא את הסקיל ותגיד לי מה הוא עושה לפני שאתה מתקין".</div></div>
+  </div></details>
+
+  <h3>איך נראה סקיל מבפנים</h3>
+  <p>אין פה קסם. זה טקסט רגיל, עם שורת תיאור למעלה שעוזרת ל-Claude להבין מתי לשלוף אותו:</p>
+  <figure class="mock" aria-label="איור: קובץ SKILL.md לדוגמה">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>skills / weekly-post / SKILL.md</span></div>
+      <div class="win-body"><div class="file"><span class="h">---
+name: weekly-post
+description: כתיבת פוסט שבועי לאינסטגרם. להשתמש כשמבקשים פוסט, קפשן או טקסט לאינסטגרם.
+---</span>
+
+כשכותבים פוסט שבועי:
+1. פותחים בשאלה שהקהל שואל את עצמו
+2. שלוש נקודות קצרות, כל אחת בשורה
+3. סוגרים בהזמנה לשמור את הפוסט
+4. בלי האשטגים באמצע הטקסט, רק בסוף
+
+דוגמה לפוסט שהצליח: ראו example.md</div></div>
+    </div>
+    <figcaption>החלק העליון (בין שלושת המקפים הקצרים) הוא <b>התיאור</b>. ככל שהוא מדויק יותר, Claude ישלוף את הסקיל ברגע הנכון.</figcaption>
+  </figure>
+  <div class="note tip"><span class="ic">🔁</span><div><b>סקיל משתפר עם הזמן.</b> לא אהבתם משהו בתוצאה? אחרי שתיקנתם, כתבו: <b>"תעדכן את הסקיל כך שמעכשיו..."</b>. כל תיקון נשמר לתמיד.</div></div>
+</section>
+
+<!-- more -->
+<section class="step" id="more">
+  <div class="step-head"><div class="num">+</div><div><h2>עוד דברים שכדאי לדעת</h2><p>לא חובה ביום הראשון, אבל תשמחו להכיר</p></div></div>
+  <details class="acc"><summary>🔄 שיחה חדשה או להמשיך את הקיימת?</summary><div class="in"><p>כל משימה חדשה, שיחה חדשה (<b>New session</b>). שיחה ארוכה מדי עם הרבה נושאים גורמת ל-Claude להתבלבל ולעבוד לאט. השיחות הקודמות נשמרות בסרגל, ואפשר לחזור ולהמשיך כל אחת.</p></div></details>
+  <details class="acc"><summary>✋ איך עוצרים או מתקנים אותו באמצע</summary><div class="in"><p>לוחצים על כפתור העצירה, והוא עוצר מיד. אפשר גם פשוט לכתוב תיקון ("רגע, בלי צבע אדום") ולשלוח בזמן שהוא עובד. הוא יקרא את ההודעה ויתקן כיוון.</p></div></details>
+  <details class="acc"><summary>🧠 איזה מודל לבחור</summary><div class="in"><p>ליד כפתור השליחה יש בחירת מודל. ברירת המחדל מצוינת לרוב המשימות. מודל חזק יותר מתאים למשימות מסובכות, אבל גם "אוכל" יותר ממכסת השימוש שלכם.</p></div></details>
+  <details class="acc"><summary>📊 מגבלת שימוש, ואיך לא להיתקע</summary><div class="in"><p>לכל מנוי יש מכסה שמתחדשת כל כמה שעות. העיגול הקטן ליד בחירת המודל מראה כמה השתמשתם. כדי לחסוך: שיחה חדשה לכל משימה, בקשות ממוקדות, ולא לצרף קבצים ענקיים שלא צריך.</p></div></details>
+  <details class="acc"><summary>⌨️ פקודות עם / שכדאי להכיר</summary><div class="in"><p>מקלידים <code>/</code> ורואים את כל הרשימה. שתיים שימושיות להתחלה: <code>/init</code> שיוצר קובץ CLAUDE.md אוטומטית לפי מה שיש בתיקייה. שאר הפקודות מופיעות ברשימה עם הסבר קצר ליד כל אחת.</p></div></details>
+  <details class="acc"><summary>⏰ משימות שרצות לבד</summary><div class="in"><p>אפשר לבקש מ-Claude לעשות משהו קבוע, למשל "כל בוקר ב-8 תכין לי סיכום של המיילים החשובים". הוא יוצר משימה מתוזמנת שרצה לבד (כל עוד המחשב והאפליקציה פתוחים).</p></div></details>
+  <details class="acc"><summary>🖼️ אפשר לשלוח לו תמונות וצילומי מסך</summary><div class="in"><p>גוררים תמונה לתיבת הכתיבה. "הנה צילום של האתר, תתקן את מה שמסומן באדום" עובד מעולה. גם קבצי PDF ואקסל.</p></div></details>
+</section>
+
+<!-- glossary -->
+<section class="step" id="glossary">
+  <div class="step-head"><div class="num">אב</div><div><h2>מילון מושגים</h2><p>לחצו על מושג כדי לראות הסבר</p></div></div>
+  <div class="gloss">
+    <details><summary>פרומפט <small>Prompt</small></summary><p>ההודעה שאתם כותבים ל-Claude. ככל שהיא ברורה ומפורטת יותר, התוצאה טובה יותר.</p></details>
+    <details><summary>סשן <small>Session</small></summary><p>שיחה אחת. לכל סשן היסטוריה ותיקייה משלו, והוא נשמר בסרגל הצד.</p></details>
+    <details><summary>תיקיית עבודה <small>Project folder</small></summary><p>התיקייה במחשב שבה Claude עובד. הוא רואה ומשנה רק את מה שבתוכה.</p></details>
+    <details><summary>הרשאה <small>Permission</small></summary><p>האישור ש-Claude מבקש לפני שהוא משנה קובץ או מריץ פעולה.</p></details>
+    <details><summary>מצב תוכנית <small>Plan</small></summary><p>מצב שבו Claude לא משנה כלום, רק חוקר ומציג תוכנית לאישור שלכם.</p></details>
+    <details><summary>CLAUDE.md</summary><p>קובץ ההיכרות שלכם. Claude קורא אותו אוטומטית בתחילת כל שיחה.</p></details>
+    <details><summary>זיכרון <small>Memory</small></summary><p>הערות ש-Claude שומר לעצמו בין שיחות, למשל העדפות ותיקונים.</p></details>
+    <details><summary>סקיל <small>Skill</small></summary><p>מתכון קבוע למשימה שחוזרת. נטען רק כשהמשימה מגיעה.</p></details>
+    <details><summary>פלאגין <small>Plugin</small></summary><p>חבילה של כמה סקילים, חיבורים והגדרות שמתקינים בבת אחת.</p></details>
+    <details><summary>חיבור <small>Connector / MCP</small></summary><p>קישור בין Claude לשירות חיצוני כמו Gmail, יומן או Notion. MCP זה השם הטכני.</p></details>
+    <details><summary>פקודת סלאש <small>/command</small></summary><p>כל מה שמתחיל ב-/ בתיבת הכתיבה: סקילים ופקודות מובנות.</p></details>
+    <details><summary>טוקנים <small>Tokens</small></summary><p>"היחידות" שבהן נמדד השימוש שלכם. שיחות ארוכות וקבצים גדולים צורכים יותר.</p></details>
+  </div>
+</section>
+
+<!-- tips -->
+<section class="step" id="tips">
+  <div class="step-head"><div class="num">💡</div><div><h2>טיפים וטעויות נפוצות</h2><p>מה הייתי רוצה שיגידו לי ביום הראשון</p></div></div>
+  <ul class="dots">
+    <li><b>תנו הקשר, לא רק פקודה.</b> "תכתוב פוסט" ייתן משהו גנרי. "תכתוב פוסט לכלות שמתלבטות על איפור ניסיון, בטון חם" ייתן משהו שלכם.</li>
+    <li><b>תבקשו שישאל אתכם שאלות.</b> "לפני שאתה מתחיל, תשאל אותי מה חסר לך" זה המשפט הכי שימושי שיש.</li>
+    <li><b>עבדו על עותקים.</b> Claude זהיר, אבל הוא יכול לשנות ולמחוק קבצים. אל תתנו לו את התיקייה היחידה של תמונות החתונה.</li>
+    <li><b>משימה גדולה? מצב Plan.</b> קודם תוכנית, אחר כך עבודה.</li>
+    <li><b>לא יצא טוב? אל תתחילו מחדש.</b> תגידו לו בדיוק מה לא טוב. הוא משתפר מהר מאוד מתיקונים.</li>
+    <li><b>הצלחתם? תהפכו לסקיל.</b> ככה כל הצלחה נשארת איתכם.</li>
+  </ul>
+</section>
+
+<section class="final">
+  <h2>זהו, אתם מוכנים 🎉</h2>
+  <p>עכשיו אפשר לחזור לפרומפט ששלחתי לכם, להדביק אותו בתיבת הכתיבה בלשונית Code, ולראות את הקסם קורה.</p>
+  <a class="btn" id="finalBack" href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">לעוד פרומפטים באינסטגרם @ronig.ai</a>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <img src="../assets/logo-dark.png" alt="Ronig.ai">
+  נכתב באהבה על ידי רוני גרין · <a href="../">לקורסים שלי</a> · <a href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">@ronig.ai</a>
+</footer>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  var KEY='ccstart-done';
+
+  // OS toggle
+  var osBtns=document.querySelectorAll('.os-switch button');
+  function setOS(os){document.body.classList.toggle('os-win',os==='win');osBtns.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.os===os)});store.set('ccstart-os',os)}
+  var savedOS=store.get('ccstart-os')||(/Win/.test(navigator.platform||navigator.userAgent)?'win':'mac');
+  setOS(savedOS);
+  osBtns.forEach(function(b){b.addEventListener('click',function(){setOS(b.dataset.os)})});
+
+  // progress
+  var steps=[].slice.call(document.querySelectorAll('section[data-step]'));
+  var done={};try{done=JSON.parse(store.get(KEY)||'{}')||{}}catch(e){}
+  function render(){
+    var n=0;
+    steps.forEach(function(s){var on=!!done[s.id];if(on)n++;var b=s.querySelector('.done-btn');b.setAttribute('aria-pressed',on);var a=document.querySelector('nav.toc a[data-step="'+s.id+'"]');if(a)a.classList.toggle('done',on)});
+    document.getElementById('progText').textContent=n+' מתוך '+steps.length+' שלבים';
+    document.getElementById('progBar').style.width=(n/steps.length*100)+'%';
+  }
+  steps.forEach(function(s,i){s.querySelector('.done-btn').addEventListener('click',function(){
+    done[s.id]=!done[s.id];store.set(KEY,JSON.stringify(done));render();
+    if(done[s.id]&&steps[i+1])setTimeout(function(){steps[i+1].scrollIntoView({behavior:'smooth'})},250);
+  })});
+  render();
+
+  // copy
+  document.querySelectorAll('.copy').forEach(function(btn){btn.addEventListener('click',function(){
+    var box=btn.parentNode.cloneNode(true);box.querySelectorAll('.copy,.lbl').forEach(function(x){x.remove()});
+    var txt=box.textContent.trim();
+    function ok(){btn.textContent='הועתק ✓';btn.classList.add('ok');setTimeout(function(){btn.textContent='העתקה';btn.classList.remove('ok')},1800)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback)}else fallback();
+    function fallback(){var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(e){}t.remove()}
+  })});
+
+  // tabs
+  var tabBtns=document.querySelectorAll('.tabs button');
+  tabBtns.forEach(function(b){b.addEventListener('click',function(){tabBtns.forEach(function(x){x.setAttribute('aria-selected',x===b);document.getElementById(x.dataset.tab).hidden=x!==b})})});
+
+  // tooltips
+  var pop=document.getElementById('tipPop');
+  function show(el){pop.textContent=el.dataset.tip;var r=el.getBoundingClientRect();pop.classList.add('show');var w=pop.offsetWidth;var left=Math.min(Math.max(8,r.left+r.width/2-w/2),window.innerWidth-w-8);pop.style.left=left+window.scrollX+'px';pop.style.top=r.bottom+window.scrollY+8+'px'}
+  function hide(){pop.classList.remove('show')}
+  document.querySelectorAll('dfn[data-tip]').forEach(function(d){d.tabIndex=0;d.addEventListener('mouseenter',function(){show(d)});d.addEventListener('mouseleave',hide);d.addEventListener('focus',function(){show(d)});d.addEventListener('blur',hide);d.addEventListener('click',function(e){e.stopPropagation();pop.classList.contains('show')?hide():show(d)})});
+  document.addEventListener('click',hide);window.addEventListener('scroll',hide,{passive:true});
+
+  // toc active
+  var links=[].slice.call(document.querySelectorAll('nav.toc a'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){var on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('active',on);if(on&&window.innerWidth<900)a.scrollIntoView({block:'nearest',inline:'center'})})}})},{rootMargin:'-40% 0px -55% 0px'});
+    links.forEach(function(a){var t=document.querySelector(a.getAttribute('href'));if(t)io.observe(t)});
+  }
+
+  // print: open every accordion and glossary card
+  function openAll(){document.querySelectorAll('details').forEach(function(d){d.open=true})}
+  window.addEventListener('beforeprint',openAll);
+  if(/[?&]print=1/.test(location.search))openAll();
+
+  // ?from=<path or url on this site>
+  var from=new URLSearchParams(location.search).get('from');
+  if(from&&/^[a-z0-9\-\/]+$/i.test(from)){
+    var href='../'+from.replace(/^\/+/,'')+(from.indexOf('.')<0&&!/\/$/.test(from)?'/':'');
+    document.getElementById('fromLink').href=href;document.getElementById('fromBanner').classList.add('show');
+    var fb=document.getElementById('finalBack');fb.href=href;fb.removeAttribute('target');fb.textContent='חזרה לפרומפט ←';
+  }
+})();
+</script>
+</body>
+</html>
