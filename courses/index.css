@@ -122,6 +122,33 @@ p{margin:0 0 1em}
 }
 .course-direct:hover{color:var(--ink-dark-1)}
 
+
+/* ---------- מדריך חינם (כרטיס קטן מתחת לקורסים) ---------- */
+.free-guide{
+  position:relative; display:flex; align-items:center; gap:22px; flex-wrap:wrap;
+  margin:clamp(36px,4vw,44px) auto 0; max-width:880px;
+  background:#fff; border:1px solid var(--line); border-radius:22px;
+  padding:30px clamp(20px,3vw,30px) 22px; text-decoration:none; color:var(--ink);
+  box-shadow:0 10px 22px rgba(35,38,30,.10); transition:transform .2s ease, box-shadow .2s ease;
+}
+.free-guide:hover{transform:translateY(-3px); box-shadow:0 14px 30px rgba(35,38,30,.16)}
+.free-badge{
+  position:absolute; top:-14px; inset-inline-start:24px;
+  background:var(--forest); color:var(--cream); font-weight:800; font-size:.78rem;
+  padding:6px 14px; border-radius:100px; box-shadow:0 6px 14px rgba(35,38,30,.18);
+}
+.free-main{flex:1; min-width:240px}
+.free-guide h2{font-size:clamp(1.15rem,2vw,1.35rem); color:var(--forest-deep); margin-bottom:.3em}
+.free-guide p{font-size:.93rem; color:var(--ink-2)}
+.free-meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+.free-meta span{font-size:.8rem; font-weight:600; color:var(--ink-2); background:var(--mint); border:1px solid var(--leaf); padding:3px 10px; border-radius:100px}
+.free-cta{
+  flex:none; font-weight:800; color:var(--forest); border:1.5px solid var(--forest);
+  padding:10px 20px; border-radius:100px; transition:background .2s, color .2s;
+}
+.free-guide:hover .free-cta{background:var(--forest); color:var(--cream)}
+@media (max-width:620px){ .free-cta{width:100%; text-align:center} }
+
 /* ---------- פוטר ---------- */
 .site-footer{border-top:1px solid var(--line); padding:36px 0 44px; font-size:.85rem; color:var(--ink-3)}
 .footer-inner{display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center}
