@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>חשבוניות מהמייל עם Claude | Ronig.ai</title>
+<meta name="description" content="מדריך מפורט בעברית: איך Claude מוצא את כל החשבוניות במייל, מוריד אותן לתיקייה מסודרת לפי חודשים, ומגלה אילו מנויים לא שלחו לכם חשבונית. כולל פרומפט מוכן להעתקה.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="כל החשבוניות מהמייל, בתיקייה מסודרת | המדריך של Ronig.ai">
+<meta property="og:description" content="Claude מחפש במייל, מוריד, מסדר לפי חודשים ומגלה אילו חשבוניות חסרות לכם. פרומפט מוכן להעתקה.">
+<meta property="og:url" content="https://rogre1.github.io/ronig-courses/email-invoices/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="../claude-code-start/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../claude-code-start/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FBF9F4;--cream-deep:#F1EFE7;--mint:#F0F3E8;
+  --forest:#333E27;--forest-deep:#20261A;--forest-tile:#2A3122;
+  --olive:#788C5D;--olive-bright:#8BA36B;--leaf:#B7C29F;
+  --ink:#1B1D16;--ink-2:#5B5F52;--ink-3:#8A8672;
+  --ink-dark-1:#F1EFE7;--ink-dark-2:#B9BDA9;
+  --line:#E3E0D5;--coral:#D9785F;
+  --shadow-sm:0 10px 22px rgba(35,38,30,.10);
+  --shadow-md:0 12px 28px rgba(35,38,30,.16);
+  --r:22px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
+a{color:var(--olive);font-weight:600}
+code,.ltr{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em}
+code{background:var(--cream-deep);border:1px solid var(--line);padding:.05em .4em;border-radius:6px;color:var(--forest)}
+b,strong{font-weight:700;color:var(--forest-deep)}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.hwrap img{height:36px;width:auto;display:block}
+.progress{flex:1;max-width:340px;display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--ink-2);font-weight:600}
+.bar{flex:1;height:8px;background:var(--cream-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--olive-bright));border-radius:99px;transition:width .4s}
+.os-switch{display:flex;background:var(--cream-deep);border:1px solid var(--line);border-radius:99px;padding:3px}
+.os-switch button{border:0;background:none;font:inherit;font-size:.8rem;font-weight:700;color:var(--ink-2);padding:5px 12px;border-radius:99px;cursor:pointer}
+.os-switch button[aria-pressed=true]{background:var(--forest);color:var(--cream)}
+
+/* return banner */
+.from-banner{display:none;background:var(--forest);color:var(--cream);text-align:center;padding:10px 16px;font-size:.95rem}
+.from-banner a{color:var(--leaf)}
+.from-banner.show{display:block}
+
+/* layout */
+.layout{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:48px;padding:0 16px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px}
+nav.toc p{font-size:.78rem;font-weight:800;color:var(--ink-3);letter-spacing:.06em;margin-bottom:10px}
+nav.toc a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-2);font-weight:500;font-size:.92rem;padding:6px 12px;border-radius:12px;border-right:3px solid transparent}
+nav.toc a:hover{background:var(--mint)}
+nav.toc a.active{background:var(--mint);color:var(--forest-deep);font-weight:700;border-right-color:var(--olive)}
+nav.toc a .tick{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--leaf);flex:none;display:grid;place-items:center;font-size:10px;color:#fff}
+nav.toc a.done .tick{background:var(--olive);border-color:var(--olive)}
+main{min-width:0;padding-bottom:60px}
+
+/* hero */
+.hero{padding:56px 0 28px}
+.eyebrow{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:700;font-size:.85rem;padding:4px 14px;border-radius:99px;margin-bottom:16px}
+h1{font-size:clamp(2rem,5.4vw,3.3rem);line-height:1.15;font-weight:900;color:var(--forest-deep);letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--olive)}
+.lead{font-size:1.15rem;color:var(--ink-2);margin-top:14px;max-width:640px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;font-weight:600;color:var(--ink-2);box-shadow:var(--shadow-sm)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border:0;font:inherit;font-weight:700;padding:12px 24px;border-radius:99px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--forest-deep)}
+.btn.ghost{background:transparent;color:var(--forest);border:1.5px solid var(--forest);box-shadow:none}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+
+/* sections */
+section.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;margin-top:22px;box-shadow:var(--shadow-sm)}
+.step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px}
+.num{flex:none;width:46px;height:46px;border-radius:50%;background:var(--mint);border:1.5px solid var(--leaf);color:var(--forest);display:grid;place-items:center;font-weight:900;font-size:1.15rem}
+h2{font-size:clamp(1.4rem,3.4vw,1.85rem);line-height:1.25;font-weight:800;color:var(--forest-deep)}
+.step-head p{color:var(--ink-3);font-size:.95rem;margin-top:2px}
+h3{font-size:1.15rem;font-weight:800;color:var(--forest);margin:26px 0 8px}
+section p+p{margin-top:10px}
+ol.steps,ul.dots{margin:12px 0 0;padding-right:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding-right:40px;margin-bottom:12px}
+ol.steps li::before{content:counter(s);position:absolute;right:0;top:1px;width:28px;height:28px;border-radius:50%;background:var(--forest);color:var(--cream);font-weight:800;font-size:.85rem;display:grid;place-items:center}
+ul.dots li{position:relative;padding-right:22px;margin-bottom:8px}
+ul.dots li::before{content:"";position:absolute;right:4px;top:.7em;width:7px;height:7px;border-radius:50%;background:var(--olive)}
+.done-row{margin-top:26px;padding-top:20px;border-top:1px dashed var(--line);display:flex;justify-content:flex-start}
+.done-btn{display:inline-flex;align-items:center;gap:10px;background:var(--cream);border:1.5px solid var(--leaf);color:var(--forest);font:inherit;font-weight:700;padding:10px 20px;border-radius:99px;cursor:pointer;transition:all .2s}
+.done-btn .box{width:20px;height:20px;border-radius:6px;border:2px solid var(--olive);display:grid;place-items:center;font-size:13px;color:#fff}
+.done-btn[aria-pressed=true]{background:var(--olive);border-color:var(--olive);color:#fff}
+.done-btn[aria-pressed=true] .box{background:#fff;color:var(--olive);border-color:#fff}
+
+/* callouts */
+.note{border-radius:16px;padding:16px 18px;margin-top:18px;display:flex;gap:12px;font-size:.97rem}
+.note .ic{flex:none;font-size:1.25rem;line-height:1.4}
+.note.tip{background:var(--mint);border:1px solid var(--leaf)}
+.note.warn{background:#FBEFE9;border:1px solid #EFC9BB}
+.note.why{background:var(--cream);border:1px solid var(--line)}
+
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.compare div{border-radius:16px;padding:18px;border:1px solid var(--line)}
+.compare .a{background:var(--cream)}
+.compare .b{background:var(--forest);color:var(--ink-dark-1);border-color:var(--forest)}
+.compare .b b{color:#fff}
+.compare h4{font-size:1rem;font-weight:800;margin-bottom:6px}
+.compare .b h4{color:var(--leaf)}
+
+/* prompt boxes */
+.prompt{position:relative;background:var(--forest-deep);color:var(--ink-dark-1);border-radius:16px;padding:18px 18px 18px 18px;margin-top:14px;white-space:pre-wrap;font-size:.95rem;line-height:1.75;border:1px solid var(--forest-tile)}
+.prompt .lbl{display:block;font-size:.75rem;font-weight:800;color:var(--leaf);letter-spacing:.05em;margin-bottom:6px}
+.prompt.en{direction:ltr;text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
+.copy{position:absolute;top:12px;left:12px;background:var(--olive);color:#fff;border:0;font:inherit;font-size:.78rem;font-weight:700;padding:5px 12px;border-radius:99px;cursor:pointer;direction:rtl}
+.copy.ok{background:var(--leaf);color:var(--forest-deep)}
+.prompt .lbl{padding-left:80px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tabs button{font:inherit;font-weight:700;font-size:.9rem;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--cream);color:var(--ink-2);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.tabpanel[hidden]{display:none}
+
+/* table */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;margin-top:16px;font-size:.93rem;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.tbl th{background:var(--forest);color:var(--cream);font-weight:700;padding:10px 12px;text-align:right}
+.tbl td{padding:11px 12px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:var(--cream)}
+.tbl td:first-child{font-weight:700;color:var(--forest);white-space:nowrap}
+.tbl-wrap{overflow-x:auto}
+
+/* accordion */
+details.acc{border:1px solid var(--line);border-radius:16px;margin-top:12px;background:var(--cream);overflow:hidden}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-size:1.3rem;color:var(--olive);font-weight:500;transition:transform .2s}
+details.acc[open] summary::after{transform:rotate(45deg)}
+details.acc .in{padding:0 18px 16px;color:var(--ink-2)}
+details.acc .in b{color:var(--forest)}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:16px}
+.gloss details{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.gloss summary{cursor:pointer;list-style:none;font-weight:800;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center}
+.gloss summary::-webkit-details-marker{display:none}
+.gloss summary small{font-weight:500;color:var(--ink-3);font-size:.78rem;direction:ltr}
+.gloss p{margin-top:8px;font-size:.93rem;color:var(--ink-2)}
+dfn{font-style:normal;border-bottom:2px dotted var(--olive);cursor:help;position:relative}
+.tip-pop{position:absolute;z-index:80;max-width:280px;background:var(--forest-deep);color:var(--ink-dark-1);font-size:.85rem;line-height:1.55;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-md);pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.show{opacity:1}
+
+/* ===== UI mockups ===== */
+figure.mock{margin:22px 0 4px}
+.win{direction:ltr;text-align:left;background:#fff;border:1px solid #DDD9CC;border-radius:14px;box-shadow:var(--shadow-md);overflow:hidden;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;color:#2b2b28;position:relative}
+.win-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;background:#F4F2EC;border-bottom:1px solid #E6E2D6}
+.win-bar i{width:11px;height:11px;border-radius:50%;background:#E0DCCF}
+.win-bar i:nth-child(1){background:#EC6A5E}.win-bar i:nth-child(2){background:#F4BF4F}.win-bar i:nth-child(3){background:#61C554}
+.win-bar span{margin-left:10px;color:#8a8672;font-size:12px}
+.win-body{padding:16px;position:relative}
+.ui-tabs{display:inline-flex;background:#EFECE3;border-radius:10px;padding:3px;gap:2px}
+.ui-tabs span{padding:6px 16px;border-radius:8px;color:#6b6a62;font-weight:600}
+.ui-tabs span.on{background:#fff;color:#1b1d16;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ui-row{display:flex;gap:14px}
+.ui-side{width:150px;flex:none;border-right:1px solid #ECE8DD;padding-right:12px;color:#6b6a62;font-size:12px}
+.ui-side div{padding:6px 8px;border-radius:7px;margin-bottom:3px}
+.ui-side .cur{position:relative;background:#F0F3E8;color:#333E27;font-weight:600}
+.ui-main{flex:1;min-width:0}
+.ui-input{border:1px solid #DDD9CC;border-radius:14px;padding:12px;background:#FFFEFB}
+.ui-input .ph{color:#a6a394;min-height:34px}
+.ui-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.pill{display:inline-flex;align-items:center;gap:5px;border:1px solid #E1DDD0;border-radius:99px;padding:4px 10px;font-size:12px;color:#4a4a44;background:#fff;white-space:nowrap}
+.pill.plus{width:28px;height:28px;padding:0;justify-content:center;font-size:16px}
+.send{margin-left:auto;width:30px;height:30px;border-radius:50%;background:#333E27;color:#fff;display:grid;place-items:center;font-size:14px}
+.menu{background:#fff;border:1px solid #DDD9CC;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:6px;width:230px;font-size:12.5px}
+.menu div{padding:7px 10px;border-radius:8px;display:flex;justify-content:space-between;gap:8px}
+.menu div small{color:#9a978a}
+.menu .hl{background:#F0F3E8;color:#333E27;font-weight:600}
+.menu .sep{height:1px;background:#EEE;padding:0;margin:4px 0}
+.card-perm{border:1px solid #E1DDD0;border-radius:12px;padding:12px 14px;background:#FFFEFB}
+.card-perm .t{font-weight:600;margin-bottom:6px}
+.card-perm pre{direction:rtl;text-align:right;font-family:Heebo,sans-serif;background:#F6F4EE;border-radius:8px;padding:8px 10px;font-size:12px;margin:6px 0 10px;white-space:pre-wrap;color:#333}
+.card-perm pre .add{color:#4f7a2b}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.ub{border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;border:1px solid #DDD9CC;background:#fff}
+.ub.pri{background:#333E27;color:#fff;border-color:#333E27}
+.msg{border-radius:12px;padding:9px 12px;margin-bottom:8px;max-width:85%}
+.msg.me{background:#F0F3E8;margin-left:auto;direction:rtl;text-align:right;font-family:'Heebo',sans-serif}
+.msg.cl{background:#fff;border:1px solid #ECE8DD;direction:rtl;text-align:right;font-family:'Heebo',sans-serif}
+.slash-chip{display:inline-block;background:#E5ECD7;color:#333E27;border-radius:6px;padding:1px 6px;font-weight:600}
+.file{font-family:Heebo,sans-serif;font-size:13px;line-height:1.7;white-space:pre-wrap;direction:rtl;text-align:right;color:#333}
+.file .h{color:#788C5D;font-weight:700}
+.finder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:11.5px;color:#4a4a44}
+.finder div{padding:8px 4px;border-radius:10px}
+.finder .ico{font-size:30px;line-height:1.2}
+.finder .sel{background:#F0F3E8;outline:2px solid #B7C29F}
+.pt{position:relative}
+.pin{position:absolute;top:-13px;right:-13px;width:26px;height:26px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(217,120,95,.25);font-family:'Heebo',sans-serif;z-index:3}
+.ring{position:absolute;border:2.5px solid var(--coral);border-radius:12px;pointer-events:none;z-index:2}
+figcaption{margin-top:14px;font-size:.93rem;color:var(--ink-2)}
+figcaption ol{list-style:none;padding:0;counter-reset:c;display:grid;gap:6px}
+figcaption li{counter-increment:c;position:relative;padding-right:32px}
+figcaption li::before{content:counter(c);position:absolute;right:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:.75rem;display:grid;place-items:center}
+.mock-note{font-size:.78rem;color:var(--ink-3);margin-top:6px}
+
+/* OS */
+body.os-win .mac-only{display:none!important}
+body:not(.os-win) .win-only{display:none!important}
+.os-tag{display:none}
+
+/* end */
+.final{background:var(--forest);color:var(--ink-dark-1);border-radius:var(--r);padding:40px 30px;margin-top:22px;text-align:center}
+.final h2{color:#fff}
+.final p{color:var(--ink-dark-2);max-width:560px;margin:10px auto 0}
+.final .btn{background:var(--leaf);color:var(--forest-deep);margin-top:20px}
+footer{border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--ink-3);font-size:.88rem}
+footer img{height:30px;display:block;margin:0 auto 10px}
+
+/* mobile */
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding-top:18px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+  nav.toc::-webkit-scrollbar{display:none}
+  nav.toc p{display:none}
+  nav.toc a{flex:none;border:1px solid var(--line);border-radius:99px;background:#fff;padding:5px 12px;font-size:.84rem}
+  nav.toc a.active{border-right-color:var(--line)}
+  .progress span{display:none}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .hwrap img{height:30px}
+  .progress{max-width:none}
+  section.step{padding:26px 18px}
+  .compare{grid-template-columns:1fr}
+  .hero{padding-top:34px}
+  .ui-side{display:none}
+  .win{font-size:12px}
+  .final{padding:32px 18px}
+}
+
+/* print / PDF */
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  body{background:#fff;font-size:12.5pt}
+  header,.from-banner,nav.toc,.done-row,.copy,.tabs,.hero-cta,.os-switch,.tip-pop{display:none!important}
+  .layout{display:block;padding:0}
+  section.step{box-shadow:none;break-inside:auto;padding:22px 20px;margin-top:14px}
+  .step-head,figure.mock,.prompt,.note,.tbl,.compare{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  .tabpanel[hidden]{display:block!important}
+  .tabpanel{margin-top:10px}
+  .tabpanel::before{content:attr(data-title);display:block;font-weight:800;color:var(--olive);margin-top:10px}
+  details>*:not(summary){display:block}
+  details.acc .in{display:block}
+  .win,.chip{box-shadow:none}
+  body .mac-only,body .win-only{display:inline!important}
+  div.mac-only,div.win-only,p.mac-only,p.win-only,li.mac-only,li.win-only{display:block!important}
+  .os-tag{display:inline;font-weight:800;color:var(--olive)}
+  .print-only{display:block!important}
+  .hero{padding-top:6px}
+  .print-logo{display:block!important;height:38px;margin-bottom:18px}
+  a{text-decoration:none}
+  details.acc summary::after{display:none}
+  .gloss summary{pointer-events:none}
+}
+.print-only,.print-logo{display:none}
+
+/* ===== additions for this guide ===== */
+.btn-back{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:.82rem;font-weight:700;color:var(--forest);border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;white-space:nowrap}
+.btn-back:hover{border-color:var(--olive)}
+.beginner{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--forest);color:var(--ink-dark-1);border-radius:18px;padding:20px 22px;margin-top:18px}
+.beginner b{color:#fff}
+.beginner p{flex:1;min-width:220px;margin:0}
+.beginner .btn{background:var(--leaf);color:var(--forest-deep)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.duo div{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--cream)}
+.duo h4{font-size:1rem;font-weight:800;color:var(--forest-deep);margin-bottom:4px}
+.duo p{font-size:.93rem;color:var(--ink-2)}
+
+/* fill-in form */
+.fill-form{display:grid;gap:14px;margin-top:18px;background:var(--mint);border:1px solid var(--leaf);border-radius:18px;padding:20px}
+.fill-form label{display:block;font-weight:700;color:var(--forest-deep);font-size:.95rem;margin-bottom:6px}
+.fill-form label small{font-weight:500;color:var(--ink-3)}
+.fill-form input{width:100%;font:inherit;font-size:1rem;padding:11px 14px;border-radius:12px;border:1.5px solid var(--leaf);background:#fff;color:var(--ink)}
+.fill-form input:focus{outline:none;border-color:var(--olive);box-shadow:0 0 0 3px rgba(120,140,93,.18)}
+.fill-form .hint{font-size:.82rem;color:var(--ink-3);margin-top:4px}
+.prompt .fill{background:rgba(183,194,159,.22);color:#E5ECD7;border-radius:5px;padding:0 4px;font-weight:700}
+.prompt .fill.empty{color:#F2B8A6;background:rgba(217,120,95,.18)}
+.prompt.long{max-height:520px;overflow:auto}
+.prompt.long.open{max-height:none}
+.expand{display:block;margin:10px auto 0;font:inherit;font-weight:700;font-size:.88rem;background:none;border:1.5px solid var(--line);color:var(--forest);padding:6px 16px;border-radius:99px;cursor:pointer}
+
+/* folder tree */
+.tree{font-family:'Heebo',sans-serif;direction:rtl;text-align:right;font-size:13.5px;line-height:1.95;color:#333}
+.tree div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree .l1{padding-right:22px}.tree .l2{padding-right:44px;color:#6b6a62}
+.tree .x{color:#788C5D;font-weight:700}
+.tree .ltr{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+
+/* mock table */
+.mtbl{width:100%;border-collapse:collapse;font-family:'Heebo',sans-serif;direction:rtl;text-align:right;font-size:12px;margin-top:6px}
+.mtbl th{background:#F0F3E8;color:#333E27;font-weight:700;padding:6px 8px}
+.mtbl td{border-top:1px solid #EEE;padding:6px 8px}
+.mtbl .warnc{color:#B5543C;font-weight:600}
+.tag{display:inline-block;border-radius:99px;padding:0 8px;font-size:11px;font-weight:700}
+.tag.att{background:#E5ECD7;color:#333E27}.tag.lnk{background:#E8EEF7;color:#2F4A72}.tag.bdy{background:#FBEFE9;color:#9A4630}
+
+/* vendor table */
+.tbl td small{display:block;color:var(--ink-3);font-size:.82rem;font-weight:500;margin-top:2px}
+
+@media (max-width:640px){
+  .duo{grid-template-columns:1fr}
+  .btn-back span{display:none}
+  .mtbl{font-size:11px}
+  .mtbl .hide-sm{display:none}
+}
+@media print{
+  .btn-back,.fill-form,.expand,.beginner .btn{display:none!important}
+  .prompt.long{max-height:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <a href="../courses/" aria-label="Ronig.ai, לעמוד הקורסים"><img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36"></a>
+    <div class="progress" aria-live="polite"><span id="progText">0 מתוך 6 שלבים</span><div class="bar"><i id="progBar"></i></div></div>
+    <a class="btn-back" href="https://rogre1.github.io/ronig-courses/courses/">← <span>חזרה לעמוד הקורסים</span></a>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="toc" id="toc" aria-label="תוכן עניינים">
+  <p>תוכן עניינים</p>
+  <a href="#start" data-step="start"><span class="tick">✓</span>לפני שמתחילים</a>
+  <a href="#folder" data-step="folder"><span class="tick">✓</span>תיקייה במחשב</a>
+  <a href="#gmail" data-step="gmail"><span class="tick">✓</span>חיבור למייל</a>
+  <a href="#chrome" data-step="chrome"><span class="tick">✓</span>חיבור לדפדפן</a>
+  <a href="#prompt" data-step="prompt"><span class="tick">✓</span>הפרומפט</a>
+  <a href="#run" data-step="run"><span class="tick">✓</span>מה קורה עכשיו</a>
+  <a href="#missing">חשבוניות שלא מגיעות</a>
+  <a href="#monthly">בחודש הבא</a>
+  <a href="#faq">תקלות ושאלות</a>
+</nav>
+
+<main id="top">
+
+<section class="hero">
+  <img class="print-logo" src="../assets/logo-dark.png" alt="Ronig.ai">
+  <span class="eyebrow">מדריך חינם · Ronig.ai</span>
+  <h1>כל החשבוניות מהמייל,<br><em>בתיקייה מסודרת</em> לפי חודשים</h1>
+  <p class="lead">סוף החודש, רואה החשבון מבקש חשבוניות, ואתם גוללים במייל שעה שלמה. במדריך הזה Claude עושה את זה בשבילכם: מוצא את כל החשבוניות, מוריד אותן לתיקייה במחשב, מסדר לפי חודשים, <b>ומגלה אילו מנויים בכלל לא שלחו לכם חשבונית</b>, כדי שתדעו בדיוק מה עוד חסר.</p>
+  <div class="hero-meta">
+    <span class="chip">⏱ הקמה של 15 דקות, פעם אחת</span>
+    <span class="chip">📧 Gmail</span>
+    <span class="chip">📋 פרומפט מוכן להעתקה</span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn" href="#start">יאללה, מתחילים</a>
+    <a class="btn ghost" href="#prompt">ישר לפרומפט</a>
+  </div>
+  <p class="print-only" style="margin-top:14px;color:var(--ink-3)">הגרסה האינטראקטיבית: rogre1.github.io/ronig-courses/email-invoices</p>
+</section>
+
+<!-- 1 -->
+<section class="step" id="start" data-step>
+  <div class="step-head"><div class="num">1</div><div><h2>לפני שמתחילים</h2><p>מה צריך, ומה Claude הולך לעשות</p></div></div>
+  <p>אנחנו נעבוד עם <b>Claude Code</b>, הגרסה של Claude שיודעת לעבוד על קבצים במחשב שלכם. אם עוד לא עבדתם איתו, אל תדלגו על זה:</p>
+  <div class="beginner">
+    <p><b>פעם ראשונה עם Claude Code?</b> עברו קודם על מדריך המתחילים שלי. 20 דקות, בלי קוד ובלי טרמינל: התקנה, תיקיית עבודה והשיחה הראשונה. אחר כך חוזרים לכאן.</p>
+    <a class="btn" href="../claude-code-start/?from=email-invoices">למדריך המתחילים ←</a>
+  </div>
+  <h3>מה צריך</h3>
+  <ul class="dots">
+    <li><b>אפליקציית Claude במחשב</b> עם מנוי בתשלום (Pro ומעלה), פתוחה בלשונית <b>Code</b>.</li>
+    <li><b>חשבון Gmail</b> שאליו מגיעות החשבוניות.</li>
+    <li><b>דפדפן Chrome</b> שבו אתם כבר מחוברים ל-Gmail. דרכו Claude יוריד את הקבצים.</li>
+  </ul>
+  <h3>מה Claude יעשה בשבילכם</h3>
+  <ol class="steps">
+    <li>יחפש במייל חשבוניות, קבלות ואישורי תשלום, בעברית ובאנגלית, בחודשים שתבחרו.</li>
+    <li>יראה לכם רשימה לאישור, <b>לפני</b> שהוא מוריד משהו.</li>
+    <li>יוריד הכל לתיקייה במחשב, עם תת-תיקייה לכל חודש ושם קובץ ברור לכל חשבונית.</li>
+    <li>יעבור על המייל ויזהה מנויים קבועים (Meta Ads, היגספילד, קלינג וכו'), ויבדוק אם קיבלתם מהם חשבונית לכל חודש.</li>
+    <li>יגיד לכם בדיוק <b>אילו חשבוניות חסרות</b> ומאיפה מורידים אותן.</li>
+  </ol>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>יש לי Claude Code, ממשיכים</button></div>
+</section>
+
+<!-- 2 -->
+<section class="step" id="folder" data-step>
+  <div class="step-head"><div class="num">2</div><div><h2>מחברים את Claude למחשב: תיקייה לחשבוניות</h2><p>המקום שאליו כל הקבצים ייכנסו</p></div></div>
+  <p>Claude Code עובד בתוך <dfn data-tip="התיקייה במחשב שבה Claude עובד. הוא רואה ומשנה רק את מה שבתוכה.">תיקיית עבודה</dfn> אחת. זה ה"חיבור" שלו למחשב: מה שבתוכה הוא יכול ליצור, לשנות ולסדר. אז ניצור לו תיקייה ייעודית לנושא הכספים.</p>
+  <ol class="steps">
+    <li>צרו בשולחן העבודה (או במסמכים) תיקייה חדשה, וקראו לה למשל <b>הנהלת חשבונות</b>.</li>
+    <li>באפליקציה, בלשונית <b>Code</b>, לוחצים <b>New session</b> (שיחה חדשה).</li>
+    <li>מתחת לתיבת הכתיבה לוחצים על <b>Select folder</b>, בוחרים את התיקייה ולוחצים <b>Open</b>.</li>
+  </ol>
+  <figure class="mock" aria-label="איור: בחירת תיקיית עבודה">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>Claude · Code</span></div>
+      <div class="win-body">
+        <div class="ui-input"><div class="ph">Describe a task…</div>
+          <div class="ui-tools"><span class="pill plus">+</span><span class="pill">💻 Local</span><span class="pill pt">📁 הנהלת חשבונות<b class="pin">1</b></span><span class="pill">Manual ▾</span><span class="send">↑</span></div>
+        </div>
+      </div>
+    </div>
+    <figcaption><ol><li>כשהתיקייה נבחרה, השם שלה מופיע כאן. מעכשיו Claude עובד בתוכה.</li></ol></figcaption>
+    <p class="mock-note">איור להמחשה. הממשק מתעדכן מדי פעם, אז ייתכן שיהיו הבדלים קטנים בעיצוב.</p>
+  </figure>
+  <div class="note why"><span class="ic">🧠</span><div><b>למה תיקייה ייעודית?</b> כי ככה כל שנה של חשבוניות יושבת במקום אחד, ובחודש הבא Claude ימשיך מאותה נקודה בלי לחפש. ואם תרצו, אפשר לשים את התיקייה בתוך Google Drive או iCloud כדי שהיא תהיה מגובה ותוכלו לשתף אותה עם רואה החשבון.</div></div>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>התיקייה מחוברת</button></div>
+</section>
+
+<!-- 3 -->
+<section class="step" id="gmail" data-step>
+  <div class="step-head"><div class="num">3</div><div><h2>מחברים את Claude למייל</h2><p>ככה הוא יכול לחפש ולקרוא את המיילים שלכם</p></div></div>
+  <p>החיבור ל-Gmail נעשה דרך <dfn data-tip="חיבור בין Claude לשירות חיצוני כמו Gmail, יומן גוגל או Notion.">Connector</dfn>, חיבור מובנה באפליקציה. עושים את זה פעם אחת, והוא נשאר מחובר.</p>
+  <ol class="steps">
+    <li>לוחצים על <b>+</b> ליד תיבת הכתיבה ובוחרים <b>Connectors</b>.</li>
+    <li>ליד <b>Gmail</b> לוחצים <b>Connect</b>.</li>
+    <li>נפתח חלון של גוגל: בוחרים את חשבון המייל שאליו מגיעות החשבוניות ומאשרים את ההרשאות.</li>
+    <li>חוזרים לאפליקציה. ליד Gmail יופיע שהוא מחובר.</li>
+  </ol>
+  <figure class="mock" aria-label="איור: חיבור Gmail דרך תפריט הפלוס">
+    <div class="win">
+      <div class="win-body" style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap">
+        <div class="menu">
+          <div>📎 Add files</div>
+          <div>/ Slash commands</div>
+          <div class="hl pt">🔌 Connectors <small>›</small><b class="pin">1</b></div>
+          <div>🧩 Plugins <small>›</small></div>
+        </div>
+        <div class="menu" style="width:210px">
+          <div class="hl pt">Gmail <small>Connect</small><b class="pin">2</b></div>
+          <div>Google Calendar <small>Connect</small></div>
+          <div>Google Drive <small>Connect</small></div>
+          <div class="sep"></div>
+          <div>Manage connectors</div>
+        </div>
+      </div>
+    </div>
+    <figcaption><ol><li>תפריט ה-<b>+</b>, ואז <b>Connectors</b>.</li><li><b>Connect</b> ליד Gmail, ומתחברים עם חשבון הגוגל.</li></ol></figcaption>
+    <p class="mock-note">לא רואים את Gmail ברשימה? לוחצים <b>Manage connectors</b> ומחפשים שם. אפשר גם לחבר מאתר claude.ai בהגדרות, תחת Connectors, והחיבור יופיע גם באפליקציה.</p>
+  </figure>
+  <div class="note tip"><span class="ic">✅</span><div><b>בדיקה קטנה:</b> כתבו ל-Claude <b>"תמצא לי את המייל האחרון שקיבלתי"</b>. אם הוא עונה עם נושא המייל, החיבור עובד.</div></div>
+  <div class="note warn"><span class="ic">🔒</span><div><b>על פרטיות:</b> Claude קורא את המיילים רק כשאתם מבקשים ממנו משימה. בפרומפט שלמטה כתבתי לו במפורש לא למחוק, לא להעביר לארכיון ולא לשלוח שום מייל. רק לקרוא.</div></div>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>Gmail מחובר</button></div>
+</section>
+
+<!-- 4 -->
+<section class="step" id="chrome" data-step>
+  <div class="step-head"><div class="num">4</div><div><h2>מחברים את Claude לדפדפן</h2><p>כדי שיוכל להוריד את הקבצים עצמם</p></div></div>
+  <p>חיבור ה-Gmail מצוין לחיפוש וקריאה, אבל הרבה חשבוניות לא יושבות במייל כקובץ. יש כאלה שמגיעות כ<b>קישור</b> ("View invoice", "להורדת החשבונית"), ויש כאלה שהקובץ המצורף צריך פשוט להוריד. בשביל זה Claude צריך גם דפדפן.</p>
+  <div class="duo">
+    <div><h4>📧 חיבור Gmail</h4><p>מחפש, קורא ומבין מה יש בכל מייל. מהיר ומדויק.</p></div>
+    <div><h4>🌐 Claude in Chrome</h4><p>פותח את המייל או את הקישור בדפדפן שלכם ולוחץ "הורדה", כמו שאתם הייתם עושים.</p></div>
+  </div>
+  <h3>איך מחברים</h3>
+  <ol class="steps">
+    <li>ב-Chrome נכנסים ל-<a href="https://claude.ai/chrome" target="_blank" rel="noopener">claude.ai/chrome</a> ולוחצים <b>Add to Chrome</b>.</li>
+    <li>לוחצים על אייקון הפאזל למעלה ב-Chrome ו"מצמידים" את Claude, כדי שיהיה תמיד בהישג יד.</li>
+    <li>לוחצים על אייקון Claude ומתחברים עם <b>אותו חשבון</b> של המנוי.</li>
+    <li>חוזרים לאפליקציה. בפעם הראשונה ש-Claude ירצה להשתמש בדפדפן, הוא יבקש אישור. מאשרים.</li>
+  </ol>
+  <figure class="mock" aria-label="איור: התוסף Claude ב-Chrome">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>mail.google.com</span><span style="margin-left:auto;display:flex;gap:6px;align-items:center"><span class="pill">🧩</span><span class="pill pt" style="background:#F0F3E8;border-color:#B7C29F;color:#333E27;font-weight:700">✳ Claude<b class="pin">1</b></span></span></div>
+      <div class="win-body">
+        <div class="card-perm">
+          <div class="t">Claude wants to use Chrome</div>
+          <div style="color:#6b6a62;font-size:12px;margin-bottom:10px">Open mail.google.com and download the attachment "Invoice-0042.pdf"</div>
+          <div class="btnrow"><span class="ub pri pt">Allow<b class="pin">2</b></span><span class="ub">Deny</span></div>
+        </div>
+      </div>
+    </div>
+    <figcaption><ol><li>התוסף מוצמד ומחובר לחשבון שלכם.</li><li>Claude מבקש אישור לפני שהוא עובד באתר. אפשר לאשר לכל השיחה כדי שלא ישאל על כל קובץ.</li></ol></figcaption>
+    <p class="mock-note">איור להמחשה. אם התוסף לא מופיע לכם באפליקציה, לוחצים על <b>+</b> ואז <b>Connectors</b> ומוודאים ש-Claude in Chrome מופעל.</p>
+  </figure>
+  <div class="note tip"><span class="ic">💡</span><div><b>יתרון גדול:</b> Claude עובד בדפדפן <b>שבו אתם כבר מחוברים</b>. הוא לא צריך את הסיסמה שלכם ל-Gmail, ובשום שלב אתם לא נותנים לו סיסמה. אם הוא נתקל במסך התחברות, הוא עוצר ומבקש שתתחברו בעצמכם.</div></div>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>הדפדפן מחובר</button></div>
+</section>
+
+<!-- 5 -->
+<section class="step" id="prompt" data-step>
+  <div class="step-head"><div class="num">5</div><div><h2>הפרומפט: מלאו, העתיקו, הדביקו</h2><p>הוראות צעד אחרי צעד, כדי ש-Claude לא יפספס כלום</p></div></div>
+  <p>מלאו את שלושת השדות, והפרומפט מתעדכן לבד. אחר כך לוחצים <b>העתקה</b> ומדביקים בתיבת הכתיבה בשיחה שפתחתם בתיקייה.</p>
+  <div class="fill-form">
+    <div>
+      <label for="fMonths">אילו חודשים להוריד?</label>
+      <input id="fMonths" data-k="months" type="text" placeholder="למשל: יולי, אוגוסט וספטמבר 2026">
+      <div class="hint">אפשר חודש אחד, כמה חודשים או שנה שלמה ("כל 2025").</div>
+    </div>
+    <div>
+      <label for="fFolder">איך לקרוא לתיקיית החשבוניות?</label>
+      <input id="fFolder" data-k="folder" type="text" value="חשבוניות">
+    </div>
+    <div>
+      <label for="fSubs">מנויים שאתם יודעים שיש לכם <small>(לא חובה, אבל עוזר)</small></label>
+      <input id="fSubs" data-k="subs" type="text" placeholder="למשל: Meta Ads, Higgsfield, Kling, Canva, ChatGPT">
+      <div class="hint">כל שירות שמחייב אתכם קבוע. Claude יבדוק שיש חשבונית מכל אחד מהם לכל חודש.</div>
+    </div>
+  </div>
+
+  <div class="prompt long" id="mainPrompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>אני רוצה שתעזור לי לאסוף את כל החשבוניות והקבלות שלי מהמייל ולסדר אותן בתיקייה במחשב. תעבוד לפי השלבים הבאים, אחד אחרי השני, בלי לדלג.
+
+החודשים שאני צריך/ה: <span class="fill" data-k="months">[החודשים]</span>
+שם התיקייה: <span class="fill" data-k="folder">חשבוניות</span>
+מנויים שאני יודע/ת שיש לי: <span class="fill" data-k="subs">[לא ציינתי, תמצא לבד]</span>
+
+שלב 1: בדיקת חיבורים
+תבדוק שיש לך גישה ל-Gmail שלי ולדפדפן (Claude in Chrome). אם אחד מהם לא מחובר, תעצור ותסביר לי בדיוק איך לחבר אותו.
+
+שלב 2: חיפוש במייל
+תחפש את כל המיילים מהחודשים האלה שיש בהם חשבונית, חשבונית מס, חשבונית מס/קבלה, קבלה, אישור תשלום או אישור הזמנה. תחפש גם בעברית וגם באנגלית (invoice, receipt, payment, billing, order confirmation, subscription, renewal), תבדוק גם בלשוניות "קידומי מכירות" ו"עדכונים", ותחפש גם קבצי PDF מצורפים מאותם חודשים.
+שים לב: חשבונית יכולה להגיע כמה ימים אחרי סוף החודש, אז תחפש גם בשבוע הראשון של החודש שאחרי. תסווג כל חשבונית לפי התאריך שכתוב עליה, ולא לפי התאריך שבו המייל הגיע.
+תתעלם מניוזלטרים, פרסומות ומבצעים. אני רוצה רק מסמכים על כסף ששילמתי בפועל.
+
+שלב 3: רשימה לאישור, לפני שמורידים
+לפני שאתה מוריד משהו, תציג לי טבלה מסודרת לפי חודש: תאריך, שם הספק, סכום ומטבע, ואיך החשבונית מגיעה (קובץ מצורף / קישור להורדה / רק בגוף המייל). תסמן מה נראה לך כפול (למשל קבלה וחשבונית על אותו תשלום) ומה לא בטוח. תחכה לאישור שלי לפני שאתה ממשיך.
+
+שלב 4: הורדה וסידור בתיקייה
+אחרי שאישרתי:
+- קובץ מצורף: תוריד אותו.
+- קישור לחשבונית: תפתח אותו בדפדפן ותוריד את ה-PDF.
+- חשבונית שנמצאת רק בגוף המייל: תשמור את המייל כקובץ PDF.
+תיצור בתיקיית העבודה תיקייה בשם "<span class="fill" data-k="folder">חשבוניות</span>", ובתוכה תת-תיקייה לכל חודש בפורמט "2026-07 יולי".
+תקרא לכל קובץ בשם: תאריך_ספק_סכום, למשל 2026-07-03_Canva_55ILS.pdf
+קבצים שירדו לתיקיית ההורדות (Downloads), תעביר למקום הנכון. אל תשאיר כפילויות.
+
+שלב 5: מנויים שלא שולחים חשבונית במייל
+תעבור על המייל של 12 החודשים האחרונים ותחפש סימנים לשירותים שמחייבים אותי באופן קבוע: מיילים של ברוכים הבאים, אישור הרשמה למנוי, חידוש מנוי, שדרוג או שינוי תוכנית, חיוב שנכשל, עדכון אמצעי תשלום, או חשבוניות שהגיעו בחודשים אחרים. תוסיף לזה גם את המנויים שרשמתי למעלה.
+לכל שירות כזה, תבדוק אם יש במייל חשבונית לכל אחד מהחודשים שביקשתי. אם אין, תוסיף אותו לרשימת "חסרות: להוריד מהאתר".
+שים לב במיוחד לשירותים שידועים בזה שהחשבוניות שלהם נמצאות רק באתר, כמו Meta Ads (פייסבוק ואינסטגרם), Google Ads, וכלי AI כמו Higgsfield, Kling ו-Midjourney.
+
+שלב 6: סיכום
+תיצור בתוך תיקיית "<span class="fill" data-k="folder">חשבוניות</span>" קובץ אקסל בשם "סיכום חשבוניות" עם שתי לשוניות:
+1. "הורדו": כל חשבונית שהורדת, לפי חודש, עם ספק, סכום ומטבע, ושורת סיכום לכל חודש.
+2. "חסרות": שם הספק, אילו חודשים חסרים, למה אתה חושב שיש לי שם מנוי (איזה מייל מצאת ומאיזה תאריך), קישור לעמוד החיובים באתר שלהם, והסבר קצר איפה באתר מורידים את החשבונית.
+בסוף תכתוב לי בצ'אט סיכום קצר: כמה חשבוניות הורדת בכל חודש, ורשימה ממוספרת של החשבוניות שאני צריך/ה להוריד בעצמי.
+
+כללים חשובים:
+- רק לקרוא מיילים. לא למחוק, לא להעביר לארכיון, לא לסמן כנקרא ולא לשלוח שום מייל בשמי.
+- אם צריך להתחבר לאתר כלשהו, אל תקליד סיסמאות. תעצור ותגיד לי, ואני אתחבר בעצמי.
+- אל תלחץ על כפתורי תשלום, ביטול מנוי או שינוי הגדרות בשום אתר.
+- אם משהו לא ברור לך, תשאל אותי לפני שאתה ממשיך.</div>
+  <button class="expand" type="button" id="expandBtn">הצגת הפרומפט המלא ↓</button>
+
+  <div class="note tip"><span class="ic">🗺️</span><div><b>טיפ:</b> אפשר לשלוח את הפרומפט במצב <b>Plan</b> (בכפתור מצב ההרשאות). ככה Claude קודם מסביר איך הוא מתכנן לעבוד, אתם מאשרים, ורק אז הוא מתחיל.</div></div>
+  <details class="acc"><summary>🤔 למה הפרומפט כל כך ארוך?</summary><div class="in">
+    <p>כי כל שורה בו מונעת טעות שראיתי קורית. בלי "תסווג לפי התאריך שעל החשבונית", חשבונית של סוף יוני נכנסת לתיקייה של יולי. בלי "רשימה לאישור לפני הורדה", Claude מוריד גם קבלה וגם חשבונית על אותו תשלום. ובלי שלב 5, אף אחד לא שם לב שהחשבונית של Meta Ads בכלל לא הגיעה למייל.</p>
+    <p>אם אתם רוצים לשנות משהו, למשל שמות קבצים אחרים, פשוט ערכו את השורה המתאימה לפני ששולחים.</p>
+  </div></details>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>הדבקתי ושלחתי</button></div>
+</section>
+
+<!-- 6 -->
+<section class="step" id="run" data-step>
+  <div class="step-head"><div class="num">6</div><div><h2>מה קורה עכשיו</h2><p>ככה זה ייראה, ומה אתם צריכים לעשות בכל שלב</p></div></div>
+
+  <h3>א. Claude מחפש ומציג רשימה לאישור</h3>
+  <p>אחרי כמה דקות של חיפוש תקבלו טבלה כזו. עברו עליה, ואם משהו לא שייך (למשל רכישה פרטית), כתבו לו "בלי שורה 4". כשהכל נראה טוב, כתבו <b>"מאשר/ת, תוריד"</b>.</p>
+  <figure class="mock" aria-label="איור: טבלת חשבוניות לאישור">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>Claude · Code</span></div>
+      <div class="win-body">
+        <div class="msg cl" style="max-width:100%">מצאתי 14 חשבוניות ביולי. הנה הרשימה לאישור:
+          <table class="mtbl">
+            <tr><th>תאריך</th><th>ספק</th><th>סכום</th><th>איך מגיעה</th></tr>
+            <tr><td>03.07</td><td>Canva</td><td>55 ₪</td><td><span class="tag att">קובץ מצורף</span></td></tr>
+            <tr><td>05.07</td><td>Higgsfield</td><td>$49</td><td><span class="tag lnk">קישור</span></td></tr>
+            <tr><td>11.07</td><td>חברת החשמל</td><td>412 ₪</td><td><span class="tag att">קובץ מצורף</span></td></tr>
+            <tr><td>18.07</td><td>ChatGPT</td><td>$20</td><td><span class="tag bdy">גוף המייל</span></td></tr>
+            <tr><td>18.07</td><td>ChatGPT</td><td>$20</td><td class="warnc">⚠ נראה כפול</td></tr>
+          </table>
+          <div style="margin-top:8px">לאשר ולהתחיל להוריד?</div>
+        </div>
+      </div>
+    </div>
+  </figure>
+
+  <h3>ב. חלונות אישור</h3>
+  <p>בזמן ההורדה Claude יבקש אישורים: לפתוח אתר בדפדפן, להוריד קובץ, ליצור תיקייה, להעביר קובץ מתיקיית ההורדות. זה תקין. כדי שלא יקפוץ חלון על כל חשבונית, בחרו <b>Allow for this session</b> (לאשר עד סוף השיחה).</p>
+  <div class="note warn"><span class="ic">⚠️</span><div><b>הכלל שלי:</b> הורדה, יצירת תיקייה והעברת קבצים? מאשרים. אם אתם רואים בקשה למחוק משהו, לשלוח מייל או ללחוץ על משהו באתר שאתם לא מבינים, לוחצים <b>Deny</b> ושואלים אותו מה זה.</div></div>
+
+  <h3>ג. התיקייה המסודרת</h3>
+  <figure class="mock" aria-label="איור: מבנה התיקייה אחרי ההורדה">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>הנהלת חשבונות</span></div>
+      <div class="win-body"><div class="tree">
+        <div>📁 <b>חשבוניות</b></div>
+        <div class="l1">📁 2026-07 יולי</div>
+        <div class="l2">📄 <span class="ltr">2026-07-03_Canva_55ILS.pdf</span></div>
+        <div class="l2">📄 <span class="ltr">2026-07-05_Higgsfield_49USD.pdf</span></div>
+        <div class="l2">📄 <span class="ltr">2026-07-11_IEC_412ILS.pdf</span></div>
+        <div class="l1">📁 2026-08 אוגוסט</div>
+        <div class="l1">📁 2026-09 ספטמבר</div>
+        <div class="l1 x">📊 סיכום חשבוניות.xlsx</div>
+      </div></div>
+    </div>
+    <figcaption>תיקייה לכל חודש, שם קובץ שאומר הכל, וקובץ סיכום אחד שאפשר לשלוח כמו שהוא לרואה החשבון.</figcaption>
+  </figure>
+
+  <h3>ד. הדוח: מה חסר לכם</h3>
+  <p>זה החלק שהכי חוסך כאב ראש. Claude מסיים עם רשימה של חשבוניות שהוא <b>יודע שאמורות להיות</b>, אבל לא הגיעו למייל:</p>
+  <figure class="mock" aria-label="איור: רשימת חשבוניות חסרות">
+    <div class="win">
+      <div class="win-body">
+        <div class="msg cl" style="max-width:100%"><b>סיימתי!</b> הורדתי 14 חשבוניות ביולי, 12 באוגוסט ו-15 בספטמבר.
+          <div style="margin-top:8px"><b>את החשבוניות האלה צריך להוריד בעצמך מהאתר:</b></div>
+          <table class="mtbl">
+            <tr><th>ספק</th><th>חודשים חסרים</th><th class="hide-sm">למה אני חושב שיש מנוי</th></tr>
+            <tr><td>Meta Ads</td><td>יולי, אוגוסט, ספטמבר</td><td class="hide-sm">מיילים על חיוב קמפיין ב-12.07</td></tr>
+            <tr><td>Kling</td><td>אוגוסט, ספטמבר</td><td class="hide-sm">אישור מנוי מ-02.06, חשבונית רק ביולי</td></tr>
+            <tr><td>Midjourney</td><td>ספטמבר</td><td class="hide-sm">חשבוניות קבועות כל חודש, ספטמבר חסר</td></tr>
+          </table>
+          <div style="margin-top:8px">בקובץ הסיכום, בלשונית "חסרות", יש קישור לעמוד החיובים של כל אחד מהם.</div>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>יש לי תיקייה מסודרת</button></div>
+</section>
+
+<!-- missing -->
+<section class="step" id="missing">
+  <div class="step-head"><div class="num">🔎</div><div><h2>החשבוניות שלא מגיעות במייל</h2><p>איפה בדרך כלל מוצאים אותן</p></div></div>
+  <p>יש שירותים שגובים מכם כסף כל חודש, אבל שולחים חשבונית רק אם נכנסים לאתר ומורידים אותה. הנה הנפוצים, ואיפה לחפש. Claude ייתן לכם קישור ישיר בקובץ הסיכום, אבל טוב לדעת:</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>שירות</th><th>איפה מורידים</th></tr>
+    <tr><td>Meta Ads<small>פייסבוק ואינסטגרם</small></td><td>במנהל המודעות (Ads Manager) או ב-Meta Business Suite: <b>Billing and payments</b>, ואז <b>Payment activity</b>. ליד כל חיוב יש כפתור הורדה.</td></tr>
+    <tr><td>Google Ads</td><td>בחשבון Google Ads: <b>Billing</b>, ואז <b>Documents</b>. שם יש חשבונית חודשית.</td></tr>
+    <tr><td>Higgsfield</td><td>בהגדרות החשבון, בעמוד המנוי והחיובים (Billing / Subscription). בדרך כלל יש שם היסטוריית תשלומים עם חשבוניות.</td></tr>
+    <tr><td>Kling</td><td>באזור האישי, בעמוד המנוי (Membership) או היסטוריית ההזמנות.</td></tr>
+    <tr><td>Midjourney</td><td>באתר: <b>Manage Subscription</b>, ואז היסטוריית החיובים (Billing history).</td></tr>
+    <tr><td>Apple / Google Play<small>מנויים באפליקציות</small></td><td>הקבלות בדרך כלל מגיעות במייל. אם לא, באפל: <span class="ltr">reportaproblem.apple.com</span>, ובגוגל: <span class="ltr">pay.google.com</span> תחת פעילות.</td></tr>
+  </table></div>
+  <p class="mock-note" style="margin-top:10px">האתרים משנים את התפריטים מדי פעם. אם לא מוצאים, חפשו בהגדרות החשבון את המילים Billing, Invoices או Payments.</p>
+  <div class="note tip"><span class="ic">🤖</span><div><b>רוצים ש-Claude ינסה להוריד גם אותן?</b> אם אתם כבר מחוברים לאתרים האלה ב-Chrome, אפשר לכתוב לו אחרי הדוח: <b>"תנסה להיכנס לעמוד החיובים של Meta Ads בדפדפן ולהוריד את החשבוניות החסרות. אם צריך התחברות, תעצור ותגיד לי."</b> זה לא תמיד עובד (יש אתרים שחוסמים), אבל כשזה עובד זה חוסך עוד רבע שעה.</div></div>
+  <div class="note why"><span class="ic">💳</span><div><b>הבדיקה הכי מדויקת:</b> Claude רואה רק את מה שיש במייל. אם יש מנוי שמעולם לא שלח לכם אף מייל, הוא לא יידע עליו. לכן כדאי פעם בכמה חודשים לעבור על פירוט האשראי ולהוסיף לשדה "מנויים שאני יודע/ת שיש לי" כל שירות שמופיע שם.</div></div>
+</section>
+
+<!-- monthly -->
+<section class="step" id="monthly">
+  <div class="step-head"><div class="num">🔁</div><div><h2>בחודש הבא: בלי להתחיל מאפס</h2><p>שלוש דרכים, מהפשוטה ביותר</p></div></div>
+  <details class="acc" open><summary>1. פרומפט קצר בשיחה חדשה</summary><div class="in">
+    <p>פותחים שיחה חדשה <b>באותה תיקייה</b>, ומדביקים:</p>
+    <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>תעשה שוב את תהליך החשבוניות, הפעם לחודש [שם החודש והשנה]. תסתכל קודם על "סיכום חשבוניות" בתיקיית החשבוניות כדי לדעת אילו ספקים ומנויים יש לי, תעבוד באותה שיטה ובאותם שמות קבצים, ותעדכן את קובץ הסיכום עם החודש החדש. כמו בפעם הקודמת: קודם רשימה לאישור, ובסוף רשימה של מה שאני צריך/ה להוריד בעצמי.</div>
+  </div></details>
+  <details class="acc"><summary>2. להפוך את זה לסקיל</summary><div class="in">
+    <p><dfn data-tip="קובץ הוראות קבוע למשימה מסוימת. Claude שולף אותו כשהמשימה מגיעה.">סקיל</dfn> הוא מתכון ש-Claude זוכר לתמיד. אחרי שהפעם הראשונה עבדה טוב (כולל התיקונים שנתתם לו בדרך), כתבו באותה שיחה:</p>
+    <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>תהפוך את כל התהליך שעשינו עכשיו לסקיל בשם invoices, כולל כל התיקונים שנתתי לך בדרך ורשימת המנויים שמצאת. תשמור אותו כסקיל אישי. מעכשיו, כשאכתוב "חשבוניות לחודש X", תעבוד לפי הסקיל.</div>
+    <p>מעכשיו מספיק לכתוב <b>"חשבוניות לאוקטובר"</b>, ו-Claude יודע בדיוק מה לעשות.</p>
+  </div></details>
+  <details class="acc"><summary>3. משימה שרצה לבד כל חודש</summary><div class="in">
+    <p>רוצים שזה פשוט יקרה? כתבו:</p>
+    <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>תיצור משימה מתוזמנת שרצה ב-3 לכל חודש בבוקר: תוריד את כל החשבוניות של החודש הקודם מהמייל לתיקיית החשבוניות, באותה שיטה, ובסוף תשאיר לי סיכום עם רשימת החשבוניות שחסרות ואני צריך/ה להוריד בעצמי.</div>
+    <p>שימו לב: משימה מתוזמנת רצה רק כשהמחשב דולק והאפליקציה פתוחה. ובפעם הראשונה כדאי להיות ליד המחשב, כי ייתכן שהיא תבקש אישורים.</p>
+  </div></details>
+</section>
+
+<!-- faq -->
+<section class="step" id="faq">
+  <div class="step-head"><div class="num">?</div><div><h2>תקלות ושאלות נפוצות</h2><p>מה עושים כשמשהו לא עובד</p></div></div>
+  <details class="acc"><summary>Claude אומר שהוא לא יכול להוריד קבצים מצורפים</summary><div class="in"><p>כנראה הדפדפן לא מחובר. חזרו ל<a href="#chrome">שלב 4</a>, ודאו שהתוסף מותקן ומחובר לאותו חשבון, ואז כתבו לו "חיברתי את Chrome, תמשיך מאיפה שעצרת".</p></div></details>
+  <details class="acc"><summary>הוא מצא יותר מדי דברים (ניוזלטרים, מבצעים)</summary><div class="in"><p>בשלב הרשימה לאישור פשוט כתבו לו מה להוציא: "בלי שורות 3, 7 ו-9, אלה פרסומות". אפשר גם להוסיף לפרומפט: "רק מיילים שיש בהם סכום ששולם".</p></div></details>
+  <details class="acc"><summary>אני יודע/ת שיש חשבונית, והוא לא מצא אותה</summary><div class="in"><p>תנו לו רמז: "יש חשבונית מ-Wix ביולי, תחפש לפי השולח". לפעמים החשבונית מגיעה מכתובת של חברת סליקה (כמו Stripe, Paddle או PayPal) ולא מהשם של השירות עצמו.</p></div></details>
+  <details class="acc"><summary>יש לי חשבוניות בכמה תיבות מייל</summary><div class="in"><p>מריצים את התהליך פעם לכל תיבה. בין לבין, מחברים את חשבון הגוגל השני דרך Connectors, או מתחברים אליו ב-Chrome. בפרומפט אפשר לכתוב "הפעם תחפש בתיבה X" כדי שהוא ידע.</p></div></details>
+  <details class="acc"><summary>המייל שלי ב-Outlook ולא ב-Gmail</summary><div class="in"><p>אם אין לכם חיבור מתאים ב-Connectors, אפשר לוותר על שלב 3: Claude יעבוד דרך הדפדפן בלבד, על תיבת ה-Outlook הפתוחה אצלכם ב-Chrome. זה איטי יותר, אבל עובד. כתבו בתחילת הפרומפט "המייל שלי ב-Outlook, תעבוד דרך הדפדפן".</p></div></details>
+  <details class="acc"><summary>חשבוניות במטבע זר</summary><div class="in"><p>Claude שומר את הסכום במטבע המקורי. אם רואה החשבון צריך גם בשקלים, בקשו: "תוסיף בקובץ הסיכום עמודה עם הסכום בשקלים לפי השער היציג ביום החשבונית".</p></div></details>
+  <details class="acc"><summary>זה בטוח לתת ל-Claude גישה למייל?</summary><div class="in"><p>הגישה היא דרך חיבור רשמי של גוגל, ואפשר לנתק אותה בכל רגע (ב-Connectors, או בהגדרות האבטחה של חשבון הגוגל). הפרומפט אומר לו במפורש רק לקרוא, ובכל פעולה רגישה הוא עוצר ושואל. ובכל זאת, הכלל הקבוע: לא נותנים לו סיסמאות ולא פרטי אשראי, אף פעם.</p></div></details>
+  <details class="acc"><summary>הוא עצר באמצע</summary><div class="in"><p>קורה בתהליכים ארוכים. כתבו "תמשיך מאיפה שעצרת". אם השיחה ארוכה מאוד, פתחו שיחה חדשה באותה תיקייה ובקשו: "תסתכל מה כבר ירד לתיקיית החשבוניות ותשלים את מה שחסר לחודשים [X]".</p></div></details>
+</section>
+
+<section class="final">
+  <h2>זהו, החשבוניות מסודרות 🎉</h2>
+  <p>מעכשיו סוף החודש הוא שיחה אחת עם Claude, ורשימה קצרה של מה שנשאר לכם להוריד. רוצים עוד מדריכים כאלה?</p>
+  <a class="btn" href="https://rogre1.github.io/ronig-courses/courses/">לכל המדריכים והקורסים ←</a>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <img src="../assets/logo-dark.png" alt="Ronig.ai">
+  נכתב באהבה על ידי רוני גרין · <a href="../courses/">לקורסים שלי</a> · <a href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">@ronig.ai</a>
+</footer>
+
+<div class="tip-pop" id="tipPop" role="tooltip"></div>
+
+<script>
+(function(){
+  var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  var KEY='invoices-done';
+
+  // progress
+  var steps=[].slice.call(document.querySelectorAll('section[data-step]'));
+  var done={};try{done=JSON.parse(store.get(KEY)||'{}')||{}}catch(e){}
+  function render(){
+    var n=0;
+    steps.forEach(function(s){var on=!!done[s.id];if(on)n++;var b=s.querySelector('.done-btn');b.setAttribute('aria-pressed',on);var a=document.querySelector('nav.toc a[data-step="'+s.id+'"]');if(a)a.classList.toggle('done',on)});
+    document.getElementById('progText').textContent=n+' מתוך '+steps.length+' שלבים';
+    document.getElementById('progBar').style.width=(n/steps.length*100)+'%';
+  }
+  steps.forEach(function(s,i){s.querySelector('.done-btn').addEventListener('click',function(){
+    done[s.id]=!done[s.id];store.set(KEY,JSON.stringify(done));render();
+    if(done[s.id]&&steps[i+1])setTimeout(function(){steps[i+1].scrollIntoView({behavior:'smooth'})},250);
+  })});
+  render();
+
+  // fill-in fields -> prompt
+  var defaults={months:'[החודשים]',folder:'חשבוניות',subs:'[לא ציינתי, תמצא לבד]'};
+  var inputs=document.querySelectorAll('.fill-form input');
+  function fill(){
+    inputs.forEach(function(inp){
+      var k=inp.dataset.k,v=inp.value.trim();
+      document.querySelectorAll('.prompt .fill[data-k="'+k+'"]').forEach(function(sp){sp.textContent=v||defaults[k];sp.classList.toggle('empty',!v&&k==='months')});
+    });
+  }
+  inputs.forEach(function(inp){
+    var saved=store.get('invoices-f-'+inp.dataset.k);if(saved!==null)inp.value=saved;
+    inp.addEventListener('input',function(){store.set('invoices-f-'+inp.dataset.k,inp.value);fill()});
+  });
+  fill();
+
+  // expand long prompt
+  var mp=document.getElementById('mainPrompt'),eb=document.getElementById('expandBtn');
+  eb.addEventListener('click',function(){var o=mp.classList.toggle('open');eb.textContent=o?'כיווץ ↑':'הצגת הפרומפט המלא ↓'});
+
+  // copy
+  document.querySelectorAll('.copy').forEach(function(btn){btn.addEventListener('click',function(){
+    var box=btn.parentNode.cloneNode(true);box.querySelectorAll('.copy,.lbl').forEach(function(x){x.remove()});
+    var txt=box.textContent.trim();
+    function ok(){btn.textContent='הועתק ✓';btn.classList.add('ok');setTimeout(function(){btn.textContent='העתקה';btn.classList.remove('ok')},1800)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback)}else fallback();
+    function fallback(){var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(e){}t.remove()}
+  })});
+
+  // tooltips
+  var pop=document.getElementById('tipPop');
+  function show(el){pop.textContent=el.dataset.tip;var r=el.getBoundingClientRect();pop.classList.add('show');var w=pop.offsetWidth;var left=Math.min(Math.max(8,r.left+r.width/2-w/2),window.innerWidth-w-8);pop.style.left=left+window.scrollX+'px';pop.style.top=r.bottom+window.scrollY+8+'px'}
+  function hide(){pop.classList.remove('show')}
+  document.querySelectorAll('dfn[data-tip]').forEach(function(d){d.tabIndex=0;d.addEventListener('mouseenter',function(){show(d)});d.addEventListener('mouseleave',hide);d.addEventListener('focus',function(){show(d)});d.addEventListener('blur',hide);d.addEventListener('click',function(e){e.stopPropagation();pop.classList.contains('show')?hide():show(d)})});
+  document.addEventListener('click',hide);window.addEventListener('scroll',hide,{passive:true});
+
+  // toc active
+  var links=[].slice.call(document.querySelectorAll('nav.toc a'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){var on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('active',on);if(on&&window.innerWidth<900)a.scrollIntoView({block:'nearest',inline:'center'})})}})},{rootMargin:'-40% 0px -55% 0px'});
+    links.forEach(function(a){var t=document.querySelector(a.getAttribute('href'));if(t)io.observe(t)});
+  }
+
+  window.addEventListener('beforeprint',function(){document.querySelectorAll('details').forEach(function(d){d.open=true})});
+})();
+</script>
+</body>
+</html>
