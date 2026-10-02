@@ -385,7 +385,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     <li>יחפש במייל חשבוניות, קבלות ואישורי תשלום, בעברית ובאנגלית, בחודשים שתבחרו.</li>
     <li>יראה לכם רשימה לאישור, <b>לפני</b> שהוא מוריד משהו.</li>
     <li>יוריד הכל לתיקייה במחשב, עם תת-תיקייה לכל חודש ושם קובץ ברור לכל חשבונית.</li>
-    <li>יעבור על המייל ויזהה מנויים קבועים (Meta Ads, היגספילד, קלינג וכו'), ויבדוק אם קיבלתם מהם חשבונית לכל חודש.</li>
+    <li>יעבור על המייל ויזהה שירותים שמחייבים אתכם באופן קבוע, ויבדוק אם קיבלתם מהם חשבונית לכל חודש.</li>
     <li>יגיד לכם בדיוק <b>אילו חשבוניות חסרות</b> ומאיפה מורידים אותן.</li>
   </ol>
   <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>יש לי Claude Code, ממשיכים</button></div>
@@ -501,7 +501,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     </div>
     <div>
       <label for="fSubs">מנויים שאתם יודעים שיש לכם <small>(לא חובה, אבל עוזר)</small></label>
-      <input id="fSubs" data-k="subs" type="text" placeholder="למשל: Meta Ads, Higgsfield, Kling, Canva, ChatGPT">
+      <input id="fSubs" data-k="subs" type="text" placeholder="שמות השירותים, מופרדים בפסיקים">
       <div class="hint">כל שירות שמחייב אתכם קבוע. Claude יבדוק שיש חשבונית מכל אחד מהם לכל חודש.</div>
     </div>
   </div>
@@ -529,13 +529,13 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 - קישור לחשבונית: תפתח אותו בדפדפן ותוריד את ה-PDF.
 - חשבונית שנמצאת רק בגוף המייל: תשמור את המייל כקובץ PDF.
 תיצור בתיקיית העבודה תיקייה בשם "<span class="fill" data-k="folder">חשבוניות</span>", ובתוכה תת-תיקייה לכל חודש בפורמט "2026-07 יולי".
-תקרא לכל קובץ בשם: תאריך_ספק_סכום, למשל 2026-07-03_Canva_55ILS.pdf
+תקרא לכל קובץ בשם: תאריך_ספק_סכום, למשל 2026-07-03_שם-הספק_55ILS.pdf
 קבצים שירדו לתיקיית ההורדות (Downloads), תעביר למקום הנכון. אל תשאיר כפילויות.
 
 שלב 5: מנויים שלא שולחים חשבונית במייל
 תעבור על המייל של 12 החודשים האחרונים ותחפש סימנים לשירותים שמחייבים אותי באופן קבוע: מיילים של ברוכים הבאים, אישור הרשמה למנוי, חידוש מנוי, שדרוג או שינוי תוכנית, חיוב שנכשל, עדכון אמצעי תשלום, או חשבוניות שהגיעו בחודשים אחרים. תוסיף לזה גם את המנויים שרשמתי למעלה.
 לכל שירות כזה, תבדוק אם יש במייל חשבונית לכל אחד מהחודשים שביקשתי. אם אין, תוסיף אותו לרשימת "חסרות: להוריד מהאתר".
-שים לב במיוחד לשירותים שידועים בזה שהחשבוניות שלהם נמצאות רק באתר, כמו Meta Ads (פייסבוק ואינסטגרם), Google Ads, וכלי AI כמו Higgsfield, Kling ו-Midjourney.
+שים לב: יש פלטפורמות שלא שולחות חשבוניות במייל בכלל, והחשבוניות שלהן נמצאות רק באתר. אם יש סימן לחיוב קבוע בלי חשבונית, תכלול אותו ברשימה.
 
 שלב 6: סיכום
 תיצור בתוך תיקיית "<span class="fill" data-k="folder">חשבוניות</span>" קובץ אקסל בשם "סיכום חשבוניות" עם שתי לשוניות:
@@ -552,7 +552,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 
   <div class="note tip"><span class="ic">🗺️</span><div><b>טיפ:</b> אפשר לשלוח את הפרומפט במצב <b>Plan</b> (בכפתור מצב ההרשאות). ככה Claude קודם מסביר איך הוא מתכנן לעבוד, אתם מאשרים, ורק אז הוא מתחיל.</div></div>
   <details class="acc"><summary>🤔 למה הפרומפט כל כך ארוך?</summary><div class="in">
-    <p>כי כל שורה בו מונעת טעות שראיתי קורית. בלי "תסווג לפי התאריך שעל החשבונית", חשבונית של סוף יוני נכנסת לתיקייה של יולי. בלי "רשימה לאישור לפני הורדה", Claude מוריד גם קבלה וגם חשבונית על אותו תשלום. ובלי שלב 5, אף אחד לא שם לב שהחשבונית של Meta Ads בכלל לא הגיעה למייל.</p>
+    <p>כי כל שורה בו מונעת טעות שראיתי קורית. בלי "תסווג לפי התאריך שעל החשבונית", חשבונית של סוף יוני נכנסת לתיקייה של יולי. בלי "רשימה לאישור לפני הורדה", Claude מוריד גם קבלה וגם חשבונית על אותו תשלום. ובלי שלב 5, אף אחד לא שם לב שחשבונית של מנוי קבוע בכלל לא הגיעה למייל.</p>
     <p>אם אתם רוצים לשנות משהו, למשל שמות קבצים אחרים, פשוט ערכו את השורה המתאימה לפני ששולחים.</p>
   </div></details>
   <div class="done-row"><button class="done-btn" type="button" aria-pressed="false"><span class="box">✓</span>הדבקתי ושלחתי</button></div>
@@ -571,11 +571,11 @@ footer img{height:30px;display:block;margin:0 auto 10px}
         <div class="msg cl" style="max-width:100%">מצאתי 14 חשבוניות ביולי. הנה הרשימה לאישור:
           <table class="mtbl">
             <tr><th>תאריך</th><th>ספק</th><th>סכום</th><th>איך מגיעה</th></tr>
-            <tr><td>03.07</td><td>Canva</td><td>55 ₪</td><td><span class="tag att">קובץ מצורף</span></td></tr>
-            <tr><td>05.07</td><td>Higgsfield</td><td>$49</td><td><span class="tag lnk">קישור</span></td></tr>
-            <tr><td>11.07</td><td>חברת החשמל</td><td>412 ₪</td><td><span class="tag att">קובץ מצורף</span></td></tr>
-            <tr><td>18.07</td><td>ChatGPT</td><td>$20</td><td><span class="tag bdy">גוף המייל</span></td></tr>
-            <tr><td>18.07</td><td>ChatGPT</td><td>$20</td><td class="warnc">⚠ נראה כפול</td></tr>
+            <tr><td>03.07</td><td>ספק א'</td><td>55 ₪</td><td><span class="tag att">קובץ מצורף</span></td></tr>
+            <tr><td>05.07</td><td>ספק ב'</td><td>$49</td><td><span class="tag lnk">קישור</span></td></tr>
+            <tr><td>11.07</td><td>ספק ג'</td><td>412 ₪</td><td><span class="tag att">קובץ מצורף</span></td></tr>
+            <tr><td>18.07</td><td>ספק ד'</td><td>$20</td><td><span class="tag bdy">גוף המייל</span></td></tr>
+            <tr><td>18.07</td><td>ספק ד'</td><td>$20</td><td class="warnc">⚠ נראה כפול</td></tr>
           </table>
           <div style="margin-top:8px">לאשר ולהתחיל להוריד?</div>
         </div>
@@ -594,9 +594,9 @@ footer img{height:30px;display:block;margin:0 auto 10px}
       <div class="win-body"><div class="tree">
         <div>📁 <b>חשבוניות</b></div>
         <div class="l1">📁 2026-07 יולי</div>
-        <div class="l2">📄 <span class="ltr">2026-07-03_Canva_55ILS.pdf</span></div>
-        <div class="l2">📄 <span class="ltr">2026-07-05_Higgsfield_49USD.pdf</span></div>
-        <div class="l2">📄 <span class="ltr">2026-07-11_IEC_412ILS.pdf</span></div>
+        <div class="l2">📄 <span class="ltr">2026-07-03_שם-הספק_55ILS.pdf</span></div>
+        <div class="l2">📄 <span class="ltr">2026-07-05_ספק-ב_49USD.pdf</span></div>
+        <div class="l2">📄 <span class="ltr">2026-07-11_ספק-ג_412ILS.pdf</span></div>
         <div class="l1">📁 2026-08 אוגוסט</div>
         <div class="l1">📁 2026-09 ספטמבר</div>
         <div class="l1 x">📊 סיכום חשבוניות.xlsx</div>
@@ -614,9 +614,9 @@ footer img{height:30px;display:block;margin:0 auto 10px}
           <div style="margin-top:8px"><b>את החשבוניות האלה צריך להוריד בעצמך מהאתר:</b></div>
           <table class="mtbl">
             <tr><th>ספק</th><th>חודשים חסרים</th><th class="hide-sm">למה אני חושב שיש מנוי</th></tr>
-            <tr><td>Meta Ads</td><td>יולי, אוגוסט, ספטמבר</td><td class="hide-sm">מיילים על חיוב קמפיין ב-12.07</td></tr>
-            <tr><td>Kling</td><td>אוגוסט, ספטמבר</td><td class="hide-sm">אישור מנוי מ-02.06, חשבונית רק ביולי</td></tr>
-            <tr><td>Midjourney</td><td>ספטמבר</td><td class="hide-sm">חשבוניות קבועות כל חודש, ספטמבר חסר</td></tr>
+            <tr><td>שירות 1</td><td>יולי, אוגוסט, ספטמבר</td><td class="hide-sm">מיילים על חיוב קמפיין ב-12.07</td></tr>
+            <tr><td>שירות 2</td><td>אוגוסט, ספטמבר</td><td class="hide-sm">אישור מנוי מ-02.06, חשבונית רק ביולי</td></tr>
+            <tr><td>שירות 3</td><td>ספטמבר</td><td class="hide-sm">חשבוניות קבועות כל חודש, ספטמבר חסר</td></tr>
           </table>
           <div style="margin-top:8px">בקובץ הסיכום, בלשונית "חסרות", יש קישור לעמוד החיובים של כל אחד מהם.</div>
         </div>
@@ -629,18 +629,15 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 <!-- missing -->
 <section class="step" id="missing">
   <div class="step-head"><div class="num">🔎</div><div><h2>החשבוניות שלא מגיעות במייל</h2><p>איפה בדרך כלל מוצאים אותן</p></div></div>
-  <p>יש שירותים שגובים מכם כסף כל חודש, אבל שולחים חשבונית רק אם נכנסים לאתר ומורידים אותה. הנה הנפוצים, ואיפה לחפש. Claude ייתן לכם קישור ישיר בקובץ הסיכום, אבל טוב לדעת:</p>
-  <div class="tbl-wrap"><table class="tbl">
-    <tr><th>שירות</th><th>איפה מורידים</th></tr>
-    <tr><td>Meta Ads<small>פייסבוק ואינסטגרם</small></td><td>במנהל המודעות (Ads Manager) או ב-Meta Business Suite: <b>Billing and payments</b>, ואז <b>Payment activity</b>. ליד כל חיוב יש כפתור הורדה.</td></tr>
-    <tr><td>Google Ads</td><td>בחשבון Google Ads: <b>Billing</b>, ואז <b>Documents</b>. שם יש חשבונית חודשית.</td></tr>
-    <tr><td>Higgsfield</td><td>בהגדרות החשבון, בעמוד המנוי והחיובים (Billing / Subscription). בדרך כלל יש שם היסטוריית תשלומים עם חשבוניות.</td></tr>
-    <tr><td>Kling</td><td>באזור האישי, בעמוד המנוי (Membership) או היסטוריית ההזמנות.</td></tr>
-    <tr><td>Midjourney</td><td>באתר: <b>Manage Subscription</b>, ואז היסטוריית החיובים (Billing history).</td></tr>
-    <tr><td>Apple / Google Play<small>מנויים באפליקציות</small></td><td>הקבלות בדרך כלל מגיעות במייל. אם לא, באפל: <span class="ltr">reportaproblem.apple.com</span>, ובגוגל: <span class="ltr">pay.google.com</span> תחת פעילות.</td></tr>
-  </table></div>
-  <p class="mock-note" style="margin-top:10px">האתרים משנים את התפריטים מדי פעם. אם לא מוצאים, חפשו בהגדרות החשבון את המילים Billing, Invoices או Payments.</p>
-  <div class="note tip"><span class="ic">🤖</span><div><b>רוצים ש-Claude ינסה להוריד גם אותן?</b> אם אתם כבר מחוברים לאתרים האלה ב-Chrome, אפשר לכתוב לו אחרי הדוח: <b>"תנסה להיכנס לעמוד החיובים של Meta Ads בדפדפן ולהוריד את החשבוניות החסרות. אם צריך התחברות, תעצור ותגיד לי."</b> זה לא תמיד עובד (יש אתרים שחוסמים), אבל כשזה עובד זה חוסך עוד רבע שעה.</div></div>
+  <p>יש פלטפורמות שגובות מכם כסף כל חודש, אבל לא שולחות חשבונית במייל. החשבונית קיימת, רק צריך להיכנס לאתר ולהוריד אותה. Claude מזהה אותן לפי מיילים אחרים שהן כן שולחות (הרשמה, חידוש, חיוב), ומכניס אותן לרשימת "חסרות" עם קישור לעמוד החיובים.</p>
+  <h3>איפה מוצאים את החשבונית באתר</h3>
+  <ul class="dots">
+    <li>נכנסים לחשבון באתר, להגדרות החשבון או לפרופיל.</li>
+    <li>מחפשים עמוד בשם <b>Billing</b>, <b>Invoices</b>, <b>Payments</b>, <b>Subscription</b> או "חיובים".</li>
+    <li>שם בדרך כלל יש היסטוריית תשלומים, וליד כל חיוב כפתור הורדה.</li>
+    <li>שומרים את הקובץ בתיקייה של החודש המתאים, או פשוט בתיקיית ההורדות ומבקשים מ-Claude: "תסדר את החשבוניות החדשות שבהורדות בתיקיות הנכונות ותעדכן את קובץ הסיכום".</li>
+  </ul>
+  <div class="note tip"><span class="ic">🤖</span><div><b>רוצים ש-Claude ינסה להוריד גם אותן?</b> אם אתם כבר מחוברים לאתרים האלה ב-Chrome, אפשר לכתוב לו אחרי הדוח: <b>"תנסה להיכנס לעמוד החיובים של [שם השירות] בדפדפן ולהוריד את החשבוניות החסרות. אם צריך התחברות, תעצור ותגיד לי."</b> זה לא תמיד עובד (יש אתרים שחוסמים), אבל כשזה עובד זה חוסך עוד רבע שעה.</div></div>
   <div class="note why"><span class="ic">💳</span><div><b>הבדיקה הכי מדויקת:</b> Claude רואה רק את מה שיש במייל. אם יש מנוי שמעולם לא שלח לכם אף מייל, הוא לא יידע עליו. לכן כדאי פעם בכמה חודשים לעבור על פירוט האשראי ולהוסיף לשדה "מנויים שאני יודע/ת שיש לי" כל שירות שמופיע שם.</div></div>
 </section>
 
@@ -668,7 +665,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
   <div class="step-head"><div class="num">?</div><div><h2>תקלות ושאלות נפוצות</h2><p>מה עושים כשמשהו לא עובד</p></div></div>
   <details class="acc"><summary>Claude אומר שהוא לא יכול להוריד קבצים מצורפים</summary><div class="in"><p>כנראה הדפדפן לא מחובר. חזרו ל<a href="#chrome">שלב 4</a>, ודאו שהתוסף מותקן ומחובר לאותו חשבון, ואז כתבו לו "חיברתי את Chrome, תמשיך מאיפה שעצרת".</p></div></details>
   <details class="acc"><summary>הוא מצא יותר מדי דברים (ניוזלטרים, מבצעים)</summary><div class="in"><p>בשלב הרשימה לאישור פשוט כתבו לו מה להוציא: "בלי שורות 3, 7 ו-9, אלה פרסומות". אפשר גם להוסיף לפרומפט: "רק מיילים שיש בהם סכום ששולם".</p></div></details>
-  <details class="acc"><summary>אני יודע/ת שיש חשבונית, והוא לא מצא אותה</summary><div class="in"><p>תנו לו רמז: "יש חשבונית מ-Wix ביולי, תחפש לפי השולח". לפעמים החשבונית מגיעה מכתובת של חברת סליקה (כמו Stripe, Paddle או PayPal) ולא מהשם של השירות עצמו.</p></div></details>
+  <details class="acc"><summary>אני יודע/ת שיש חשבונית, והוא לא מצא אותה</summary><div class="in"><p>תנו לו רמז: "יש חשבונית מ[שם השירות] ביולי, תחפש לפי השולח". לפעמים החשבונית מגיעה מכתובת של חברת הסליקה ולא מהשם של השירות עצמו.</p></div></details>
   <details class="acc"><summary>יש לי חשבוניות בכמה תיבות מייל</summary><div class="in"><p>מריצים את התהליך פעם לכל תיבה. בין לבין, מחברים את חשבון הגוגל השני דרך Connectors, או מתחברים אליו ב-Chrome. בפרומפט אפשר לכתוב "הפעם תחפש בתיבה X" כדי שהוא ידע.</p></div></details>
   <details class="acc"><summary>המייל שלי ב-Outlook ולא ב-Gmail</summary><div class="in"><p>אם אין לכם חיבור מתאים ב-Connectors, אפשר לוותר על שלב 3: Claude יעבוד דרך הדפדפן בלבד, על תיבת ה-Outlook הפתוחה אצלכם ב-Chrome. זה איטי יותר, אבל עובד. כתבו בתחילת הפרומפט "המייל שלי ב-Outlook, תעבוד דרך הדפדפן".</p></div></details>
   <details class="acc"><summary>חשבוניות במטבע זר</summary><div class="in"><p>Claude שומר את הסכום במטבע המקורי. אם רואה החשבון צריך גם בשקלים, בקשו: "תוסיף בקובץ הסיכום עמודה עם הסכום בשקלים לפי השער היציג ביום החשבונית".</p></div></details>
