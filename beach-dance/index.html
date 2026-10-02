@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ריקוד בחוף - מדריך החלפת דמויות בהיגספילד | Ronig.ai</title>
+  <meta name="description" content="מדריך צעד אחר צעד ליצירת סרטון הריקוד על המזח בהיגספילד, עם הדמויות שלכם והפרומפט המלא להעתקה.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green:       #6B7F52;
+      --green-light: #8a9e6e;
+      --green-glow:  rgba(107,127,82,0.18);
+      --dark:        #1e1e1e;
+      --darker:      #141414;
+      --card-dark:   #242424;
+      --light-bg:    #f7f8f5;
+      --border-dark: rgba(107,127,82,0.3);
+      --border-light:rgba(107,127,82,0.18);
+      --lime:        #d4f24a;   /* higgsfield accent */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      direction: rtl;
+      text-align: right;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════ HEADER ═══════════ */
+    header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 2rem;
+      background: rgba(20,20,20,0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .logo-link { display:flex; align-items:center; gap:0.6rem; text-decoration:none; }
+    .logo-link img { height:34px; }
+
+    .btn-back {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: #ccc;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-back:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
+
+    /* ═══════════ HERO ═══════════ */
+    #hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 1.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--darker);
+    }
+    .hero-bg-gradient {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(107,127,82,0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(212,242,74,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(107,127,82,0.15);
+      border: 1px solid var(--border-dark);
+      padding: 0.38rem 1rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-light);
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content:''; width:7px; height:7px; border-radius:50%;
+      background:var(--green); flex-shrink:0;
+      box-shadow: 0 0 6px var(--green);
+    }
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    h1 .hi { color: var(--green); }
+    .hero-sub {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #bbb;
+      margin-bottom: 2.25rem;
+    }
+    .hero-cta-row { display:flex; gap:1rem; flex-wrap:wrap; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 4px 20px rgba(107,127,82,0.4);
+      transition: all 0.25s;
+    }
+    .btn-primary:hover { background:var(--green-light); transform:translateY(-2px); }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: #bbb;
+      padding: 0.85rem 1.75rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1.5px solid rgba(255,255,255,0.18);
+      transition: all 0.25s;
+    }
+    .btn-ghost:hover { color:#fff; border-color:rgba(255,255,255,0.4); }
+
+    .hero-visual { position: relative; }
+    .hero-screen {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
+    }
+    .hero-screen img { width:100%; display:block; }
+    .hero-screen-label {
+      position: absolute;
+      bottom: -1.2rem;
+      right: 50%;
+      transform: translateX(50%);
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--green-light);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    /* ═══════════ SHARED ═══════════ */
+    section { padding: 5rem 1.5rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      color: var(--green);
+      margin-bottom: 0.6rem;
+    }
+    .section-header { text-align:center; margin-bottom: 3rem; }
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900;
+      line-height: 1.25;
+    }
+    h2 .hi { color: var(--green); }
+    .section-desc {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.8;
+      max-width: 580px;
+      margin: 0.75rem auto 0;
+    }
+
+    .fade-in {
+      opacity:0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+
+    /* ═══════════ NEED ═══════════ */
+    #need .req-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .req-card {
+      background:#fff;
+      border:1.5px solid var(--border-light);
+      border-radius:16px;
+      padding: 2rem 1.5rem;
+      text-align:center;
+    }
+    .req-icon {
+      width:56px; height:56px;
+      border-radius:14px;
+      background:var(--light-bg);
+      border:1px solid var(--border-light);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.5rem;
+      margin:0 auto 1.25rem;
+    }
+    .req-card h3 { font-size:1.1rem; font-weight:800; margin-bottom:0.6rem; }
+    .req-card p { color:#666; font-size:0.92rem; line-height:1.75; }
+
+    /* ═══════════ STEPS ═══════════ */
+    #steps { background:var(--darker); color:#fff; }
+    #steps h2 { color:#fff; }
+    #steps .section-desc { color:#aaa; }
+    #steps .section-label { color:var(--green-light); }
+
+    .steps-list { display:flex; flex-direction:column; gap:4rem; }
+    .step-item {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:3.5rem;
+      align-items:center;
+    }
+    .step-item.reverse { direction:ltr; }
+    .step-item.reverse > * { direction:rtl; }
+
+    .step-number-row { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem; }
+    .step-num {
+      width:36px; height:36px;
+      border-radius:50%;
+      background:var(--green);
+      color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.9rem; font-weight:800;
+      box-shadow:0 0 14px rgba(107,127,82,0.5);
+      flex-shrink:0;
+    }
+    .step-tag { font-size:0.75rem; font-weight:700; letter-spacing:1.5px; color:var(--green-light); }
+    .step-title {
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-weight:900;
+      color:#fff;
+      margin-bottom:1rem;
+    }
+    .step-points { list-style:none; display:flex; flex-direction:column; gap:0.85rem; }
+    .step-points li {
+      display:flex; gap:0.75rem; align-items:flex-start;
+      color:#bbb; font-size:0.98rem; line-height:1.7;
+    }
+    .step-points li strong { color:#fff; }
+    .step-points li .dot {
+      width:22px; height:22px; border-radius:6px;
+      background:var(--green-glow); border:1px solid var(--border-dark);
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.75rem; flex-shrink:0; margin-top:2px;
+    }
+
+    .step-visual {
+      display:flex; justify-content:center; align-items:center;
+      background: radial-gradient(ellipse at center, rgba(107,127,82,0.12), transparent 70%);
+      border-radius:16px;
+      padding: 2rem 1rem;
+    }
+    .step-visual img {
+      max-width:100%;
+      display:block;
+      border-radius:14px;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
+    }
+    .step-visual.small img { width: 260px; }
+    .step-visual.tall img { max-height: 560px; }
+
+    .step-connector {
+      display:flex; justify-content:center;
+      color:rgba(107,127,82,0.5); font-size:1.5rem;
+      margin:-1.5rem 0;
+    }
+
+    .role-cards { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:1.25rem; }
+    .role-card {
+      background:var(--card-dark);
+      border:1px solid var(--border-dark);
+      border-radius:12px;
+      padding:0.9rem 1rem;
+    }
+    .role-card .n { font-size:0.75rem; font-weight:700; color:var(--green-light); margin-bottom:0.25rem; }
+    .role-card .t { font-size:0.95rem; font-weight:700; color:#fff; line-height:1.5; }
+
+    /* ═══════════ PROMPT ═══════════ */
+    #prompt { background:var(--light-bg); }
+    .prompt-box {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--dark);
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+    .prompt-bar {
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      gap: 1rem;
+    }
+    .prompt-bar span { color:#aaa; font-size:0.85rem; font-weight:600; }
+    .copy-btn {
+      font-family: 'Heebo', sans-serif;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.55rem 1.3rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .copy-btn:hover { background: var(--green-light); }
+    .copy-btn.done { background: #4a7c3a; }
+    .prompt-text {
+      direction: ltr;
+      text-align: left;
+      color: #ddd;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+      padding: 1.25rem 1.5rem;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .prompt-actions { text-align:center; margin-top:1.5rem; }
+
+    /* ═══════════ TIPS ═══════════ */
+    #tips .tips-cards {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1.25rem;
+    }
+    .tip-card {
+      background:#fff;
+      border:1.5px solid var(--border-light);
+      border-radius:16px;
+      padding:2rem 1.5rem;
+    }
+    .tip-card.highlight { border-color: var(--green); background: #fbfcf8; }
+    .tip-icon {
+      width:52px; height:52px;
+      border-radius:13px;
+      background:var(--light-bg);
+      border:1.5px solid var(--border-light);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.4rem;
+      margin-bottom:1.25rem;
+    }
+    .tip-card h3 { font-size:1.05rem; font-weight:800; margin-bottom:0.6rem; }
+    .tip-card p { color:#555; font-size:0.92rem; line-height:1.8; }
+
+    /* ═══════════ CTA ═══════════ */
+    #cta {
+      background:var(--darker);
+      text-align:center;
+      padding:6rem 1.5rem;
+      position:relative;
+      overflow:hidden;
+    }
+    #cta::before {
+      content:'';
+      position:absolute; inset:0;
+      background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(107,127,82,0.18) 0%, transparent 65%);
+      pointer-events:none;
+    }
+    #cta .inner { position:relative; z-index:2; max-width:620px; margin:0 auto; }
+    #cta h2 { color:#fff; font-size:clamp(1.8rem,3.5vw,2.8rem); margin-bottom:1rem; }
+    #cta p { color:#aaa; font-size:1.05rem; line-height:1.8; margin-bottom:2.5rem; }
+
+    footer {
+      background:var(--darker);
+      border-top:1px solid var(--border-dark);
+      padding:1.5rem 2rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:1rem;
+    }
+    footer p { color:#666; font-size:0.83rem; }
+    footer a { color:var(--green-light); text-decoration:none; }
+
+    /* ═══════════ RESPONSIVE ═══════════ */
+    @media (max-width: 860px) {
+      .hero-grid, .step-item { grid-template-columns:1fr; gap:2rem; }
+      .step-item.reverse { direction:rtl; }
+      .step-item .step-visual { order:2; }
+      #need .req-cards, #tips .tips-cards { grid-template-columns:1fr; }
+      h1 { font-size:2rem; }
+      header { padding: 0.75rem 1rem; }
+      section { padding: 3.5rem 1rem; }
+      #hero { padding: 6.5rem 1rem 4rem; }
+    }
+    @media (max-width:520px) {
+      .hero-cta-row { flex-direction:column; }
+      .btn-primary, .btn-ghost { justify-content:center; }
+      .role-cards { grid-template-columns:1fr; }
+      .prompt-text { font-size:0.76rem; padding:1rem; }
+      .step-visual.tall img { max-height: 460px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="../" class="logo-link">
+    <img src="../assets/logo.png" alt="Ronig.ai">
+  </a>
+  <a href="https://rogre1.github.io/ronig-courses/" class="btn-back">← חזרה לעמוד הקורסים</a>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-grid container">
+    <div class="hero-text fade-in">
+      <div class="hero-badge">מדריך היגספילד · Genjutsu</div>
+      <h1>סרטון הריקוד בחוף<br><span class="hi">עם הדמויות שלכם</span></h1>
+      <p class="hero-sub">
+        הסרטון כבר מחכה לכם בהיגספילד. נכנסים, עובדים לפי המדריך
+        ומקבלים את אותו הסרטון עם הדמויות שבחרתם.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#steps" class="btn-primary">↓ למדריך</a>
+        <a href="#prompt" class="btn-ghost">ישר לפרומפט</a>
+      </div>
+    </div>
+    <div class="hero-visual fade-in" style="transition-delay:0.15s">
+      <div class="hero-screen">
+        <img src="step-video.png" alt="הסרטון על המזח בהיגספילד">
+      </div>
+      <div class="hero-screen-label">הסרטון שעליו עובדים</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ מה צריך ═══════════ -->
+<section id="need">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">לפני שמתחילים</div>
+      <h2>מה <span class="hi">צריך להכין?</span></h2>
+    </div>
+    <div class="req-cards">
+      <div class="req-card fade-in">
+        <div class="req-icon">🔑</div>
+        <h3>חשבון בהיגספילד</h3>
+        <p>עם קרדיטים ליצירת וידאו.</p>
+      </div>
+      <div class="req-card fade-in" style="transition-delay:0.1s">
+        <div class="req-icon">🧍</div>
+        <h3>תמונה של דמות 1</h3>
+        <p>מי שישיר בסרטון. תמונה ברורה מכף רגל ועד ראש, עם הבגדים שתרצו שיופיעו.</p>
+      </div>
+      <div class="req-card fade-in" style="transition-delay:0.2s">
+        <div class="req-icon">🧍‍♀️</div>
+        <h3>תמונה של דמות 2</h3>
+        <p>מי שיושב/ת לבד על המזח בפתיחה. גם כאן, תמונה ברורה של כל הגוף והלבוש.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ STEPS ═══════════ -->
+<section id="steps">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">צעד אחר צעד</div>
+      <h2>איך <span class="hi">יוצרים את זה?</span></h2>
+      <p class="section-desc">חמישה שלבים ויש לכם סרטון</p>
+    </div>
+
+    <div class="steps-list">
+
+      <!-- 1 -->
+      <div class="step-item fade-in">
+        <div class="step-content">
+          <div class="step-number-row">
+            <div class="step-num">1</div>
+            <span class="step-tag">שלב ראשון</span>
+          </div>
+          <h3 class="step-title">נכנסים ל-Genjutsu</h3>
+          <ul class="step-points">
+            <li><span class="dot">🌐</span><span>נכנסים לאתר של <strong>היגספילד</strong>.</span></li>
+            <li><span class="dot">👆</span><span>בתפריט בוחרים בחלון <strong>Genjutsu</strong> (מסומן בתגית Top).</span></li>
+          </ul>
+        </div>
+        <div class="step-visual small">
+          <img src="step-genjutsu.png" alt="Genjutsu בתפריט של היגספילד">
+        </div>
+      </div>
+
+      <div class="step-connector">↓</div>
+
+      <!-- 2 -->
+      <div class="step-item reverse fade-in">
+        <div class="step-visual small">
+          <img src="step-motion-library.png" alt="כפתור Motion Library">
+        </div>
+        <div class="step-content">
+          <div class="step-number-row">
+            <div class="step-num">2</div>
+            <span class="step-tag">שלב שני</span>
+          </div>
+          <h3 class="step-title">פותחים את Motion Library</h3>
+          <ul class="step-points">
+            <li><span class="dot">📚</span><span>לוחצים על הכפתור <strong>Motion Library</strong>. כאן נמצאים כל הסרטונים המוכנים.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-connector">↓</div>
+
+      <!-- 3 -->
+      <div class="step-item fade-in">
+        <div class="step-content">
+          <div class="step-number-row">
+            <div class="step-num">3</div>
+            <span class="step-tag">שלב שלישי</span>
+          </div>
+          <h3 class="step-title">בוחרים את הסרטון על המזח</h3>
+          <ul class="step-points">
+            <li><span class="dot">🎬</span><span>בספרייה מחפשים את הסרטון הזה: <strong>בחור בחולצה שחורה יושב על מזח עץ</strong>, ומאחוריו בחורה בשמלה לבנה.</span></li>
+            <li><span class="dot">✅</span><span>לוחצים עליו כדי לבחור אותו.</span></li>
+          </ul>
+        </div>
+        <div class="step-visual">
+          <img src="step-video.png" alt="הסרטון על המזח בספרייה">
+        </div>
+      </div>
+
+      <div class="step-connector">↓</div>
+
+      <!-- 4 -->
+      <div class="step-item reverse fade-in">
+        <div class="step-visual tall">
+          <img src="step-swap.png" alt="מסך Objects swap עם שתי תמונות ופרומפט">
+        </div>
+        <div class="step-content">
+          <div class="step-number-row">
+            <div class="step-num">4</div>
+            <span class="step-tag">שלב רביעי</span>
+          </div>
+          <h3 class="step-title">Objects swap ומעלים את הדמויות</h3>
+          <ul class="step-points">
+            <li><span class="dot">🔁</span><span>למעלה בוחרים בלשונית <strong>Objects swap</strong> (ולא Motion transfer).</span></li>
+            <li><span class="dot">＋</span><span>לוחצים על ה-<strong>+</strong> ומעלים את שתי התמונות. <strong>הסדר חשוב:</strong></span></li>
+          </ul>
+          <div class="role-cards">
+            <div class="role-card">
+              <div class="n">תמונה ראשונה</div>
+              <div class="t">מי ששר בסרטון</div>
+            </div>
+            <div class="role-card">
+              <div class="n">תמונה שנייה</div>
+              <div class="t">מי שיושב לבד על המזח בהתחלה</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-connector">↓</div>
+
+      <!-- 5 -->
+      <div class="step-item fade-in">
+        <div class="step-content">
+          <div class="step-number-row">
+            <div class="step-num">5</div>
+            <span class="step-tag">שלב חמישי</span>
+          </div>
+          <h3 class="step-title">מדביקים את הפרומפט ויוצרים</h3>
+          <ul class="step-points">
+            <li><span class="dot">🟢</span><span>מדליקים את המתג של <strong>Prompt</strong> (הוא צריך להיות ירוק).</span></li>
+            <li><span class="dot">📋</span><span>מעתיקים את הפרומפט מלמטה ומדביקים אותו בתיבה.</span></li>
+            <li><span class="dot">🚀</span><span>לוחצים על יצירה ומחכים לסרטון.</span></li>
+          </ul>
+          <div class="hero-cta-row" style="margin-top:1.5rem">
+            <a href="#prompt" class="btn-primary">לפרומפט ←</a>
+          </div>
+        </div>
+        <div class="step-visual">
+          <img src="step-prompt.png" alt="מתג הפרומפט דולק">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROMPT ═══════════ -->
+<section id="prompt">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">להעתקה</div>
+      <h2>הפרומפט <span class="hi">המלא</span></h2>
+      <p class="section-desc">לוחצים על "העתקה" ומדביקים כמו שהוא בתיבת ה-Prompt. אין צורך לשנות כלום.</p>
+    </div>
+
+    <div class="prompt-box fade-in">
+      <div class="prompt-bar">
+        <span>Prompt · Objects swap</span>
+        <button class="copy-btn" data-copy>📋 העתקה</button>
+      </div>
+<pre class="prompt-text" id="promptText">FULL CAST REPLACEMENT THROUGHOUT THE ENTIRE VIDEO.
+FINAL CAST:
+The ONLY people allowed anywhere in the output are the exact man from reference IMAGE 1 and the exact woman from reference IMAGE 2. Completely replace both original actors throughout the entire video.
+REFERENCE AUTHORITY:
+
+* IMAGE 1 alone defines the replacement man. Faithfully preserve his individual face, eyes, eyebrows, nose, lips, skin tone, hairstyle, facial hair if present, and natural body proportions. Keep his exact clothing, colors, footwear and accessories as shown in IMAGE 1 in every shot.
+* IMAGE 2 alone defines the replacement woman. Faithfully preserve her individual face, eyes, eyebrows, nose, lips, skin tone, hairstyle and natural body proportions. Keep her exact clothing, colors, footwear and accessories as shown in IMAGE 2 in every shot.
+* Do not invent similar-looking people, blend their identities with the source actors, or exchange their clothing.
+* Ignore both reference-image backgrounds, poses and camera viewpoints. Do not reproduce furniture, indoor scenery, selfie-taking arms or other reference-background objects. Place the reference people naturally into the source video's scenes and actions.
+* The VIDEO supplies shot order, camera movement, setting, lighting, action timing and actor tracks ONLY. The reference images supply the replacement identities and wardrobes.
+
+FIXED TRACK ASSIGNMENTS — NEVER REVERSED:
+TRACK A is the original short-haired male actor wearing the dark suit, including the person seated alone on the wooden jetty in the opening shot. Replace this ENTIRE person, from head to feet, with the exact woman from IMAGE 2. She inherits his position, scene role, gaze direction and action timing while retaining her own face, hairstyle, body and reference outfit.
+TRACK B is the original female actor wearing the light top/cardigan and denim skirt. Replace this ENTIRE person, from head to feet, with the exact man from IMAGE 1. He inherits her position, scene role, gaze direction and action timing while retaining his own face, hairstyle, body and reference outfit.
+These assignments follow the original actor tracks, regardless of the replacement person's gender. Never swap assignments after a cut or when the characters change positions.
+STRICT WARDROBE CONSISTENCY:
+Replace each source actor's entire outfit together with their face and body. Do not place a reference face onto a source actor's clothing.
+The replacement man must wear the exact outfit from IMAGE 1 throughout the entire video, INCLUDING THE SHOT AT 00:06. Preserve the same garments, colors and accessories across every cut and camera angle.
+The replacement woman must wear the exact outfit from IMAGE 2 throughout the entire video. Preserve the same garments, colors and accessories across every cut and camera angle.
+Neither person may inherit the original dark suit, cardigan, denim skirt or any other source wardrobe item unless that item is also shown in their own reference image. Do not invent wardrobe changes.
+SINGING PERFORMANCE — BOTH CHARACTERS:
+The reference woman on TRACK A performs the original male actor's vocal passages with expressive, synchronized lip movement while preserving her own face and identity.
+The reference man on TRACK B performs the original female actor's vocal passages with expressive, synchronized lip movement while preserving his own face and identity.
+Whenever a source performer is singing on screen, the assigned replacement person MUST visibly sing in synchronization with the syllables, phrasing and rhythm of the existing song. Use natural lip articulation, jaw movement, facial expressions and subtle head gestures. The mouth should articulate sung syllables and settle naturally between phrases.
+Apply this singing performance in close-ups, profiles and shared shots. Never retain or restore a source actor's face to imitate their mouth movements.
+Preserve the original soundtrack, voices and vocal timing exactly, even though the replacement performers have different genders. Do not add dialogue, alter the voices or introduce a replacement song.
+EVERY SHOT MUST FOLLOW THIS CAST RULE:
+
+* Original man alone -&gt; exact woman from IMAGE 2 alone.
+* Original woman alone -&gt; exact man from IMAGE 1 alone.
+* Both original actors together -&gt; exact woman from IMAGE 2 on TRACK A and exact man from IMAGE 1 on TRACK B.
+
+Apply this mapping independently after EVERY camera cut, in close-ups, wide shots, profiles, rear views, shadows and reflections if present, and whenever a character returns after leaving the frame or being occluded.
+The opening frame must already show the exact woman from IMAGE 2 seated alone on the wooden jetty in place of the original man. The final frame must still show the correct replacements. Maintain both reference identities and outfits continuously from beginning to end.
+COMPLETE REMOVAL OF THE SOURCE ACTORS:
+Erase and regenerate each source actor's full visible head, face, hair, neck, torso, clothing, limbs and silhouette. Reconstruct the background wherever the replacement person's silhouette exposes areas previously covered by the source actor.
+No face-only overlays, partial replacements, blended identities, duplicate actors, ghost outlines or transitions that reveal a source actor. No frame may revert to an original face, hairstyle, body or costume.
+PRIORITIES:
+Accurate reference identities, exact reference outfits and complete cast replacement take priority over matching the source actors' body geometry or limb poses. Adapt the movements naturally to the replacement people's bodies.
+Preserve the existing ocean, beach, wooden jetty, shot durations, cuts, camera work, lighting and original soundtrack. Maintain photorealistic integration, natural scale, believable physical interaction and appropriate contact shadows.</pre>
+    </div>
+    <div class="prompt-actions fade-in">
+      <button class="copy-btn" data-copy style="padding:0.85rem 2.2rem;font-size:1rem">📋 העתקת הפרומפט</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TIPS ═══════════ -->
+<section id="tips">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">שימו לב</div>
+      <h2>לפני <span class="hi">שלוחצים יצירה</span></h2>
+    </div>
+    <div class="tips-cards">
+      <div class="tip-card highlight fade-in">
+        <div class="tip-icon">🤖</div>
+        <h3>הדמויות שלכם לא בני אדם?</h3>
+        <p>
+          אם אתם משתמשים בדמויות מצוירות, חיות, בובות או כל דבר שהוא לא אדם,
+          קחו את הפרומפט לצ׳אט GPT, תסבירו לו מה יש בכל תמונה ובקשו שיתאים לכם אותו.
+        </p>
+      </div>
+      <div class="tip-card fade-in" style="transition-delay:0.1s">
+        <div class="tip-icon">🔤</div>
+        <h3>הפרומפט מניח גבר ואישה</h3>
+        <p>
+          הפרומפט כתוב כך שבתמונה הראשונה יש גבר ובשנייה אישה.
+          אם אצלכם זה אחרת (שתי נשים, שני גברים או הפוך), גם כאן כדאי לבקש מצ׳אט GPT לעדכן את הפרומפט.
+        </p>
+      </div>
+      <div class="tip-card fade-in" style="transition-delay:0.2s">
+        <div class="tip-icon">📸</div>
+        <h3>תמונות טובות = תוצאה טובה</h3>
+        <p>
+          תמונה ברורה, באור טוב, שבה רואים את כל הגוף והבגדים.
+          הבגדים שבתמונה הם הבגדים שיופיעו בכל הסרטון.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CTA ═══════════ -->
+<section id="cta">
+  <div class="inner fade-in">
+    <div class="section-label" style="color:var(--green-light)">עכשיו תורכם</div>
+    <h2>מוכנים <span class="hi">לרקוד?</span></h2>
+    <p>היכנסו להיגספילד, בחרו את הסרטון, העלו את הדמויות שלכם ותייגו אותי בתוצאה.</p>
+    <div class="hero-cta-row" style="justify-content:center">
+      <a href="https://higgsfield.ai" target="_blank" rel="noopener" class="btn-primary">🎬 להיגספילד</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <a href="../">Ronig.ai</a> · כל הזכויות שמורות</p>
+  <p><a href="../">חזרה לדף הבית</a></p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  const promptText = document.getElementById('promptText').textContent;
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    const label = btn.textContent;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(promptText);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = promptText;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      btn.textContent = '✓ הועתק!';
+      btn.classList.add('done');
+      setTimeout(() => { btn.textContent = label; btn.classList.remove('done'); }, 2000);
+    });
+  });
+</script>
+
+</body>
+</html>
