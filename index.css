@@ -399,6 +399,7 @@ section{padding-block:clamp(52px,7vw,80px)}
   padding:11px 14px; margin:0 0 18px;
 }
 
+.pricing-grid.pricing-single{max-width:620px}
 .pricing-side{display:flex; flex-direction:column; gap:16px}
 .anim-card{background:var(--cream); border:1px solid var(--line); border-radius:22px; padding:20px 24px 26px; flex:1; display:flex; flex-direction:column}
 .anim-media{margin:-20px -24px 18px; border-radius:22px 22px 0 0; overflow:hidden; line-height:0}
@@ -545,6 +546,7 @@ html.js .reveal.in{opacity:1; transform:none}
   .about-photo img{width:270px}
   .pricing-grid{grid-template-columns:1.35fr 1fr; gap:28px}
   .pricing-divider{display:none}
+  .pricing-grid.pricing-single{grid-template-columns:1fr}
 }
 
 @media (max-width:420px){
