@@ -48,6 +48,10 @@ header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdro
 .os-switch button{border:0;background:none;font:inherit;font-size:.8rem;font-weight:700;color:var(--ink-2);padding:5px 12px;border-radius:99px;cursor:pointer}
 .os-switch button[aria-pressed=true]{background:var(--forest);color:var(--cream)}
 
+.hstart{display:flex;align-items:center;gap:12px}
+.btn-back{white-space:nowrap;text-decoration:none;font-size:.82rem;font-weight:700;color:var(--forest);border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:5px 12px;transition:border-color .2s,background .2s}
+.btn-back:hover{border-color:var(--olive);background:var(--mint)}
+
 /* return banner */
 .from-banner{display:none;background:var(--forest);color:var(--cream);text-align:center;padding:10px 16px;font-size:.95rem}
 .from-banner a{color:var(--leaf)}
@@ -234,6 +238,11 @@ footer img{height:30px;display:block;margin:0 auto 10px}
   body{font-size:16px}
   .hwrap img{height:30px}
   .progress{max-width:none}
+  .btn-back span{display:none}
+  .hstart{gap:8px}
+  .hwrap{gap:8px}
+  .progress{display:none}
+  .os-switch button{padding:5px 9px}
   section.step{padding:26px 18px}
   .compare{grid-template-columns:1fr}
   .hero{padding-top:34px}
@@ -274,7 +283,10 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 
 <header>
   <div class="hwrap">
-    <a href="../" aria-label="Ronig.ai, לדף הבית"><img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36"></a>
+    <div class="hstart">
+      <a href="../" aria-label="Ronig.ai, לדף הבית"><img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36"></a>
+      <a href="https://rogre1.github.io/ronig-courses/courses/" class="btn-back">← <span>חזרה לעמוד </span>הקורסים</a>
+    </div>
     <div class="progress" aria-live="polite"><span id="progText">0 מתוך 6 שלבים</span><div class="bar"><i id="progBar"></i></div></div>
     <div class="os-switch" role="group" aria-label="מערכת הפעלה">
       <button type="button" data-os="mac" aria-pressed="true">Mac</button>
