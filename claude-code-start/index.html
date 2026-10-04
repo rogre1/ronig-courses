@@ -227,11 +227,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 /* mobile */
 @media (max-width:900px){
   .layout{grid-template-columns:1fr;gap:0}
-  nav.toc{position:static;padding-top:18px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
-  nav.toc::-webkit-scrollbar{display:none}
-  nav.toc p{display:none}
-  nav.toc a{flex:none;border:1px solid var(--line);border-radius:99px;background:#fff;padding:5px 12px;font-size:.84rem}
-  nav.toc a.active{border-right-color:var(--line)}
+  nav.toc{display:none}
   .progress span{display:none}
 }
 @media (max-width:640px){
@@ -729,7 +725,7 @@ description: כתיבת פוסט שבועי לאינסטגרם. להשתמש כ�
   // toc active
   var links=[].slice.call(document.querySelectorAll('nav.toc a'));
   if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){var on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('active',on);if(on&&window.innerWidth<900)a.scrollIntoView({block:'nearest',inline:'center'})})}})},{rootMargin:'-40% 0px -55% 0px'});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){var on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('active',on)})}})},{rootMargin:'-40% 0px -55% 0px'});
     links.forEach(function(a){var t=document.querySelector(a.getAttribute('href'));if(t)io.observe(t)});
   }
 
