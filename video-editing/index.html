@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>עורכים סרטונים עם קלוד, מאפס | Ronig.ai</title>
+<meta name="description" content="מדריך למתחילים לעריכת רילסים עם Claude Code: התקנה, פרומפט פתיחה להעתקה, הכנה לצילום, סבבי עריכה ואיך להעביר הערות.">
+<meta property="og:title" content="עורכים סרטונים עם קלוד, מאפס">
+<meta property="og:description" content="מדריך למתחילים לעריכת רילסים עם Claude Code, כולל פרומפט פתיחה להעתקה.">
+<meta name="robots" content="noindex">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+.topline{direction:rtl;max-width:860px;margin:0 auto;padding:14px 20px 0;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-family:"Assistant",Arial,sans-serif;font-size:15px}
+.topline a{color:#27415E;text-decoration:none;border:1.5px solid #DCE1E8;border-radius:999px;padding:4px 14px;background:#fff}
+.topline a:hover{border-color:#27415E}</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;800&family=Secular+One&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column styled like an editing timeline — each section is a "clip" with a timecode, steps run in order */
+:root{
+  --bg:#F5F6F8; --panel:#FFFFFF; --ink:#18202B; --muted:#5A6573; --line:#DCE1E8;
+  --accent:#27415E; --accent-soft:#E4EAF1; --mark:#F2C84B; --mark-ink:#3A2C00;
+  --good:#22784F; --good-soft:#E2F1E9; --bad:#B0412A; --bad-soft:#F8E6E1; --code:#EEF1F5;
+  --display:"Secular One","Assistant","Arial",sans-serif;
+  --body:"Assistant","Arial Hebrew","Arial",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.7}
+.wrap{direction:rtl;max-width:860px;margin:0 auto;padding-inline:20px;padding-block:0 72px}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:400}
+h1{font-family:var(--display);font-size:clamp(40px,8vw,68px);line-height:1.05}
+h2{font-family:var(--display);font-size:clamp(28px,5vw,38px);line-height:1.15}
+h3{font-family:var(--body);font-weight:800;font-size:18px}
+p{margin:0}
+ul,ol{margin:0;padding-inline-start:20px;display:grid;gap:6px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code{font-family:var(--mono);font-size:.85em;background:var(--code);padding:1px 6px;border-radius:4px;direction:ltr;unicode-bidi:isolate}
+.muted{color:var(--muted)}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 4px;border-radius:3px}
+
+/* sticky chapter bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar-inner{direction:rtl;max-width:860px;margin:0 auto;padding-inline:20px;padding-block:8px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.bar-inner::-webkit-scrollbar{display:none}
+.bar a{flex:0 0 auto;text-decoration:none;font-size:14px;color:var(--muted);padding:4px 10px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.bar a.on{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+
+header{padding-block:44px 30px;display:grid;gap:16px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:1.4px;color:var(--accent);direction:ltr;text-align:right}
+.lede{font-size:20px;max-width:60ch}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:28px;align-items:center}
+@media (max-width:620px){.hero-grid{grid-template-columns:1fr}.phone{justify-self:center}}
+
+/* phone mock with a caption in the target style */
+.phone{width:170px;max-width:100%;aspect-ratio:9/16;border-radius:22px;border:5px solid #0d1117;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 30% 18% at 50% 38%,#d8b49a 0 62%,transparent 63%),radial-gradient(ellipse 58% 36% at 50% 95%,#27415E 0 70%,transparent 71%),linear-gradient(180deg,#c9d3de,#8e9cad)}
+.safe{position:absolute;inset-inline:0;background:repeating-linear-gradient(45deg,rgba(176,65,42,.28) 0 6px,transparent 6px 12px)}
+.safe.t{top:0;height:13%}.safe.b{bottom:0;height:20%}
+.pcap{position:absolute;top:55%;inset-inline:0;text-align:center;color:#fff;font-family:var(--body);line-height:1.05;text-shadow:0 1px 6px rgba(0,0,0,.25);direction:rtl}
+.pcap .l{font-weight:300;font-size:15px;display:block}
+.pcap .b{font-weight:800;font-size:24px;display:block}
+.phone-note{font-size:12.5px;color:var(--muted);text-align:center;margin-top:6px}
+
+section{padding-block:40px;border-top:1px solid var(--line);display:grid;gap:18px;scroll-margin-top:60px}
+.head{display:grid;gap:6px}
+.tc{font-family:var(--mono);font-size:12px;color:var(--muted);direction:ltr;text-align:right}
+.prose{display:grid;gap:12px;max-width:66ch}
+
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;display:grid;gap:4px;align-content:start}
+.who{font-size:12px;font-weight:600;justify-self:start;padding:1px 8px;border-radius:999px}
+.who.you{background:var(--mark);color:var(--mark-ink)}
+.who.cl{background:var(--accent-soft);color:var(--accent)}
+.step b{font-size:16px}
+.step span.t{font-size:14.5px;color:var(--muted);line-height:1.5}
+
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.term{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;gap:2px}
+.term b{font-size:16px}
+.term span{font-size:14.5px;color:var(--muted);line-height:1.5}
+
+.numbered{counter-reset:s;display:grid;gap:12px;list-style:none;padding:0}
+.numbered>li{counter-increment:s;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start}
+.numbered>li::before{content:counter(s);font-family:var(--display);font-size:18px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--bg);display:grid;place-items:center}
+.numbered>li>div{display:grid;gap:4px;min-width:0}
+
+.note{background:var(--accent-soft);border-radius:8px;padding:14px 16px;font-size:16px}
+.note b{color:var(--accent)}
+.warn{background:var(--bad-soft);border-radius:8px;padding:14px 16px;font-size:16px}
+.warn b{color:var(--bad)}
+
+/* copy blocks */
+.copybox{background:var(--panel);border:2px solid var(--accent);border-radius:10px;overflow:hidden}
+.copybox-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;background:var(--accent-soft);flex-wrap:wrap}
+.copybox-head b{color:var(--accent);font-size:16px}
+.copybox pre{margin:0;padding:16px;white-space:pre-wrap;word-break:break-word;font-family:var(--body);font-size:15.5px;line-height:1.75;direction:rtl;text-align:right;max-height:520px;overflow:auto}
+.btn{font:inherit;font-size:15px;font-weight:600;background:var(--accent);color:var(--bg);border:0;border-radius:6px;padding:7px 16px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+
+.checklist{display:grid;gap:8px}
+.checklist label{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px;cursor:pointer}
+.checklist input{width:18px;height:18px;margin-top:5px;accent-color:var(--accent)}
+.checklist label:has(input:checked){opacity:.55}
+.checklist small{display:block;color:var(--muted);font-size:14.5px;line-height:1.55}
+.count{font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+.rounds{display:grid;gap:0;border-inline-start:2px solid var(--line);margin-inline-start:8px}
+.round{position:relative;padding:0 22px 22px 0;display:grid;gap:4px}
+.round::before{content:"";position:absolute;right:-8px;top:7px;width:14px;height:14px;border-radius:50%;background:var(--panel);border:2px solid var(--accent)}
+.round .v{font-family:var(--mono);font-size:12.5px;color:var(--accent);direction:ltr;text-align:right}
+.round p{font-size:16px;max-width:62ch}
+
+.fb{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.fb{grid-template-columns:1fr}}
+.fbcard{border-radius:8px;padding:14px 16px;display:grid;gap:8px;align-content:start}
+.fbcard.bad{background:var(--bad-soft)}
+.fbcard.good{background:var(--good-soft)}
+.fbcard .tag{font-size:13px;font-weight:800}
+.fbcard.bad .tag{color:var(--bad)}
+.fbcard.good .tag{color:var(--good)}
+.fbcard ul{font-size:15.5px}
+
+.qa{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.qa-group{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:grid;gap:8px;align-content:start}
+.qa-group h3{font-size:16px;color:var(--accent)}
+.qa-group ul{font-size:15px;line-height:1.55}
+
+.traps{display:grid;gap:10px}
+.trap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.trap .x{font-family:var(--mono);font-size:12px;color:var(--bad);padding-top:4px;min-width:28px}
+.trap p{font-size:15.5px}
+
+
+/* examples */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.shot{display:grid;gap:8px;align-content:start;margin:0}
+.shot img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block}
+.shot figcaption{font-size:14.5px;line-height:1.5}
+.shot figcaption b{display:block;font-size:15px}
+.case{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:14px}
+.stats{display:flex;flex-wrap:wrap;gap:10px}
+.stat{background:var(--accent-soft);border-radius:8px;padding:8px 14px;display:grid}
+.stat b{font-family:var(--display);font-size:24px;color:var(--accent);line-height:1.1;font-weight:400;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.case table{width:100%;border-collapse:collapse;font-size:15px;min-width:480px}
+.case th,.case td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.case th{font-size:13px;color:var(--muted);font-weight:600}
+.tblwrap{overflow-x:auto}
+footer{padding-block:30px;color:var(--muted);font-size:15px;border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topline"><a href="https://rogre1.github.io/ronig-courses/courses/">← חזרה לעמוד הקורסים</a><a href="https://rogre1.github.io/ronig-courses/claude-code-start/?from=video-editing">חדשים ב-Claude Code? מדריך המתחילים</a></div>
+
+
+<nav class="bar" aria-label="פרקים">
+  <div class="bar-inner" id="bar">
+    <a href="#how">איך זה עובד</a>
+    <a href="#words">מילון</a>
+    <a href="#setup">התקנה</a>
+    <a href="#prompt">פרומפט 1</a>
+    <a href="#prep">הכנה וצילום</a>
+    <a href="#send">שליחת סרטון</a>
+    <a href="#rounds">סבבי עריכה</a>
+    <a href="#examples">דוגמאות</a>
+    <a href="#feedback">הערות</a>
+    <a href="#qa">מה לבדוק</a>
+    <a href="#traps">מלכודות</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">CLAUDE CODE · VIDEO EDITING · 9:16</span>
+  <div class="hero-grid">
+    <div style="display:grid;gap:14px;min-width:0">
+      <h1>עורכים סרטונים<br>עם קלוד, מאפס</h1>
+      <p class="lede">מדריך למי שלא ערך אף פעם סרטון ולא כתב שורת קוד. אתם מצלמים ונותנים הערות, וקלוד חותך, מתמלל, מוסיף כתוביות, זומים, אנימציות ואפקטי סאונד, ומחזיר סרטון מוכן לאינסטגרם או לטיקטוק.</p>
+      <p class="muted">המדריך מבוסס על תהליך עריכה אמיתי של כמה רילסים, כולל כל ההערות שהיו צריכות לחזור על עצמן עד שהתוצאה נראתה מקצועית. הכל מרוכז כאן כדי שתתחילו מהמקום שבו אנחנו סיימנו.</p>
+    </div>
+    <div>
+      <div class="phone" aria-hidden="true">
+        <div class="safe t"></div><div class="safe b"></div>
+        <div class="pcap"><span class="l">לקח לי</span><span class="b">שש שנים</span></div>
+      </div>
+      <p class="phone-note">כתובית מתחת לפנים, מחוץ לאזורים המפוספסים שהאפליקציה מכסה</p>
+    </div>
+  </div>
+</header>
+
+<section id="how">
+  <div class="head"><span class="tc">00:00:00</span><h2>איך זה עובד בכלל</h2></div>
+  <div class="prose">
+    <p>בתוכנת עריכה רגילה גוררים קליפים על ציר זמן. קלוד עובד אחרת: הוא כותב הוראות מדויקות למחשב, למשל "חתוך מ-3.2 עד 7.8 שניות, הגדל ב-5%, תציג את המילה 'שש' בשנייה 4.1". כל דבר מדויק לפריים, ואפשר לשנות פרט אחד בלי לשבור את השאר.</p>
+    <p><b>הדבר הכי חשוב להבין:</b> קלוד לא צופה בסרטון כמו שאתם צופים. הוא מוציא ממנו תמונות בודדות ומסתכל עליהן, וקורא את התמלול של מה שנאמר. הוא לא מרגיש קצב, לא שומע אם בדיחה עובדת, ולפעמים מפספס קפיצה של פריים אחד. לכן העיניים שלכם, וההערות שלכם, הן מה שהופך טיוטה לסרטון טוב.</p>
+  </div>
+  <div class="flow">
+    <div class="step"><span class="who you">אתם</span><b>מצלמים</b><span class="t">קובץ גולמי אחד, גם עם טעויות וחזרות</span></div>
+    <div class="step"><span class="who cl">קלוד</span><b>מתמלל</b><span class="t">כל מילה עם הזמן המדויק שבו נאמרה</span></div>
+    <div class="step"><span class="who cl">קלוד</span><b>חותך</b><span class="t">שתיקות, זמן מת, טייקים כפולים, התחלות שבורות</span></div>
+    <div class="step"><span class="who cl">קלוד</span><b>מעצב</b><span class="t">כתוביות, זומים, כותרת פתיחה, אנימציות, סאונד</span></div>
+    <div class="step"><span class="who you">אתם</span><b>נותנים הערות</b><span class="t">עם טיימקוד או צילום מסך, וקלוד מתקן</span></div>
+    <div class="step"><span class="who cl">קלוד</span><b>מייצא</b><span class="t">קובץ MP4, ואם רוצים גם פרויקט CapCut לדיוק ידני</span></div>
+  </div>
+</section>
+
+<section id="words">
+  <div class="head"><span class="tc">00:00:08</span><h2>מילון קצר</h2><p class="muted">המילים שתשמעו מקלוד, ומה הן אומרות.</p></div>
+  <div class="gloss">
+    <div class="term"><b>9:16</b><span>סרטון אנכי, הפורמט של רילס, טיקטוק ושורטס.</span></div>
+    <div class="term"><b>טייק</b><span>ניסיון אחד להגיד משפט. טעיתם ואמרתם שוב? יש שני טייקים, וקלוד בוחר אחד.</span></div>
+    <div class="term"><b>טיימקוד</b><span>המקום בסרטון, למשל 0:12. ככה מצביעים לקלוד על בעיה.</span></div>
+    <div class="term"><b>חיתוך / קאט</b><span>המעבר מקטע אחד לקטע הבא.</span></div>
+    <div class="term"><b>זמן מת</b><span>שנייה של שקט או "אממ" שלא מוסיפה כלום וצריך להוריד.</span></div>
+    <div class="term"><b>זום / פאנץ'-אין</b><span>הגדלה קטנה של הפריים, כדי שצילום מזווית אחת ירגיש כמו כמה זוויות.</span></div>
+    <div class="term"><b>קאטאווי / B-roll</b><span>קטע קצר אחר (למשל סרטון AI) שקוטע את הדיבור וממחיש מה שאומרים.</span></div>
+    <div class="term"><b>SFX</b><span>אפקט סאונד: קליק, הקלדה, דינג, ווש.</span></div>
+    <div class="term"><b>הסרת רקע (cutout)</b><span>קלוד גוזר אתכם מהרקע, כדי שאנימציה תופיע מאחוריכם ולא תסתיר אתכם.</span></div>
+    <div class="term"><b>רינדור</b><span>השלב שבו כל ההוראות הופכות לקובץ וידאו אמיתי.</span></div>
+    <div class="term"><b>אזור בטוח</b><span>החלק במסך שהאפליקציה לא מכסה בכפתורים ובכיתוב. בערך 13% עליונים ו-20% תחתונים מכוסים.</span></div>
+    <div class="term"><b>CapCut</b><span>תוכנת עריכה חינמית. קלוד יכול לבנות בה פרויקט, ואז אפשר לתקן ביד.</span></div>
+  </div>
+</section>
+
+<section id="setup">
+  <div class="head"><span class="tc">00:00:16</span><h2>שלב 0: מה צריך לפני שמתחילים</h2></div>
+  <ol class="numbered">
+    <li><div><h3>מחשב</h3><p>מק עם מעבד אפל (M1 ומעלה) הכי נוח, כי התמלול רץ עליו מקומית ובחינם. גם במחשב Windows זה עובד, קלוד יתאים את הכלים. כדאי שיהיו לפחות 30GB פנויים, כי סרטוני 4K תופסים הרבה מקום.</p></div></li>
+    <li><div><h3>מנוי לקלוד</h3><p>Claude Pro או Max. עריכת סרטון היא עבודה ארוכה עם הרבה שלבים, ובמנוי הבסיסי תגיעו מהר למגבלת השימוש.</p></div></li>
+    <li><div><h3>אפליקציית Claude למחשב, לשונית Code</h3><p>מורידים מ-<a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a>, מתחברים, ועוברים ללשונית <b>Code</b>. זה Claude Code: הגרסה של קלוד שיכולה לעבוד עם קבצים במחשב ולהריץ תוכנות. בצ'אט הרגיל אי אפשר לערוך סרטונים.</p></div></li>
+    <li><div><h3>תיקייה לעבודה</h3><p>יוצרים תיקייה חדשה, למשל <code>video-studio</code> בתוך תיקיית הבית, ובוחרים אותה כשפותחים שיחה חדשה בלשונית Code. <b>לא</b> על שולחן העבודה ולא בתיקייה שמסונכרנת ל-iCloud או ל-OneDrive: הענן מוריד קבצים למחשב רק כשצריך, והשיחה עלולה להיתקע.</p></div></li>
+    <li><div><h3>אישורים</h3><p>בהתחלה קלוד יבקש אישור לפני כל פקודה. זה תקין. קראו את המשפט שמסביר מה הוא עומד לעשות ואשרו. אם משהו לא ברור, שאלו אותו "מה זה עושה?" לפני שמאשרים.</p></div></li>
+    <li><div><h3>לא חובה: CapCut וכלי AI</h3><p>CapCut אם רוצים לדייק ביד בסוף. כלים כמו Higgsfield, Kling או ElevenLabs רק אם תרצו קטעי AI או קריינות, ומחברים אותם בהגדרות של קלוד תחת Connectors. אפשר לגמרי לערוך סרטון טוב בלי אף אחד מהם.</p></div></li>
+  </ol>
+  <p class="note"><b>את ההתקנות עצמן אתם לא עושים.</b> כלי החיתוך, כלי התמלול ומנוע האנימציות מותקנים על ידי קלוד, אחרי שתדביקו את הפרומפט הראשון. הוא יסביר כל התקנה במשפט ויבקש אישור.</p>
+</section>
+
+<section id="prompt">
+  <div class="head"><span class="tc">00:00:24</span><h2>שלב 1: הפרומפט הראשון</h2>
+    <p class="muted">פותחים שיחה חדשה בלשונית Code, בתיקייה שיצרתם, ומדביקים את כל הטקסט. קלוד יראיין אתכם, יכין את המחשב, ייתן רשימת הכנה ויסביר איך עובדים איתו. זה לוקח בערך חצי שעה, ועושים את זה פעם אחת.</p>
+  </div>
+  <div class="copybox">
+    <div class="copybox-head"><b>פרומפט 1 · הכנה והיכרות</b><button class="btn" type="button" data-copy="p1">העתקה</button></div>
+<pre id="p1">אתה העורך והמורה שלי לעריכת סרטונים. אין לי שום ניסיון בעריכה ולא בקוד, אז תסביר הכל בעברית פשוטה, בלי מונחים טכניים (ואם חייבים, תסביר אותם במשפט). תתקדם צעד אחד בכל פעם ותחכה לתשובה שלי לפני שאתה ממשיך.
+
+המטרה: שנעבוד יחד כצוות עריכה. התפקיד שלי: לצלם, להביא את הרעיון והטעם ולתת הערות. התפקיד שלך: לחתוך, לתמלל, להוסיף כתוביות, זומים, אנימציות ואפקטי סאונד, ולייצא סרטון מוכן (ואם ארצה, גם פרויקט CapCut שאוכל לדייק בו ביד).
+
+תעבור איתי על השלבים האלה לפי הסדר:
+
+שלב 1: היכרות
+תשאל אותי עד 6 שאלות קצרות: איזה סרטונים אני רוצה לעשות (דיבור למצלמה, מדריך, סיפור), לאיזו פלטפורמה, באיזה אורך, אם יש לי סרטונים קודמים או רפרנסים שאני אוהב/ת (ומה בדיוק אני אוהב/ת בהם: כתוביות, קצב, אנימציות), אם יש לי צבעים, פונט או לוגו של מותג, ואם אני עובד/ת עם CapCut.
+
+שלב 2: הכנת המחשב
+תבדוק מה כבר מותקן אצלי ומה חסר כדי לערוך: כלי לחיתוך וידאו (ffmpeg), תמלול עברית מקומי וחינמי עם זמן לכל מילה (Whisper), ומנוע לכתוביות ואנימציות בקוד (Remotion), וכל כלי נוסף שאתה צריך. לפני כל התקנה תגיד לי במשפט אחד מה זה, למה צריך את זה וכמה מקום זה תופס, ותחכה לאישור. תעבוד רק בתיקייה הזו, ותוודא שהיא לא מסונכרנת לענן. בסוף תריץ בדיקה על קליפ קצר (אפשר שתבקש ממני להקליט 10 שניות) ותראה לי שהתמלול בעברית עובד.
+
+שלב 3: רשימת הכנה
+תכין לי צ'קליסט קצר וברור:
+- איך לצלם: אנכי, סאונד, אור, כמה מקום להשאיר מעל הראש ומתחת לסנטר.
+- מה לעשות כשאני טועה באמצע משפט.
+- איך לקרוא לקבצים ואיפה לשים אותם.
+- מה לשלוח לך עם כל סרטון: תסריט או נקודות, רפרנס, לוגואים, צילומי מסך או אתרים לאנימציות.
+
+שלב 4: איך עובדים בסבבים
+תסביר לי את סדר הגרסאות ומה אני בודק/ת בכל אחת, ואיך לתת לך הערות כך שתתקן בסבב אחד: טיימקוד או צילום מסך ממוספר, מה לא טוב, ומה אני רוצה במקום.
+
+שלב 5: כללים קבועים
+תכתוב את הכללים האלה בקובץ הוראות בתיקייה (CLAUDE.md), כדי שתזכור אותם גם בשיחות הבאות:
+- תמיד 9:16. חומר אופקי חותכים ומתאימים, אף פעם לא מכווצים או מותחים.
+- גרסה ראשונה = חיתוך בלבד, כדי שאאשר את התוכן לפני שמעצבים.
+- טייקים חוזרים: לוקחים את האחרון השלם והנקי. בלי התחלות שבורות ובלי זמן מת לפני המילה הראשונה של כל קטע. אל תסמוך רק על התמלול כדי למצוא חזרות, תבדוק גם לפי השקטים באודיו.
+- כתוביות: 2–3 מילים בכל פעם, לא מהירות מדי. ביטוי לא מתפצל בין כתוביות. אף פעם לא על הפנים, לא באזורים שהאפליקציה מכסה, לא מופיעות לפני שהמילה נאמרת, לא ממשיכות אחרי חיתוך לשוט הבא, ונגמרות בדיוק עם סוף הסרטון.
+- לא להפוך (מראה) צילומי סלפי.
+- לפני כל יצירה ב-AI שעולה כסף או קרדיטים: תראה לי את הפרומפט ואת העלות ותחכה לאישור.
+- כל תוספת (אנימציה, קטע AI, החלפת רקע) בשכבה נפרדת, כך שאפשר להוריד אותה בקלות.
+- לפני שאתה שולח לי גרסה: תבדוק בעצמך את הפריימים סביב כל חיתוך (קפיצות זום, כתוביות שנשארות, הבהובים) ותגיד לי מה בדקת.
+- כשאני מאשר/ת סגנון, תשמור אותו כברירת מחדל לכל הסרטונים הבאים.
+
+תתחיל בשלב 1.</pre>
+  </div>
+  <p class="note"><b>למה הכללים בשלב 5 שם?</b> כל אחד מהם נולד מהערה שחזרה על עצמה בעריכה אמיתית. אם כותבים אותם מראש, חוסכים סבבים שלמים של תיקונים.</p>
+</section>
+
+<section id="prep">
+  <div class="head"><span class="tc">00:00:32</span><h2>שלב 2: מה להכין ואיך לצלם</h2></div>
+  <p class="count" id="prepCount">0 מתוך 8</p>
+  <div class="checklist" id="prepList">
+    <label><input type="checkbox" id="c1"><div><b>מצלמים אנכי, בגובה העיניים</b><small>השאירו מקום מעל הראש ומתחת לסנטר: שם יושבות הכתוביות והכותרות. אם צילמתם בכל זאת לרוחב, קלוד יחתוך לאנכי, אבל תאבדו את הצדדים.</small></div></label>
+    <label><input type="checkbox" id="c2"><div><b>סאונד נקי</b><small>מיקרופון דש או חדר שקט. תמונה בינונית אפשר לשפר, סאונד גרוע קשה מאוד להציל. רעש של מזגן או רחוב קלוד יכול להחליש, לא למחוק.</small></div></label>
+    <label><input type="checkbox" id="c3"><div><b>טעיתם? עוצרים שנייה ואומרים שוב</b><small>לא צריך להתחיל את כל הצילום מחדש ולא צריך לעצור את המצלמה. קובץ אחד ארוך עם חזרות זה מצוין. השקט הקצר לפני החזרה עוזר לקלוד למצוא אותה.</small></div></label>
+    <label><input type="checkbox" id="c4"><div><b>תסריט או לפחות נקודות</b><small>גם אם אלתרתם, תנו לקלוד את הטקסט המתוכנן. ככה הוא יודע מה הסדר, מה ההוק ואיפה לשים גרפיקה. זה בסדר שאמרתם קצת אחרת.</small></div></label>
+    <label><input type="checkbox" id="c5"><div><b>הסרטונים הקודמים שלכם או רפרנסים</b><small>הדרך הכי מהירה ללמד את קלוד סגנון. אם ערכתם פעם ב-CapCut, אפשר לבקש ממנו לפתוח את הפרויקטים שלכם ולמדוד משם פונטים, גדלים ומיקומים של כתוביות.</small></div></label>
+    <label><input type="checkbox" id="c6"><div><b>חומרים לאנימציות</b><small>לוגואים, אייקונים של תוכנות, צילומי מסך, קישור לאתר. אם אתם מזכירים כלי מסוים, תנו את הלוגו שלו.</small></div></label>
+    <label><input type="checkbox" id="c7"><div><b>צבע מותג אחד או שניים</b><small>צבע אחד שמופיע בנגיעות (מילה מודגשת, כפתור, מסגרת) נראה מקצועי יותר מהרבה צבעים.</small></div></label>
+    <label><input type="checkbox" id="c8"><div><b>מעבירים את הקובץ למחשב כמו שהוא</b><small>AirDrop או כבל, בלי לערוך ובלי לדחוס בוואטסאפ. שימו אותו בתיקיית העבודה, לא בתיקייה מסונכרנת לענן.</small></div></label>
+  </div>
+</section>
+
+<section id="send">
+  <div class="head"><span class="tc">00:00:40</span><h2>שלב 3: שולחים סרטון לעריכה</h2>
+    <p class="muted">לכל סרטון חדש: גוררים את הקובץ לשיחה (או כותבים איפה הוא נמצא), ומדביקים את הבריף. שורות שאין לכם מה לכתוב בהן אפשר למחוק, וקלוד יחליט ויגיד מה בחר.</p>
+  </div>
+  <div class="copybox">
+    <div class="copybox-head"><b>בריף לכל סרטון</b><button class="btn" type="button" data-copy="p2">העתקה</button></div>
+<pre id="p2">יש לי סרטון חדש לעריכה: [שם הקובץ או התיקייה]
+
+על מה הסרטון: [משפט אחד]
+הטקסט שתכננתי להגיד (אולי שיניתי קצת באלתור, זה בסדר): [להדביק]
+אורך יעד: [למשל 30–45 שניות]
+הוק פתיחה כתוב בפריים הראשון: [הטקסט, או "תציע לי 3"]
+מילים שחשוב להדגיש: [אם יש]
+אנימציות שאני רוצה ואיפה: [למשל "כשאני אומר/ת 'חיפשתי במייל' – חיפוש במייל מאחוריי"]. חומרים מצורפים: [לוגואים/צילומי מסך]
+צבע מותג: [קוד צבע או תמונה]
+מה המטרה: [למשל שיכתבו מילה בתגובות]
+
+תעבוד לפי הכללים שבקובץ ההוראות. תתחיל מגרסה של חיתוך בלבד, ותראה לי אותה לפני שאתה ממשיך.</pre>
+  </div>
+</section>
+
+<section id="rounds">
+  <div class="head"><span class="tc">00:00:48</span><h2>שלב 4: עורכים בסבבים</h2>
+    <p class="muted">הטעות הכי נפוצה היא לבקש הכל בבת אחת. בונים שכבה אחרי שכבה, ומאשרים כל שכבה לפני הבאה.</p>
+  </div>
+  <div class="rounds">
+    <div class="round"><span class="v">v1 · חיתוך</span><h3>רק התוכן</h3><p>בלי כתוביות ובלי עיצוב. בודקים: כל המשפטים שם ובסדר הנכון? אין משפט שחוזר פעמיים? אין זמן מת או מילה חתוכה בתחילת קטע?</p></div>
+    <div class="round"><span class="v">v2 · כתוביות</span><h3>הסגנון</h3><p>בודקים קצב, גודל, מיקום והדגשות. כאן הכי כדאי להשקיע: כשהסגנון מאושר, מבקשים מקלוד לשמור אותו, ומהסרטון הבא הוא מתחיל משם.</p></div>
+    <div class="round"><span class="v">v3 · תנועה</span><h3>זומים ומסגור</h3><p>זומים עדינים, מירכוז הפנים, פחות תקרה ריקה. אם זה מרגיש קופצני, מבקשים "זום עדין יותר" או "גודל אחיד בין החיתוכים".</p></div>
+    <div class="round"><span class="v">v4 · שכבות</span><h3>אנימציות, הוק וסאונד</h3><p>אנימציות מאחוריכם או מעליכם, כותרת פתיחה, אפקטי סאונד מגוונים ושקטים. כדאי לבקש "לא עמוס": שתיים-שלוש אנימציות לסרטון של חצי דקה מספיקות.</p></div>
+    <div class="round"><span class="v">v5 · AI (לא חובה)</span><h3>קטעים מיוצרים</h3><p>קטעי AI קצרים של 1–2.5 שניות שממחישים מילה עם קריצה. קלוד מציע איפה, מראה פרומפט ועלות, ומייצר רק אחרי אישור. מבקשים גם התאמת צבע, כי קטעי AI יוצאים לעיתים רוויים או צהבהבים.</p></div>
+    <div class="round"><span class="v">final · ייצוא</span><h3>איכות מלאה</h3><p>מבקשים "רינדור סופי באיכות הכי גבוהה מהקובץ המקורי". בזמן העבודה קלוד מרנדר באיכות נמוכה כדי שיהיה מהיר, וזה בסדר. אם רוצים CapCut: סוגרים אותו לגמרי (Cmd+Q) לפני שקלוד מייצא אליו.</p></div>
+  </div>
+</section>
+
+<section id="examples">
+  <div class="head"><span class="tc">00:00:52</span><h2>דוגמאות מסרטונים שערכנו</h2>
+    <p class="muted">פריימים מתוך רילסים אמיתיים שנערכו כך עם קלוד, מצילום גולמי ועד גרסה סופית. ככה זה נראה כשכל השכבות מתחברות.</p>
+  </div>
+  <div class="gallery">
+    <figure class="shot"><img src="img/example-1.jpg" alt="הוק בפריים הראשון" loading="lazy"><figcaption><b>הוק בפריים הראשון</b><span class="muted">כותרת בצבעי המותג מעל הראש, בתוך האזור הבטוח, עם "וזה הפרומפט" קטן מתחת. נעלמת לפני שהכתובית הראשונה מעל הראש מופיעה.</span></figcaption></figure>
+    <figure class="shot"><img src="img/example-2.jpg" alt="אנימציה שממחישה משפט" loading="lazy"><figcaption><b>אנימציה שממחישה משפט</b><span class="muted">בדיוק כשהיא אומרת שחיפשה חשבוניות במייל, מופיע חיפוש במייל. הכתובית ירדה למטה כדי לא לשבת על הכרטיס.</span></figcaption></figure>
+    <figure class="shot"><img src="img/example-3.jpg" alt="אנימציה מאחוריה" loading="lazy"><figcaption><b>אנימציה מאחוריה</b><span class="muted">קלוד גוזר אותה מהרקע, והתיקיות נכנסות בין הקיר לבינה. היא אף פעם לא מוסתרת.</span></figcaption></figure>
+    <figure class="shot"><img src="img/example-4.jpg" alt="פאנל עליון" loading="lazy"><figcaption><b>פאנל עליון</b><span class="muted">ציר זמן של עריכה מעל הראש, עם המילה המודגשת "עשר" גדולה ובעבה בתוך אותה כתובית.</span></figcaption></figure>
+    <figure class="shot"><img src="img/example-5.jpg" alt="טיפוגרפיה" loading="lazy"><figcaption><b>טיפוגרפיה</b><span class="muted">מילת המפתח ענקית, ותגית קטנה בצבע המותג. צבע אחד בנגיעות, לא קשת של צבעים.</span></figcaption></figure>
+    <figure class="shot"><img src="img/example-6.jpg" alt="קטע AI כקאטאווי" loading="lazy"><figcaption><b>קטע AI כקאטאווי</b><span class="muted">שנייה וחצי שממחישות "כל חודשיים אותו סיפור" עם קריצה, ואז חוזרים לדיבור. הצבע הותאם לשאר הסרטון.</span></figcaption></figure>
+    <figure class="shot"><img src="img/example-7.jpg" alt="החלפת רקע סוריאליסטית" loading="lazy"><figcaption><b>החלפת רקע סוריאליסטית</b><span class="muted">היא נשארת בדיוק באותו מקום ובאותו גודל, ורק העולם סביבה משתנה. שלוש פעמים בסרטון, לא יותר.</span></figcaption></figure>
+    <figure class="shot"><img src="img/example-8.jpg" alt="פתיחה מסקרנת" loading="lazy"><figcaption><b>פתיחה מסקרנת</b><span class="muted">בסרטון סיפור, המשפט הכי מסקרן הוזז להתחלה וקיבל כותרת. 68 שניות גולמיות קוצרו ל-43.</span></figcaption></figure>
+  </div>
+
+  <div class="case">
+    <h3>מקרה אמיתי: סרטון החשבוניות, מ-11 דקות ל-46 שניות</h3>
+    <div class="stats">
+      <div class="stat"><b>11:04</b><span>צילום גולמי, קובץ 4K אחד עם הרבה חזרות</span></div>
+      <div class="stat"><b>0:46</b><span>הסרטון הסופי</span></div>
+      <div class="stat"><b>23</b><span>גרסאות, ביומיים</span></div>
+      <div class="stat"><b>3</b><span>גרסאות לסרטון השלישי, כשהסגנון כבר היה שמור</span></div>
+    </div>
+    <div class="tblwrap"><table>
+      <thead><tr><th>סבב</th><th>מה ביקשנו</th><th>מה למדנו</th></tr></thead>
+      <tbody>
+        <tr><td>חיתוך</td><td>"עדיין יש זמנים מתים, קטע שמתחיל ממילה חתוכה, ומשפטים שחוזרים על עצמם"</td><td>תמלול לבד מפספס חזרות מהירות. צריך לחתוך גם לפי השקט באודיו ולבחור את הטייק האחרון השלם.</td></tr>
+        <tr><td>כתוביות</td><td>"רוב קבוצות המילים ממורכזות, לא בצדדים". אחר כך: "בלי הצל המוגזם, ופחות רווח בין השורות"</td><td>כמה סבבים קטנים על הכתוביות משתלמים, כי אחרי האישור הם נשמרים לכל סרטון.</td></tr>
+        <tr><td>תנועה</td><td>"זומים קטנים מדי פעם, וכמה כתוביות מעל הראש, בשטח המת"</td><td>זום עדין מחליף זווית מצלמה. זום גדול מדי מרגיש כמו קפיצה.</td></tr>
+        <tr><td>שכבות</td><td>"אנימציה של חיפוש במייל, מאחוריי ולא מעליי", ואפקטי סאונד</td><td>אנימציה אחת לכל רעיון מרכזי, וצליל לכל פעולה באנימציה (הקלדה, קליק, דינג).</td></tr>
+        <tr><td>AI</td><td>"בקטעי ה-AI הצבע חזק יותר, תתאים לסרטון שלי"</td><td>כל קטע AI עובר התאמת צבע לפני שהוא נכנס.</td></tr>
+        <tr><td>הוק</td><td>"תן לי כמה דוגמאות סטטיות בגווני הירוק מדפי הנחיתה שלי" ובחירה באחת</td><td>לבחור מתוך תמונות זה מהיר יותר מלרנדר סרטון לכל ניסיון.</td></tr>
+        <tr><td>סופי</td><td>"האיכות קצת ירודה", "הפריים הראשון צהבהב", "ההוק נחתך באינסטגרם"</td><td>רינדור סופי מהקובץ המקורי ב-4K, איזון לבן, ובדיקה מול האזור הבטוח של אינסטגרם.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="muted">הסיבה שהסרטון הראשון לקח 23 גרסאות היא שכל הכללים נבנו בדרך. הם כבר כתובים בפרומפט 1, אז אצלכם זה יהיה קצר בהרבה.</p>
+  </div>
+</section>
+
+<section id="feedback">
+  <div class="head"><span class="tc">00:00:56</span><h2>איך להעביר הערות</h2>
+    <p class="muted">צופים בגרסה, ובכל מקום שמשהו מפריע עוצרים, מצלמים מסך (Cmd+Shift+4 במק), ורושמים. אחר כך שולחים לקלוד את כל צילומי המסך יחד עם רשימה ממוספרת.</p>
+  </div>
+  <div class="fb">
+    <div class="fbcard bad"><span class="tag">קשה לתקן מזה</span><ul><li>"משהו מרגיש לא טוב"</li><li>"תעשה את זה יותר מגניב"</li><li>"הכתוביות לא טובות"</li><li>"יש קפיצה איפשהו"</li></ul></div>
+    <div class="fbcard good"><span class="tag">מתוקן בסבב אחד</span><ul><li>"0:04 – יש שנייה של שקט לפני 'אתם', תחתוך ממש לפני המילה"</li><li>"תמונה 2 – הכתובית על הסנטר, תעלה אותה מעל הראש"</li><li>"0:27 – קפיצת זום מיותרת, תוריד"</li><li>"תמונה 5 – המשפט הזה חוזר פעמיים, תשאיר את השני"</li></ul></div>
+  </div>
+  <div class="copybox">
+    <div class="copybox-head"><b>תבנית הערות</b><button class="btn" type="button" data-copy="p3">העתקה</button></div>
+<pre id="p3">הערות על הגרסה הזו (צילומי המסך מצורפים לפי הסדר):
+
+תמונה 1 / 0:00 – מה לא טוב: [...] / מה אני רוצה במקום: [...]
+תמונה 2 / 0:00 – מה לא טוב: [...] / מה אני רוצה במקום: [...]
+תמונה 3 / 0:00 – מה לא טוב: [...] / מה אני רוצה במקום: [...]
+
+באופן כללי לכל הסרטון: [למשל "פחות צל בכתוביות", "סאונדים יותר מגוונים"]
+
+אחרי התיקון, תבדוק אם יש עוד מקומות בסרטון עם אותה בעיה ותתקן גם אותם.</pre>
+  </div>
+  <ol class="numbered">
+    <li><div><h3>הערה כללית שווה יותר מעשר נקודתיות</h3><p>אם אותה בעיה מופיעה בכמה מקומות, כתבו "באופן כללי" ובקשו מקלוד למצוא את כל המקרים. ככה זה הופך לכלל ולא לתיקון חד-פעמי.</p></div></li>
+    <li><div><h3>אהבתם משהו? תגידו</h3><p>"הגרסה הזו של הכתוביות מצוינת, תשמור את הדרך עבודה הזו" שווה בדיוק כמו הערה שלילית. קלוד שומר את זה לזיכרון, וזה חוסך את כל הסבבים בסרטון הבא.</p></div></li>
+    <li><div><h3>לא בטוחים מה אתם רוצים? בקשו אופציות</h3><p>"תראה לי 3–4 סגנונות להוק כתמונות סטטיות, בנפרד מהסרטון" מהיר וזול יותר מלרנדר סרטון שלם לכל ניסיון. וגם מותר להגיד "לא התחברתי, נשאיר מה שיש".</p></div></li>
+  </ol>
+</section>
+
+<section id="qa">
+  <div class="head"><span class="tc">00:01:04</span><h2>מה לבדוק בכל גרסה</h2>
+    <p class="muted">אלה ההערות שחזרו הכי הרבה בעריכה אמיתית. עברו על הרשימה כשאתם צופים, ואם משהו מופיע, תעתיקו את המשפט לקלוד.</p>
+  </div>
+  <div class="qa">
+    <div class="qa-group"><h3>חיתוך</h3><ul>
+      <li>זמן מת לפני המילה הראשונה של קטע</li>
+      <li>קטע שמתחיל בחצי מילה</li>
+      <li>משפט שמופיע פעמיים (טייק כפול שלא נחתך)</li>
+      <li>הסוף נחתך מוקדם או נגרר</li>
+    </ul></div>
+    <div class="qa-group"><h3>כתוביות</h3><ul>
+      <li>מהירות מדי, לא מספיקים לקרוא</li>
+      <li>מילה מופיעה לפני שאומרים אותה</li>
+      <li>כתובית נשארת אחרי מעבר לשוט הבא</li>
+      <li>על הפנים, על הסנטר או על המצח</li>
+      <li>רווח גדול מדי בין השורות, או צל כבד מדי</li>
+      <li>נחתכת על ידי הכפתורים של האפליקציה</li>
+      <li>שם או מונח שתומלל לא נכון</li>
+    </ul></div>
+    <div class="qa-group"><h3>מצלמה ותמונה</h3><ul>
+      <li>קפיצות זום מוגזמות בין חיתוכים</li>
+      <li>פריים אחד שקופץ או מהבהב בחיתוך</li>
+      <li>הרבה תקרה ריקה מעל הראש</li>
+      <li>צבע צהבהב או ירקרק</li>
+      <li>קטע AI בצבע שונה מהשאר</li>
+      <li>איכות נראית ירודה בגרסה הסופית</li>
+    </ul></div>
+    <div class="qa-group"><h3>שכבות וסאונד</h3><ul>
+      <li>אנימציה מסתירה את הפנים</li>
+      <li>אנימציה נעלמת לפני החיתוך במקום יחד איתו</li>
+      <li>כתובית יושבת על האנימציה</li>
+      <li>אותו אפקט סאונד חוזר שוב ושוב</li>
+      <li>סאונד לא מסונכרן עם מה שקורה במסך</li>
+      <li>הקול שלכם חלש מדי</li>
+      <li>כותרת הפתיחה נחתכת למעלה באינסטגרם</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="traps">
+  <div class="head"><span class="tc">00:01:12</span><h2>מלכודות שכדאי להכיר</h2></div>
+  <div class="traps">
+    <div class="trap"><span class="x">GB</span><p><b>מקום במחשב.</b> כל רינדור וכל גרסה הם קובץ חדש, וסרטון 4K של כמה דקות יכול להגיע לכמה ג'יגה. אחרי שסיימתם סרטון, בקשו מקלוד "תמחק קבצי ביניים ותשאיר רק את המקור והגרסה הסופית".</p></div>
+    <div class="trap"><span class="x">☁</span><p><b>ענן.</b> קבצים שיושבים רק ב-iCloud או OneDrive נראים בתיקייה אבל לא באמת נמצאים במחשב, והשיחה נתקעת עליהם. תמיד לעבוד בתיקייה מקומית.</p></div>
+    <div class="trap"><span class="x">₪</span><p><b>קרדיטים.</b> כל יצירת AI עולה כסף. גם ניסיון שלא הצליח. זו הסיבה לכלל "פרומפט ועלות לפני כל יצירה".</p></div>
+    <div class="trap"><span class="x">AI</span><p><b>פנים ב-AI.</b> תמונות AI של אדם אמיתי לא תמיד יוצאות דומות. אם לא דומה לכם, בקשו מקלוד לנסות מודל אחר ולתת לו כמה תמונות קרובות שלכם מהסרטון עצמו.</p></div>
+    <div class="trap"><span class="x">⌘Q</span><p><b>CapCut פתוח.</b> אם CapCut פתוח בזמן שקלוד בונה בו פרויקט, הפרויקט עלול להישבר או להשמיע אודיו של פרויקט אחר. סוגרים לגמרי, ואז אומרים לקלוד "סגרתי".</p></div>
+    <div class="trap"><span class="x">⏸</span><p><b>שיחה ארוכה מדי.</b> אחרי הרבה סבבים השיחה מתארכת וקלוד מסכם אותה. זה תקין. אם הוא מתבלבל, פתחו שיחה חדשה וכתבו "ממשיכים את עריכת הסרטון בתיקייה X, הנה מה שנשאר לתקן".</p></div>
+    <div class="trap"><span class="x">⟷</span><p><b>הוא לא יודע מה הוא לא רואה.</b> קלוד בודק תמונות בודדות, אז קפיצה של פריים אחד או סאונד שלא יושב בקצב יכולים לעבור לו. בקשו ממנו לבדוק את כל החיתוכים, ובכל זאת צפו בעצמכם בכל גרסה עד הסוף.</p></div>
+  </div>
+</section>
+
+<footer>מה עכשיו: יוצרים תיקייה, פותחים שיחה בלשונית Code, מדביקים את פרומפט 1. אחרי ההכנה מצלמים סרטון קצר של 30 שניות כתרגיל ראשון, ושומרים את הסגנון שאהבתם.</footer>
+</div>
+
+<script>
+(function(){
+  // copy buttons
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var el=document.getElementById(btn.dataset.copy), txt=el.textContent, orig=btn.textContent;
+      function done(m){btn.textContent=m; setTimeout(function(){btn.textContent=orig},1600);}
+      function fallback(){var r=document.createRange(); r.selectNodeContents(el); var s=getSelection(); s.removeAllRanges(); s.addRange(r); done('סומן, Cmd+C');}
+      try{ navigator.clipboard.writeText(txt).then(function(){done('הועתק ✓')},fallback); }catch(e){ fallback(); }
+    });
+  });
+  // checklist
+  var boxes=[].slice.call(document.querySelectorAll('#prepList input')), cnt=document.getElementById('prepCount'), saved={};
+  try{saved=JSON.parse(localStorage.getItem('vg-prep')||'{}')}catch(e){}
+  function upd(){cnt.textContent=boxes.filter(function(b){return b.checked}).length+' מתוך '+boxes.length}
+  boxes.forEach(function(b){b.checked=!!saved[b.id]; b.addEventListener('change',function(){saved[b.id]=b.checked; try{localStorage.setItem('vg-prep',JSON.stringify(saved))}catch(e){} upd();});});
+  upd();
+  // chapter bar
+  var links=[].slice.call(document.querySelectorAll('#bar a')), secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  function onScroll(){var cur=-1; secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<120)cur=i}); links.forEach(function(a,i){a.classList.toggle('on',i===cur)});}
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+</script>
+
+</body>
+</html>
