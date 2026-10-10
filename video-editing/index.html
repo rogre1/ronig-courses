@@ -325,12 +325,75 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 .narrow section.step{margin-top:18px}
 .narrow .hero{padding-bottom:10px}
 
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.gallery{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:18px}
 .gallery figure{margin:0}
-.gallery img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:16px;border:1px solid var(--line);display:block;box-shadow:var(--shadow-sm)}
-.gallery figcaption{margin-top:8px;font-size:.88rem;line-height:1.5}
-.gallery figcaption b{display:block;font-size:.95rem}
-@media (max-width:640px){.gallery{grid-template-columns:1fr 1fr}}
+.gallery img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:10px;border:1px solid var(--line);display:block}
+.gallery figcaption{margin-top:6px;font-size:.8rem;line-height:1.35;font-weight:700;color:var(--forest);text-align:center}
+@media (max-width:640px){.gallery{grid-template-columns:repeat(3,1fr)}}
+
+/* ===== illustrations ===== */
+.tl{margin-top:26px;background:var(--forest-deep);border-radius:18px;padding:16px 16px 14px;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+.tl-head{display:flex;justify-content:space-between;align-items:center;color:var(--ink-dark-2);font-size:.75rem;font-weight:700;margin-bottom:10px}
+.tl-head .dots i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#55604a;margin-left:5px}
+.tl-head .tc{direction:ltr;font-family:ui-monospace,Menlo,monospace;color:var(--leaf)}
+.tl-grid{display:grid;grid-template-columns:74px 1fr;gap:7px 10px;align-items:center}
+.tl-lbl{color:var(--ink-dark-2);font-size:.76rem;font-weight:700;text-align:right}
+.tl-track{position:relative;height:30px;background:rgba(255,255,255,.05);border-radius:7px;direction:ltr}
+.tl-track.vid{height:44px}
+.clip{position:absolute;top:3px;bottom:3px;border-radius:5px;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;direction:rtl}
+.clip.cap{background:#F1EFE7;color:var(--forest-deep)}
+.clip.cap b{font-weight:900}
+.clip.anim{background:var(--olive-bright);color:#fff}
+.clip.fx{background:var(--coral);color:#fff;width:14px!important;border-radius:50%;top:8px;bottom:8px}
+.clip.v{background-size:cover;background-position:center 30%;border:1.5px solid rgba(255,255,255,.25)}
+.clip.ai{outline:2px dashed var(--leaf);outline-offset:-2px}
+.wave{position:absolute;inset:5px 4px;background:repeating-linear-gradient(90deg,var(--leaf) 0 2px,transparent 2px 5px);-webkit-mask:linear-gradient(0deg,transparent 0 15%,#000 15% 85%,transparent 85%);mask:radial-gradient(ellipse 60% 50% at 30% 50%,#000 40%,transparent 70%),radial-gradient(ellipse 40% 50% at 75% 50%,#000 35%,transparent 70%);opacity:.8}
+.playhead{position:absolute;top:34px;bottom:10px;width:2px;background:var(--coral);left:calc(84px + 20%);box-shadow:0 0 0 3px rgba(217,120,95,.18);animation:ph 9s linear infinite}
+.playhead::before{content:"";position:absolute;top:-6px;left:-5px;border:6px solid transparent;border-top-color:var(--coral)}
+@keyframes ph{from{left:calc(16px + 0%)}to{left:calc(100% - 100px)}}
+.tl-cap{margin-top:10px;font-size:.8rem;color:var(--ink-dark-2);text-align:center}
+
+.eq{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:16px;background:var(--mint);border:1px solid var(--leaf);border-radius:18px;padding:20px 16px}
+.eq figure{margin:0;flex:1 1 0;min-width:0;max-width:96px;display:grid;justify-items:center;gap:8px}
+.eq figcaption{text-align:center;font-weight:800;color:var(--forest-deep);font-size:.88rem;line-height:1.3}
+.eq figcaption small{display:block;font-weight:500;color:var(--ink-2);font-size:.74rem}
+.eq .op{font-size:1.5rem;font-weight:900;color:var(--olive);padding-bottom:34px}
+.fr{position:relative;width:100%;aspect-ratio:9/16;border-radius:10px;overflow:hidden;border:1.5px solid var(--leaf);background:#fff}
+.fr.f1{background:radial-gradient(ellipse 26% 15% at 50% 40%,#c9a58c 0 60%,transparent 61%),radial-gradient(ellipse 52% 32% at 50% 96%,#2A3122 0 70%,transparent 71%),linear-gradient(180deg,#d9d2c3,#b3a891)}
+.fr.f2{background:repeating-conic-gradient(#F4F2EC 0 25%,#fff 0 50%) 0 0/12px 12px}
+.fr.f2 i{position:absolute;width:30%;height:13%;border-radius:4px;background:#F4C542;box-shadow:0 2px 0 #d9a92a}
+.fr.f3{background:repeating-conic-gradient(#F4F2EC 0 25%,#fff 0 50%) 0 0/12px 12px}
+.fr.f3 span{position:absolute;left:0;right:0;top:58%;text-align:center;color:var(--forest-deep);font-size:11px;line-height:1.05}
+.fr.f3 span b{display:block;font-weight:900;font-size:15px}
+.fr.f4{background:repeating-conic-gradient(#F4F2EC 0 25%,#fff 0 50%) 0 0/12px 12px;display:grid;place-items:center}
+.fr.f4 em{font-style:normal;width:34px;height:34px;border-radius:50%;background:var(--coral);color:#fff;display:grid;place-items:center;font-size:16px;box-shadow:0 0 0 6px rgba(217,120,95,.18)}
+.fr.f5{background:url(img/example-3.jpg) center/cover;border:2px solid var(--forest);box-shadow:var(--shadow-sm)}
+
+.fbshot{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;margin-top:18px}
+.mini{position:relative;width:120px;aspect-ratio:9/16;border-radius:16px;border:4px solid var(--forest-deep);background:radial-gradient(ellipse 28% 16% at 50% 38%,#c9a58c 0 60%,transparent 61%),radial-gradient(ellipse 55% 34% at 50% 96%,#2A3122 0 70%,transparent 71%),linear-gradient(180deg,#e6dfd1,#bfb39b)}
+.mini .mc{position:absolute;left:0;right:0;top:44%;text-align:center;color:#fff;font-weight:900;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.mini .ring{left:14px;right:14px;top:41%;height:26px}
+.mini .pin{top:38%;right:-12px}
+.mini .tcx{position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.55);color:#fff;font-size:10px;padding:1px 6px;border-radius:5px;direction:ltr;font-family:ui-monospace,Menlo,monospace}
+.fbshot p{font-size:.97rem}
+.fbshot .quote{display:inline-block;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-top:8px;font-weight:600;color:var(--forest-deep)}
+@media (max-width:640px){
+  .tl-grid{grid-template-columns:56px 1fr}
+  .tl-lbl{font-size:.68rem}
+  .clip{font-size:.6rem}
+  .eq{gap:3px;padding:16px 8px}
+  .fr.f3 span{font-size:8px}
+  .fr.f3 span b{font-size:10px}
+  .eq figcaption{font-size:.72rem}
+  .clip.cap:nth-child(even){display:none}
+  .clip.cap{font-size:.56rem}
+  .clip.anim{font-size:.56rem}
+  .eq .op{font-size:1.1rem}
+  .eq figcaption small{display:none}
+  .fbshot{grid-template-columns:1fr;justify-items:center;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){.playhead{animation:none}}
+@media print{.playhead{display:none}}
 </style>
 </head>
 <body>
@@ -348,6 +411,17 @@ footer img{height:30px;display:block;margin:0 auto 10px}
   <span class="eyebrow">מדריך חינם · Ronig.ai</span>
   <h1>עורכים סרטונים<br><em>עם Claude</em></h1>
   <p class="lead">אתם מצלמים ונותנים הערות. Claude חותך, מתמלל, מוסיף כתוביות, זומים, אנימציות ואפקטי סאונד, ומחזיר רילס מוכן. בלי ניסיון בעריכה ובלי קוד.</p>
+  <div class="tl" aria-hidden="true">
+    <div class="tl-head"><span class="dots"><i></i><i></i><i></i></span><span>ככה Claude רואה את הסרטון שלכם</span><span class="tc">00:00:12:18</span></div>
+    <div class="tl-grid">
+      <span class="tl-lbl">אנימציות</span><div class="tl-track"><span class="clip anim" style="left:18%;width:20%">חיפוש במייל</span><span class="clip anim" style="left:62%;width:18%">תיקיות</span></div>
+      <span class="tl-lbl">כתוביות</span><div class="tl-track"><span class="clip cap" style="left:2%;width:13%">לקח לי</span><span class="clip cap" style="left:16%;width:14%"><b>שש שנים</b></span><span class="clip cap" style="left:33%;width:12%">כל חודשיים</span><span class="clip cap" style="left:47%;width:14%"><b>חשבוניות</b></span><span class="clip cap" style="left:64%;width:12%">בתיקייה</span><span class="clip cap" style="left:78%;width:18%"><b>וזה הפרומפט</b></span></div>
+      <span class="tl-lbl">וידאו</span><div class="tl-track vid"><span class="clip v" style="left:0;width:19%;background-image:url(img/example-8.jpg)"></span><span class="clip v" style="left:19.5%;width:17%;background-image:url(img/example-2.jpg)"></span><span class="clip v ai" style="left:37%;width:9%;background-image:url(img/example-6.jpg)"></span><span class="clip v" style="left:46.5%;width:17%;background-image:url(img/example-4.jpg)"></span><span class="clip v" style="left:64%;width:18%;background-image:url(img/example-3.jpg)"></span><span class="clip v" style="left:82.5%;width:17.5%;background-image:url(img/example-5.jpg)"></span></div>
+      <span class="tl-lbl">סאונד</span><div class="tl-track"><span class="wave"></span><span class="clip fx" style="left:19%"></span><span class="clip fx" style="left:37%"></span><span class="clip fx" style="left:63%"></span><span class="clip fx" style="left:82%"></span></div>
+    </div>
+    <span class="playhead"></span>
+    <p class="tl-cap">כל שכבה היא הוראה מדויקת: איפה לחתוך, מתי מילה מופיעה, איפה נכנס צליל</p>
+  </div>
   <div class="beginner">
     <p><b>פעם ראשונה עם Claude Code?</b> עברו קודם על מדריך המתחילים שלי, ואז חזרו לכאן.</p>
     <a class="btn" href="../claude-code-start/?from=video-editing">למדריך המתחילים ←</a>
@@ -361,46 +435,48 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     <li>תיקייה חדשה במחשב, <b>לא</b> בשולחן העבודה ולא ב-iCloud או OneDrive (קבצים בענן תוקעים את העבודה).</li>
     <li>כ-30GB פנויים. סרטונים תופסים הרבה מקום.</li>
   </ul>
-  <div class="note tip"><span class="ic">💡</span><div>את כלי העריכה עצמם Claude מתקין לבד, אחרי הפרומפט בשלב הבא. הוא יסביר כל התקנה ויבקש אישור.</div></div>
-</section>
-
-<section class="step" id="prompt">
-  <div class="step-head"><div class="num">2</div><div><h2>פרומפט ראשון: הכנה</h2><p>פעם אחת. פותחים שיחה חדשה בתיקייה ומדביקים</p></div></div>
-  <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>אתה העורך והמורה שלי לעריכת סרטונים. אין לי ניסיון בעריכה ולא בקוד, אז תסביר בעברית פשוטה ותתקדם צעד אחד בכל פעם.
-
-1. תשאל אותי עד 5 שאלות: איזה סרטונים אני עושה, לאיזו פלטפורמה ובאיזה אורך, אם יש לי סרטונים קודמים או רפרנסים שאני אוהב/ת (ומה אני אוהב/ת בהם), ואם יש לי צבעי מותג ולוגו.
-2. תבדוק מה חסר במחשב כדי לערוך (חיתוך, תמלול עברית עם זמן לכל מילה, כתוביות ואנימציות) ותתקין. לפני כל התקנה תגיד במשפט מה זה ותחכה לאישור. בסוף תריץ בדיקה על קליפ קצר.
-3. תן לי צ'קליסט קצר: איך לצלם, מה לעשות כשאני טועה באמצע, ומה לשלוח לך עם כל סרטון.
-4. תכתוב לקובץ CLAUDE.md בתיקייה את הכללים הקבועים שלנו:
-- תמיד 9:16. חומר אופקי חותכים, אף פעם לא מכווצים.
-- גרסה ראשונה = חיתוך בלבד, לאישור התוכן.
-- טייקים חוזרים: לוקחים את האחרון השלם, בלי התחלות שבורות ובלי זמן מת.
-- כתוביות: 2–3 מילים בכל פעם, לא על הפנים, לא באזורים שהאפליקציה מכסה, לא לפני שהמילה נאמרת ולא אחרי חיתוך.
-- כל תוספת בשכבה נפרדת שאפשר להוריד.
-- לפני כל יצירה בכלי AI שעולה קרדיטים: פרומפט ועלות, ולחכות לאישור.
-- לפני כל גרסה: לבדוק בעצמך את הפריימים סביב כל חיתוך.
-- סגנון שאישרתי נשמר לכל הסרטונים הבאים.</div>
+  <div class="note tip"><span class="ic">💡</span><div>את כלי העריכה עצמם Claude מתקין לבד. הוא יסביר כל התקנה ויבקש אישור.</div></div>
 </section>
 
 <section class="step">
-  <div class="step-head"><div class="num">3</div><div><h2>מצלמים</h2></div></div>
+  <div class="step-head"><div class="num">2</div><div><h2>מצלמים</h2></div></div>
   <ul class="dots">
     <li>אנכי, בגובה העיניים, עם מקום מעל הראש ומתחת לסנטר בשביל הכתוביות.</li>
     <li>סאונד נקי: מיקרופון דש או חדר שקט.</li>
     <li>טעיתם? עוצרים שנייה ואומרים שוב. לא צריך להתחיל מחדש, Claude בוחר את הטייק האחרון.</li>
-    <li>מעבירים את הקובץ למחשב כמו שהוא (AirDrop או כבל, לא וואטסאפ).</li>
+    <li>מעבירים את הקובץ למחשב כמו שהוא (AirDrop או כבל, לא וואטסאפ) ושמים אותו בתיקייה.</li>
   </ul>
 </section>
 
-<section class="step">
-  <div class="step-head"><div class="num">4</div><div><h2>שולחים סרטון לעריכה</h2><p>לכל סרטון חדש: גוררים את הקובץ לשיחה ומדביקים</p></div></div>
-  <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">בריף לכל סרטון</span>סרטון חדש לעריכה. על מה הוא: [משפט אחד]
-הטקסט שתכננתי להגיד (אולי שיניתי באלתור): [להדביק]
-אורך יעד: [למשל 30–45 שניות]
-הוק כתוב בפתיחה: [טקסט, או "תציע לי 3"]
-אנימציות שאני רוצה ואיפה: [למשל "כשאני אומר/ת X – אנימציה מאחוריי"]
+<section class="step" id="prompt">
+  <div class="step-head"><div class="num">3</div><div><h2>מדביקים את הפרומפט</h2><p>פותחים שיחה חדשה בתיקייה. Claude יכין הכל, יבקש את הסרטון ויתחיל לערוך</p></div></div>
+  <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>אתה העורך והמורה שלי לעריכת סרטונים. אין לי ניסיון בעריכה ולא בקוד, אז תסביר בעברית פשוטה ותתקדם צעד אחד בכל פעם.
 
-תעבוד לפי CLAUDE.md ותתחיל מגרסת חיתוך בלבד.</div>
+1. תשאל אותי כמה שאלות קצרות: איזה סרטונים אני עושה, לאיזו פלטפורמה ובאיזה אורך, איך אני אוהב/ת כתוביות (מילה-מילה, כמה מילים יחד או משפט שלם, איפה במסך, איזה פונט), אם יש לי סרטונים או רפרנסים שאני אוהב/ת, ואם יש לי צבעי מותג ולוגו.
+2. תבדוק מה חסר במחשב כדי לערוך (חיתוך, תמלול עברית עם זמן לכל מילה, כתוביות ואנימציות) ותתקין. לפני כל התקנה תגיד במשפט מה זה ותחכה לאישור.
+3. תכתוב לקובץ CLAUDE.md בתיקייה את הכללים הקבועים שלנו:
+- תמיד 9:16. חומר אופקי חותכים, אף פעם לא מכווצים.
+- גרסה ראשונה = חיתוך בלבד, לאישור התוכן.
+- טייקים חוזרים: לוקחים את האחרון השלם, בלי התחלות שבורות ובלי זמן מת.
+- כתוביות בסגנון שבחרתי, לא על הפנים, לא באזורים שהאפליקציה מכסה, לא לפני שהמילה נאמרת ולא אחרי חיתוך.
+- כל תוספת בשכבה נפרדת שאפשר להוריד.
+- לפני כל יצירה בכלי AI שעולה קרדיטים: פרומפט ועלות, ולחכות לאישור.
+- לפני כל גרסה: לבדוק בעצמך את הפריימים סביב כל חיתוך.
+- סגנון שאישרתי נשמר לכל הסרטונים הבאים.
+4. תבקש ממני את הסרטון הגולמי (לשים בתיקייה או לגרור לשיחה) ואת הטקסט שתכננתי להגיד, ותתחיל מגרסת חיתוך בלבד.
+5. בכל גרסה תסביר לי מה לבדוק ואיך לתת לך הערות.</div>
+  <h3>ממה בנוי כל פריים</h3>
+  <div class="eq" aria-label="צילום ועוד אנימציה ועוד כתוביות ועוד סאונד שווה סרטון">
+    <figure><div class="fr f1"></div><figcaption>הצילום<small>חתוך, ב-9:16</small></figcaption></figure>
+    <span class="op">+</span>
+    <figure><div class="fr f2"><i style="top:16%;left:9%"></i><i style="top:16%;right:9%"></i><i style="top:32%;left:9%"></i><i style="top:32%;right:9%"></i></div><figcaption>אנימציה<small>מאחוריכם</small></figcaption></figure>
+    <span class="op">+</span>
+    <figure><div class="fr f3"><span>לקח לי<b>שש שנים</b></span></div><figcaption>כתוביות<small>לא על הפנים</small></figcaption></figure>
+    <span class="op">+</span>
+    <figure><div class="fr f4"><em>♪</em></div><figcaption>סאונד<small>צליל לכל פעולה</small></figcaption></figure>
+    <span class="op">=</span>
+    <figure><div class="fr f5"></div><figcaption>הסרטון<small>כל השכבות יחד</small></figcaption></figure>
+  </div>
   <h3>סדר הסבבים</h3>
   <ol class="steps">
     <li><b>חיתוך</b>: כל המשפטים שם, בלי חזרות ובלי זמן מת.</li>
@@ -411,8 +487,12 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 </section>
 
 <section class="step">
-  <div class="step-head"><div class="num">5</div><div><h2>נותנים הערות</h2><p>זה מה שהופך טיוטה לסרטון טוב</p></div></div>
+  <div class="step-head"><div class="num">4</div><div><h2>נותנים הערות</h2><p>זה מה שהופך טיוטה לסרטון טוב</p></div></div>
   <p>Claude לא צופה בסרטון כמוכם, הוא בודק תמונות בודדות. אז צופים, עוצרים בכל מקום שמפריע, מצלמים מסך ושולחים הכל יחד:</p>
+  <div class="fbshot">
+    <div class="mini" aria-hidden="true"><span class="mc">שש שנים</span><span class="ring"></span><span class="pin">2</span><span class="tcx">0:07</span></div>
+    <div><p>צילום מסך, מספר, ומשפט אחד שאומר מה לשנות:</p><span class="quote">"תמונה 2 – הכתובית על הסנטר, תעלה אותה מעל הראש"</span></div>
+  </div>
   <div class="compare">
     <div class="a"><h4>קשה לתקן מזה</h4><p>"משהו מרגיש לא טוב"<br>"הכתוביות לא טובות"</p></div>
     <div class="b"><h4>מתוקן בסבב אחד</h4><p>"0:04 – שקט לפני המילה הראשונה, תחתוך"<br>"תמונה 2 – הכתובית על הסנטר, תעלה מעל הראש"</p></div>
@@ -426,14 +506,22 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 </section>
 
 <section class="step">
+  <div class="step-head"><div class="num">5</div><div><h2>הסרטון הבא</h2><p>פותחים שיחה חדשה באותה תיקייה. Claude כבר זוכר את הכללים והסגנון</p></div></div>
+  <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>יש סרטון חדש בתיקייה: [שם הקובץ]. על מה הוא: [משפט אחד]
+הטקסט שתכננתי להגיד: [להדביק]
+אנימציות שאני רוצה ואיפה: [אם יש]
+תעבוד לפי CLAUDE.md ובסגנון ששמרנו, ותתחיל מגרסת חיתוך.</div>
+</section>
+
+<section class="step">
   <div class="step-head"><div class="num">✦</div><div><h2>ככה זה נראה</h2><p>פריימים מרילסים שערכתי כך עם Claude</p></div></div>
   <div class="gallery">
-    <figure><img src="img/example-8.jpg" alt="" loading="lazy"><figcaption><b>הוק בפתיחה</b>כותרת כתובה בפריים הראשון</figcaption></figure>
-    <figure><img src="img/example-2.jpg" alt="" loading="lazy"><figcaption><b>אנימציה שממחישה</b>חיפוש במייל בדיוק כשאני אומרת את זה</figcaption></figure>
-    <figure><img src="img/example-3.jpg" alt="" loading="lazy"><figcaption><b>אנימציה מאחוריי</b>Claude מסיר את הרקע, והאנימציה לא מסתירה</figcaption></figure>
-    <figure><img src="img/example-4.jpg" alt="" loading="lazy"><figcaption><b>פאנל מעל הראש</b>ומילה מודגשת גדולה בכתובית</figcaption></figure>
-    <figure><img src="img/example-5.jpg" alt="" loading="lazy"><figcaption><b>טיפוגרפיה</b>מילת מפתח ענקית וצבע מותג בנגיעה</figcaption></figure>
-    <figure><img src="img/example-6.jpg" alt="" loading="lazy"><figcaption><b>קטע AI קצר</b>שנייה וחצי שממחישות משפט, ואז חוזרים</figcaption></figure>
+    <figure><img src="img/example-8.jpg" alt="" loading="lazy"><figcaption>הוק בפתיחה</figcaption></figure>
+    <figure><img src="img/example-2.jpg" alt="" loading="lazy"><figcaption>אנימציה שממחישה</figcaption></figure>
+    <figure><img src="img/example-3.jpg" alt="" loading="lazy"><figcaption>אנימציה מאחוריי</figcaption></figure>
+    <figure><img src="img/example-4.jpg" alt="" loading="lazy"><figcaption>פאנל מעל הראש</figcaption></figure>
+    <figure><img src="img/example-5.jpg" alt="" loading="lazy"><figcaption>טיפוגרפיה</figcaption></figure>
+    <figure><img src="img/example-6.jpg" alt="" loading="lazy"><figcaption>קטע AI קצר</figcaption></figure>
   </div>
   <div class="note tip"><span class="ic">🎬</span><div><b>קטעי AI:</b> אפשר לחבר ל-Claude כלי AI, כמו Seedance דרך Higgsfield או Kling AI, ולבקש ממנו ליצור דרכם קטעים קצרים שיתווספו לסרטון. מחברים בהגדרות של Claude תחת Connectors. כל יצירה עולה קרדיטים, ולכן Claude יראה פרומפט ועלות לפני.</div></div>
 </section>
