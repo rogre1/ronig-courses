@@ -395,6 +395,11 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 @media print{.playhead{display:none}}
 .note.first{background:#FFF6DC;border:2px solid #E8C25A;font-size:1.02rem;box-shadow:var(--shadow-sm)}
 .note.first b{color:#7A5A00}
+.compare h4{display:flex;align-items:center;gap:8px}
+.cmp-ic{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:900;position:relative}
+.cmp-ic.no{border:3px solid #D23B2B;background:#fff}
+.cmp-ic.no::after{content:"";position:absolute;width:3px;height:22px;background:#D23B2B;transform:rotate(45deg);border-radius:2px}
+.cmp-ic.yes{background:var(--olive-bright);color:#fff}
 </style>
 </head>
 <body>
@@ -499,8 +504,8 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     <div><p>צילום מסך, מספר, ומשפט אחד שאומר מה לשנות:</p><span class="quote">"תמונה 2 – הכתובית על הסנטר, תעלה אותה מעל הראש"</span></div>
   </div>
   <div class="compare">
-    <div class="a"><h4>קשה לתקן מזה</h4><p>"משהו מרגיש לא טוב"<br>"הכתוביות לא טובות"</p></div>
-    <div class="b"><h4>מתוקן בסבב אחד</h4><p>"0:04 – שקט לפני המילה הראשונה, תחתוך"<br>"תמונה 2 – הכתובית על הסנטר, תעלה מעל הראש"</p></div>
+    <div class="a"><h4><span class="cmp-ic no" aria-hidden="true"></span>איך לא לתת הערות</h4><p>"משהו מרגיש לא טוב"<br>"הכתוביות לא טובות"</p></div>
+    <div class="b"><h4><span class="cmp-ic yes" aria-hidden="true">✓</span>איך לתת ל-Claude הערות</h4><p>"0:04 – שקט לפני המילה הראשונה, תחתוך"<br>"תמונה 2 – הכתובית על הסנטר, תעלה מעל הראש"</p></div>
   </div>
   <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">תבנית הערות</span>הערות (צילומי המסך מצורפים לפי הסדר):
 תמונה 1 / 0:00 – מה לא טוב: [...] / מה אני רוצה: [...]
