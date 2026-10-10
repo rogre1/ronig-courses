@@ -411,6 +411,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
   <span class="eyebrow">מדריך חינם · Ronig.ai</span>
   <h1>עורכים סרטונים<br><em>עם Claude</em></h1>
   <p class="lead">אתם מצלמים ונותנים הערות. Claude חותך, מתמלל, מוסיף כתוביות, זומים, אנימציות ואפקטי סאונד, ומחזיר רילס מוכן. בלי ניסיון בעריכה ובלי קוד.</p>
+  <p class="lead" style="font-size:1rem;margin-top:8px">המדריך בנוי לסרטונים אנכיים לרשתות (9:16), אבל אפשר לבקש מ-Claude גם סרטון לרוחב (16:9) ולהתאים הכל למה שתרצו.</p>
   <div class="tl" aria-hidden="true">
     <div class="tl-head"><span class="dots"><i></i><i></i><i></i></span><span>ככה Claude רואה את הסרטון שלכם</span><span class="tc">00:00:12:18</span></div>
     <div class="tl-grid">
@@ -441,7 +442,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 <section class="step">
   <div class="step-head"><div class="num">2</div><div><h2>מצלמים</h2></div></div>
   <ul class="dots">
-    <li>אנכי, בגובה העיניים, עם מקום מעל הראש ומתחת לסנטר בשביל הכתוביות.</li>
+    <li>אנכי לרשתות (או לרוחב, אם זה הסרטון שלכם), בגובה העיניים, עם מקום מעל הראש ומתחת לסנטר בשביל הכתוביות.</li>
     <li>סאונד נקי: מיקרופון דש או חדר שקט.</li>
     <li>טעיתם? עוצרים שנייה ואומרים שוב. לא צריך להתחיל מחדש, Claude בוחר את הטייק האחרון.</li>
     <li>מעבירים את הקובץ למחשב כמו שהוא (AirDrop או כבל, לא וואטסאפ) ושמים אותו בתיקייה.</li>
@@ -450,12 +451,12 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 
 <section class="step" id="prompt">
   <div class="step-head"><div class="num">3</div><div><h2>מדביקים את הפרומפט</h2><p>פותחים שיחה חדשה בתיקייה. Claude יכין הכל, יבקש את הסרטון ויתחיל לערוך</p></div></div>
-  <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>אתה העורך והמורה שלי לעריכת סרטונים. אין לי ניסיון בעריכה ולא בקוד, אז תסביר בעברית פשוטה ותתקדם צעד אחד בכל פעם.
+  <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>אתה עורך וידאו מקצועי. נעבוד יחד על הסרטונים שלי: אני מצלם/ת ונותן/ת הערות, ואתה עורך. בכל שלב הסבר בקצרה מה אתה עושה ולמה, והתקדם שלב אחר שלב.
 
-1. תשאל אותי כמה שאלות קצרות: איזה סרטונים אני עושה, לאיזו פלטפורמה ובאיזה אורך, איך אני אוהב/ת כתוביות (מילה-מילה, כמה מילים יחד או משפט שלם, איפה במסך, איזה פונט), אם יש לי סרטונים או רפרנסים שאני אוהב/ת, ואם יש לי צבעי מותג ולוגו.
+1. תשאל אותי כמה שאלות קצרות: איזה סרטונים אני עושה, לאיזו פלטפורמה, באיזה פורמט (אנכי 9:16 לרשתות או לרוחב 16:9) ובאיזה אורך, איך אני אוהב/ת כתוביות (מילה-מילה, כמה מילים יחד או משפט שלם, איפה במסך, איזה פונט), אם יש לי סרטונים או רפרנסים שאני אוהב/ת, ואם יש לי צבעי מותג ולוגו.
 2. תבדוק מה חסר במחשב כדי לערוך (חיתוך, תמלול עברית עם זמן לכל מילה, כתוביות ואנימציות) ותתקין. לפני כל התקנה תגיד במשפט מה זה ותחכה לאישור.
 3. תכתוב לקובץ CLAUDE.md בתיקייה את הכללים הקבועים שלנו:
-- תמיד 9:16. חומר אופקי חותכים, אף פעם לא מכווצים.
+- הפורמט שבחרתי. אם הסרטון הגולמי צולם בפורמט אחר, לשאול אותי לפני שמתאימים, ואף פעם לא לכווץ או למתוח.
 - גרסה ראשונה = חיתוך בלבד, לאישור התוכן.
 - טייקים חוזרים: לוקחים את האחרון השלם, בלי התחלות שבורות ובלי זמן מת.
 - כתוביות בסגנון שבחרתי, לא על הפנים, לא באזורים שהאפליקציה מכסה, לא לפני שהמילה נאמרת ולא אחרי חיתוך.
@@ -467,7 +468,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 5. בכל גרסה תסביר לי מה לבדוק ואיך לתת לך הערות.</div>
   <h3>ממה בנוי כל פריים</h3>
   <div class="eq" aria-label="צילום ועוד אנימציה ועוד כתוביות ועוד סאונד שווה סרטון">
-    <figure><div class="fr f1"></div><figcaption>הצילום<small>חתוך, ב-9:16</small></figcaption></figure>
+    <figure><div class="fr f1"></div><figcaption>הצילום<small>חתוך ומותאם</small></figcaption></figure>
     <span class="op">+</span>
     <figure><div class="fr f2"><i style="top:16%;left:9%"></i><i style="top:16%;right:9%"></i><i style="top:32%;left:9%"></i><i style="top:32%;right:9%"></i></div><figcaption>אנימציה<small>מאחוריכם</small></figcaption></figure>
     <span class="op">+</span>
@@ -523,7 +524,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     <figure><img src="img/example-5.jpg" alt="" loading="lazy"><figcaption>טיפוגרפיה</figcaption></figure>
     <figure><img src="img/example-6.jpg" alt="" loading="lazy"><figcaption>קטע AI קצר</figcaption></figure>
   </div>
-  <div class="note tip"><span class="ic">🎬</span><div><b>קטעי AI:</b> אפשר לחבר ל-Claude כלי AI, כמו Seedance דרך Higgsfield או Kling AI, ולבקש ממנו ליצור דרכם קטעים קצרים שיתווספו לסרטון. מחברים בהגדרות של Claude תחת Connectors. כל יצירה עולה קרדיטים, ולכן Claude יראה פרומפט ועלות לפני.</div></div>
+  <div class="note tip"><span class="ic">🎬</span><div><b>קטעי AI:</b> אפשר לחבר ל-Claude כלי AI, כמו Seedance דרך Higgsfield או Kling AI, ולבקש ממנו ליצור דרכם קטעים קצרים שיתווספו לסרטון. מחברים בהגדרות של Claude תחת Connectors. כל יצירה עולה קרדיטים, ולכן Claude יראה פרומפט ועלות לפני. רוצים לנסות? שאלו את Claude, והוא יסביר לכם איך לחבר ומה אפשר ליצור.</div></div>
 </section>
 
 <section class="final">
