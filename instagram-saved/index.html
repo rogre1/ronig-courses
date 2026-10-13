@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>השמורים מאינסטגרם בעמוד אחד | Ronig.ai</title>
+<meta name="description" content="פרומפט בעברית: Claude עובר על הפוסטים ששמרתם באינסטגרם, ממיין אותם לנושאים ובונה עמוד צבעוני עם חיפוש וקישור לכל פוסט.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="כל השמורים מאינסטגרם, בעמוד אחד עם חיפוש | Ronig.ai">
+<meta property="og:description" content="Claude ממיין את הפוסטים ששמרתם לנושאים, עם תיאור קצר וחיפוש חכם. פרומפט מוכן להעתקה.">
+<meta property="og:url" content="https://rogre1.github.io/ronig-courses/instagram-saved/">
+<meta property="og:image" content="https://rogre1.github.io/ronig-courses/instagram-saved/search.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../claude-code-start/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../claude-code-start/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FBF9F4;--cream-deep:#F1EFE7;--mint:#F0F3E8;
+  --forest:#333E27;--forest-deep:#20261A;--forest-tile:#2A3122;
+  --olive:#788C5D;--olive-bright:#8BA36B;--leaf:#B7C29F;
+  --ink:#1B1D16;--ink-2:#5B5F52;--ink-3:#8A8672;
+  --ink-dark-1:#F1EFE7;--ink-dark-2:#B9BDA9;
+  --line:#E3E0D5;--coral:#D9785F;
+  --shadow-sm:0 10px 22px rgba(35,38,30,.10);
+  --shadow-md:0 12px 28px rgba(35,38,30,.16);
+  --r:22px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
+a{color:var(--olive);font-weight:600}
+code,.ltr{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em}
+code{background:var(--cream-deep);border:1px solid var(--line);padding:.05em .4em;border-radius:6px;color:var(--forest)}
+b,strong{font-weight:700;color:var(--forest-deep)}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.hwrap img{height:36px;width:auto;display:block}
+.progress{flex:1;max-width:340px;display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--ink-2);font-weight:600}
+.bar{flex:1;height:8px;background:var(--cream-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--olive-bright));border-radius:99px;transition:width .4s}
+.os-switch{display:flex;background:var(--cream-deep);border:1px solid var(--line);border-radius:99px;padding:3px}
+.os-switch button{border:0;background:none;font:inherit;font-size:.8rem;font-weight:700;color:var(--ink-2);padding:5px 12px;border-radius:99px;cursor:pointer}
+.os-switch button[aria-pressed=true]{background:var(--forest);color:var(--cream)}
+
+/* return banner */
+.from-banner{display:none;background:var(--forest);color:var(--cream);text-align:center;padding:10px 16px;font-size:.95rem}
+.from-banner a{color:var(--leaf)}
+.from-banner.show{display:block}
+
+/* layout */
+.layout{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:48px;padding:0 16px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px}
+nav.toc p{font-size:.78rem;font-weight:800;color:var(--ink-3);letter-spacing:.06em;margin-bottom:10px}
+nav.toc a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-2);font-weight:500;font-size:.92rem;padding:6px 12px;border-radius:12px;border-right:3px solid transparent}
+nav.toc a:hover{background:var(--mint)}
+nav.toc a.active{background:var(--mint);color:var(--forest-deep);font-weight:700;border-right-color:var(--olive)}
+nav.toc a .tick{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--leaf);flex:none;display:grid;place-items:center;font-size:10px;color:#fff}
+nav.toc a.done .tick{background:var(--olive);border-color:var(--olive)}
+main{min-width:0;padding-bottom:60px}
+
+/* hero */
+.hero{padding:56px 0 28px}
+.eyebrow{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:700;font-size:.85rem;padding:4px 14px;border-radius:99px;margin-bottom:16px}
+h1{font-size:clamp(2rem,5.4vw,3.3rem);line-height:1.15;font-weight:900;color:var(--forest-deep);letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--olive)}
+.lead{font-size:1.15rem;color:var(--ink-2);margin-top:14px;max-width:640px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;font-weight:600;color:var(--ink-2);box-shadow:var(--shadow-sm)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border:0;font:inherit;font-weight:700;padding:12px 24px;border-radius:99px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--forest-deep)}
+.btn.ghost{background:transparent;color:var(--forest);border:1.5px solid var(--forest);box-shadow:none}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+
+/* sections */
+section.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;margin-top:22px;box-shadow:var(--shadow-sm)}
+.step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px}
+.num{flex:none;width:46px;height:46px;border-radius:50%;background:var(--mint);border:1.5px solid var(--leaf);color:var(--forest);display:grid;place-items:center;font-weight:900;font-size:1.15rem}
+h2{font-size:clamp(1.4rem,3.4vw,1.85rem);line-height:1.25;font-weight:800;color:var(--forest-deep)}
+.step-head p{color:var(--ink-3);font-size:.95rem;margin-top:2px}
+h3{font-size:1.15rem;font-weight:800;color:var(--forest);margin:26px 0 8px}
+section p+p{margin-top:10px}
+ol.steps,ul.dots{margin:12px 0 0;padding-right:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding-right:40px;margin-bottom:12px}
+ol.steps li::before{content:counter(s);position:absolute;right:0;top:1px;width:28px;height:28px;border-radius:50%;background:var(--forest);color:var(--cream);font-weight:800;font-size:.85rem;display:grid;place-items:center}
+ul.dots li{position:relative;padding-right:22px;margin-bottom:8px}
+ul.dots li::before{content:"";position:absolute;right:4px;top:.7em;width:7px;height:7px;border-radius:50%;background:var(--olive)}
+.done-row{margin-top:26px;padding-top:20px;border-top:1px dashed var(--line);display:flex;justify-content:flex-start}
+.done-btn{display:inline-flex;align-items:center;gap:10px;background:var(--cream);border:1.5px solid var(--leaf);color:var(--forest);font:inherit;font-weight:700;padding:10px 20px;border-radius:99px;cursor:pointer;transition:all .2s}
+.done-btn .box{width:20px;height:20px;border-radius:6px;border:2px solid var(--olive);display:grid;place-items:center;font-size:13px;color:#fff}
+.done-btn[aria-pressed=true]{background:var(--olive);border-color:var(--olive);color:#fff}
+.done-btn[aria-pressed=true] .box{background:#fff;color:var(--olive);border-color:#fff}
+
+/* callouts */
+.note{border-radius:16px;padding:16px 18px;margin-top:18px;display:flex;gap:12px;font-size:.97rem}
+.note .ic{flex:none;font-size:1.25rem;line-height:1.4}
+.note.tip{background:var(--mint);border:1px solid var(--leaf)}
+.note.warn{background:#FBEFE9;border:1px solid #EFC9BB}
+.note.why{background:var(--cream);border:1px solid var(--line)}
+
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.compare div{border-radius:16px;padding:18px;border:1px solid var(--line)}
+.compare .a{background:var(--cream)}
+.compare .b{background:var(--forest);color:var(--ink-dark-1);border-color:var(--forest)}
+.compare .b b{color:#fff}
+.compare h4{font-size:1rem;font-weight:800;margin-bottom:6px}
+.compare .b h4{color:var(--leaf)}
+
+/* prompt boxes */
+.prompt{position:relative;background:var(--forest-deep);color:var(--ink-dark-1);border-radius:16px;padding:18px 18px 18px 18px;margin-top:14px;white-space:pre-wrap;font-size:.95rem;line-height:1.75;border:1px solid var(--forest-tile)}
+.prompt .lbl{display:block;font-size:.75rem;font-weight:800;color:var(--leaf);letter-spacing:.05em;margin-bottom:6px}
+.prompt.en{direction:ltr;text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
+.copy{position:absolute;top:12px;left:12px;background:var(--olive);color:#fff;border:0;font:inherit;font-size:.78rem;font-weight:700;padding:5px 12px;border-radius:99px;cursor:pointer;direction:rtl}
+.copy.ok{background:var(--leaf);color:var(--forest-deep)}
+.prompt .lbl{padding-left:80px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tabs button{font:inherit;font-weight:700;font-size:.9rem;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--cream);color:var(--ink-2);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.tabpanel[hidden]{display:none}
+
+/* table */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;margin-top:16px;font-size:.93rem;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.tbl th{background:var(--forest);color:var(--cream);font-weight:700;padding:10px 12px;text-align:right}
+.tbl td{padding:11px 12px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:var(--cream)}
+.tbl td:first-child{font-weight:700;color:var(--forest);white-space:nowrap}
+.tbl-wrap{overflow-x:auto}
+
+/* accordion */
+details.acc{border:1px solid var(--line);border-radius:16px;margin-top:12px;background:var(--cream);overflow:hidden}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-size:1.3rem;color:var(--olive);font-weight:500;transition:transform .2s}
+details.acc[open] summary::after{transform:rotate(45deg)}
+details.acc .in{padding:0 18px 16px;color:var(--ink-2)}
+details.acc .in b{color:var(--forest)}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:16px}
+.gloss details{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.gloss summary{cursor:pointer;list-style:none;font-weight:800;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center}
+.gloss summary::-webkit-details-marker{display:none}
+.gloss summary small{font-weight:500;color:var(--ink-3);font-size:.78rem;direction:ltr}
+.gloss p{margin-top:8px;font-size:.93rem;color:var(--ink-2)}
+dfn{font-style:normal;border-bottom:2px dotted var(--olive);cursor:help;position:relative}
+.tip-pop{position:absolute;z-index:80;max-width:280px;background:var(--forest-deep);color:var(--ink-dark-1);font-size:.85rem;line-height:1.55;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-md);pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.show{opacity:1}
+
+/* ===== UI mockups ===== */
+figure.mock{margin:22px 0 4px}
+.win{direction:ltr;text-align:left;background:#fff;border:1px solid #DDD9CC;border-radius:14px;box-shadow:var(--shadow-md);overflow:hidden;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;color:#2b2b28;position:relative}
+.win-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;background:#F4F2EC;border-bottom:1px solid #E6E2D6}
+.win-bar i{width:11px;height:11px;border-radius:50%;background:#E0DCCF}
+.win-bar i:nth-child(1){background:#EC6A5E}.win-bar i:nth-child(2){background:#F4BF4F}.win-bar i:nth-child(3){background:#61C554}
+.win-bar span{margin-left:10px;color:#8a8672;font-size:12px}
+.win-body{padding:16px;position:relative}
+.ui-tabs{display:inline-flex;background:#EFECE3;border-radius:10px;padding:3px;gap:2px}
+.ui-tabs span{padding:6px 16px;border-radius:8px;color:#6b6a62;font-weight:600}
+.ui-tabs span.on{background:#fff;color:#1b1d16;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ui-row{display:flex;gap:14px}
+.ui-side{width:150px;flex:none;border-right:1px solid #ECE8DD;padding-right:12px;color:#6b6a62;font-size:12px}
+.ui-side div{padding:6px 8px;border-radius:7px;margin-bottom:3px}
+.ui-side .cur{position:relative;background:#F0F3E8;color:#333E27;font-weight:600}
+.ui-main{flex:1;min-width:0}
+.ui-input{border:1px solid #DDD9CC;border-radius:14px;padding:12px;background:#FFFEFB}
+.ui-input .ph{color:#a6a394;min-height:34px}
+.ui-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.pill{display:inline-flex;align-items:center;gap:5px;border:1px solid #E1DDD0;border-radius:99px;padding:4px 10px;font-size:12px;color:#4a4a44;background:#fff;white-space:nowrap}
+.pill.plus{width:28px;height:28px;padding:0;justify-content:center;font-size:16px}
+.send{margin-left:auto;width:30px;height:30px;border-radius:50%;background:#333E27;color:#fff;display:grid;place-items:center;font-size:14px}
+.menu{background:#fff;border:1px solid #DDD9CC;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:6px;width:230px;font-size:12.5px}
+.menu div{padding:7px 10px;border-radius:8px;display:flex;justify-content:space-between;gap:8px}
+.menu div small{color:#9a978a}
+.menu .hl{background:#F0F3E8;color:#333E27;font-weight:600}
+.menu .sep{height:1px;background:#EEE;padding:0;margin:4px 0}
+.card-perm{border:1px solid #E1DDD0;border-radius:12px;padding:12px 14px;background:#FFFEFB}
+.card-perm .t{font-weight:600;margin-bottom:6px}
+.card-perm pre{direction:rtl;text-align:right;font-family:Heebo,sans-serif;background:#F6F4EE;border-radius:8px;padding:8px 10px;font-size:12px;margin:6px 0 10px;white-space:pre-wrap;color:#333}
+.card-perm pre .add{color:#4f7a2b}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.ub{border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;border:1px solid #DDD9CC;background:#fff}
+.ub.pri{background:#333E27;color:#fff;border-color:#333E27}
+.msg{border-radius:12px;padding:9px 12px;margin-bottom:8px;max-width:85%}
+.msg.me{background:#F0F3E8;margin-left:auto;direction:rtl;text-align:right;font-family:'Heebo',sans-serif}
+.msg.cl{background:#fff;border:1px solid #ECE8DD;direction:rtl;text-align:right;font-family:'Heebo',sans-serif}
+.slash-chip{display:inline-block;background:#E5ECD7;color:#333E27;border-radius:6px;padding:1px 6px;font-weight:600}
+.file{font-family:Heebo,sans-serif;font-size:13px;line-height:1.7;white-space:pre-wrap;direction:rtl;text-align:right;color:#333}
+.file .h{color:#788C5D;font-weight:700}
+.finder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:11.5px;color:#4a4a44}
+.finder div{padding:8px 4px;border-radius:10px}
+.finder .ico{font-size:30px;line-height:1.2}
+.finder .sel{background:#F0F3E8;outline:2px solid #B7C29F}
+.pt{position:relative}
+.pin{position:absolute;top:-13px;right:-13px;width:26px;height:26px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(217,120,95,.25);font-family:'Heebo',sans-serif;z-index:3}
+.ring{position:absolute;border:2.5px solid var(--coral);border-radius:12px;pointer-events:none;z-index:2}
+figcaption{margin-top:14px;font-size:.93rem;color:var(--ink-2)}
+figcaption ol{list-style:none;padding:0;counter-reset:c;display:grid;gap:6px}
+figcaption li{counter-increment:c;position:relative;padding-right:32px}
+figcaption li::before{content:counter(c);position:absolute;right:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:.75rem;display:grid;place-items:center}
+.mock-note{font-size:.78rem;color:var(--ink-3);margin-top:6px}
+
+/* OS */
+body.os-win .mac-only{display:none!important}
+body:not(.os-win) .win-only{display:none!important}
+.os-tag{display:none}
+
+/* end */
+.final{background:var(--forest);color:var(--ink-dark-1);border-radius:var(--r);padding:40px 30px;margin-top:22px;text-align:center}
+.final h2{color:#fff}
+.final p{color:var(--ink-dark-2);max-width:560px;margin:10px auto 0}
+.final .btn{background:var(--leaf);color:var(--forest-deep);margin-top:20px}
+footer{border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--ink-3);font-size:.88rem}
+footer img{height:30px;display:block;margin:0 auto 10px}
+
+/* mobile */
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding-top:18px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+  nav.toc::-webkit-scrollbar{display:none}
+  nav.toc p{display:none}
+  nav.toc a{flex:none;border:1px solid var(--line);border-radius:99px;background:#fff;padding:5px 12px;font-size:.84rem}
+  nav.toc a.active{border-right-color:var(--line)}
+  .progress span{display:none}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .hwrap img{height:30px}
+  .progress{max-width:none}
+  section.step{padding:26px 18px}
+  .compare{grid-template-columns:1fr}
+  .hero{padding-top:34px}
+  .ui-side{display:none}
+  .win{font-size:12px}
+  .final{padding:32px 18px}
+}
+
+/* print / PDF */
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  body{background:#fff;font-size:12.5pt}
+  header,.from-banner,nav.toc,.done-row,.copy,.tabs,.hero-cta,.os-switch,.tip-pop{display:none!important}
+  .layout{display:block;padding:0}
+  section.step{box-shadow:none;break-inside:auto;padding:22px 20px;margin-top:14px}
+  .step-head,figure.mock,.prompt,.note,.tbl,.compare{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  .tabpanel[hidden]{display:block!important}
+  .tabpanel{margin-top:10px}
+  .tabpanel::before{content:attr(data-title);display:block;font-weight:800;color:var(--olive);margin-top:10px}
+  details>*:not(summary){display:block}
+  details.acc .in{display:block}
+  .win,.chip{box-shadow:none}
+  body .mac-only,body .win-only{display:inline!important}
+  div.mac-only,div.win-only,p.mac-only,p.win-only,li.mac-only,li.win-only{display:block!important}
+  .os-tag{display:inline;font-weight:800;color:var(--olive)}
+  .print-only{display:block!important}
+  .hero{padding-top:6px}
+  .print-logo{display:block!important;height:38px;margin-bottom:18px}
+  a{text-decoration:none}
+  details.acc summary::after{display:none}
+  .gloss summary{pointer-events:none}
+}
+.print-only,.print-logo{display:none}
+
+/* ===== additions for this guide ===== */
+.btn-back{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:.82rem;font-weight:700;color:var(--forest);border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;white-space:nowrap}
+.btn-back:hover{border-color:var(--olive)}
+.beginner{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--forest);color:var(--ink-dark-1);border-radius:18px;padding:20px 22px;margin-top:18px}
+.beginner b{color:#fff}
+.beginner p{flex:1;min-width:220px;margin:0}
+.beginner .btn{background:var(--leaf);color:var(--forest-deep)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.duo div{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--cream)}
+.duo h4{font-size:1rem;font-weight:800;color:var(--forest-deep);margin-bottom:4px}
+.duo p{font-size:.93rem;color:var(--ink-2)}
+
+/* fill-in form */
+.fill-form{display:grid;gap:14px;margin-top:18px;background:var(--mint);border:1px solid var(--leaf);border-radius:18px;padding:20px}
+.fill-form label{display:block;font-weight:700;color:var(--forest-deep);font-size:.95rem;margin-bottom:6px}
+.fill-form label small{font-weight:500;color:var(--ink-3)}
+.fill-form input{width:100%;font:inherit;font-size:1rem;padding:11px 14px;border-radius:12px;border:1.5px solid var(--leaf);background:#fff;color:var(--ink)}
+.fill-form input:focus{outline:none;border-color:var(--olive);box-shadow:0 0 0 3px rgba(120,140,93,.18)}
+.fill-form .hint{font-size:.82rem;color:var(--ink-3);margin-top:4px}
+.prompt .fill{background:rgba(183,194,159,.22);color:#E5ECD7;border-radius:5px;padding:0 4px;font-weight:700}
+.prompt .fill.empty{color:#F2B8A6;background:rgba(217,120,95,.18)}
+.prompt.long{max-height:520px;overflow:auto}
+.prompt.long.open{max-height:none}
+.expand{display:block;margin:10px auto 0;font:inherit;font-weight:700;font-size:.88rem;background:none;border:1.5px solid var(--line);color:var(--forest);padding:6px 16px;border-radius:99px;cursor:pointer}
+
+/* folder tree */
+.tree{font-family:'Heebo',sans-serif;direction:rtl;text-align:right;font-size:13.5px;line-height:1.95;color:#333}
+.tree div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree .l1{padding-right:22px}.tree .l2{padding-right:44px;color:#6b6a62}
+.tree .x{color:#788C5D;font-weight:700}
+.tree .ltr{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+
+/* mock table */
+.mtbl{width:100%;border-collapse:collapse;font-family:'Heebo',sans-serif;direction:rtl;text-align:right;font-size:12px;margin-top:6px}
+.mtbl th{background:#F0F3E8;color:#333E27;font-weight:700;padding:6px 8px}
+.mtbl td{border-top:1px solid #EEE;padding:6px 8px}
+.mtbl .warnc{color:#B5543C;font-weight:600}
+.tag{display:inline-block;border-radius:99px;padding:0 8px;font-size:11px;font-weight:700}
+.tag.att{background:#E5ECD7;color:#333E27}.tag.lnk{background:#E8EEF7;color:#2F4A72}.tag.bdy{background:#FBEFE9;color:#9A4630}
+
+/* vendor table */
+.tbl td small{display:block;color:var(--ink-3);font-size:.82rem;font-weight:500;margin-top:2px}
+
+@media (max-width:640px){
+  .duo{grid-template-columns:1fr}
+  .btn-back span{display:none}
+  .mtbl{font-size:11px}
+  .mtbl .hide-sm{display:none}
+}
+@media print{
+  .btn-back,.fill-form,.expand,.beginner .btn{display:none!important}
+  .prompt.long{max-height:none}
+}
+
+.narrow{max-width:780px;margin:0 auto;padding:0 16px 60px}
+.narrow section.step{margin-top:18px}
+.narrow .hero{padding-bottom:10px}
+
+/* gallery */
+.shots{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;align-items:start}
+.shot{margin:0;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.shot img{display:block;width:100%;height:auto}
+.shot figcaption{margin:0;padding:8px 12px;font-size:.82rem;color:var(--ink-2);border-top:1px solid var(--line);background:var(--cream)}
+@media (max-width:520px){.shots{grid-template-columns:1fr;max-width:360px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <a href="../courses/" aria-label="Ronig.ai, לעמוד הקורסים"><img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36"></a>
+    <a class="btn-back" href="https://rogre1.github.io/ronig-courses/courses/">← <span>חזרה לעמוד הקורסים</span></a>
+  </div>
+</header>
+
+<main class="narrow">
+
+<section class="hero">
+  <img class="print-logo" src="../assets/logo-dark.png" alt="Ronig.ai">
+  <span class="eyebrow">פרומפט חינם · Ronig.ai</span>
+  <h1>כל מה ששמרתם באינסטגרם,<br><em>בעמוד אחד עם חיפוש</em></h1>
+  <p class="lead">שומרים ושומרים, ואז לא מוצאים כלום. עם הפרומפט הזה Claude עובר על השמורים שלכם, ממיין אותם לנושאים, כותב משפט קצר על כל פוסט ובונה עמוד צבעוני שאפשר לחפש בו. לחיצה על שורה פותחת את הפוסט באינסטגרם.</p>
+  <div class="beginner">
+    <p><b>פעם ראשונה עם Claude Code?</b> עברו קודם על מדריך המתחילים שלי (20 דקות, בלי קוד), ואז חזרו לכאן.</p>
+    <a class="btn" href="../claude-code-start/?from=instagram-saved">למדריך המתחילים ←</a>
+  </div>
+
+  <div class="shots">
+    <figure class="shot"><img src="board.jpg" alt="דוגמה לעמוד: כפתורי נושאים צבעוניים ורשימת פוסטים לפי נושא" width="1500" height="1350" loading="lazy"><figcaption>כל נושא בצבע משלו, עם מספר הפוסטים בו.</figcaption></figure>
+    <figure class="shot"><img src="search.jpg" alt="דוגמה: חיפוש המילה איטליה מוצא גם מתכוני פסטה ופיצה" width="1500" height="960" loading="lazy"><figcaption>מחפשים "איטליה" ומקבלים גם פסטה ופיצה.</figcaption></figure>
+  </div>
+  <p class="mock-note">הדוגמאות בתמונות מומצאות.</p>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">1</div><div><h2>מה צריך</h2></div></div>
+  <ul class="dots">
+    <li><b>אפליקציית Claude</b> במחשב, בלשונית <b>Code</b>.</li>
+    <li><b>Claude in Chrome</b>, התוסף שמאפשר ל-Claude לגלוש בכרום שלכם. אם הוא לא מותקן, Claude יסביר לכם איך להתקין אותו.</li>
+    <li><b>להיות מחוברים לאינסטגרם בכרום, לחשבון הנכון.</b> אם יש לכם כמה חשבונות, בדקו שאתם על זה שבו שמרתם את הפוסטים.</li>
+  </ul>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">2</div><div><h2>פותחים שיחה חדשה</h2></div></div>
+  <p>בלשונית <b>Code</b> לוחצים <b>New session</b>, ובוחרים ב-<b>Select folder</b> את התיקייה שבה תרצו לשמור את העמוד.</p>
+</section>
+
+<section class="step" id="prompt">
+  <div class="step-head"><div class="num">3</div><div><h2>מעתיקים ומדביקים</h2><p>Claude ידריך אתכם משם</p></div></div>
+  <div class="prompt long"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>אני רוצה לסדר את הפוסטים ששמרתי באינסטגרם בעמוד אחד מסודר לפי נושאים, עם חיפוש. אני לא טכני/ת, אז תדריך אותי צעד אחרי צעד: בכל שלב תגיד לי בדיוק על מה ללחוץ, תחכה שאכתוב "עשיתי", ורק אז תמשיך.
+
+1. תבדוק אם יש לך גישה לדפדפן Chrome שלי דרך Claude in Chrome. אם אין, תסביר לי איך להתקין ולחבר אותו ותחכה.
+2. תפתח טאב חדש באינסטגרם ותבדוק לאיזה חשבון אני מחובר/ת. תגיד לי את שם המשתמש ותשאל אם זה החשבון הנכון. אם לא, אני אחליף חשבון בעצמי.
+3. תשאל אותי אם יש נושאים שחשוב לי שיופיעו, למשל AI, טיולים, אופנה או מתכונים.
+4. תיכנס לעמוד השמורים שלי ותאסוף את 100 הפוסטים האחרונים: הקישור, הכיתוב ושם היוצר. תעבוד לאט, כמו אדם שגולל: גלילה אמיתית עם הפסקה של כמה שניות, ובלי לפתוח הרבה פוסטים במקביל. מה שרואים בעמוד השמורים מספיק. פוסט שלא ברור על מה הוא, תשים בנושא "עוד לבדוק" במקום לנחש.
+5. תמיין את הפוסטים לנושאים ותכתוב לכל אחד תיאור קצר בעברית, עד 10 מילים.
+6. תבנה לי קובץ HTML אחד שנפתח בדאבל קליק: עיצוב בהיר, צבעוני ועגול, וקל לקריאה. למעלה תיבת חיפוש גדולה שמבינה מילים קרובות (למשל "איטליה" מוצא גם "איטלקית" ו"פיצה") ועובדת בעברית ובאנגלית. מתחתיה כפתור לכל נושא עם מספר הפוסטים בו. כל נושא בצבע משלו, וכל שורה פותחת את הפוסט באינסטגרם בטאב חדש. שיעבוד טוב גם בטלפון.
+7. תפתח לי את העמוד, ותגיד לי כמה פוסטים אספת ומה לא הצלחת לקרוא. לפני 100 הפוסטים הבאים תשאל אותי.
+8. בסוף תשאל אותי אם אני רוצה להפוך את זה למשימה שחוזרת כל שבוע ומוסיפה לעמוד רק את הפוסטים החדשים ששמרתי. אם אני רוצה, תסביר לי בפשטות מה צריך: שהמחשב יהיה דלוק, שהכרום יהיה פתוח ומחובר לאותו חשבון אינסטגרם, ושאם משהו מהם חסר המשימה תעצור ותודיע לי, בלי להתחבר בעצמה. תשאל אותי באיזה יום ושעה, ואיך אני רוצה לקבל עדכון בסוף, ורק אז תגדיר אותה. בכל ריצה תגלול רק עד הפוסט האחרון שכבר נמצא בעמוד, ובאותם כללים: לאט ורק קריאה.
+
+כללים: רק לקרוא. לא ללחוץ לייק, לא להגיב, לא לעקוב, לא לשלוח הודעות, לא לבטל שמירה ולא לשנות שום הגדרה. לא להקליד סיסמאות או קודי אימות: אם צריך להתחבר, תעצור ותגיד לי. לא יותר מ-100 פוסטים בכל פעם.</div>
+  <button class="expand" type="button">הצגת כל הפרומפט</button>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">4</div><div><h2>מה יקרה</h2></div></div>
+  <ul class="dots">
+    <li>Claude יבדוק שהכרום מחובר ושאתם על החשבון הנכון, ויסביר רק את מה שחסר.</li>
+    <li>תראו אותו גולל בעמוד השמורים בטאב חדש. זה לוקח כמה דקות, וזה בכוונה.</li>
+    <li>בסוף ייפתח העמוד שלכם. אם משהו לא מתאים, פשוט כתבו לו, למשל "תאחד את שני הנושאים האלה" או "תגדיל את הכתב".</li>
+    <li>בסוף Claude ישאל אם תרצו להפוך את זה למשימה שבועית שמוסיפה רק את מה ששמרתם מאז. אם כן, הוא יסביר מה צריך ויגדיר את זה איתכם.</li>
+  </ul>
+  <div class="note warn"><span class="ic">⚠️</span><div><b>חשוב לדעת:</b> אינסטגרם לא אוהבים פעולות אוטומטיות. הפרומפט עובד לאט ורק קורא, וזה מקטין מאוד את הסיכון, אבל לא מבטל אותו. אל תריצו אלפי פוסטים בבת אחת, ואל תבקשו מ-Claude לעשות לייקים, תגובות או מעקבים.</div></div>
+  <details class="acc">
+    <summary>רוצים בלי שום סיכון? יש דרך דרך הייצוא הרשמי</summary>
+    <div class="in">
+      <p>אינסטגרם מאפשרים להוריד קובץ עם כל השמורים שלכם, ואז Claude ממיין מהקובץ בלי להיכנס לחשבון בכלל. החיסרון: בקובץ יש בעיקר קישורים ושמות יוצרים, אז התיאורים יוצאים כלליים יותר.</p>
+      <ol class="steps">
+        <li>באינסטגרם: הגדרות ← <b>Accounts Center</b> ← <b>Your information and permissions</b> ← <b>Download your information</b>.</li>
+        <li>בוחרים רק את <b>Saved</b>, בפורמט <b>JSON</b>. הקובץ מגיע במייל, לפעמים אחרי כמה שעות.</li>
+        <li>פותחים את הקובץ שהורדתם, גוררים לשיחה עם Claude את הקובץ של השמורים, ומדביקים:</li>
+      </ol>
+      <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>צירפתי את קובץ השמורים שהורדתי מאינסטגרם. תמיין את הפוסטים לנושאים לפי מה שאפשר להבין מהקובץ, ותבנה לי עמוד HTML אחד, בהיר, צבעוני ועגול, עם חיפוש חכם בראש העמוד, כפתור לכל נושא וקישור לכל פוסט. אל תיכנס לאינסטגרם. מה שלא ברור, תשים בנושא "עוד לבדוק".</div>
+    </div>
+  </details>
+  <h3>ב-100 הבאים</h3>
+  <p>באותה שיחה, או בשיחה חדשה באותה תיקייה:</p>
+  <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>תמשיך ל-100 הפוסטים השמורים הבאים באותה שיטה, ותוסיף אותם לאותו עמוד. אותם כללים: לאט, רק קריאה, ובסוף תגיד לי כמה הוספת.</div>
+</section>
+
+<section class="final">
+  <h2>זהו, השמורים מסודרים 🎉</h2>
+  <p>רוצים עוד פרומפטים ומדריכים כאלה?</p>
+  <a class="btn" href="https://rogre1.github.io/ronig-courses/courses/">לכל המדריכים והקורסים ←</a>
+</section>
+
+</main>
+
+<footer>
+  <img src="../assets/logo-dark.png" alt="Ronig.ai">
+  <a href="../courses/">לקורסים שלי</a> · <a href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">@ronig.ai</a>
+</footer>
+
+<script>
+document.querySelectorAll('.copy').forEach(function(btn){btn.addEventListener('click',function(){
+  var box=btn.parentNode.cloneNode(true);box.querySelectorAll('.copy,.lbl').forEach(function(x){x.remove()});
+  var txt=box.textContent.trim();
+  function ok(){btn.textContent='הועתק ✓';btn.classList.add('ok');setTimeout(function(){btn.textContent='העתקה';btn.classList.remove('ok')},1800)}
+  function fallback(){var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(e){}t.remove()}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback)}else fallback();
+})});
+document.querySelectorAll('.expand').forEach(function(b){var p=b.previousElementSibling;b.addEventListener('click',function(){var o=p.classList.toggle('open');b.textContent=o?'הסתרה':'הצגת כל הפרומפט'})});
+</script>
+</body>
+</html>
