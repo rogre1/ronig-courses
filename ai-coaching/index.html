@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ייעוץ והדרכה אישית לייעול העסק עם AI | Ronig.ai</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="ליווי אישי שבו אתם בונים בעצמכם כלים שחוסכים שעות בעסק, ויוצאים עם היכולת לבנות לבד.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="ייעוץ והדרכה אישית לייעול העסק עם AI">
+<meta property="og:description" content="לא עוד טיפים על AI. בונים יחד כלים שעובדים בעסק שלכם, ויוצאים עם היכולת לבנות לבד.">
+<meta property="og:image" content="https://rogre1.github.io/ronig-courses/assets/profile.jpg">
+<link rel="icon" href="../claude-code-start/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../claude-code-start/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FBF9F4;--cream-deep:#F1EFE7;--mint:#F0F3E8;
+  --forest:#333E27;--forest-deep:#20261A;--forest-tile:#2A3122;
+  --olive:#788C5D;--olive-bright:#8BA36B;--leaf:#B7C29F;
+  --ink:#1B1D16;--ink-2:#5B5F52;--ink-3:#8A8672;
+  --ink-dark-1:#F1EFE7;--ink-dark-2:#B9BDA9;
+  --line:#E3E0D5;--coral:#D9785F;
+  --shadow-sm:0 10px 22px rgba(35,38,30,.10);
+  --shadow-md:0 16px 34px rgba(35,38,30,.16);
+  --r:22px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
+b,strong{font-weight:700;color:var(--forest-deep)}
+a{color:var(--olive);font-weight:600}
+
+header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.hwrap img{height:36px;width:auto;display:block}
+.hcta{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:.86rem;font-weight:700;color:var(--cream);background:var(--forest);border-radius:99px;padding:7px 16px;white-space:nowrap}
+
+main{max-width:1000px;margin:0 auto;padding:0 16px 40px}
+section{margin-top:64px}
+.kicker{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:700;font-size:.85rem;padding:4px 14px;border-radius:99px;margin-bottom:12px}
+h2{font-size:clamp(1.6rem,3.8vw,2.2rem);line-height:1.2;font-weight:900;color:var(--forest-deep);letter-spacing:-.01em}
+h2 em,h1 em{font-style:normal;color:var(--olive)}
+.sub{color:var(--ink-2);font-size:1.08rem;margin-top:10px;max-width:640px}
+.center{text-align:center}
+.center .sub{margin-inline:auto}
+
+.kicker::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--olive-bright);margin-inline-end:8px;vertical-align:middle;box-shadow:0 0 0 3px rgba(139,163,107,.25)}
+
+/* personal fit */
+.fit{display:grid;grid-template-columns:1.15fr 1fr;gap:22px;margin-top:26px;align-items:center}
+.console{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-md);overflow:hidden;font-size:.95rem}
+.console-bar{display:flex;align-items:center;gap:6px;padding:11px 16px;background:var(--cream-deep);border-bottom:1px solid var(--line)}
+.console-bar i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.console-bar i:nth-child(1){background:#E7A992}.console-bar i:nth-child(2){background:#E9CF8F}.console-bar i:nth-child(3){background:var(--leaf)}
+.console-bar span{margin-inline-start:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;color:var(--ink-3);direction:ltr}
+.console-body{padding:18px 18px 20px;background-image:linear-gradient(var(--cream) 1px,transparent 1px),linear-gradient(90deg,var(--cream) 1px,transparent 1px);background-size:20px 20px}
+.crow{display:flex;align-items:center;gap:10px;padding:7px 0;color:var(--ink-3);transition:color .3s}
+.crow .st{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:11px;color:#fff;transition:all .3s}
+.crow.run .st{border-color:var(--olive-bright);border-top-color:transparent;animation:spin .7s linear infinite}
+.crow.ok{color:var(--forest-deep)}
+.crow.ok .st{background:var(--olive);border-color:var(--olive);animation:none}
+.crow.ok .st::after{content:"✓"}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cbar{height:6px;background:var(--cream-deep);border-radius:99px;overflow:hidden;margin:12px 0 14px}
+.cbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--olive-bright));transition:width .6s ease}
+.plan-out{opacity:0;transform:translateY(6px);transition:all .5s ease;background:var(--mint);border:1px solid var(--leaf);border-radius:14px;padding:12px 14px}
+.plan-out.show{opacity:1;transform:none}
+.plan-out b{display:block;font-size:.85rem;color:var(--olive);margin-bottom:6px}
+.plan-out ol{padding-right:18px;color:var(--forest-deep);font-weight:600;font-size:.93rem}
+.fit-points{list-style:none}
+.fit-points li{display:flex;gap:14px;align-items:flex-start;margin-top:18px}
+.fit-points li:first-child{margin-top:0}
+.fit-points .n{flex:none;width:38px;height:38px;border-radius:12px;background:var(--mint);border:1px solid var(--leaf);display:grid;place-items:center;font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;color:var(--olive);font-size:.85rem}
+.fit-points h3{font-size:1.08rem;font-weight:800;color:var(--forest-deep)}
+.fit-points p{color:var(--ink-2);font-size:.96rem}
+.ex .tg{display:inline-block;margin-top:10px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.72rem;color:var(--olive);background:var(--mint);border:1px solid var(--leaf);border-radius:6px;padding:1px 7px;direction:ltr}
+
+/* hero */
+.hero{position:relative;padding:52px 0 8px;margin-top:0;text-align:center}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(var(--leaf) 1px,transparent 1.2px);background-size:22px 22px;opacity:.5;-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 75%)}
+.me{display:inline-flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 18px 6px 6px;box-shadow:var(--shadow-sm);margin-bottom:22px}
+.me img{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:50% 30%;border:2px solid var(--leaf);display:block}
+.me div{text-align:right;line-height:1.3}
+.me b{display:block;font-size:.98rem}
+.me span{font-size:.82rem;color:var(--ink-3);font-weight:600}
+h1{font-size:clamp(2.1rem,6vw,3.6rem);line-height:1.12;font-weight:900;color:var(--forest-deep);letter-spacing:-.015em;max-width:820px;margin:0 auto}
+.lead{font-size:1.18rem;color:var(--ink-2);margin:18px auto 0;max-width:620px}
+.term{display:inline-flex;align-items:center;gap:8px;margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 16px;font-size:.95rem;font-weight:500;color:var(--forest);box-shadow:var(--shadow-sm);max-width:100%}
+.term .pr{color:var(--olive);font-weight:800;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;direction:ltr;unicode-bidi:isolate;padding-inline-end:8px;border-inline-end:1px solid var(--line)}
+.cur{display:inline-block;width:8px;height:1.1em;background:var(--olive);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border:0;font:inherit;font-weight:700;padding:13px 26px;border-radius:99px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--forest-deep)}
+.btn.ghost{background:#fff;color:var(--forest);border:1.5px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--olive)}
+
+/* why */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+.why>div{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--shadow-sm)}
+.why .ic{width:46px;height:46px;border-radius:14px;background:var(--mint);border:1px solid var(--leaf);display:grid;place-items:center;font-size:1.35rem;margin-bottom:12px}
+.why h3{font-size:1.15rem;font-weight:800;color:var(--forest-deep);margin-bottom:6px}
+.why p{color:var(--ink-2);font-size:.98rem}
+
+/* compare */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+.vs div{border-radius:var(--r);padding:24px}
+.vs .a{background:var(--cream-deep);border:1px solid var(--line)}
+.vs .b{background:var(--forest);color:var(--ink-dark-1)}
+.vs h3{font-size:1.05rem;font-weight:800;margin-bottom:10px}
+.vs .a h3{color:var(--ink-2)}
+.vs .b h3{color:var(--leaf)}
+.vs ul{list-style:none}
+.vs li{position:relative;padding-right:24px;margin-top:8px;font-size:.98rem}
+.vs .a li::before{content:"✕";position:absolute;right:0;color:var(--ink-3);font-weight:800}
+.vs .b li::before{content:"✓";position:absolute;right:0;color:var(--olive-bright);font-weight:900}
+
+/* calc */
+.calc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:30px;box-shadow:var(--shadow-sm);margin-top:26px}
+.calc label{display:block;font-weight:700;color:var(--forest-deep);font-size:1.05rem;margin-bottom:12px}
+.calc input[type=range]{width:100%;accent-color:var(--forest);cursor:pointer}
+.calc-out{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;text-align:center}
+.calc-out div{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:16px 8px}
+.calc-out b{display:block;font-size:clamp(1.6rem,4.5vw,2.3rem);font-weight:900;color:var(--forest-deep);line-height:1.1;font-variant-numeric:tabular-nums}
+.calc-out span{font-size:.85rem;color:var(--ink-3);font-weight:600}
+.calc-out .hl{background:var(--mint);border-color:var(--leaf)}
+.calc-out .hl b{color:var(--olive)}
+.calc-note{text-align:center;color:var(--ink-3);font-size:.88rem;margin-top:12px}
+
+/* examples */
+.ex{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:26px}
+.ex>div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;transition:transform .2s,box-shadow .2s,border-color .2s}
+.ex>div:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--leaf)}
+.ex b{display:block;font-size:1rem;margin-bottom:4px}
+.ex span{font-size:.92rem;color:var(--ink-2)}
+.small-note{color:var(--ink-3);font-size:.9rem;margin-top:14px}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px;counter-reset:s}
+.steps>div{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px 22px 22px;box-shadow:var(--shadow-sm);counter-increment:s}
+.steps>div::before{content:"0" counter(s);position:absolute;top:-15px;right:20px;height:30px;padding:0 12px;border-radius:10px;background:var(--forest);color:var(--leaf);font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;font-size:.85rem;display:grid;place-items:center;letter-spacing:.05em}
+.steps h3{font-size:1.1rem;font-weight:800;color:var(--forest-deep);margin-bottom:6px}
+.steps p{color:var(--ink-2);font-size:.96rem}
+.timeline{display:flex;margin-top:14px;border-radius:10px;overflow:hidden;font-size:.76rem;font-weight:700;text-align:center;white-space:nowrap}
+.timeline span{padding:6px 4px;color:var(--forest);min-width:0;overflow:hidden;text-overflow:ellipsis}
+.timeline .t1{flex:15;background:var(--leaf)}
+.timeline .t2{flex:60;background:var(--forest);color:var(--cream)}
+.timeline .t3{flex:15;background:var(--leaf)}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:1fr 1.08fr;gap:18px;margin-top:30px;align-items:stretch}
+.plan{position:relative;background:#fff;border:1px solid var(--line);border-radius:26px;padding:30px 26px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column}
+.plan.star{background:var(--forest-deep);color:var(--ink-dark-1);border-color:var(--forest-deep);box-shadow:var(--shadow-md)}
+.plan .tag{position:absolute;top:-14px;left:24px;background:var(--olive-bright);color:#fff;font-weight:800;font-size:.82rem;padding:5px 14px;border-radius:99px}
+.plan h3{font-size:1.3rem;font-weight:900;color:var(--forest-deep)}
+.plan.star h3{color:#fff}
+.plan .for{font-size:.93rem;color:var(--ink-3);margin-top:2px}
+.plan.star .for{color:var(--ink-dark-2)}
+.price{margin-top:18px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.price b{font-size:2.8rem;font-weight:900;line-height:1;color:var(--forest-deep);font-variant-numeric:tabular-nums}
+.plan.star .price b{color:#fff}
+.price span{font-size:.92rem;color:var(--ink-3);font-weight:600}
+.plan.star .price span{color:var(--ink-dark-2)}
+.price s{color:var(--ink-dark-2);font-size:1.05rem}
+.save{display:inline-block;margin-top:8px;background:rgba(139,163,107,.2);color:var(--leaf);font-weight:700;font-size:.85rem;padding:3px 12px;border-radius:99px}
+.plan ul{list-style:none;margin-top:20px;flex:1}
+.plan li{position:relative;padding-right:26px;margin-top:10px;font-size:.98rem}
+.plan li::before{content:"✓";position:absolute;right:0;top:0;color:var(--olive);font-weight:900}
+.plan.star li::before{color:var(--olive-bright)}
+.plan.star b{color:#fff}
+.plan .btn{margin-top:24px;justify-content:center}
+.plan.star .btn{background:var(--olive-bright);color:#fff}
+.plan.star .btn:hover{background:var(--olive)}
+.price-notes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px}
+.price-notes span{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;font-weight:600;color:var(--ink-2)}
+.upgrade{margin-top:16px;background:var(--mint);border:1px solid var(--leaf);border-radius:18px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start;font-size:.97rem}
+.upgrade .ic{font-size:1.3rem;line-height:1.4}
+
+/* terms */
+.terms{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
+.box{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--shadow-sm)}
+.box h3{display:flex;align-items:center;gap:10px;font-size:1.12rem;font-weight:800;color:var(--forest-deep);margin-bottom:10px}
+.box ul{list-style:none}
+.box li{position:relative;padding-right:20px;margin-top:9px;font-size:.96rem;color:var(--ink-2)}
+.box li::before{content:"";position:absolute;right:3px;top:.68em;width:7px;height:7px;border-radius:50%;background:var(--olive)}
+.box li b{color:var(--forest-deep)}
+
+/* faq */
+.faq{margin-top:22px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:16px;margin-top:10px;overflow:hidden}
+.faq summary{list-style:none;cursor:pointer;padding:16px 20px;font-weight:700;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;width:28px;height:28px;border-radius:50%;background:var(--mint);color:var(--olive);display:grid;place-items:center;font-weight:800;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 20px 18px;color:var(--ink-2)}
+
+/* final cta */
+.final{background:var(--forest-deep);color:var(--ink-dark-1);border-radius:28px;padding:44px 26px;text-align:center;position:relative;overflow:hidden}
+.final::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(183,194,159,.25) 1px,transparent 1.2px);background-size:22px 22px}
+.final>*{position:relative}
+.final h2{color:#fff}
+.final p{color:var(--ink-dark-2);margin:10px auto 0;max-width:520px}
+.final .btn{margin-top:24px;background:var(--olive-bright);color:#fff}
+.final img{width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:50% 30%;border:2px solid var(--leaf);margin-bottom:14px}
+
+footer{border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--ink-3);font-size:.88rem;margin-top:50px}
+footer img{height:30px;display:block;margin:0 auto 10px}
+.legal{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:12px}
+.legal a{color:var(--ink-3);font-weight:500;font-size:.84rem}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:820px){
+  .why,.steps,.ex{grid-template-columns:1fr 1fr}
+  .plans,.terms,.vs,.fit{grid-template-columns:1fr}
+  .plan.star{order:-1}
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  section{margin-top:52px}
+  .why,.steps,.ex{grid-template-columns:1fr}
+  .steps{gap:24px}
+  .calc{padding:22px 16px}
+  .calc-out{gap:8px}
+  .calc-out span{font-size:.75rem}
+}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.cur{animation:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36">
+    <a class="hcta" href="#plans">חבילות ומחירים</a>
+  </div>
+</header>
+
+<main>
+  <!-- hero -->
+  <section class="hero">
+    <div class="me">
+      <img src="../assets/profile.jpg" alt="רוני" width="52" height="52">
+      <div><b>רוני · ronig.ai</b><span>ליווי אישי אונליין</span></div>
+    </div>
+    <h1>ייעוץ והדרכה אישית <em>לייעול העבודה בעסק</em> עם AI</h1>
+    <p class="lead">לא עוד טיפים על AI. בפגישות אישיות אונליין אתם בונים, צעד אחרי צעד, כלים שעובדים בעסק שלכם באמת, ויוצאים עם היכולת לבנות לבד גם את הבאים.</p>
+    <div class="term" aria-hidden="true"><span class="pr">✦ Claude</span> <span id="typed"></span><i class="cur"></i></div>
+    <div class="hero-cta">
+      <a class="btn" href="#plans">לחבילות ולמחירים ←</a>
+      <a class="btn ghost" href="#how">איך זה עובד</a>
+    </div>
+  </section>
+
+  <!-- why now -->
+  <section class="reveal">
+    <span class="kicker">למה עכשיו</span>
+    <h2>העסקים שילמדו לעבוד עם AI עכשיו, <em>יהיו צעד לפני</em></h2>
+    <p class="sub">AI כבר לא רק כותב ניסוחים. היום בעל עסק קטן יכול לבנות לעצמו כלים שפעם דרשו מתכנת, צוות או תקציב.</p>
+    <div class="why">
+      <div><div class="ic">⏳</div><h3>הזמן שלכם חוזר</h3><p>מיילים, הצעות מחיר, תוכן, דוחות. המשימות שחוזרות כל שבוע עוברות לכלים שאתם בונים, ואתם מתפנים לעבודה שרק אתם יכולים לעשות.</p></div>
+      <div><div class="ic">🛠</div><h3>אתם בונים, לא רק שואלים</h3><p>יש הבדל גדול בין לבקש מצ'אט ניסוח, לבין מערכת שעובדת בשבילכם על הקבצים, המייל והטבלאות של העסק.</p></div>
+      <div><div class="ic">🌱</div><h3>יכולת שנשארת</h3><p>הכלים משתנים כל חודש. מה שנשאר זה לדעת לזהות מה אפשר לייעל ולבנות את זה בעצמכם, בלי לחכות לאף אחד.</p></div>
+    </div>
+  </section>
+
+  <!-- personal fit -->
+  <section class="reveal">
+    <span class="kicker">מותאם אישית</span>
+    <h2>תוכנית שנבנית <em>רק בשבילכם</em></h2>
+    <p class="sub">אין כאן תוכנית קבועה לכולם. לפני שמתחילים אני לומדת את העסק שלכם, ממליצה מה הכי משתלם לבנות, ואנחנו בונים את זה יחד.</p>
+    <div class="fit">
+      <div class="console" id="console" aria-hidden="true">
+        <div class="console-bar"><i></i><i></i><i></i><span>your-business.plan</span></div>
+        <div class="console-body">
+          <div class="crow"><span class="st"></span>קוראת את שאלון האפיון שלכם</div>
+          <div class="crow"><span class="st"></span>ממפה משימות שחוזרות כל שבוע</div>
+          <div class="crow"><span class="st"></span>מדרגת לפי כמה זמן כל אחת תחסוך</div>
+          <div class="crow"><span class="st"></span>בודקת מה אפשר לבנות בזמן שיש לנו</div>
+          <div class="cbar"><i id="cbar"></i></div>
+          <div class="plan-out" id="planOut"><b>התוכנית המומלצת לעסק שלכם</b><ol><li>הצעות מחיר מתוך כמה פרטים</li><li>מענה קבוע לשאלות של לקוחות</li><li>קרוסלות מתוך רעיון אחד</li></ol></div>
+        </div>
+      </div>
+      <ul class="fit-points">
+        <li><span class="n">01</span><div><h3>אפיון אישי לפני הכל</h3><p>שאלון קצר על העסק ועל השבוע שלכם, כדי שאגיע לפגישה עם תוכנית ולא עם שאלות.</p></div></li>
+        <li><span class="n">02</span><div><h3>אני ממליצה מה לבנות</h3><p>מתוך כל מה שאפשר, נבחר את מה שיחסוך לכם הכי הרבה זמן, ושאפשר לבנות באמת בזמן שיש לנו.</p></div></li>
+        <li><span class="n">03</span><div><h3>על הכלים והקבצים שלכם</h3><p>לא דוגמאות כלליות. בונים על המייל, הטבלאות והתיקיות של העסק שלכם.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- calculator -->
+  <section class="reveal">
+    <span class="kicker">רגע של חשבון</span>
+    <h2>כמה שעות <em>הולכות לכם</em> על משימות שחוזרות?</h2>
+    <div class="calc">
+      <label for="hours">שעות בשבוע: <span id="hW">5</span></label>
+      <input type="range" id="hours" min="1" max="30" step="1" value="5">
+      <div class="calc-out">
+        <div><b id="hY">240</b><span>שעות בשנה</span></div>
+        <div><b id="hD">30</b><span>ימי עבודה מלאים</span></div>
+        <div class="hl"><b id="hS">120</b><span>שעות שחוזרות אליכם, אם נחסוך רק חצי</span></div>
+      </div>
+      <p class="calc-note">לפי 48 שבועות עבודה בשנה ו-8 שעות ליום</p>
+    </div>
+  </section>
+
+  <!-- examples -->
+  <section class="reveal">
+    <span class="kicker">מה בונים בפועל</span>
+    <h2>כמה דוגמאות <em>ממה שאפשר לבנות</em></h2>
+    <div class="ex">
+      <div><b>💬 מענה ללקוחות</b><span>תשובות קבועות לשאלות שחוזרות, בניסוח שלכם</span><br><span class="tg">auto-reply</span></div>
+      <div><b>🧾 הצעות מחיר</b><span>מכמה פרטים להצעה מסודרת, בכמה שניות</span><br><span class="tg">quote</span></div>
+      <div><b>🎨 יצירת קרוסלות</b><span>מרעיון אחד לקרוסלה מעוצבת לאינסטגרם</span><br><span class="tg">carousel</span></div>
+      <div><b>🎬 עריכת סרטונים</b><span>כתוביות, חיתוכים וסידור קטעים, בלי תוכנת עריכה</span><br><span class="tg">video</span></div>
+      <div><b>📂 חשבוניות</b><span>איסוף מהמייל לתיקייה מסודרת, מוכנה לרואה החשבון</span><br><span class="tg">invoices</span></div>
+      <div><b>📊 סיכומים ודוחות</b><span>משיחה או מטבלה מבולגנת לתמונת מצב ברורה</span><br><span class="tg">reports</span></div>
+    </div>
+    <p class="small-note">מה שנבנה אצלכם ייקבע אחרי האפיון, לפי מה שאני ממליצה שיחסוך לכם הכי הרבה ושאפשר לבנות בזמן שיש לנו.</p>
+  </section>
+
+  <!-- how -->
+  <section class="reveal" id="how">
+    <span class="kicker">איך זה עובד</span>
+    <h2>שלושה שלבים, <em>בלי לדעת קוד</em></h2>
+    <div class="steps">
+      <div><h3>שאלון אפיון</h3><p>אחרי התשלום אתם ממלאים שאלון קצר על העסק ועל השבוע שלכם. אני מגיעה לפגישה כבר עם רעיון ראשון.</p></div>
+      <div><h3>פגישה אונליין, 90 דקות</h3><p>משתפים מסך, ואתם בונים על המחשב שלכם בזמן שאני מכוונת צעד אחרי צעד.</p>
+        <div class="timeline" aria-label="חלוקת הפגישה"><span class="t1">15′ חידוד</span><span class="t2">60′ בונים</span><span class="t3">15′ תוכנית</span></div></div>
+      <div><h3>ממשיכים לבד</h3><p>יוצאים עם כלי שעובד, עם הבנה איך הוא נבנה, ועם תוכנית ברורה למה לעשות הלאה.</p></div>
+    </div>
+  </section>
+
+  <!-- pricing -->
+  <section class="reveal" id="plans">
+    <div class="center">
+      <span class="kicker">חבילות ומחירים</span>
+      <h2>בוחרים <em>איך מתחילים</em></h2>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>פגישה אחת</h3>
+        <p class="for">למי שרוצה כיוון והתחלה</p>
+        <div class="price"><b>1,200 ₪</b><span>כולל מע"מ</span></div>
+        <ul>
+          <li>שאלון אפיון לפני הפגישה</li>
+          <li>פגישה אישית של 90 דקות בזום</li>
+          <li>בונים יחד כלי ראשון לעסק שלכם</li>
+          <li>תוכנית פעולה ברורה להמשך</li>
+        </ul>
+        <a class="btn ghost" href="https://wa.me/972586003092?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%95%D7%A2%20%D7%A4%D7%92%D7%99%D7%A9%D7%94%20%D7%90%D7%97%D7%AA%20%D7%9C%D7%99%D7%99%D7%A2%D7%95%D7%9C%20%D7%94%D7%A2%D7%A1%D7%A7%20%D7%A2%D7%9D%20AI" target="_blank" rel="noopener">לקביעת פגישה</a>
+      </div>
+      <div class="plan star">
+        <span class="tag">מומלץ</span>
+        <h3>ליווי אישי</h3>
+        <p class="for">למי שרוצה שזה באמת ייכנס לעסק</p>
+        <div class="price"><b>3,800 ₪</b><span>כולל מע"מ</span> <s>4,800 ₪</s></div>
+        <span class="save">חוסכים 1,000 ₪ לעומת 4 פגישות בודדות</span>
+        <ul>
+          <li><b>4 מפגשים</b> של 90 דקות, לאורך 4 שבועות</li>
+          <li>מפגש ראשון: ממפים את העסק ובונים רשימת עדיפויות</li>
+          <li>בכל מפגש מתקדמים ברשימה, בקצב שמתאים לכם</li>
+          <li><b>וואטסאפ</b> לשאלות קצרות בין המפגשים</li>
+          <li>יוצאים עם כלים שעובדים, ועם היכולת לבנות לבד</li>
+        </ul>
+        <a class="btn" href="https://wa.me/972586003092?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%94%D7%9C%D7%99%D7%95%D7%95%D7%99%20%D7%94%D7%90%D7%99%D7%A9%D7%99" target="_blank" rel="noopener">אני רוצה ליווי ←</a>
+      </div>
+    </div>
+    <div class="price-notes">
+      <span>🌱 מחיר השקה ללקוחות הראשונים</span>
+      <span>💳 התשלום מראש</span>
+    </div>
+    <div class="upgrade"><span class="ic">⬆️</span><div><b>התחלתם בפגישה אחת ורוצים להמשיך לליווי?</b> אם משדרגים תוך 7 ימים מהפגישה, ה-1,200 ₪ ששילמתם מתקזזים ממחיר הליווי.</div></div>
+  </section>
+
+  <!-- terms -->
+  <section class="reveal">
+    <span class="kicker">חשוב לדעת</span>
+    <h2>תנאים <em>ופרטים</em></h2>
+    <div class="terms">
+      <div class="box">
+        <h3>📋 תנאי השירות</h3>
+        <ul>
+          <li><b>התשלום מראש</b>, לפני קביעת המפגש הראשון.</li>
+          <li>המפגשים מתקיימים <b>אונליין בזום</b>, עם שיתוף מסך.</li>
+          <li>שינוי מועד אפשרי <b>עד 24 שעות</b> לפני המפגש.</li>
+          <li>אני מלמדת ומכוונת, <b>ואתם בונים</b> על המחשב שלכם. ככה הידע נשאר אצלכם.</li>
+          <li>בליווי מתקדמים לפי רשימת העדיפויות ובקצב שלכם. <b>אין התחייבות</b> למספר מסוים של פרויקטים.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>💻 מה צריך להביא</h3>
+        <ul>
+          <li><b>מחשב</b>, מק או ווינדוס.</li>
+          <li><b>מנוי בתשלום ל-Claude</b>. <a href="../claude-code-start/" target="_blank" rel="noopener">מדריך ההתקנה שלי למתחילים</a></li>
+          <li>רשימה בראש של מה הכי מעצבן אתכם בעבודה. את השאר נמצא יחד.</li>
+        </ul>
+      </div>
+      <div class="box" style="grid-column:1/-1">
+        <h3>💬 הוואטסאפ בליווי</h3>
+        <ul>
+          <li>לשאלות קצרות ולמקומות שנתקעתם, עם צילום מסך.</li>
+          <li>מענה <b>תוך יום עסקים</b>, בימים א׳ עד ה׳.</li>
+          <li>מה שדורש בנייה או הסבר ארוך עובר למפגש הבא. בלי שיחות טלפון מחוץ למפגשים.</li>
+          <li>הוואטסאפ פעיל עד <b>שבוע אחרי המפגש האחרון</b>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- faq -->
+  <section class="reveal">
+    <span class="kicker">שאלות</span>
+    <h2>שאלות <em>שתמיד שואלים</em></h2>
+    <div class="faq">
+      <details><summary>אני ממש לא טכני/ת. זה מתאים לי?</summary><p>כן, וזה בדיוק בשבילכם. לא צריך לדעת קוד. מדברים עם Claude בעברית רגילה, ואני מראה לכם איך לבקש ממנו את מה שאתם צריכים.</p></details>
+      <details><summary>למה לא פשוט לבנות לי את זה?</summary><p>כי המטרה היא שהידע יישאר אצלכם. אני מכוונת, מסבירה ועוזרת לתקן בזמן אמת, ואתם בונים. ככה אחרי הליווי תדעו לבנות לבד גם דברים שעוד לא חשבנו עליהם.</p></details>
+      <details><summary>מה אם לא נספיק לבנות את כל מה שרציתי?</summary><p>בפגישה הראשונה בונים רשימת עדיפויות ומתחילים מהדבר הכי משתלם. מה שלא נספיק יהפוך לתוכנית שתמשיכו איתה לבד.</p></details>
+      <details><summary>כמה זמן לוקח לראות תוצאה?</summary><p>כבר בפגישה הראשונה בונים משהו שעובד. בליווי, בכל מפגש מוסיפים עוד כלי לעסק.</p></details>
+    </div>
+  </section>
+
+  <!-- final -->
+  <section class="final reveal">
+    <img src="../assets/profile.jpg" alt="רוני" width="64" height="64">
+    <h2>רוצים להתחיל?</h2>
+    <p>שלחו לי הודעה בוואטסאפ, נבדוק יחד מה מתאים לעסק שלכם ונקבע.</p>
+    <a class="btn" href="https://wa.me/972586003092?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%94%D7%99%D7%99%D7%A2%D7%95%D7%A5%20%D7%9C%D7%99%D7%99%D7%A2%D7%95%D7%9C%20%D7%94%D7%A2%D7%A1%D7%A7%20%D7%A2%D7%9D%20AI" target="_blank" rel="noopener">💬 לשיחה בוואטסאפ ←</a>
+  </section>
+</main>
+
+<footer>
+  <img src="../assets/logo-dark.png" alt="Ronig.ai">
+  <a href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">@ronig.ai</a>
+  <nav class="legal"><a href="../terms.html" target="_blank" rel="noopener">תקנון ותנאי שימוש</a><a href="../privacy.html" target="_blank" rel="noopener">מדיניות פרטיות</a><a href="../accessibility.html" target="_blank" rel="noopener">הצהרת נגישות</a></nav>
+</footer>
+
+<script>
+(function(){
+  var lines = ['בונה הצעת מחיר מתוך שלוש שורות...', 'מסדר חשבוניות מהמייל לתיקייה...', 'כותב תשובה ללקוח בסגנון שלכם...', 'מסכם את השיחה לרשימת משימות...'];
+  var li = 0, ch = 0, del = false, el = document.getElementById('typed');
+  (function tick(){
+    var s = lines[li];
+    el.textContent = s.slice(0, ch);
+    if(!del && ch < s.length){ ch++; return setTimeout(tick, 50); }
+    if(!del){ del = true; return setTimeout(tick, 1600); }
+    if(ch > 0){ ch--; return setTimeout(tick, 20); }
+    del = false; li = (li + 1) % lines.length; setTimeout(tick, 300);
+  })();
+
+  var r = document.getElementById('hours');
+  function calc(){
+    var w = +r.value, y = w * 48;
+    document.getElementById('hW').textContent = w;
+    document.getElementById('hY').textContent = y.toLocaleString('he-IL');
+    document.getElementById('hD').textContent = Math.round(y / 8).toLocaleString('he-IL');
+    document.getElementById('hS').textContent = Math.round(y / 2).toLocaleString('he-IL');
+  }
+  r.addEventListener('input', calc); calc();
+
+  var con = document.getElementById('console'), ran = false;
+  function runConsole(){
+    if(ran) return; ran = true;
+    var rows = con.querySelectorAll('.crow'), i = 0;
+    (function next(){
+      if(i > 0) rows[i-1].className = 'crow ok';
+      document.getElementById('cbar').style.width = (i / rows.length * 100) + '%';
+      if(i < rows.length){ rows[i].className = 'crow run'; i++; return setTimeout(next, 750); }
+      document.getElementById('planOut').classList.add('show');
+    })();
+  }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es, o){ if(es[0].isIntersecting){ runConsole(); o.disconnect(); } }, {threshold:.5}).observe(con);
+  } else runConsole();
+
+  var els = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.12});
+    els.forEach(function(e){ io.observe(e); });
+  } else els.forEach(function(e){ e.classList.add('in'); });
+})();
+</script>
+</body>
+</html>
