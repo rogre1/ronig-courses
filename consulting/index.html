@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שאלון אפיון לפני הפגישה | Ronig.ai</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="כמה שאלות קצרות על העסק שלכם, כדי שאגיע לפגישה מוכנה עם תוכנית.">
+<link rel="icon" href="../claude-code-start/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../claude-code-start/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FBF9F4;--cream-deep:#F1EFE7;--mint:#F0F3E8;
+  --forest:#333E27;--forest-deep:#20261A;
+  --olive:#788C5D;--olive-bright:#8BA36B;--leaf:#B7C29F;
+  --ink:#1B1D16;--ink-2:#5B5F52;--ink-3:#8A8672;
+  --line:#E3E0D5;--coral:#D9785F;
+  --shadow-sm:0 10px 22px rgba(35,38,30,.10);
+  --r:22px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
+b,strong{font-weight:700;color:var(--forest-deep)}
+a{color:var(--olive);font-weight:600}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px}
+.hwrap img{height:36px;width:auto;display:block}
+.progress{flex:1;max-width:320px;display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--ink-2);font-weight:600}
+.bar{flex:1;height:8px;background:var(--cream-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--olive-bright));border-radius:99px;transition:width .4s}
+
+main{max-width:760px;margin:0 auto;padding:0 16px 60px}
+
+/* hero */
+.hero{padding:48px 0 8px}
+.eyebrow{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:700;font-size:.85rem;padding:4px 14px;border-radius:99px;margin-bottom:16px}
+h1{font-size:clamp(2rem,5.4vw,3rem);line-height:1.15;font-weight:900;color:var(--forest-deep);letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--olive)}
+.lead{font-size:1.12rem;color:var(--ink-2);margin-top:14px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.chip-info{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;font-weight:600;color:var(--ink-2);box-shadow:var(--shadow-sm)}
+
+/* tech touches */
+.hero{position:relative}
+.hero::before{content:"";position:absolute;inset:0 -40px;z-index:-1;background-image:radial-gradient(var(--leaf) 1px,transparent 1.2px);background-size:22px 22px;opacity:.45;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 85%);mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+.term{display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px;font-size:.92rem;font-weight:500;color:var(--forest);box-shadow:var(--shadow-sm);max-width:100%}
+.term .pr{color:var(--olive);font-weight:800;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;direction:ltr;unicode-bidi:isolate;padding-inline-end:8px;border-inline-end:1px solid var(--line)}
+.cur{display:inline-block;width:8px;height:1.1em;background:var(--olive);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.calc{background:var(--mint);border:1px solid var(--leaf);border-radius:16px;padding:18px}
+.calc input[type=range]{width:100%;accent-color:var(--forest);cursor:pointer}
+.calc-out{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:12px;text-align:center}
+.calc-out b{display:block;font-size:2rem;font-weight:900;color:var(--forest-deep);line-height:1.1;font-variant-numeric:tabular-nums}
+.calc-out span{font-size:.82rem;color:var(--ink-3);font-weight:600}
+.calc-out .hl b{color:var(--olive)}
+.calc-out .eq{font-size:1.4rem;color:var(--ink-3);font-weight:700}
+.calc-note{text-align:center;font-size:.92rem;color:var(--forest);font-weight:600;margin-top:8px;min-height:1.5em}
+
+.radar{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-sm)}
+.radar-head{display:flex;align-items:center;gap:10px;font-size:.95rem}
+.radar-head b{color:var(--forest-deep)}
+.cnt{margin-inline-start:auto;background:var(--forest);color:var(--cream);font-weight:800;font-size:.85rem;min-width:28px;height:28px;border-radius:99px;display:grid;place-items:center;padding:0 8px;transition:transform .2s}
+.cnt.bump{transform:scale(1.25)}
+.pulse{width:10px;height:10px;border-radius:50%;background:var(--olive-bright);box-shadow:0 0 0 0 rgba(139,163,107,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(139,163,107,0)}100%{box-shadow:0 0 0 0 rgba(139,163,107,0)}}
+.radar-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.radar-chips .empty{font-size:.88rem;color:var(--ink-3)}
+.op{display:inline-flex;align-items:center;gap:6px;background:var(--mint);border:1px solid var(--leaf);color:var(--forest);font-weight:700;font-size:.88rem;padding:6px 12px;border-radius:99px;animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+
+/* cards */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;margin-top:22px;box-shadow:var(--shadow-sm);display:none}
+.card.on{display:block;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:8px}
+.num{flex:none;width:46px;height:46px;border-radius:50%;background:var(--mint);border:1.5px solid var(--leaf);color:var(--forest);display:grid;place-items:center;font-weight:900;font-size:1.15rem}
+h2{font-size:clamp(1.35rem,3.4vw,1.75rem);line-height:1.25;font-weight:800;color:var(--forest-deep)}
+.step-head p{color:var(--ink-3);font-size:.95rem;margin-top:2px}
+
+/* fields */
+.q{margin-top:26px}
+.q>label,.q>.lbl{display:block;font-weight:700;color:var(--forest-deep);font-size:1.02rem;margin-bottom:4px}
+.q .hint{display:block;color:var(--ink-3);font-size:.9rem;margin-bottom:10px;font-weight:400}
+.req{color:var(--coral)}
+input[type=text],input[type=email],input[type=tel],textarea{width:100%;font:inherit;font-size:1rem;color:var(--ink);background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;transition:border-color .2s,background .2s}
+textarea{min-height:110px;resize:vertical;line-height:1.6}
+input:focus,textarea:focus{outline:none;border-color:var(--olive);background:#fff}
+input.bad,textarea.bad{border-color:var(--coral);background:#FBEFE9}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:inherit;font-size:.93rem;font-weight:600;color:var(--forest);background:var(--cream);border:1.5px solid var(--line);border-radius:99px;padding:8px 16px;cursor:pointer;transition:all .15s}
+.chips button:hover{border-color:var(--leaf)}
+.chips button[aria-pressed=true]{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.chips.bad button{border-color:#EFC9BB}
+
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.scale button{font:inherit;background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:12px 4px;cursor:pointer;color:var(--forest);transition:all .15s}
+.scale button b{display:block;font-size:1.3rem;font-weight:900;color:inherit}
+.scale button span{display:block;font-size:.76rem;font-weight:600;line-height:1.3;color:var(--ink-3)}
+.scale button[aria-pressed=true]{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.scale button[aria-pressed=true] span{color:var(--leaf)}
+
+.drop{border:2px dashed var(--leaf);border-radius:16px;background:var(--mint);padding:22px;text-align:center;cursor:pointer;transition:background .2s}
+.drop:hover,.drop.over{background:#E6EBDA}
+.drop b{display:block;color:var(--forest)}
+.drop span{font-size:.88rem;color:var(--ink-3)}
+.files{list-style:none;margin-top:10px}
+.files li{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-top:6px;font-size:.92rem}
+.files li button{border:0;background:none;color:var(--coral);font:inherit;font-weight:700;cursor:pointer}
+
+.note{border-radius:16px;padding:14px 16px;margin-top:16px;display:flex;gap:12px;font-size:.95rem}
+.note .ic{flex:none;font-size:1.2rem;line-height:1.4}
+.note.tip{background:var(--mint);border:1px solid var(--leaf)}
+.note.warn{background:#FBEFE9;border:1px solid #EFC9BB}
+.hidden{display:none!important}
+
+/* nav buttons */
+.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:30px;padding-top:22px;border-top:1px dashed var(--line)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border:0;font:inherit;font-weight:700;padding:12px 26px;border-radius:99px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--forest-deep)}
+.btn[disabled]{opacity:.6;cursor:wait;transform:none}
+.btn.ghost{background:transparent;color:var(--forest);border:1.5px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--olive)}
+.err{color:#B2543D;font-weight:600;font-size:.93rem;margin-top:12px}
+.saved{font-size:.82rem;color:var(--ink-3)}
+
+/* thanks */
+.thanks{text-align:center}
+.thanks .big{font-size:3rem;line-height:1}
+.thanks h2{margin-top:10px}
+.thanks p{color:var(--ink-2);margin-top:10px}
+.thanks .note{text-align:right}
+.hp{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+
+footer{border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--ink-3);font-size:.88rem}
+footer img{height:30px;display:block;margin:0 auto 10px}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .progress span{display:none}
+  .card{padding:26px 18px}
+  .row2{grid-template-columns:1fr}
+  .scale{gap:5px}
+  .scale button span{font-size:.68rem}
+  .num{width:40px;height:40px;font-size:1rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36">
+    <div class="progress" aria-hidden="true"><span id="pLabel">פתיחה</span><div class="bar"><i id="pBar"></i></div></div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="hero">
+    <span class="eyebrow">שאלון אפיון · לפני הפגישה</span>
+    <h1>ייעוץ והדרכה אישית <em>לייעול העבודה בעסק</em> עם AI</h1>
+    <div class="term" aria-hidden="true"><span class="pr">✦ Claude</span> <span id="typed"></span><i class="cur"></i></div>
+    <p class="lead">כמה שאלות קצרות על איך נראה השבוע שלכם. תוך כדי שאתם עונים, תראו אילו כיוונים לייעול כבר עולים, ואני אגיע לפגישה מוכנה עם רעיון ראשון שנבנה יחד.</p>
+    <div class="hero-meta">
+      <span class="chip-info">⏱ בערך 10 דקות</span>
+      <span class="chip-info">💾 נשמר אוטומטית</span>
+      <span class="chip-info">🔒 רק אני רואה את התשובות</span>
+    </div>
+  </section>
+
+  <form id="f" novalidate autocomplete="on">
+    <div class="hp" aria-hidden="true"><label>אל תמלאו<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+    <!-- 1 -->
+    <section class="card on" data-title="פרטים">
+      <div class="step-head"><div class="num">1</div><div><h2>נתחיל בפרטים</h2><p>כדי שאדע של מי התשובות</p></div></div>
+      <div class="row2">
+        <div class="q"><label for="name">שם מלא <span class="req">*</span></label><input type="text" id="name" name="name" autocomplete="name" required></div>
+        <div class="q"><label for="business">שם העסק</label><input type="text" id="business" name="business" autocomplete="organization"></div>
+      </div>
+      <div class="row2">
+        <div class="q"><label for="phone">טלפון <span class="req">*</span></label><input type="tel" id="phone" name="phone" autocomplete="tel" dir="ltr" required></div>
+        <div class="q"><label for="email">מייל <span class="req">*</span></label><input type="email" id="email" name="email" autocomplete="email" dir="ltr" required></div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="card" data-title="העסק">
+      <div class="step-head"><div class="num">2</div><div><h2>ספרו לי על העסק</h2><p>בכמה משפטים, כמו שהייתם מספרים לחברה</p></div></div>
+      <div class="q"><label for="what">מה העסק עושה, ומי הלקוחות שלכם? <span class="req">*</span></label>
+        <span class="hint">למשל: "סטודיו לעיצוב פנים, רוב הלקוחות זוגות שקנו דירה חדשה"</span>
+        <textarea id="what" name="what" required></textarea></div>
+      <div class="q"><span class="lbl">כמה אנשים עובדים בעסק?</span>
+        <div class="chips" data-name="team" data-single>
+          <button type="button">רק אני</button><button type="button">2–5</button><button type="button">6–15</button><button type="button">יותר מ-15</button>
+        </div></div>
+    </section>
+
+    <!-- 3 -->
+    <section class="card" data-title="הכלים">
+      <div class="step-head"><div class="num">3</div><div><h2>במה אתם עובדים?</h2><p>סמנו את כל מה שאתם משתמשים בו ביום-יום</p></div></div>
+      <div class="q"><span class="lbl">כלים ותוכנות</span>
+        <div class="chips" data-name="tools">
+          <button type="button">מייל (ג'ימייל / אאוטלוק)</button><button type="button">וואטסאפ</button><button type="button">גוגל שיטס / אקסל</button><button type="button">גוגל דרייב</button><button type="button">גוגל יומן</button><button type="button">מערכת חשבוניות</button><button type="button">CRM / מערכת לקוחות</button><button type="button">קנבה</button><button type="button">אתר / חנות</button><button type="button">אינסטגרם / פייסבוק</button><button type="button">זום</button><button type="button">נושן / מאנדיי</button><button type="button">ChatGPT</button>
+        </div>
+        <input type="text" name="tools_other" placeholder="משהו נוסף? כתבו כאן" style="margin-top:10px"></div>
+      <div class="q"><span class="lbl">על איזה מחשב אתם עובדים? <span class="req">*</span></span>
+        <div class="chips" data-name="computer" data-single data-required>
+          <button type="button">מק</button><button type="button">ווינדוס</button><button type="button">לא בטוח/ה</button>
+        </div></div>
+      <div class="q"><span class="lbl">יש לכם מנוי בתשלום לקלוד? <span class="req">*</span></span>
+        <div class="chips" data-name="claude" data-single data-required>
+          <button type="button">כן, יש לי מנוי</button><button type="button">יש לי חשבון חינמי</button><button type="button">אין לי</button><button type="button">לא בטוח/ה</button>
+        </div>
+        <div class="note tip hidden" id="claudeNote"><span class="ic">💡</span><div>לא נורא. לפני הפגישה אשלח לכם הסבר קצר איך לפתוח מנוי ולהתקין, כדי שנוכל לעבוד מהדקה הראשונה.</div></div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="card" data-title="השבוע שלכם">
+      <div class="step-head"><div class="num">4</div><div><h2>איך נראה השבוע שלכם</h2><p>זה החלק הכי חשוב. אין תשובות לא נכונות</p></div></div>
+      <div class="q"><label for="timeSink">מה לוקח לכם הכי הרבה זמן בשבוע? <span class="req">*</span></label>
+        <span class="hint">למשל: "לענות ללקוחות בוואטסאפ", "להכין הצעות מחיר", "לחשוב מה להעלות לאינסטגרם"</span>
+        <textarea id="timeSink" name="timeSink" required></textarea></div>
+      <div class="q"><label for="repeat">אילו משימות חוזרות על עצמן כל שבוע, כמעט באותה צורה?</label>
+        <span class="hint">דברים שאתם עושים שוב ושוב, ומרגישים שאפשר היה לעשות אותם בעיניים עצומות</span>
+        <textarea id="repeat" name="repeat"></textarea></div>
+      <div class="q"><label for="hours">כמה שעות בשבוע הולכות על משימות שחוזרות על עצמן?</label>
+        <span class="hint">הערכה גסה מספיקה</span>
+        <div class="calc">
+          <input type="range" id="hours" name="hoursWeek" min="0" max="30" step="1" value="5">
+          <div class="calc-out">
+            <div><b id="hW">5</b><span>שעות בשבוע</span></div>
+            <div class="eq">=</div>
+            <div class="hl"><b id="hY">240</b><span>שעות בשנה</span></div>
+          </div>
+          <p class="calc-note" id="hNote"></p>
+        </div></div>
+      <div class="q"><label for="hate">איזו משימה אתם הכי שונאים לעשות?</label>
+        <textarea id="hate" name="hate" style="min-height:80px"></textarea></div>
+    </section>
+
+    <!-- 5 -->
+    <section class="card" data-title="העובד הדמיוני">
+      <div class="step-head"><div class="num">5</div><div><h2>העובד הדמיוני</h2><p>תדמיינו רגע</p></div></div>
+      <div class="q"><label for="assistant">אם היה לכם עובד שעובד 5 שעות בשבוע, מה הייתם מעבירים אליו? <span class="req">*</span></label>
+        <span class="hint">כתבו הכל, גם דברים שנראים לכם קטנים או לא קשורים ל-AI</span>
+        <textarea id="assistant" name="assistant" required></textarea></div>
+    </section>
+
+    <!-- 6 -->
+    <section class="card" data-title="ניסיון עם AI">
+      <div class="step-head"><div class="num">6</div><div><h2>ואיפה אתם עם AI?</h2><p>כדי שאדע מאיפה להתחיל</p></div></div>
+      <div class="q"><span class="lbl">כמה אתם משתמשים היום ב-AI? <span class="req">*</span></span>
+        <div class="scale" data-name="aiLevel" data-required>
+          <button type="button"><b>1</b><span>אף פעם</span></button>
+          <button type="button"><b>2</b><span>ניסיתי פעם-פעמיים</span></button>
+          <button type="button"><b>3</b><span>מדי פעם</span></button>
+          <button type="button"><b>4</b><span>כל שבוע</span></button>
+          <button type="button"><b>5</b><span>כל יום</span></button>
+        </div></div>
+      <div class="q"><label for="aiTried">מה ניסיתם עד היום, ואיפה נתקעתם?</label>
+        <span class="hint">למשל: "כותבת פוסטים עם ChatGPT אבל זה יוצא גנרי"</span>
+        <textarea id="aiTried" name="aiTried"></textarea></div>
+    </section>
+
+    <!-- 7 -->
+    <section class="card" data-title="המטרה">
+      <div class="step-head"><div class="num">7</div><div><h2>המטרה</h2><p>שאלה אחרונה, ואפשר לשלוח</p></div></div>
+      <div class="q"><label for="goal">אם בעוד חודש דבר אחד בעסק יעבוד אחרת, מה הייתם רוצים שזה יהיה? <span class="req">*</span></label>
+        <textarea id="goal" name="goal" required></textarea></div>
+      <div class="q"><span class="lbl">יש לכם דוגמה למשימה כזו? צרפו אותה</span>
+        <span class="hint">מייל ששלחתם, הצעת מחיר, טבלה או צילום מסך. לא חובה, אבל זה עוזר לי מאוד להתכונן</span>
+        <div class="drop" id="drop" tabindex="0" role="button"><b>📎 לחצו לבחירת קבצים</b><span>או גררו לכאן · עד 3 קבצים, עד 8MB ביחד</span></div>
+        <input type="file" id="fileIn" multiple class="hidden" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt">
+        <ul class="files" id="fileList"></ul>
+      </div>
+      <div class="q"><label for="more">עוד משהו שחשוב שאדע?</label>
+        <textarea id="more" name="more" style="min-height:80px"></textarea></div>
+    </section>
+
+    <!-- thanks -->
+    <section class="card thanks" id="thanks" data-title="נשלח">
+      <div class="big">🌿</div>
+      <h2>תודה, קיבלתי!</h2>
+      <p>אעבור על התשובות לפני הפגישה ואגיע עם רעיון ראשון שנבנה יחד.</p>
+      <div class="note tip hidden" id="thanksClaude"><span class="ic">💡</span><div><b>עוד דבר אחד לפני הפגישה:</b> צריך מנוי בתשלום לקלוד ואת אפליקציית Claude מותקנת על המחשב. אשלח לכם הסבר קצר בוואטסאפ, ואם בא לכם להתחיל כבר עכשיו, <a href="../claude-code-start/" target="_blank" rel="noopener">כאן יש מדריך התקנה צעד אחרי צעד</a>.</div></div>
+      <div class="note tip hidden" id="thanksReady"><span class="ic">✅</span><div><b>לפני הפגישה:</b> ודאו שאפליקציית Claude מותקנת על המחשב ושאתם מחוברים. אם צריך, <a href="../claude-code-start/" target="_blank" rel="noopener">כאן יש מדריך התקנה צעד אחרי צעד</a>.</div></div>
+    </section>
+
+    <aside class="radar hidden" id="radar" aria-live="polite">
+      <div class="radar-head"><span class="pulse"></span><b id="rTitle">כיוונים לייעול שזיהיתי עד עכשיו</b><span class="cnt" id="rCnt">0</span></div>
+      <div class="radar-chips" id="rChips"><span class="empty">ממשיכים לענות, והכיוונים יופיעו כאן...</span></div>
+    </aside>
+
+    <div class="nav" id="nav">
+      <button type="button" class="btn ghost" id="back">→ הקודם</button>
+      <span class="saved" id="saved"></span>
+      <button type="button" class="btn" id="next">הבא ←</button>
+    </div>
+    <p class="err" id="err" role="alert"></p>
+  </form>
+</main>
+
+<footer>
+  <img src="../assets/logo-dark.png" alt="Ronig.ai">
+  <a href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">@ronig.ai</a>
+</footer>
+
+<script>
+// כתובת ה-Web App של Google Apps Script (Deploy > Web app). ריק = הטופס עוד לא מחובר.
+var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzXtzoWbSPaTie7X6G_GFLqfRd97-MVySbeYx7hdIFcsj2bn4qu8rDDjACk4PQkZPrRSA/exec';
+var KEY = 'ronig_afyun_draft';
+var MAX_BYTES = 8 * 1024 * 1024;
+
+var form = document.getElementById('f');
+var cards = [].slice.call(document.querySelectorAll('.card'));
+var steps = cards.filter(function(c){ return c.id !== 'thanks'; });
+var cur = 0, files = [];
+var $ = function(id){ return document.getElementById(id); };
+
+// chips & scale
+document.querySelectorAll('.chips,.scale').forEach(function(g){
+  g.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    var single = g.hasAttribute('data-single') || g.classList.contains('scale');
+    if(single){ g.querySelectorAll('button').forEach(function(x){ if(x!==b) x.setAttribute('aria-pressed','false'); }); }
+    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')==='true' && !single ? 'false' : 'true');
+    g.classList.remove('bad');
+    if(g.dataset.name==='claude') toggleClaudeNote();
+    save();
+  });
+});
+function chipVal(g){
+  return [].map.call(g.querySelectorAll('button[aria-pressed=true]'), function(b){
+    var n = b.querySelector('b'); return n ? n.textContent : b.textContent.trim();
+  });
+}
+function noSub(){
+  var v = chipVal(document.querySelector('[data-name=claude]'))[0];
+  return v && v !== 'כן, יש לי מנוי';
+}
+function toggleClaudeNote(){ $('claudeNote').classList.toggle('hidden', !noSub()); }
+
+// collect / restore
+function collect(){
+  var d = {};
+  form.querySelectorAll('input[name],textarea[name]').forEach(function(el){ d[el.name] = el.value.trim(); });
+  document.querySelectorAll('.chips,.scale').forEach(function(g){ d[g.dataset.name] = chipVal(g).join(', '); });
+  d.opportunities = found.join(', ');
+  return d;
+}
+var t;
+function save(){
+  clearTimeout(t);
+  t = setTimeout(function(){
+    try{ localStorage.setItem(KEY, JSON.stringify({d:collect(), step:cur})); $('saved').textContent = 'נשמר ✓'; }catch(e){}
+  }, 400);
+}
+function restore(){
+  var s; try{ s = JSON.parse(localStorage.getItem(KEY) || 'null'); }catch(e){}
+  if(!s) return;
+  Object.keys(s.d).forEach(function(k){
+    var el = form.querySelector('[name="'+k+'"]');
+    if(el){ el.value = s.d[k]; return; }
+    var g = document.querySelector('[data-name="'+k+'"]'); if(!g || !s.d[k]) return;
+    var vals = s.d[k].split(', ');
+    g.querySelectorAll('button').forEach(function(b){
+      var n = b.querySelector('b'); var v = n ? n.textContent : b.textContent.trim();
+      if(vals.indexOf(v) > -1) b.setAttribute('aria-pressed','true');
+    });
+  });
+  toggleClaudeNote();
+  if(typeof s.step === 'number') cur = Math.min(s.step, steps.length-1);
+}
+form.addEventListener('input', function(e){ e.target.classList.remove('bad'); save(); });
+
+// validation
+function valid(card){
+  var ok = true, first;
+  card.querySelectorAll('[required]').forEach(function(el){
+    var v = el.value.trim();
+    if(!v || (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))){ el.classList.add('bad'); ok = false; first = first || el; }
+  });
+  card.querySelectorAll('[data-required]').forEach(function(g){
+    if(!g.querySelector('[aria-pressed=true]')){ g.classList.add('bad'); ok = false; first = first || g; }
+  });
+  if(!ok){ $('err').textContent = 'חסרות כמה תשובות שמסומנות בכוכבית, או שכתובת המייל לא תקינה'; first.scrollIntoView({block:'center',behavior:'smooth'}); }
+  return ok;
+}
+
+// navigation
+function show(i){
+  cur = i;
+  cards.forEach(function(c){ c.classList.remove('on'); });
+  steps[i].classList.add('on');
+  $('hero').classList.toggle('hidden', i > 0);
+  $('back').style.visibility = i === 0 ? 'hidden' : 'visible';
+  $('next').textContent = i === steps.length-1 ? 'שליחה ✓' : 'הבא ←';
+  $('pBar').style.width = (i / steps.length * 100) + '%';
+  $('pLabel').textContent = (i+1) + ' מתוך ' + steps.length;
+  $('err').textContent = '';
+  $('radar').classList.toggle('hidden', i < 1);
+  if(i > 0) window.scrollTo({top:0,behavior:'smooth'});
+}
+$('back').addEventListener('click', function(){ if(cur > 0){ show(cur-1); save(); } });
+$('next').addEventListener('click', function(){
+  if(!valid(steps[cur])) return;
+  if(cur < steps.length-1){ show(cur+1); save(); } else submit();
+});
+
+// files
+var drop = $('drop'), fileIn = $('fileIn');
+drop.addEventListener('click', function(){ fileIn.click(); });
+drop.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); fileIn.click(); } });
+['dragover','dragenter'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev, function(){ drop.classList.remove('over'); }); });
+drop.addEventListener('drop', function(e){ e.preventDefault(); addFiles(e.dataTransfer.files); });
+fileIn.addEventListener('change', function(){ addFiles(fileIn.files); fileIn.value = ''; });
+function addFiles(list){
+  $('err').textContent = '';
+  [].forEach.call(list, function(f){
+    var total = files.reduce(function(s,x){ return s + x.size; }, 0);
+    if(files.length >= 3){ $('err').textContent = 'אפשר לצרף עד 3 קבצים'; return; }
+    if(total + f.size > MAX_BYTES){ $('err').textContent = 'הקבצים גדולים מדי. אפשר לשלוח אותם אליי בוואטסאפ'; return; }
+    files.push(f);
+  });
+  renderFiles();
+}
+function renderFiles(){
+  var ul = $('fileList'); ul.innerHTML = '';
+  files.forEach(function(f, i){
+    var li = document.createElement('li');
+    var s = document.createElement('span'); s.textContent = '📄 ' + f.name;
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = 'הסרה';
+    b.addEventListener('click', function(){ files.splice(i,1); renderFiles(); });
+    li.appendChild(s); li.appendChild(b); ul.appendChild(li);
+  });
+}
+function readB64(f){
+  return new Promise(function(res, rej){
+    var r = new FileReader();
+    r.onload = function(){ res({name:f.name, type:f.type || 'application/octet-stream', data:String(r.result).split(',')[1]}); };
+    r.onerror = rej; r.readAsDataURL(f);
+  });
+}
+
+// submit
+function submit(){
+  var d = collect();
+  if(d.website) return; // honeypot
+  if(!ENDPOINT){ $('err').textContent = 'הטופס עוד לא מחובר. אפשר לשלוח לי את התשובות בוואטסאפ.'; return; }
+  var btn = $('next'); btn.disabled = true; btn.textContent = 'שולח...';
+  Promise.all(files.map(readB64)).then(function(enc){
+    d.files = enc;
+    return fetch(ENDPOINT, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(d)});
+  }).then(function(){
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    var need = noSub();
+    $('thanksClaude').classList.toggle('hidden', !need);
+    $('thanksReady').classList.toggle('hidden', need);
+    cards.forEach(function(c){ c.classList.remove('on'); });
+    $('thanks').classList.add('on');
+    $('nav').classList.add('hidden'); $('err').textContent = '';
+    $('rTitle').textContent = 'הכיוונים שנבדוק יחד בפגישה';
+    $('radar').classList.toggle('hidden', !found.length);
+    $('pBar').style.width = '100%'; $('pLabel').textContent = 'נשלח ✓';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }).catch(function(){
+    btn.disabled = false; btn.textContent = 'שליחה ✓';
+    $('err').textContent = 'משהו השתבש בשליחה. התשובות שמורות, נסו שוב בעוד רגע.';
+  });
+}
+
+// typing line in hero
+(function(){
+  var lines = ['מנתח איך נראה השבוע שלכם...', 'מחפש משימות שחוזרות על עצמן...', 'מכין תוכנית עבודה לפגישה...'];
+  var li = 0, ch = 0, del = false, el = $('typed');
+  (function tick(){
+    var s = lines[li];
+    el.textContent = s.slice(0, ch);
+    if(!del && ch < s.length){ ch++; return setTimeout(tick, 55); }
+    if(!del){ del = true; return setTimeout(tick, 1600); }
+    if(ch > 0){ ch--; return setTimeout(tick, 22); }
+    del = false; li = (li + 1) % lines.length; setTimeout(tick, 300);
+  })();
+})();
+
+// hours calculator
+function calc(){
+  var w = +$('hours').value, y = w * 48;
+  $('hW').textContent = w;
+  $('hY').textContent = y.toLocaleString('he-IL');
+  var weeks = Math.round(y / 40);
+  $('hNote').textContent = w === 0 ? '' : weeks >= 1 ? 'כמו ' + weeks + ' שבועות עבודה מלאים בשנה' : 'כל שעה שנחסכת חוזרת אליכם כל שבוע';
+}
+$('hours').addEventListener('input', calc);
+
+// opportunity radar: simple keyword matching over the answers
+var OPS = [
+  ['✉️ מענה ומיון מיילים', /מייל|אימייל|ג'ימייל|ג׳ימייל|אאוטלוק|דואר/],
+  ['💬 תבניות מענה ללקוחות', /וואטסאפ|ווטסאפ|הודעות|פניות|לענות ל|שאלות של לקוחות|שירות לקוחות/],
+  ['🧾 הצעות מחיר', /הצע(ת|ות) מחיר|תמחור|הצעה ל/],
+  ['📂 איסוף וסידור חשבוניות', /חשבוני|קבלות|הנהלת חשבונות|רואה חשבון|הוצאות/],
+  ['📱 תכנון וכתיבת תוכן', /תוכן|פוסט|אינסטגרם|רילס|קפשן|פייסבוק|טיקטוק|ניוזלטר|לינקדאין|סושיאל/],
+  ['📊 דוחות מתוך טבלאות', /טבל|אקסל|שיטס|דוח|נתונים|מספרים/],
+  ['📝 סיכומי פגישות ושיחות', /סיכום|סיכומי|פרוטוקול|זום|שיחות|הקלטה/],
+  ['🗂 סידור קבצים ומסמכים', /קבצים|תיקיות|מסמכים|דרייב|לסדר/],
+  ['📅 תיאום פגישות ותזכורות', /יומן|תיאום|לתאם|תורים|תזכור/],
+  ['📄 חוזים והסכמים', /חוזה|חוזים|הסכם|הסכמים/],
+  ['🌐 עדכון אתר ודפים', /אתר|דף נחיתה|חנות/],
+  ['👥 מעקב אחרי לקוחות', /לידים|ליד |מעקב|CRM|פולואפ|פולו אפ|לחזור ל/i]
+];
+var TOOL_OPS = {'מייל (ג\'ימייל / אאוטלוק)':0, 'מערכת חשבוניות':3, 'אינסטגרם / פייסבוק':4, 'גוגל שיטס / אקסל':5, 'זום':6, 'גוגל יומן':8, 'CRM / מערכת לקוחות':11};
+var found = [];
+function scan(){
+  var text = ['what','timeSink','repeat','hate','assistant','goal','aiTried','more','tools_other']
+    .map(function(n){ var el = form.querySelector('[name="'+n+'"]'); return el ? el.value : ''; }).join(' ');
+  var hit = {};
+  OPS.forEach(function(o, i){ if(o[1].test(text)) hit[i] = 1; });
+  chipVal(document.querySelector('[data-name=tools]')).forEach(function(t){ if(t in TOOL_OPS) hit[TOOL_OPS[t]] = 1; });
+  var next = OPS.filter(function(o, i){ return hit[i]; }).map(function(o){ return o[0]; });
+  var box = $('rChips'), added = false;
+  if(!next.length){ box.innerHTML = '<span class="empty">ממשיכים לענות, והכיוונים יופיעו כאן...</span>'; }
+  else {
+    var old = box.querySelector('.empty'); if(old) old.remove();
+    [].slice.call(box.querySelectorAll('.op')).forEach(function(c){ if(next.indexOf(c.textContent) < 0) c.remove(); });
+    next.forEach(function(n){
+      if(found.indexOf(n) < 0){ var s = document.createElement('span'); s.className = 'op'; s.textContent = n; box.appendChild(s); added = true; }
+    });
+  }
+  found = next;
+  var c = $('rCnt'); c.textContent = found.length;
+  if(added){ c.classList.add('bump'); setTimeout(function(){ c.classList.remove('bump'); }, 200); }
+}
+var st;
+form.addEventListener('input', function(){ clearTimeout(st); st = setTimeout(scan, 350); });
+document.querySelector('[data-name=tools]').addEventListener('click', function(){ setTimeout(scan, 0); });
+
+restore();
+calc();
+scan();
+show(cur);
+</script>
+</body>
+</html>
