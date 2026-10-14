@@ -176,19 +176,19 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     </div>
   </section>
 
-  <form id="f" novalidate autocomplete="on">
+  <form id="f" novalidate autocomplete="off">
     <div class="hp" aria-hidden="true"><label>אל תמלאו<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
 
     <!-- 1 -->
     <section class="card on" data-title="פרטים">
       <div class="step-head"><div class="num">1</div><div><h2>נתחיל בפרטים</h2><p>כדי שאדע של מי התשובות</p></div></div>
       <div class="row2">
-        <div class="q"><label for="name">שם מלא <span class="req">*</span></label><input type="text" id="name" name="name" autocomplete="name" required></div>
-        <div class="q"><label for="business">שם העסק</label><input type="text" id="business" name="business" autocomplete="organization"></div>
+        <div class="q"><label for="fa">שם מלא <span class="req">*</span></label><input type="text" id="fa" name="fld_a" data-k="name" autocomplete="off" autocorrect="off" data-lpignore="true" required></div>
+        <div class="q"><label for="fb">שם העסק</label><input type="text" id="fb" name="fld_b" data-k="business" autocomplete="off" data-lpignore="true"></div>
       </div>
       <div class="row2">
-        <div class="q"><label for="phone">טלפון <span class="req">*</span></label><input type="tel" id="phone" name="phone" autocomplete="tel" dir="ltr" required></div>
-        <div class="q"><label for="email">מייל <span class="req">*</span></label><input type="email" id="email" name="email" autocomplete="email" dir="ltr" required></div>
+        <div class="q"><label for="fc">טלפון <span class="req">*</span></label><input type="text" inputmode="tel" id="fc" name="fld_c" data-k="phone" autocomplete="off" data-lpignore="true" dir="ltr" required></div>
+        <div class="q"><label for="fd">מייל <span class="req">*</span></label><input type="text" inputmode="email" autocapitalize="off" spellcheck="false" id="fd" name="fld_d" data-k="email" autocomplete="off" data-lpignore="true" dir="ltr" required></div>
       </div>
     </section>
 
@@ -353,7 +353,7 @@ function toggleClaudeNote(){ $('claudeNote').classList.toggle('hidden', !noSub()
 // collect / restore
 function collect(){
   var d = {};
-  form.querySelectorAll('input[name],textarea[name]').forEach(function(el){ d[el.name] = el.value.trim(); });
+  form.querySelectorAll('input[name],textarea[name]').forEach(function(el){ d[el.dataset.k || el.name] = el.value.trim(); });
   document.querySelectorAll('.chips,.scale').forEach(function(g){ d[g.dataset.name] = chipVal(g).join(', '); });
   d.opportunities = found.join(', ');
   return d;
@@ -369,7 +369,7 @@ function restore(){
   var s; try{ s = JSON.parse(localStorage.getItem(KEY) || 'null'); }catch(e){}
   if(!s) return;
   Object.keys(s.d).forEach(function(k){
-    var el = form.querySelector('[name="'+k+'"]');
+    var el = form.querySelector('[data-k="'+k+'"]') || form.querySelector('[name="'+k+'"]');
     if(el){ el.value = s.d[k]; return; }
     var g = document.querySelector('[data-name="'+k+'"]'); if(!g || !s.d[k]) return;
     var vals = s.d[k].split(', ');
@@ -388,7 +388,7 @@ function valid(card){
   var ok = true, first;
   card.querySelectorAll('[required]').forEach(function(el){
     var v = el.value.trim();
-    if(!v || (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))){ el.classList.add('bad'); ok = false; first = first || el; }
+    if(!v || (el.dataset.k === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))){ el.classList.add('bad'); ok = false; first = first || el; }
   });
   card.querySelectorAll('[data-required]').forEach(function(g){
     if(!g.querySelector('[aria-pressed=true]')){ g.classList.add('bad'); ok = false; first = first || g; }
