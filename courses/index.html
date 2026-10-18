@@ -251,5 +251,13 @@
         });
     });
 </script>
+<script>
+/* deep links (#claude-code-start): re-scroll after images and fonts settle, so the card lands under the header */
+(function(){
+  if(!location.hash) return;
+  function go(){var el=document.getElementById(decodeURIComponent(location.hash.slice(1))); if(el) el.scrollIntoView({block:'start',behavior:'auto'});}
+  window.addEventListener('load',function(){go(); setTimeout(go,300);});
+})();
+</script>
 </body>
 </html>
