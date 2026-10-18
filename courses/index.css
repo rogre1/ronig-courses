@@ -164,3 +164,9 @@ p{margin:0 0 1em}
 .footer-links a{color:var(--ink-2); text-decoration:none; font-weight:500}
 .footer-links a:hover{color:var(--ink)}
 .footer-mail a{color:var(--ink-2); text-decoration:none}
+
+/* deep link: /courses/#claude-code-start */
+.free-guide{scroll-margin-top:calc(var(--header-h) + 24px)}
+.free-guide:target{box-shadow:0 0 0 3px #8BA36B,0 12px 28px rgba(35,38,30,.16);animation:target-pulse 1.6s ease-out 2}
+@keyframes target-pulse{0%{box-shadow:0 0 0 0 rgba(139,163,107,.55)}100%{box-shadow:0 0 0 16px rgba(139,163,107,0)}}
+@media (prefers-reduced-motion:reduce){.free-guide:target{animation:none}}
