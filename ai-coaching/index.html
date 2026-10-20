@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ייעוץ והדרכה אישית לייעול העסק עם AI | Ronig.ai</title>
+<title>ליווי אישי לייעול העבודה בעסק עם AI | Ronig.ai</title>
 <meta name="robots" content="noindex, nofollow, noarchive">
-<meta name="description" content="ליווי אישי שבו אתם בונים בעצמכם כלים שחוסכים שעות בעסק, ויוצאים עם היכולת לבנות לבד.">
+<meta name="description" content="פגישות אישיות אונליין שבהן מזהים איפה AI יכול להקל על העבודה בעסק, ולומדים ליישם אותו על משימות אמיתיות, צעד אחרי צעד.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="he_IL">
-<meta property="og:title" content="ייעוץ והדרכה אישית לייעול העסק עם AI">
-<meta property="og:description" content="מלמדת בעלי עסקים קטנים למסור ל-AI את כל מה שמסביב, כדי שיישאר להם זמן לעבודה עצמה.">
+<meta property="og:title" content="ליווי אישי לייעול העבודה בעסק עם AI">
+<meta property="og:description" content="מזהים איפה AI יכול להקל על העבודה בעסק, ולומדים ליישם אותו על משימות אמיתיות, בעברית פשוטה וצעד אחרי צעד.">
 <meta property="og:image" content="https://rogre1.github.io/ronig-courses/ai-coaching/me.jpg">
 <link rel="icon" href="../claude-code-start/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="../claude-code-start/favicon.png">
@@ -140,7 +140,7 @@ h1{font-size:clamp(2.1rem,6vw,3.6rem);line-height:1.12;font-weight:900;color:var
 .small-note{color:var(--ink-3);font-size:.9rem;margin-top:14px}
 
 /* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px;counter-reset:s}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px;counter-reset:s}
 .steps>div{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px 22px 22px;box-shadow:var(--shadow-sm);counter-increment:s}
 .steps>div::before{content:"0" counter(s);position:absolute;top:-15px;right:20px;height:30px;padding:0 12px;border-radius:10px;background:var(--forest);color:var(--leaf);font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;font-size:.85rem;display:grid;place-items:center;letter-spacing:.05em}
 .steps h3{font-size:1.1rem;font-weight:800;color:var(--forest-deep);margin-bottom:6px}
@@ -173,6 +173,7 @@ h1{font-size:clamp(2.1rem,6vw,3.6rem);line-height:1.12;font-weight:900;color:var
 .plan.star li::before{color:var(--olive-bright)}
 .plan.star b{color:#fff}
 .plan .btn{margin-top:24px;justify-content:center}
+.plan-note{margin-top:14px;font-size:.88rem;color:var(--ink-3)}
 .plan.star .btn{background:var(--olive-bright);color:#fff}
 .plan.star .btn:hover{background:var(--olive)}
 .price-notes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px}
@@ -246,10 +247,10 @@ footer img{height:30px;display:block;margin:0 auto 10px}
   <section class="hero">
     <div class="me">
       <img src="me.jpg" alt="רוני" width="56" height="56">
-      <div><b>רוני · ronig.ai</b><span>ליווי אישי אונליין</span></div>
+      <div><b>רוני · ronig.ai</b><span>ליווי אישי לייעול העבודה בעסק עם AI</span></div>
     </div>
     <h1>ליווי אישי שמחזיר לכם את הזמן <em>לעבודה שאתם אוהבים</em></h1>
-    <p class="lead">פתחתם עסק כדי ליצור, לטפל, לבשל או לעצב, ורוב היום הולך על כל מה שמסביב. בפגישות אישיות אונליין אני מלמדת אתכם למסור ל-AI את מה שמסביב, בעברית פשוטה ושלב אחרי שלב, כדי שיישאר לכם זמן לעבודה עצמה.</p>
+    <p class="lead">פתחתם עסק כדי לעסוק במה שאתם אוהבים, אבל חלק גדול מהיום הולך על כל מה שמסביב. בפגישות אישיות אונליין נזהה איפה AI יכול להקל על העבודה שלכם, ונלמד ליישם אותו על משימות מהעסק, בעברית פשוטה וצעד אחרי צעד.</p>
     <div class="term" aria-hidden="true"><span class="pr">✦ Claude</span> <span id="typed"></span><i class="cur"></i></div>
     <div class="hero-cta">
       <a class="btn" href="#plans">לחבילות ולמחירים ←</a>
@@ -261,11 +262,11 @@ footer img{height:30px;display:block;margin:0 auto 10px}
   <section class="reveal">
     <span class="kicker">למה זה בשבילכם</span>
     <h2>AI לא לוקח לכם את היצירתיות. <em>הוא מחזיר לכם את הזמן אליה.</em></h2>
-    <p class="sub">היום בערך 70% מהזמן הולך על מה שמסביב, ו-30% על העבודה עצמה. בליווי אנחנו הופכים את היחס.</p>
+    <p class="sub">הצעות מחיר, הכנת תוכן וסידור מידע - כל מה שמסביב לעסק מצטבר לשעות. בליווי נזהה אילו משימות אפשר לקצר או לפשט בעזרת AI, ובמה הכי כדאי להתחיל.</p>
     <div class="why">
-      <div><div class="ic">⏳</div><h3>מה שעושים פעמיים, לא עושים שוב</h3><p>הודעות, הצעות מחיר, תיאומים וחשבוניות. כל משימה שחוזרת מגדירים פעם אחת, והיא כבר לא חוזרת אליכם. בלי לשכור בשביל זה אף אחד.</p></div>
-      <div><div class="ic">🛠</div><h3>זה באמת פשוט</h3><p>בלי ז'רגון ובלי "הצטרפו למהפכה". הכלי המדויק, הפרומפט להעתקה, שלב אחרי שלב. אם אתם יודעים לכתוב הודעת וואטסאפ, אתם יודעים לעשות את זה.</p></div>
-      <div><div class="ic">🌱</div><h3>יכולת שנשארת</h3><p>הכלים משתנים כל חודש. מה שנשאר זה לדעת לזהות מה אפשר לייעל ולבנות את זה בעצמכם, בלי לחכות לאף אחד.</p></div>
+      <div><div class="ic">⏳</div><h3>פחות עבודה שחוזרת על עצמה</h3><p>נזהה משימות שחוזרות בעסק ונלמד לבנות תבניות, כלים או תהליכים שיעזרו לבצע אותן בפחות עבודה ידנית.</p></div>
+      <div><div class="ic">🛠</div><h3>צעד אחרי צעד, בקצב שלכם</h3><p>לא צריך לדעת קוד. נעבוד על משימות מהעסק שלכם, עם הסברים ברורים והתנסות על המחשב שלכם.</p></div>
+      <div><div class="ic">🌱</div><h3>יכולת שנשארת</h3><p>המטרה היא שתבינו איך לעבוד עם AI, לבדוק את התוצאות ולהמשיך להתנסות גם אחרי המפגשים.</p></div>
     </div>
   </section>
 
@@ -278,11 +279,12 @@ footer img{height:30px;display:block;margin:0 auto 10px}
         <li>אתם מנהלים עסק קטן, לבד או עם עובד אחד.</li>
         <li>המקצוע שלכם הוא היצירה עצמה: סטודיו, טיפול, בישול, עיצוב, מותג קטן.</li>
         <li>כבר הבנתם שמשהו בצורת העבודה צריך להשתנות.</li>
-        <li>אתם מוכנים לשבת שעה וחצי ולהטמיע את זה בעסק.</li>
+        <li>אתם מוכנים להתנסות על המחשב שלכם ולפנות זמן ליישום ולתרגול גם אחרי המפגש.</li>
       </ul></div>
       <div class="a"><h3>פחות מתאים אם</h3><ul>
         <li>אתם מתעניינים ב-AI מסקרנות, בלי עסק מאחורה.</li>
         <li>אתם מחפשים מישהו שיבנה בשבילכם במקום ללמוד לעשות לבד.</li>
+        <li>אתם מחפשים ייעוץ עסקי בנושאי תמחור, מכירות או ניהול.</li>
         <li>אתם חברה גדולה, עם צוות שיווק ותפעול משלה.</li>
       </ul></div>
     </div>
@@ -291,24 +293,24 @@ footer img{height:30px;display:block;margin:0 auto 10px}
   <!-- personal fit -->
   <section class="reveal">
     <span class="kicker">מותאם אישית</span>
-    <h2>תוכנית שנבנית <em>רק בשבילכם</em></h2>
-    <p class="sub">אין כאן תוכנית קבועה לכולם. לפני שמתחילים אני לומדת את העסק שלכם, ממליצה מה הכי משתלם לבנות, ואנחנו בונים את זה יחד.</p>
+    <h2>מתחילים <em>מהעסק שלכם</em></h2>
+    <p class="sub">אין כאן תוכנית קבועה לכולם. לפני המפגש אני עוברת על שאלון האפיון שלכם ומזהה כיוונים אפשריים לייעול. יחד נבחר מטרה ממוקדת, בהתאם לצורך שלכם, לרמת הניסיון ולזמן שעומד לרשותנו.</p>
     <div class="fit">
       <div class="console" id="console" aria-hidden="true">
-        <div class="console-bar"><i></i><i></i><i></i><span>your-business.plan</span></div>
+        <div class="console-bar"><i></i><i></i><i></i><span>your-business.notes</span></div>
         <div class="console-body">
           <div class="crow"><span class="st"></span>קוראת את שאלון האפיון שלכם</div>
           <div class="crow"><span class="st"></span>ממפה משימות שחוזרות כל שבוע</div>
-          <div class="crow"><span class="st"></span>מדרגת לפי כמה זמן כל אחת תחסוך</div>
-          <div class="crow"><span class="st"></span>בודקת מה אפשר לבנות בזמן שיש לנו</div>
+          <div class="crow"><span class="st"></span>מעריכה איפה AI יכול לעזור</div>
+          <div class="crow"><span class="st"></span>בודקת מה מתאים לזמן שיש לנו</div>
           <div class="cbar"><i id="cbar"></i></div>
-          <div class="plan-out" id="planOut"><b>התוכנית המומלצת לעסק שלכם</b><ol><li>הצעות מחיר מתוך כמה פרטים</li><li>עריכת סרטונים בקלוד</li><li>קרוסלות מתוך רעיון אחד</li></ol></div>
+          <div class="plan-out" id="planOut"><b>כיוונים אפשריים לבדיקה</b><ol><li>טיוטת הצעת מחיר מתוך פרטי הפרויקט</li><li>סידור מסמכים והערות במקום אחד</li><li>קרוסלות מתוך רעיון אחד</li></ol></div>
         </div>
       </div>
       <ul class="fit-points">
-        <li><span class="n">01</span><div><h3>אפיון אישי לפני הכל</h3><p>שאלון קצר על העסק ועל השבוע שלכם, כדי שאגיע לפגישה עם תוכנית ולא עם שאלות.</p></div></li>
-        <li><span class="n">02</span><div><h3>אני ממליצה מה לבנות</h3><p>מתוך כל מה שאפשר, נבחר את מה שיחסוך לכם הכי הרבה זמן, ושאפשר לבנות באמת בזמן שיש לנו.</p></div></li>
-        <li><span class="n">03</span><div><h3>על הכלים והקבצים שלכם</h3><p>לא דוגמאות כלליות. בונים על המייל, הטבלאות והתיקיות של העסק שלכם.</p></div></li>
+        <li><span class="n">01</span><div><h3>אפיון אישי לפני הכל</h3><p>שאלון קצר על העסק ועל השבוע שלכם, כדי שאגיע לפגישה עם היכרות ראשונית עם העסק וכיוון לעבודה המשותפת.</p></div></li>
+        <li><span class="n">02</span><div><h3>בוחרים יחד במה להתמקד</h3><p>מתוך כל מה שאפשר, נבחר מטרה אחת ממוקדת שמתאימה לצורך שלכם ולזמן שיש לנו.</p></div></li>
+        <li><span class="n">03</span><div><h3>על חומרים אמיתיים מהעסק</h3><p>לא דוגמאות כלליות. עובדים על קבצים, טבלאות ומשימות מהעסק שלכם, עם הכלים שמתאימים להם.</p></div></li>
       </ul>
     </div>
   </section>
@@ -323,35 +325,36 @@ footer img{height:30px;display:block;margin:0 auto 10px}
       <div class="calc-out">
         <div><b id="hY">240</b><span>שעות בשנה</span></div>
         <div><b id="hD">30</b><span>ימי עבודה מלאים</span></div>
-        <div class="hl"><b id="hS">120</b><span>שעות שחוזרות אליכם, אם נחסוך רק חצי</span></div>
+        <div class="hl"><b id="hS">120</b><span>שעות שאפשר לחסוך בתרחיש של קיצור זמן העבודה ב-50%</span></div>
       </div>
-      <p class="calc-note">לפי 48 שבועות עבודה בשנה ו-8 שעות ליום</p>
+      <p class="calc-note">המחשה בלבד. החיסכון בפועל תלוי במשימה ובאופן היישום. החישוב לפי 48 שבועות עבודה בשנה ו-8 שעות ליום.</p>
     </div>
   </section>
 
   <!-- examples -->
   <section class="reveal">
-    <span class="kicker">מה בונים בפועל</span>
-    <h2>כמה דוגמאות <em>ממה שאפשר לבנות</em></h2>
+    <span class="kicker">על מה עובדים</span>
+    <h2>דוגמאות לדברים שאפשר <em>לעבוד עליהם יחד</em></h2>
     <div class="ex">
-      <div><b>💬 מענה ללקוחות</b><span>תשובות קבועות לשאלות שחוזרות, בניסוח שלכם</span><br><span class="tg">auto-reply</span></div>
-      <div><b>🧾 הצעות מחיר</b><span>מכמה פרטים להצעה מסודרת, בכמה שניות</span><br><span class="tg">quote</span></div>
-      <div><b>🎨 יצירת קרוסלות</b><span>מרעיון אחד לקרוסלה מעוצבת לאינסטגרם</span><br><span class="tg">carousel</span></div>
-      <div><b>🎬 עריכת סרטונים</b><span>כתוביות, חיתוכים וסידור קטעים, בלי תוכנת עריכה</span><br><span class="tg">video</span></div>
-      <div><b>📂 חשבוניות</b><span>איסוף מהמייל לתיקייה מסודרת, מוכנה לרואה החשבון</span><br><span class="tg">invoices</span></div>
-      <div><b>📊 סיכומים ודוחות</b><span>משיחה או מטבלה מבולגנת לתמונת מצב ברורה</span><br><span class="tg">reports</span></div>
+      <div><b>🗂 סידור מידע וחומרים</b><span>הפיכת מסמכים, הערות ורעיונות מפוזרים למידע מסודר שקל למצוא ולעבוד איתו.</span><br><span class="tg">organize</span></div>
+      <div><b>🧾 הצעות מחיר</b><span>בניית תהליך להכנת טיוטת הצעת מחיר מתוך פרטי הפרויקט והתבנית שלכם.</span><br><span class="tg">quote</span></div>
+      <div><b>🎨 יצירת קרוסלות</b><span>פיתוח רעיון לקרוסלה ועבודה על התוכן והעיצוב בעזרת AI.</span><br><span class="tg">carousel</span></div>
+      <div><b>🎬 עריכת סרטונים</b><span>עבודה על חיתוכים, כתוביות וסידור קטעים בעזרת AI, בהתאם לסוג הסרטון ולכלים שנבחר.</span><br><span class="tg">video</span></div>
+      <div><b>📂 סידור חשבוניות</b><span>בחינת דרכים לאיסוף ולסידור חשבוניות, בהתאם למערכת ולכלים שבהם אתם משתמשים.</span><br><span class="tg">invoices</span></div>
+      <div><b>📊 סיכומים ודוחות</b><span>הפיכת תמלול, מסמך או טבלה לסיכום מסודר שקל להבין ולעבוד איתו.</span><br><span class="tg">reports</span></div>
     </div>
-    <p class="small-note">מה שנבנה אצלכם ייקבע אחרי האפיון, לפי מה שאני ממליצה שיחסוך לכם הכי הרבה ושאפשר לבנות בזמן שיש לנו.</p>
+    <p class="small-note">אלה כיוונים אפשריים. נבחר במה להתמקד לפי הצורך שלכם, הכלים שבהם אתם משתמשים ורמת המורכבות של המשימה.</p>
   </section>
 
   <!-- how -->
   <section class="reveal" id="how">
     <span class="kicker">איך זה עובד</span>
-    <h2>שלושה שלבים, <em>בלי לדעת קוד</em></h2>
+    <h2>ארבעה שלבים, <em>בלי לדעת קוד</em></h2>
     <div class="steps">
-      <div><h3>שאלון אפיון</h3><p>אחרי התשלום אתם ממלאים שאלון קצר על העסק ועל השבוע שלכם. אני מגיעה לפגישה כבר עם רעיון ראשון.</p></div>
-      <div><h3>פגישה אונליין, 90 דקות</h3><p>משתפים מסך, ואתם בונים על המחשב שלכם בזמן שאני מכוונת צעד אחרי צעד.</p></div>
-      <div><h3>ממשיכים לבד</h3><p>יוצאים עם כלי שעובד, עם הבנה איך הוא נבנה, ועם תוכנית ברורה למה לעשות הלאה.</p></div>
+      <div><h3>בודקים התאמה</h3><p>שולחים לי הודעה קצרה על העסק ועל מה שהייתם רוצים לייעל. נבדוק אם הליווי מתאים לצורך שלכם ובאיזה מסלול כדאי להתחיל.</p></div>
+      <div><h3>משלימים הרשמה ואפיון</h3><p>אחרי בדיקת ההתאמה והתשלום, ממלאים שאלון אפיון ומתאמים מועד. אני עוברת על התשובות ומתכוננת למפגש.</p></div>
+      <div><h3>נפגשים ועובדים יחד</h3><p>90 דקות אונליין עם שיתוף מסך. עובדים על משימה ממוקדת על המחשב שלכם, בהדרכה שלי.</p></div>
+      <div><h3>ממשיכים ליישם</h3><p>מסיימים עם מה שעבדנו עליו במפגש ועם צעדים ברורים להמשך. במסגרת חבילת הליווי אפשר לשאול שאלות קצרות בין המפגשים.</p></div>
     </div>
   </section>
 
@@ -364,37 +367,38 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     <div class="plans">
       <div class="plan">
         <h3>פגישה אחת</h3>
-        <p class="for">למי שרוצה כיוון והתחלה</p>
+        <p class="for">למי שרוצה להתחיל מצורך ממוקד בעסק</p>
         <div class="price"><b>1,200 ₪</b><span>כולל מע"מ</span></div>
         <ul>
-          <li>שאלון אפיון לפני הפגישה</li>
-          <li>פגישה אישית של 90 דקות בזום</li>
-          <li>בונים יחד כלי ראשון לעסק שלכם</li>
-          <li>תוכנית פעולה ברורה להמשך</li>
+          <li>מעבר שלי על שאלון האפיון והכנה לפני המפגש.</li>
+          <li>פגישה אישית של 90 דקות ב-Google Meet.</li>
+          <li>בחירת משימה ממוקדת ועבודה מעשית עליה.</li>
+          <li>הגדרת צעדים ברורים להמשך.</li>
         </ul>
-        <a class="btn ghost" href="https://wa.me/972586003092?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%95%D7%A2%20%D7%A4%D7%92%D7%99%D7%A9%D7%94%20%D7%90%D7%97%D7%AA%20%D7%9C%D7%99%D7%99%D7%A2%D7%95%D7%9C%20%D7%94%D7%A2%D7%A1%D7%A7%20%D7%A2%D7%9D%20AI" target="_blank" rel="noopener">לקביעת פגישה</a>
+        <p class="plan-note">היקף ההתקדמות תלוי במורכבות המשימה ובקצב העבודה שלכם.</p>
+        <a class="btn ghost" href="https://wa.me/972586003092?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%91%D7%93%D7%95%D7%A7%20%D7%94%D7%AA%D7%90%D7%9E%D7%94%20%D7%9C%D7%A4%D7%92%D7%99%D7%A9%D7%94%20%D7%90%D7%97%D7%AA%20%D7%9C%D7%99%D7%99%D7%A2%D7%95%D7%9C%20%D7%94%D7%A2%D7%91%D7%95%D7%93%D7%94%20%D7%91%D7%A2%D7%A1%D7%A7%20%D7%A2%D7%9D%20AI" target="_blank" rel="noopener">לבדיקת התאמה לפגישה</a>
       </div>
       <div class="plan star">
-        <span class="tag">מומלץ</span>
-        <h3>ליווי אישי</h3>
-        <p class="for">למי שרוצה שזה באמת ייכנס לעסק</p>
+        <h3>חבילת ליווי</h3>
+        <p class="for">למי שרוצה המשכיות, תרגול והכוונה לאורך הדרך</p>
         <div class="price"><b>3,800 ₪</b><span>כולל מע"מ</span> <s>4,800 ₪</s></div>
         <span class="save">חוסכים 1,000 ₪ לעומת 4 פגישות בודדות</span>
         <ul>
-          <li><b>4 מפגשים</b> של 90 דקות, לאורך 4 שבועות</li>
-          <li>מפגש ראשון: ממפים את העסק ובונים רשימת עדיפויות</li>
-          <li>בכל מפגש מתקדמים ברשימה, בקצב שמתאים לכם</li>
-          <li><b>וואטסאפ</b> לשאלות קצרות בין המפגשים</li>
-          <li>יוצאים עם כלים שעובדים, ועם היכולת לבנות לבד</li>
+          <li><b>4 מפגשים</b> אישיים של 90 דקות, לאורך 4 שבועות.</li>
+          <li>שאלון אפיון והכנה שלי לפני תחילת הליווי.</li>
+          <li>במפגש הראשון מחדדים מטרות, קובעים סדר עדיפויות ומתחילים לעבוד.</li>
+          <li>במפגשי ההמשך מתקדמים ביישום, מתרגלים ופותרים קשיים שעולים.</li>
+          <li><b>וואטסאפ</b> לשאלות קצרות בין המפגשים ועד שבוע אחרי המפגש האחרון.</li>
+          <li>הגדרת צעדים להמשך עבודה עצמאית.</li>
         </ul>
-        <a class="btn" href="https://wa.me/972586003092?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%94%D7%9C%D7%99%D7%95%D7%95%D7%99%20%D7%94%D7%90%D7%99%D7%A9%D7%99" target="_blank" rel="noopener">אני רוצה ליווי ←</a>
+        <a class="btn" href="https://wa.me/972586003092?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%91%D7%93%D7%95%D7%A7%20%D7%94%D7%AA%D7%90%D7%9E%D7%94%20%D7%9C%D7%97%D7%91%D7%99%D7%9C%D7%AA%20%D7%94%D7%9C%D7%99%D7%95%D7%95%D7%99%20%D7%9C%D7%99%D7%99%D7%A2%D7%95%D7%9C%20%D7%94%D7%A2%D7%91%D7%95%D7%93%D7%94%20%D7%91%D7%A2%D7%A1%D7%A7%20%D7%A2%D7%9D%20AI" target="_blank" rel="noopener">לבדיקת התאמה לליווי ←</a>
       </div>
     </div>
     <div class="price-notes">
       <span>🌱 מחיר השקה ללקוחות הראשונים</span>
-      <span>💳 התשלום מראש</span>
+      <span>💳 התשלום אחרי בדיקת התאמה</span>
     </div>
-    <div class="upgrade"><span class="ic">⬆️</span><div><b>התחלתם בפגישה אחת ורוצים להמשיך לליווי?</b> אם משדרגים תוך 7 ימים מהפגישה, ה-1,200 ₪ ששילמתם מתקזזים ממחיר הליווי.</div></div>
+    <div class="upgrade"><span class="ic">⬆️</span><div><b>התחלתם בפגישה אחת ורוצים להמשיך לליווי?</b> אם משדרגים בתוך שבעה ימים מהפגישה, ה-1,200 ₪ ששילמתם מתקזזים ממחיר החבילה. הפגישה שכבר התקיימה נחשבת למפגש הראשון מתוך הארבעה.</div></div>
   </section>
 
   <!-- terms -->
@@ -405,28 +409,29 @@ footer img{height:30px;display:block;margin:0 auto 10px}
       <div class="box">
         <h3>📋 תנאי השירות</h3>
         <ul>
-          <li><b>התשלום מראש</b>, לפני קביעת המפגש הראשון.</li>
-          <li>המפגשים מתקיימים <b>אונליין בזום</b>, עם שיתוף מסך.</li>
+          <li>התשלום מתבצע <b>לאחר בדיקת התאמה</b> ולפני שריון המפגש.</li>
+          <li>המפגשים מתקיימים <b>אונליין ב-Google Meet</b>, עם שיתוף מסך.</li>
           <li>שינוי מועד אפשרי <b>עד 24 שעות</b> לפני המפגש.</li>
-          <li>אני מלמדת ומכוונת, <b>ואתם בונים</b> על המחשב שלכם. ככה הידע נשאר אצלכם.</li>
-          <li>בליווי מתקדמים לפי רשימת העדיפויות ובקצב שלכם. <b>אין התחייבות</b> למספר מסוים של פרויקטים.</li>
+          <li>אני מדריכה ומכוונת, <b>ואתם עובדים</b> על המחשב שלכם. ככה הידע נשאר אצלכם.</li>
+          <li>בליווי מתקדמים לפי סדר העדיפויות ובקצב שלכם. <b>אין התחייבות</b> למספר מסוים של פרויקטים.</li>
         </ul>
       </div>
       <div class="box">
         <h3>💻 מה צריך להביא</h3>
         <ul>
-          <li><b>מחשב</b>, מק או ווינדוס.</li>
-          <li><b>מנוי בתשלום ל-Claude</b>. <a href="../claude-code-start/" target="_blank" rel="noopener">מדריך ההתקנה שלי למתחילים</a></li>
+          <li><b>מחשב</b>, מק או ווינדוס, וחיבור אינטרנט יציב.</li>
+          <li><b>מנוי בתשלום ל-Claude</b>, שאינו כלול במחיר הליווי. <a href="../claude-code-start/" target="_blank" rel="noopener">מדריך ההתקנה שלי למתחילים</a></li>
           <li>רשימה בראש של מה הכי מעצבן אתכם בעבודה. את השאר נמצא יחד.</li>
+          <li>כל ההכנות מרוכזות בדף <a href="../before-session/" target="_blank" rel="noopener">מתכוננים לפגישה</a>, שתקבלו אחרי ההרשמה.</li>
         </ul>
       </div>
       <div class="box" style="grid-column:1/-1">
-        <h3>💬 הוואטסאפ בליווי</h3>
+        <h3>💬 הוואטסאפ בחבילת הליווי</h3>
         <ul>
-          <li>לשאלות קצרות ולמקומות שנתקעתם, עם צילום מסך.</li>
-          <li>מענה <b>תוך יום עסקים</b>, בימים א׳ עד ה׳.</li>
-          <li>מה שדורש בנייה או הסבר ארוך עובר למפגש הבא. בלי שיחות טלפון מחוץ למפגשים.</li>
-          <li>הוואטסאפ פעיל עד <b>שבוע אחרי המפגש האחרון</b>.</li>
+          <li>במסגרת <b>חבילת הליווי</b> אפשר לשלוח שאלות קצרות על מה שעבדנו עליו במפגשים, כולל צילום מסך אם נתקעתם.</li>
+          <li>המענה ניתן <b>בתוך שני ימי עסקים</b>, בימים א׳ עד ה׳.</li>
+          <li>נושאים שדורשים בנייה, בדיקה מעמיקה או הסבר ממושך נשמור למפגש.</li>
+          <li>הליווי בוואטסאפ פעיל <b>עד שבוע אחרי המפגש האחרון</b>, ואינו כולל שיחות טלפון מחוץ למפגשים.</li>
         </ul>
       </div>
     </div>
@@ -437,10 +442,12 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     <span class="kicker">שאלות</span>
     <h2>שאלות <em>שתמיד שואלים</em></h2>
     <div class="faq">
-      <details><summary>אני ממש לא טכני/ת. זה מתאים לי?</summary><p>כן, וזה בדיוק בשבילכם. לא צריך לדעת קוד. מדברים עם Claude בעברית רגילה, ואני מראה לכם איך לבקש ממנו את מה שאתם צריכים.</p></details>
-      <details><summary>למה לא פשוט לבנות לי את זה?</summary><p>כי המטרה היא שהידע יישאר אצלכם. אני מכוונת, מסבירה ועוזרת לתקן בזמן אמת, ואתם בונים. ככה אחרי הליווי תדעו לבנות לבד גם דברים שעוד לא חשבנו עליהם.</p></details>
-      <details><summary>מה אם לא נספיק לבנות את כל מה שרציתי?</summary><p>בפגישה הראשונה בונים רשימת עדיפויות ומתחילים מהדבר הכי משתלם. מה שלא נספיק יהפוך לתוכנית שתמשיכו איתה לבד.</p></details>
-      <details><summary>כמה זמן לוקח לראות תוצאה?</summary><p>כבר בפגישה הראשונה בונים משהו שעובד. בליווי, בכל מפגש מוסיפים עוד כלי לעסק.</p></details>
+      <details><summary>אני ממש לא טכני/ת. זה מתאים לי?</summary><p>לא צריך לדעת קוד, אבל כן צריך להיות מוכנים להתנסות ולעבוד על המחשב. לפני ההרשמה נבדוק שהמטרה שלכם מתאימה לנקודת הפתיחה ולמסגרת המפגשים.</p></details>
+      <details><summary>האם יוצאים מהפגישה עם כלי מוכן?</summary><p>אנחנו עובדים באופן מעשי על משימה שנבחרה מראש. לפעמים אפשר להשלים פתרון במפגש, ולפעמים נדרש המשך עבודה ותרגול. נגדיר מטרה מציאותית בהתאם למשימה ולניסיון שלכם.</p></details>
+      <details><summary>מה אם לא נספיק את כל מה שרציתי?</summary><p>נבחר סדר עדיפויות ונתמקד קודם במה שהכי חשוב לכם. ההתקדמות תלויה במורכבות ובקצב שלכם, ומה שיישאר יהפוך לצעדים ברורים להמשך.</p></details>
+      <details><summary>האם את בונה עבורי את הכלים?</summary><p>אני מדריכה ומכוונת בזמן שאתם עובדים על המחשב שלכם. כך אתם לומדים להשתמש במה שאנחנו בונים ולהמשיך לעבוד איתו בעצמכם. השירות אינו כולל פיתוח עבורכם מחוץ למפגשים.</p></details>
+      <details><summary>אפשר להתחיל בפגישה אחת?</summary><p>כן. אפשר להתחיל בפגישה ממוקדת, ואם תרצו לשדרג לחבילת הליווי בתוך שבעה ימים, התשלום על הפגישה יקוזז ממחיר החבילה ויישארו לכם שלושה מפגשים נוספים.</p></details>
+      <details><summary>יש עלויות נוספות?</summary><p>נדרש מנוי בתשלום ל-Claude, שאינו כלול במחיר הליווי. אם הכיוון שנבחר ידרוש כלי נוסף בתשלום, נדבר על כך לפני השימוש בו.</p></details>
     </div>
   </section>
 
@@ -448,8 +455,8 @@ footer img{height:30px;display:block;margin:0 auto 10px}
   <section class="final reveal">
     <img src="me.jpg" alt="רוני" width="72" height="72">
     <h2>רוצים להתחיל?</h2>
-    <p>שלחו לי הודעה בוואטסאפ, נבדוק יחד מה מתאים לעסק שלכם ונקבע.</p>
-    <a class="btn" href="https://wa.me/972586003092?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%94%D7%99%D7%99%D7%A2%D7%95%D7%A5%20%D7%9C%D7%99%D7%99%D7%A2%D7%95%D7%9C%20%D7%94%D7%A2%D7%A1%D7%A7%20%D7%A2%D7%9D%20AI" target="_blank" rel="noopener">💬 לשיחה בוואטסאפ ←</a>
+    <p>שלחו לי הודעה קצרה בוואטסאפ על העסק ועל מה שהייתם רוצים לייעל, ונבדוק יחד אם הליווי מתאים לכם ובאיזה מסלול כדאי להתחיל.</p>
+    <a class="btn" href="https://wa.me/972586003092?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%95%D7%A0%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%91%D7%93%D7%95%D7%A7%20%D7%90%D7%9D%20%D7%94%D7%9C%D7%99%D7%95%D7%95%D7%99%20%D7%9C%D7%99%D7%99%D7%A2%D7%95%D7%9C%20%D7%94%D7%A2%D7%91%D7%95%D7%93%D7%94%20%D7%91%D7%A2%D7%A1%D7%A7%20%D7%A2%D7%9D%20AI%20%D7%9E%D7%AA%D7%90%D7%99%D7%9D%20%D7%9C%D7%99" target="_blank" rel="noopener">💬 לבדיקת התאמה בוואטסאפ ←</a>
   </section>
 </main>
 
@@ -461,7 +468,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 
 <script>
 (function(){
-  var lines = ['בונה הצעת מחיר מתוך שלוש שורות...', 'מסדר חשבוניות מהמייל לתיקייה...', 'כותב תשובה ללקוח בסגנון שלכם...', 'מסכם את השיחה לרשימת משימות...'];
+  var lines = ['מכין טיוטת הצעת מחיר מתוך הפרטים...', 'מסדר הערות מפוזרות למסמך אחד...', 'מסכם תמלול לרשימת משימות...', 'מסדר חשבוניות לתיקייה לפי חודשים...'];
   var li = 0, ch = 0, del = false, el = document.getElementById('typed');
   (function tick(){
     var s = lines[li];

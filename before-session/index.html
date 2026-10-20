@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מתכוננים לפגישה | Ronig.ai</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="כמה דברים קטנים לסדר לפני הפגישה, כדי שכל הזמן ילך על העבודה עצמה.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="מתכוננים לפגישה">
+<meta property="og:description" content="כמה דברים קטנים לסדר לפני הפגישה, כדי שכל הזמן ילך על העבודה עצמה.">
+<meta property="og:image" content="https://rogre1.github.io/ronig-courses/ai-coaching/me.jpg">
+<link rel="icon" href="../claude-code-start/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../claude-code-start/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* פריסה: רשימת הכנה אחת עם תיבות סימון, ואחריה תקלות נפוצות. אותה שפה עיצובית של דף הליווי */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FBF9F4;--cream-deep:#F1EFE7;--mint:#F0F3E8;
+  --forest:#333E27;--forest-deep:#20261A;
+  --olive:#788C5D;--olive-bright:#8BA36B;--leaf:#B7C29F;
+  --ink:#1B1D16;--ink-2:#5B5F52;--ink-3:#8A8672;
+  --ink-dark-1:#F1EFE7;--ink-dark-2:#B9BDA9;
+  --line:#E3E0D5;
+  --shadow-sm:0 10px 22px rgba(35,38,30,.10);
+  --r:22px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
+b,strong{font-weight:700;color:var(--forest-deep)}
+a{color:var(--olive);font-weight:600}
+header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.hwrap img{height:36px;width:auto;display:block}
+.progress{font-size:.86rem;font-weight:700;color:var(--forest);background:var(--mint);border:1px solid var(--leaf);border-radius:99px;padding:5px 14px;white-space:nowrap}
+main{max-width:820px;margin:0 auto;padding:0 16px 40px}
+section{margin-top:56px}
+.kicker{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:700;font-size:.85rem;padding:4px 14px;border-radius:99px;margin-bottom:12px}
+.kicker::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--olive-bright);margin-inline-end:8px;vertical-align:middle;box-shadow:0 0 0 3px rgba(139,163,107,.25)}
+h1{font-size:clamp(2.1rem,6vw,3.2rem);line-height:1.12;font-weight:900;color:var(--forest-deep);letter-spacing:-.015em;text-wrap:balance}
+h2{font-size:clamp(1.5rem,3.8vw,2rem);line-height:1.2;font-weight:900;color:var(--forest-deep);text-wrap:balance}
+h1 em,h2 em{font-style:normal;color:var(--olive)}
+.sub{color:var(--ink-2);font-size:1.08rem;margin-top:10px;max-width:620px}
+.hero{padding-top:44px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chips span{background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 14px;font-size:.9rem;font-weight:600;color:var(--ink-2)}
+
+/* checklist */
+.list{display:grid;gap:12px;margin-top:24px}
+.item{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow-sm);display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start;transition:border-color .2s,background .2s}
+.item input{appearance:none;width:32px;height:32px;border-radius:10px;border:2px solid var(--leaf);background:var(--mint);cursor:pointer;display:grid;place-items:center;margin-top:2px}
+.item input::after{content:"✓";color:#fff;font-weight:900;opacity:0}
+.item input:checked{background:var(--forest);border-color:var(--forest)}
+.item input:checked::after{opacity:1}
+.item input:focus-visible{outline:3px solid var(--olive-bright);outline-offset:2px}
+.item.done{background:var(--mint);border-color:var(--leaf)}
+.ready{margin-top:16px;background:var(--forest);color:#fff;border-radius:var(--r);padding:22px 20px;text-align:center;font-size:clamp(1.25rem,3.6vw,1.6rem);font-weight:900;box-shadow:var(--shadow-sm);animation:pop .45s ease-out}
+.ready[hidden]{display:none}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.ready{animation:none}}
+.item.done h3{color:var(--olive)}
+.item .body{display:grid;gap:8px;min-width:0}
+.item h3{font-size:1.12rem;font-weight:800;color:var(--forest-deep);line-height:1.4}
+.item p,.item li{color:var(--ink-2);font-size:.97rem}
+.item ol,.item ul{padding-inline-start:20px;display:grid;gap:3px}
+.opt{display:inline-block;font-size:.78rem;font-weight:700;color:var(--olive);background:var(--mint);border:1px solid var(--leaf);border-radius:99px;padding:0 10px;margin-inline-start:6px;vertical-align:middle}
+.prompt{position:relative;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px 14px;padding-inline-end:80px;font-size:.95rem;color:var(--ink)}
+.copy{position:absolute;top:9px;left:9px;font:inherit;font-size:.8rem;font-weight:700;background:#fff;border:1px solid var(--line);color:var(--forest);border-radius:8px;padding:3px 10px;cursor:pointer}
+.copy:hover,.copy:focus-visible{border-color:var(--olive);outline:none}
+.copy.ok{background:var(--forest);color:var(--ink-dark-1);border-color:var(--forest)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);font-weight:700;padding:9px 20px;border-radius:99px;text-decoration:none;font-size:.95rem;justify-self:start}
+.btn:hover{background:var(--forest-deep)}
+.path{font-weight:700;color:var(--forest-deep);background:var(--cream-deep);border-radius:6px;padding:0 6px}
+
+/* troubleshooting */
+.faq{margin-top:22px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:16px;margin-top:10px;overflow:hidden}
+.faq summary{list-style:none;cursor:pointer;padding:16px 20px;font-weight:700;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;width:28px;height:28px;border-radius:50%;background:var(--mint);color:var(--olive);display:grid;place-items:center;font-weight:800;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details>div{padding:0 20px 18px;color:var(--ink-2);display:grid;gap:6px}
+.faq details ol{padding-inline-start:20px;display:grid;gap:3px}
+
+.final{margin-top:56px;background:var(--forest-deep);color:var(--ink-dark-1);border-radius:28px;padding:40px 24px;text-align:center;position:relative;overflow:hidden}
+.final::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(183,194,159,.25) 1px,transparent 1.2px);background-size:22px 22px}
+.final>*{position:relative}
+.final h2{color:#fff}
+.final p{color:var(--ink-dark-2);margin:10px auto 0;max-width:500px}
+.final .btn{margin-top:22px;background:var(--olive-bright);color:#fff}
+.final img{width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:50% 30%;border:1.5px solid var(--leaf);margin-bottom:14px}
+footer{border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--ink-3);font-size:.88rem;margin-top:50px}
+footer img{height:30px;display:block;margin:0 auto 10px}
+.legal{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:12px}
+.legal a{color:var(--ink-3);font-weight:500;font-size:.84rem}
+@media (max-width:560px){
+  body{font-size:16px}
+  .item{grid-template-columns:34px 1fr;padding:16px;gap:12px}
+  .item input{width:28px;height:28px}
+  .prompt{padding:40px 12px 12px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36">
+    <span class="progress" id="progress" aria-live="polite">0 מתוך 8</span>
+  </div>
+</header>
+<main>
+  <section class="hero" style="margin-top:0">
+    <span class="kicker">לפני הפגישה</span>
+    <h1>מתכוננים <em>לפגישה</em></h1>
+    <p class="sub">כמה דברים קטנים לסדר מראש, כדי שכל 90 הדקות ילכו על העבודה עצמה ולא על התקנות. מסמנים כל שלב כשהוא מוכן.</p>
+    <div class="chips"><span>⏱ בערך 20 דקות</span><span>💻 Mac או Windows</span><span>📅 לפני הפגישה</span></div>
+  </section>
+
+  <section style="margin-top:32px">
+    <div class="list">
+      <label class="item" for="c1">
+        <input type="checkbox" id="c1">
+        <div class="body">
+          <h3>שאלון האפיון מולא</h3>
+          <p>כדאי למלא אותו כמה שיותר מוקדם, כדי שיהיה לי זמן לעבור על התשובות ולהגיע לפגישה עם היכרות ראשונית עם העסק וכיוון לעבודה המשותפת.</p>
+          <a class="btn" href="../consulting/" target="_blank" rel="noopener">לשאלון האפיון ←</a>
+        </div>
+      </label>
+
+      <label class="item" for="c2">
+        <input type="checkbox" id="c2">
+        <div class="body">
+          <h3>יש מנוי Claude בתשלום, והאפליקציה מותקנת</h3>
+          <p>המנוי הבסיסי, Pro, מספיק, והוא לא כלול במחיר הליווי. מתקינים את אפליקציית Claude למחשב ומתחברים עם החשבון שיש בו מנוי. ברוב המפגשים נעבוד בלשונית <b>Code</b>, ואם נבחר לעבוד בסביבה אחרת, אעדכן אתכם מראש. ההתקנה מוסברת צעד אחרי צעד במדריך המתחילים שלי.</p>
+          <a class="btn" href="../claude-code-start/" target="_blank" rel="noopener">למדריך המתחילים ←</a>
+        </div>
+      </label>
+
+      <label class="item" for="c3">
+        <input type="checkbox" id="c3">
+        <div class="body">
+          <h3>יש תיקייה לעבודה שלנו</h3>
+          <p>יוצרים תיקייה חדשה, למשל בשם <b>claude</b>, ושמים בה עותקים של מה שקשור למשימה שבחרנו, למשל הצעות מחיר ששלחתם, מחירון או קובץ אקסל. מספיקות דוגמה או שתיים, בלי מידע רגיש שלא נחוץ לעבודה, ובלי סיסמאות או פרטי גישה. באפליקציה בוחרים את התיקייה ב-<b>Select folder</b>.</p>
+        </div>
+      </label>
+
+      <label class="item" for="cbrand">
+        <input type="checkbox" id="cbrand">
+        <div class="body">
+          <h3>יש בתיקייה תת-תיקייה עם המותג שלכם <span class="opt">אם יש</span></h3>
+          <p>בתוך התיקייה של העבודה יוצרים עוד תיקייה בשם <b>brand</b>, ומרכזים בה את מה שיש לכם: לוגו, תמונת הפרופיל של העסק, צבעים או פונטים אם הם מוגדרים, וכמה דוגמאות לעיצובים או לפוסטים שאתם אוהבים. ככה כל מה שנבנה בפגישה ייראה כמו העסק שלכם. אין לכם את כל זה? מביאים מה שיש, ואת השאר נשלים יחד.</p>
+        </div>
+      </label>
+
+      <label class="item" for="c4">
+        <input type="checkbox" id="c4">
+        <div class="body">
+          <h3>פתחתם את Claude מראש, ושלחתם הודעת בדיקה</h3>
+          <p>פותחים את האפליקציה, מוודאים שאתם מחוברים ובוחרים את התיקייה. אז מעתיקים את ההודעה, מדביקים בלשונית Code ושולחים. אם הוא עונה ומפרט מה יש בתיקייה, הכל עובד.</p>
+          <div class="prompt"><button class="copy" type="button">העתקה</button><span class="txt">תענה לי בעברית ותגיד לי אילו קבצים יש בתיקייה הזו. אל תשנה שום דבר.</span></div>
+        </div>
+      </label>
+
+      <label class="item" for="c5">
+        <input type="checkbox" id="c5">
+        <div class="body">
+          <h3>Gmail מחובר ל-Claude <span class="opt">רק אם סיכמנו שנעבוד עם מייל</span></h3>
+          <p>אם המשימה שבחרנו קשורה למייל, למשל סידור חשבוניות:</p>
+          <ol><li>לוחצים על <b>+</b> ליד תיבת הכתיבה ובוחרים <b>Connectors</b>.</li><li>ליד Gmail לוחצים <b>Connect</b>.</li><li>מתחברים עם חשבון הגוגל שבו מגיעים המיילים של העסק, ומאשרים.</li></ol>
+        </div>
+      </label>
+
+      <label class="item" for="c6">
+        <input type="checkbox" id="c6">
+        <div class="body">
+          <h3>Google Meet מוכן לשיתוף מסך</h3>
+          <p>הפגישה היא ב-Google Meet, דרך הקישור שתקבלו ממני. מתחברים מהמחשב, ממקום עם חיבור אינטרנט יציב. בפגישה אתם משתפים מסך ועובדים על המחשב שלכם, אז כדאי לבדוק מראש: נכנסים ל-<a href="https://meet.google.com" target="_blank" rel="noopener">meet.google.com</a>, פותחים פגישה חדשה, לוחצים על כפתור <b>שיתוף המסך</b> בסרגל התחתון, ומוודאים שרואים את החלון של Claude. במק, בפעם הראשונה צריך לתת לדפדפן אישור, ומוסבר למטה איך.</p>
+        </div>
+      </label>
+
+      <label class="item" for="c7">
+        <input type="checkbox" id="c7">
+        <div class="body">
+          <h3>יש לכם רשימה של מה שהכי מעצבן בעבודה</h3>
+          <p>שלוש עד חמש משימות שחוזרות כל שבוע ולוקחות לכם זמן. אם אפשר, גם כמה זמן כל אחת לוקחת היום. ככה יהיה קל יותר לבחור במה להתמקד.</p>
+        </div>
+      </label>
+    </div>
+    <div class="ready" id="ready" aria-live="polite" hidden>✨ מושלם, אתם מוכנים לפגישה ✨</div>
+  </section>
+
+  <section>
+    <span class="kicker">אם משהו לא עובד</span>
+    <h2>תקלות נפוצות, <em>ואיך פותרים</em></h2>
+    <div class="faq">
+      <details><summary>לשונית Code מציגה שגיאה או לא נפתחת</summary><div>
+        <p>בדרך כלל זה אומר שהתחברתם עם חשבון Claude חינמי. מתנתקים ומתחברים עם החשבון שיש בו מנוי בתשלום.</p></div></details>
+      <details><summary>Claude אומר שהוא לא מוצא קובץ</summary><div>
+        <p>הוא רואה רק את מה שבתוך התיקייה שבחרתם. אפשר להעתיק את הקובץ לתיקייה, או פשוט לגרור אותו לתיבת הכתיבה.</p></div></details>
+      <details><summary>הוא מבקש אישור על כל דבר קטן</summary><div>
+        <p>זה תקין, וככה רואים מה הוא עושה. כשמבינים מה הוא מבקש ומסכימים, לוחצים <b>Allow for this session</b>, והוא לא ישאל שוב על פעולות מאותו סוג עד סוף השיחה. מחיקה, או משהו שלא ברור? לוחצים <b>Deny</b> וכותבים לו "תסביר לי קודם מה זה עושה".</p></div></details>
+      <details><summary>הוא עונה לי באנגלית</summary><div>
+        <p>כותבים לו "תענה לי תמיד בעברית, ותזכור את זה". מהפעם הבאה הוא כבר יידע.</p></div></details>
+      <details><summary>Gmail לא מופיע ב-Connectors, או שהחיבור נכשל</summary><div>
+        <ol><li>מוודאים שמתחברים עם חשבון הגוגל הנכון, זה שבו מגיעים המיילים של העסק.</li><li>מנסים שוב, ומאשרים את כל ההרשאות בחלון של גוגל.</li><li>אם זה מייל של עבודה (Google Workspace), ייתכן שמנהל החשבון חוסם חיבורים. במקרה כזה שלחו לי צילום מסך.</li></ol></div></details>
+      <details><summary>במק: ב-Meet אי אפשר לשתף מסך, או שרואים מסך שחור</summary><div>
+        <ol><li>פותחים את <span class="path">הגדרות המערכת ← פרטיות ואבטחה ← הקלטת מסך ושמע מערכת</span>.</li><li>מדליקים את הדפדפן שבו אתם נכנסים ל-Meet, למשל <b>Google Chrome</b>.</li><li>סוגרים את הדפדפן לגמרי, פותחים אותו מחדש, ונכנסים שוב לפגישה.</li></ol></div></details>
+      <details><summary>הכל איטי, או ש-Claude נתקע על קבצים</summary><div>
+        <p>במק, אם התיקייה יושבת בשולחן העבודה או ב"מסמכים" והם מסונכרנים ל-iCloud, ייתכן שחלק מהקבצים נמצאים רק בענן. נסו ליצור את התיקייה בתיקיית הבית: ב-Finder בתפריט <b>Go</b> ← <b>Home</b>.</p>
+        <p>ואם השיחה כבר ארוכה מאוד, פותחים שיחה חדשה עם <b>New session</b>. זה בדרך כלל מזרז.</p></div></details>
+      <details><summary>כתוב שהגעתי למגבלת השימוש</summary><div>
+        <p>לכל מנוי יש מכסה שמתחדשת כל כמה שעות. מחכים שתתחדש. כדי לחסוך: שיחה חדשה לכל משימה, ולא לצרף קבצים גדולים שלא צריך.</p></div></details>
+    </div>
+  </section>
+
+  <div class="final">
+    <img src="../ai-coaching/me.jpg" alt="רוני" width="72" height="72">
+    <h2>משהו בהתקנה לא עובד?</h2>
+    <p>עדכנו אותי בוואטסאפ לפני הפגישה, רצוי עם צילום מסך, כדי שנדע מראש ונתכנן את הזמן בהתאם.</p>
+    <a class="btn" href="https://wa.me/972586003092" target="_blank" rel="noopener">💬 לוואטסאפ ←</a>
+  </div>
+</main>
+<footer>
+  <img src="../assets/logo-dark.png" alt="Ronig.ai" width="86" height="30">
+  @ronig.ai
+  <div class="legal"><a href="../terms.html">תקנון ותנאי שימוש</a><a href="../privacy.html">מדיניות פרטיות</a><a href="../accessibility.html">הצהרת נגישות</a></div>
+</footer>
+<script>
+const boxes = [...document.querySelectorAll('.item input')];
+const KEY = 'ronig-before-session';
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+function update() {
+  const n = boxes.filter(b => b.checked).length;
+  document.getElementById('progress').textContent = n === boxes.length ? 'הכל מוכן ✓' : `${n} מתוך ${boxes.length}`;
+  boxes.forEach(b => b.closest('.item').classList.toggle('done', b.checked));
+  document.getElementById('ready').hidden = n !== boxes.length;
+}
+boxes.forEach(b => {
+  b.checked = !!saved[b.id];
+  b.addEventListener('change', () => { saved[b.id] = b.checked; try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} update();
+    if (boxes.every(x => x.checked)) document.getElementById('ready').scrollIntoView({behavior: 'smooth', block: 'center'}); });
+});
+update();
+document.querySelectorAll('.copy').forEach(btn => btn.addEventListener('click', e => {
+  e.preventDefault();
+  const box = btn.parentElement, text = box.querySelector('.txt').textContent;
+  const done = () => { btn.textContent = 'הועתק'; btn.classList.add('ok'); setTimeout(() => { btn.textContent = 'העתקה'; btn.classList.remove('ok'); }, 1600); };
+  const fallback = () => { const r = document.createRange(); r.selectNodeContents(box.querySelector('.txt')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+  try { navigator.clipboard.writeText(text).then(done, fallback); } catch (err) { fallback(); }
+}));
+</script>
+</body>
+</html>

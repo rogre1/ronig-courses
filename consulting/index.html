@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>שאלון אפיון לפני הפגישה | Ronig.ai</title>
 <meta name="robots" content="noindex, nofollow, noarchive">
-<meta name="description" content="כמה שאלות קצרות על העסק שלכם, כדי שאגיע לפגישה מוכנה עם תוכנית.">
+<meta name="description" content="כמה שאלות קצרות על העסק שלכם, כדי שאגיע לפגישה עם היכרות ראשונית וכיוון לעבודה המשותפת.">
 <link rel="icon" href="../claude-code-start/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="../claude-code-start/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -166,9 +166,9 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 <main>
   <section class="hero" id="hero">
     <span class="eyebrow">שאלון אפיון · לפני הפגישה</span>
-    <h1>ייעוץ והדרכה אישית <em>לייעול העבודה בעסק</em> עם AI</h1>
+    <h1>ליווי אישי <em>לייעול העבודה בעסק</em> עם AI</h1>
     <div class="term" aria-hidden="true"><span class="pr">✦ Claude</span> <span id="typed"></span><i class="cur"></i></div>
-    <p class="lead">כמה שאלות קצרות על איך נראה השבוע שלכם. תוך כדי שאתם עונים, תראו אילו כיוונים לייעול כבר עולים, ואני אגיע לפגישה מוכנה עם רעיון ראשון שנבנה יחד.</p>
+    <p class="lead">כמה שאלות קצרות על איך נראה השבוע שלכם. תוך כדי שאתם עונים, יופיעו כיוונים אפשריים לבדיקה. אעבור על התשובות ואגיע עם כיוון ראשוני לעבודה המשותפת.</p>
     <div class="hero-meta">
       <span class="chip-info">⏱ בערך 10 דקות</span>
       <span class="chip-info">💾 נשמר אוטומטית</span>
@@ -200,7 +200,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
         <textarea id="what" name="what" required></textarea></div>
       <div class="q"><span class="lbl">כמה אנשים עובדים בעסק?</span>
         <div class="chips" data-name="team" data-single>
-          <button type="button">רק אני</button><button type="button">2–5</button><button type="button">6–15</button><button type="button">יותר מ-15</button>
+          <button type="button">רק אני</button><button type="button">2-5</button><button type="button">6-15</button><button type="button">יותר מ-15</button>
         </div></div>
     </section>
 
@@ -228,7 +228,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     <section class="card" data-title="השבוע שלכם">
       <div class="step-head"><div class="num">4</div><div><h2>איך נראה השבוע שלכם</h2><p>זה החלק הכי חשוב. אין תשובות לא נכונות</p></div></div>
       <div class="q"><label for="timeSink">מה לוקח לכם הכי הרבה זמן בשבוע? <span class="req">*</span></label>
-        <span class="hint">למשל: "לענות ללקוחות בוואטסאפ", "להכין הצעות מחיר", "לחשוב מה להעלות לאינסטגרם"</span>
+        <span class="hint">למשל: להכין הצעות מחיר, לסדר מסמכים או לחשוב מה להעלות לאינסטגרם</span>
         <textarea id="timeSink" name="timeSink" required></textarea></div>
       <div class="q"><label for="repeat">אילו משימות חוזרות על עצמן כל שבוע, כמעט באותה צורה?</label>
         <span class="hint">דברים שאתם עושים שוב ושוב, ומרגישים שאפשר היה לעשות אותם בעיניים עצומות</span>
@@ -279,10 +279,14 @@ footer img{height:30px;display:block;margin:0 auto 10px}
         <textarea id="goal" name="goal" required></textarea></div>
       <div class="q"><span class="lbl">יש לכם דוגמה למשימה כזו? צרפו אותה</span>
         <span class="hint">מייל ששלחתם, הצעת מחיר, טבלה או צילום מסך. לא חובה, אבל זה עוזר לי מאוד להתכונן</span>
+        <span class="hint">אפשר לצרף דוגמה לאחר הסרת פרטים אישיים או מידע רגיש. אין לצרף סיסמאות או פרטי גישה.</span>
         <div class="drop" id="drop" tabindex="0" role="button"><b>📎 לחצו לבחירת קבצים</b><span>או גררו לכאן · עד 3 קבצים, עד 8MB ביחד</span></div>
         <input type="file" id="fileIn" multiple class="hidden" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt">
         <ul class="files" id="fileList"></ul>
       </div>
+      <div class="q"><label for="expect">האם יש משהו מסוים שאתם מצפים שנכין או נפתור במפגשים?</label>
+        <span class="hint">לא חובה</span>
+        <textarea id="expect" name="expect" style="min-height:80px"></textarea></div>
       <div class="q"><label for="more">עוד משהו שחשוב שאדע?</label>
         <textarea id="more" name="more" style="min-height:80px"></textarea></div>
     </section>
@@ -291,13 +295,14 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     <section class="card thanks" id="thanks" data-title="נשלח">
       <div class="big">🌿</div>
       <h2>תודה, קיבלתי!</h2>
-      <p>אעבור על התשובות לפני הפגישה ואגיע עם רעיון ראשון שנבנה יחד.</p>
+      <p>אעבור על התשובות ואגיע עם כיוון ראשוני לעבודה המשותפת.</p>
+      <p>כל ההכנות לפגישה מרוכזות בדף <a href="../before-session/" target="_blank" rel="noopener">מתכוננים לפגישה</a>.</p>
       <div class="note tip hidden" id="thanksClaude"><span class="ic">💡</span><div><b>עוד דבר אחד לפני הפגישה:</b> צריך מנוי בתשלום לקלוד ואת אפליקציית Claude מותקנת על המחשב. אשלח לכם הסבר קצר בוואטסאפ, ואם בא לכם להתחיל כבר עכשיו, <a href="../claude-code-start/" target="_blank" rel="noopener">כאן יש מדריך התקנה צעד אחרי צעד</a>.</div></div>
       <div class="note tip hidden" id="thanksReady"><span class="ic">✅</span><div><b>לפני הפגישה:</b> ודאו שאפליקציית Claude מותקנת על המחשב ושאתם מחוברים. אם צריך, <a href="../claude-code-start/" target="_blank" rel="noopener">כאן יש מדריך התקנה צעד אחרי צעד</a>.</div></div>
     </section>
 
     <aside class="radar hidden" id="radar" aria-live="polite">
-      <div class="radar-head"><span class="pulse"></span><b id="rTitle">כיוונים לייעול שזיהיתי עד עכשיו</b><span class="cnt" id="rCnt">0</span></div>
+      <div class="radar-head"><span class="pulse"></span><b id="rTitle">כיוונים אפשריים לבדיקה</b><span class="cnt" id="rCnt">0</span></div>
       <div class="radar-chips" id="rChips"><span class="empty">ממשיכים לענות, והכיוונים יופיעו כאן...</span></div>
     </aside>
 
@@ -457,6 +462,7 @@ function readB64(f){
 function submit(){
   var d = collect();
   if(d.website) return; // honeypot
+  if(d.expect) d.more = 'ציפיות למפגשים: ' + d.expect + (d.more ? '\n\n' + d.more : '');
   if(!ENDPOINT){ $('err').textContent = 'הטופס עוד לא מחובר. אפשר לשלוח לי את התשובות בוואטסאפ.'; return; }
   var btn = $('next'); btn.disabled = true; btn.textContent = 'שולח...';
   Promise.all(files.map(readB64)).then(function(enc){
@@ -470,7 +476,7 @@ function submit(){
     cards.forEach(function(c){ c.classList.remove('on'); });
     $('thanks').classList.add('on');
     $('nav').classList.add('hidden'); $('err').textContent = '';
-    $('rTitle').textContent = 'הכיוונים שנבדוק יחד בפגישה';
+    $('rTitle').textContent = 'כיוונים אפשריים לבדיקה';
     $('radar').classList.toggle('hidden', !found.length);
     $('pBar').style.width = '100%'; $('pLabel').textContent = 'נשלח ✓';
     window.scrollTo({top:0,behavior:'smooth'});
@@ -482,7 +488,7 @@ function submit(){
 
 // typing line in hero
 (function(){
-  var lines = ['מנתח איך נראה השבוע שלכם...', 'מחפש משימות שחוזרות על עצמן...', 'מכין תוכנית עבודה לפגישה...'];
+  var lines = ['מנתח איך נראה השבוע שלכם...', 'מחפש משימות שחוזרות על עצמן...', 'מזהה כיוונים אפשריים לבדיקה...'];
   var li = 0, ch = 0, del = false, el = $('typed');
   (function tick(){
     var s = lines[li];
@@ -506,8 +512,8 @@ $('hours').addEventListener('input', calc);
 
 // opportunity radar: simple keyword matching over the answers
 var OPS = [
-  ['✉️ מענה ומיון מיילים', /מייל|אימייל|ג'ימייל|ג׳ימייל|אאוטלוק|דואר/],
-  ['💬 תבניות מענה ללקוחות', /וואטסאפ|ווטסאפ|הודעות|פניות|לענות ל|שאלות של לקוחות|שירות לקוחות/],
+  ['✉️ מיון וסידור מיילים', /מייל|אימייל|ג'ימייל|ג׳ימייל|אאוטלוק|דואר/],
+  ['🗒 סידור מידע וחומרים', /רעיונות|הערות|פתקים|מפוזר|מבולגן|בלגן/],
   ['🧾 הצעות מחיר', /הצע(ת|ות) מחיר|תמחור|הצעה ל/],
   ['📂 איסוף וסידור חשבוניות', /חשבוני|קבלות|הנהלת חשבונות|רואה חשבון|הוצאות/],
   ['📱 תכנון וכתיבת תוכן', /תוכן|פוסט|אינסטגרם|רילס|קפשן|פייסבוק|טיקטוק|ניוזלטר|לינקדאין|סושיאל/],
@@ -517,9 +523,9 @@ var OPS = [
   ['📅 תיאום פגישות ותזכורות', /יומן|תיאום|לתאם|תורים|תזכור/],
   ['📄 חוזים והסכמים', /חוזה|חוזים|הסכם|הסכמים/],
   ['🌐 עדכון אתר ודפים', /אתר|דף נחיתה|חנות/],
-  ['👥 מעקב אחרי לקוחות', /לידים|ליד |מעקב|CRM|פולואפ|פולו אפ|לחזור ל/i]
+  ['🧩 תבניות למסמכים שחוזרים', /תבנית|תבניות|טופס|טפסים|שוב ושוב|כל פעם מחדש/]
 ];
-var TOOL_OPS = {'מייל (ג\'ימייל / אאוטלוק)':0, 'מערכת חשבוניות':3, 'אינסטגרם / פייסבוק':4, 'גוגל שיטס / אקסל':5, 'זום':6, 'גוגל יומן':8, 'CRM / מערכת לקוחות':11};
+var TOOL_OPS = {'מייל (ג\'ימייל / אאוטלוק)':0, 'מערכת חשבוניות':3, 'אינסטגרם / פייסבוק':4, 'גוגל שיטס / אקסל':5, 'זום':6, 'גוגל יומן':8};
 var found = [];
 function scan(){
   var text = ['what','timeSink','repeat','hate','assistant','goal','aiTried','more','tools_other']
