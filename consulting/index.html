@@ -462,7 +462,6 @@ function readB64(f){
 function submit(){
   var d = collect();
   if(d.website) return; // honeypot
-  if(d.expect) d.more = 'ציפיות למפגשים: ' + d.expect + (d.more ? '\n\n' + d.more : '');
   if(!ENDPOINT){ $('err').textContent = 'הטופס עוד לא מחובר. אפשר לשלוח לי את התשובות בוואטסאפ.'; return; }
   var btn = $('next'); btn.disabled = true; btn.textContent = 'שולח...';
   Promise.all(files.map(readB64)).then(function(enc){
