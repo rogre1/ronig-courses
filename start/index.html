@@ -46,6 +46,8 @@ h1{font-size:clamp(2.2rem,6vw,3.2rem);line-height:1.1;font-weight:200;color:var(
 h1 em{font-style:normal;font-weight:800;color:var(--olive)}
 .lead{font-size:1.12rem;color:var(--ink-2);margin-top:14px;max-width:600px}
 .chips-info{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.info-link{display:inline-flex;align-items:center;margin-top:16px;background:var(--forest);color:var(--cream);border-radius:99px;padding:10px 22px;font-weight:800;text-decoration:none;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
+.info-link:hover{background:var(--forest-deep);transform:translateY(-2px)}
 .chips-info span{background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 14px;font-size:.9rem;font-weight:600;color:var(--ink-2)}
 
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px 26px;margin-top:22px;box-shadow:var(--shadow-sm)}
@@ -112,6 +114,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
     <h1>בואו <em>נכיר</em></h1>
     <p class="lead">כמה שאלות קצרות על העסק ועל מה שאתם מחפשים. ככה נדע יחד אם הליווי מתאים לכם, ובאיזה מסלול כדאי להתחיל. בסוף לוחצים על שליחה, והתשובות מגיעות ישירות אליי.</p>
     <div class="chips-info"><span>⏱ בערך 3 דקות</span></div>
+    <a class="info-link" href="../ai-coaching/" target="_blank" rel="noopener">לפרטים על הליווי ומחירים ←</a>
   </section>
 
   <form id="f" novalidate autocomplete="off">
@@ -123,14 +126,16 @@ footer img{height:30px;display:block;margin:0 auto 10px}
         <div class="q"><label for="name">שם מלא <span class="req">*</span></label><input type="text" id="name" data-k="שם" data-required></div>
         <div class="q"><label for="phone">טלפון <span class="req">*</span></label><input type="tel" id="phone" inputmode="tel" dir="ltr" autocomplete="tel" data-k="טלפון" data-required></div>
       </div>
-      <div class="q"><label for="biz">שם העסק</label><input type="text" id="biz" data-k="עסק"></div>
-      <div class="q"><label for="what">מה העסק עושה? <span class="req">*</span></label>
+      <div class="q"><label for="biz">שם העסק (אם יש)</label><input type="text" id="biz" data-k="עסק"></div>
+      <div class="q"><label for="what">במה אתם עוסקים? <span class="req">*</span></label>
         <span class="hint">משפט או שניים מספיקים</span>
-        <textarea id="what" data-k="מה העסק עושה" data-required style="min-height:76px"></textarea></div>
+        <textarea id="what" data-k="במה עוסקים" data-required style="min-height:76px"></textarea></div>
     </div>
 
     <div class="card">
       <h2>מה אתם מחפשים</h2>
+      <div class="q"><label for="learn">מה הייתם רוצים ללמוד לעשות בעצמכם עם AI?</label>
+        <textarea id="learn" data-k="מה רוצים ללמוד" style="min-height:76px"></textarea></div>
       <div class="q"><label for="repeat">אילו משימות חוזרות על עצמן בעבודה היומיומית שלכם? <span class="req">*</span></label>
         <span class="hint">דברים שאתם עושים שוב ושוב, כמעט באותה צורה. למשל: הכנת הצעות מחיר, סידור מסמכים וקבצים, הכנת פוסטים לאינסטגרם</span>
         <textarea id="repeat" data-k="משימות חוזרות" data-required></textarea></div>
@@ -278,6 +283,10 @@ $('f').addEventListener('submit', function(e){
 });
 
 restore();
+var plan = {'1':'פגישה אחת ממוקדת','4':'חבילת ליווי של 4 מפגשים'}[new URLSearchParams(location.search).get('plan')];
+if(plan){
+  document.querySelectorAll('[data-k="מסלול"] button').forEach(function(b){ b.setAttribute('aria-pressed', b.textContent === plan ? 'true' : 'false'); });
+}
 update();
 </script>
 </body>
