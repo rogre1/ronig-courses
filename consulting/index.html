@@ -22,8 +22,8 @@
   --shadow-sm:0 10px 22px rgba(35,38,30,.10);
   --r:22px;
 }
-html{scroll-behavior:smooth}
-body{font-family:'Heebo',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden;overflow-x:clip}
 b,strong{font-weight:700;color:var(--forest-deep)}
 a{color:var(--olive);font-weight:600}
 
@@ -48,7 +48,7 @@ h1 em{font-style:normal;color:var(--olive)}
 
 /* tech touches */
 .hero{position:relative}
-.hero::before{content:"";position:absolute;inset:0 -40px;z-index:-1;background-image:radial-gradient(var(--leaf) 1px,transparent 1.2px);background-size:22px 22px;opacity:.45;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 85%);mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+.hero::before{content:"";position:absolute;inset:0 -16px;z-index:-1;background-image:radial-gradient(var(--leaf) 1px,transparent 1.2px);background-size:22px 22px;opacity:.45;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 85%);mask-image:linear-gradient(to bottom,#000,transparent 85%)}
 .term{display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px;font-size:.92rem;font-weight:500;color:var(--forest);box-shadow:var(--shadow-sm);max-width:100%}
 .term .pr{color:var(--olive);font-weight:800;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;direction:ltr;unicode-bidi:isolate;padding-inline-end:8px;border-inline-end:1px solid var(--line)}
 .cur{display:inline-block;width:8px;height:1.1em;background:var(--olive);animation:blink 1s steps(1) infinite}

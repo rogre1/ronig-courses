@@ -29,8 +29,8 @@
   --r:22px;
   color-scheme:light;
 }
-html{scroll-behavior:smooth}
-body{font-family:'Assistant',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.65;font-size:18px;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
+body{font-family:'Assistant',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.65;font-size:18px;overflow-x:hidden;overflow-x:clip}
 b,strong{font-weight:800;color:var(--forest-deep)}
 a{color:var(--olive);font-weight:700}
 
@@ -40,7 +40,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdro
 
 main{max-width:720px;margin:0 auto;padding:0 16px 60px}
 .hero{padding:44px 0 6px;position:relative}
-.hero::before{content:"";position:absolute;inset:0 -40px;z-index:-1;background-image:radial-gradient(var(--leaf) 1px,transparent 1.2px);background-size:22px 22px;opacity:.45;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 85%);mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+.hero::before{content:"";position:absolute;inset:0 -16px;z-index:-1;background-image:radial-gradient(var(--leaf) 1px,transparent 1.2px);background-size:22px 22px;opacity:.45;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 85%);mask-image:linear-gradient(to bottom,#000,transparent 85%)}
 .kicker{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:700;font-size:.85rem;padding:3px 14px;border-radius:99px;margin-bottom:14px}
 h1{font-size:clamp(2.2rem,6vw,3.2rem);line-height:1.1;font-weight:200;color:var(--forest-deep);letter-spacing:-.01em;text-wrap:balance}
 .title{display:flex;align-items:center;gap:12px}
