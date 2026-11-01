@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>בואו נכיר | Ronig.ai</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="כמה שאלות קצרות לפני שמתחילים, כדי שנדע יחד אם הליווי מתאים לכם ובמה כדאי להתחיל.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="בואו נכיר">
+<meta property="og:description" content="כמה שאלות קצרות לפני שמתחילים, כדי שנדע יחד אם הליווי מתאים לכם ובמה כדאי להתחיל.">
+<meta property="og:image" content="https://rogre1.github.io/ronig-courses/ai-coaching/me.jpg">
+<link rel="icon" href="../claude-code-start/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../claude-code-start/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* פריסה: עמוד אחד קצר בלי שלבים. שאלות פתוחות ובחירות מהירות, ובסוף כפתור ששולח את התשובות אליי במייל ולגיליון. אותה פלטה של דפי הליווי */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FBF9F4;--cream-deep:#F1EFE7;--mint:#F0F3E8;
+  --forest:#333E27;--forest-deep:#20261A;
+  --olive:#788C5D;--olive-bright:#8BA36B;--leaf:#B7C29F;
+  --ink:#1B1D16;--ink-2:#5B5F52;--ink-3:#8A8672;
+  --line:#E3E0D5;--coral:#C4654C;
+  --shadow-sm:0 10px 22px rgba(35,38,30,.10);
+  --r:22px;
+  color-scheme:light;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Assistant',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.65;font-size:18px;overflow-x:hidden}
+b,strong{font-weight:800;color:var(--forest-deep)}
+a{color:var(--olive);font-weight:700}
+
+header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:720px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.hwrap img{height:36px;width:auto;display:block}
+
+main{max-width:720px;margin:0 auto;padding:0 16px 60px}
+.hero{padding:44px 0 6px;position:relative}
+.hero::before{content:"";position:absolute;inset:0 -40px;z-index:-1;background-image:radial-gradient(var(--leaf) 1px,transparent 1.2px);background-size:22px 22px;opacity:.45;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 85%);mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+.kicker{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:700;font-size:.85rem;padding:3px 14px;border-radius:99px;margin-bottom:14px}
+h1{font-size:clamp(2.2rem,6vw,3.2rem);line-height:1.1;font-weight:200;color:var(--forest-deep);letter-spacing:-.01em;text-wrap:balance}
+h1 em{font-style:normal;font-weight:800;color:var(--olive)}
+.lead{font-size:1.12rem;color:var(--ink-2);margin-top:14px;max-width:600px}
+.chips-info{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chips-info span{background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 14px;font-size:.9rem;font-weight:600;color:var(--ink-2)}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px 26px;margin-top:22px;box-shadow:var(--shadow-sm)}
+.card h2{font-size:1.35rem;font-weight:800;color:var(--forest-deep);line-height:1.25}
+.card h2 span{display:block;font-size:.95rem;font-weight:400;color:var(--ink-3);margin-top:2px}
+
+.q{margin-top:22px}
+.q>label,.q>.lbl{display:block;font-weight:700;color:var(--forest-deep);font-size:1.04rem;margin-bottom:4px}
+.q .hint{display:block;color:var(--ink-3);font-size:.92rem;margin-bottom:8px}
+.req{color:var(--coral)}
+input[type=text],input[type=tel],textarea{width:100%;font:inherit;font-size:1rem;color:var(--ink);background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;transition:border-color .2s,background .2s}
+textarea{min-height:96px;resize:vertical;line-height:1.55}
+input:focus,textarea:focus{outline:none;border-color:var(--olive);background:#fff}
+input.bad,textarea.bad{border-color:var(--coral);background:#FBEFE9}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:inherit;font-size:.95rem;font-weight:600;color:var(--forest);background:var(--cream);border:1.5px solid var(--line);border-radius:99px;padding:7px 16px;cursor:pointer;transition:all .15s}
+.chips button:hover{border-color:var(--leaf)}
+.chips button:focus-visible{outline:3px solid var(--olive-bright);outline-offset:2px}
+.chips button[aria-pressed=true]{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.chips.bad button{border-color:#EFC9BB}
+
+.note{border-radius:14px;padding:12px 16px;margin-top:12px;font-size:.95rem;background:var(--mint);border:1px solid var(--leaf);color:var(--forest)}
+.hidden{display:none!important}
+
+.send{margin-top:22px;background:var(--forest-deep);color:var(--cream-deep);border-radius:var(--r);padding:28px 26px;text-align:center}
+.send h2{color:#fff;font-size:1.4rem;font-weight:800}
+.send p{color:#B9BDA9;margin-top:6px}
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--olive-bright);color:#fff;border:0;font:inherit;font-weight:800;padding:13px 26px;border-radius:99px;text-decoration:none;cursor:pointer;transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--olive)}
+.btn[disabled]{opacity:.6;cursor:wait;transform:none}
+.thanks{text-align:center;padding:40px 26px}
+.thanks .big{font-size:2.6rem;line-height:1}
+.thanks h2{margin-top:12px;font-size:1.6rem}
+.thanks p{color:var(--ink-2);margin-top:8px}
+.err{color:#F2B5A3;font-weight:700;font-size:.95rem;margin-top:14px;min-height:1.4em}
+.hp{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+
+footer{border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--ink-3);font-size:.88rem;margin-top:40px}
+footer img{height:30px;display:block;margin:0 auto 10px}
+.legal{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:12px}
+.legal a{color:var(--ink-3);font-weight:400;font-size:.84rem}
+
+@media (max-width:600px){
+  body{font-size:17px}
+  .card,.send{padding:22px 16px}
+  .row2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36">
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <span class="kicker">לפני שמתחילים</span>
+    <h1>בואו <em>נכיר</em></h1>
+    <p class="lead">כמה שאלות קצרות על העסק ועל מה שאתם מחפשים. ככה נדע יחד אם הליווי מתאים לכם, ובאיזה מסלול כדאי להתחיל. בסוף לוחצים על שליחה, והתשובות מגיעות ישירות אליי.</p>
+    <div class="chips-info"><span>⏱ בערך 3 דקות</span></div>
+  </section>
+
+  <form id="f" novalidate autocomplete="off">
+    <div class="hp" aria-hidden="true"><label>אל תמלאו<input type="text" name="website" tabindex="-1"></label></div>
+
+    <div class="card">
+      <h2>קצת עליכם</h2>
+      <div class="row2">
+        <div class="q"><label for="name">שם מלא <span class="req">*</span></label><input type="text" id="name" data-k="שם" data-required></div>
+        <div class="q"><label for="phone">טלפון <span class="req">*</span></label><input type="tel" id="phone" inputmode="tel" dir="ltr" autocomplete="tel" data-k="טלפון" data-required></div>
+      </div>
+      <div class="q"><label for="biz">שם העסק</label><input type="text" id="biz" data-k="עסק"></div>
+      <div class="q"><label for="what">מה העסק עושה? <span class="req">*</span></label>
+        <span class="hint">משפט או שניים מספיקים</span>
+        <textarea id="what" data-k="מה העסק עושה" data-required style="min-height:76px"></textarea></div>
+    </div>
+
+    <div class="card">
+      <h2>מה אתם מחפשים</h2>
+      <div class="q"><label for="repeat">אילו משימות חוזרות על עצמן בעבודה היומיומית שלכם? <span class="req">*</span></label>
+        <span class="hint">דברים שאתם עושים שוב ושוב, כמעט באותה צורה. למשל: הכנת הצעות מחיר, סידור מסמכים וקבצים, הכנת פוסטים לאינסטגרם</span>
+        <textarea id="repeat" data-k="משימות חוזרות" data-required></textarea></div>
+      <div class="q"><label for="first">ואיזו מהן הכי הייתם רוצים לקצר או לפשט? <span class="req">*</span></label>
+        <input type="text" id="first" data-k="מה הכי רוצים לפשט" data-required></div>
+      <div class="q"><label for="success">מה יגרום לכם להרגיש שהליווי היה שווה? <span class="req">*</span></label>
+        <span class="hint">מה תרצו שיהיה לכם, או שתדעו לעשות, בסוף התהליך</span>
+        <textarea id="success" data-k="מה ייחשב הצלחה" data-required></textarea></div>
+    </div>
+
+    <div class="card">
+      <h2>נקודת הפתיחה</h2>
+      <div class="q"><span class="lbl">כמה אתם משתמשים היום ב-AI? <span class="req">*</span></span>
+        <div class="chips" data-k="ניסיון עם AI" data-required>
+          <button type="button">עוד לא ניסיתי</button><button type="button">ניסיתי קצת</button><button type="button">משתמש/ת מדי פעם</button><button type="button">משתמש/ת כל יום</button>
+        </div></div>
+      <div class="q"><span class="lbl">על מה תעבדו בפגישות? <span class="req">*</span></span>
+        <div class="chips" data-k="מחשב" data-required>
+          <button type="button">מק</button><button type="button">ווינדוס</button><button type="button">אין לי מחשב</button>
+        </div>
+        <p class="note hidden" id="pcNote">העבודה בפגישות נעשית על מחשב, עם שיתוף מסך. אם אין לכם מחשב זמין, ספרו לי ונחשוב יחד.</p>
+      </div>
+      <div class="q"><span class="lbl">כמה זמן תוכלו להקדיש ליישום ולתרגול בין המפגשים? <span class="req">*</span></span>
+        <div class="chips" data-k="זמן ליישום" data-required>
+          <button type="button">פחות משעה בשבוע</button><button type="button">שעה-שעתיים בשבוע</button><button type="button">יותר משעתיים בשבוע</button>
+        </div></div>
+    </div>
+
+    <div class="card">
+      <h2>איך מתחילים</h2>
+      <div class="q"><span class="lbl">מה מעניין אתכם? <span class="req">*</span></span>
+        <div class="chips" data-k="מסלול" data-required>
+          <button type="button">פגישה אחת ממוקדת</button><button type="button">חבילת ליווי של 4 מפגשים</button><button type="button">עוד לא יודע/ת</button>
+        </div>
+        <span class="hint" style="margin-top:8px">הפרטים על שני המסלולים <a href="../ai-coaching/#plans" target="_blank" rel="noopener">נמצאים כאן</a></span></div>
+      <div class="q"><span class="lbl">מתי הייתם רוצים להתחיל?</span>
+        <div class="chips" data-k="מתי להתחיל">
+          <button type="button">בשבועיים הקרובים</button><button type="button">בחודש הקרוב</button><button type="button">מתלבטים</button>
+        </div></div>
+      <div class="q"><label for="more">יש עוד משהו שחשוב לכם שאדע?</label>
+        <textarea id="more" data-k="עוד" style="min-height:76px"></textarea></div>
+    </div>
+
+    <div class="send">
+      <h2>שולחים, ואחזור אליכם</h2>
+      <p>התשובות מגיעות ישירות אליי.</p>
+      <div class="btns">
+        <button type="submit" class="btn" id="go">שליחה ✓</button>
+      </div>
+      <p class="err" id="err" role="alert"></p>
+    </div>
+  </form>
+
+  <div class="card thanks hidden" id="thanks" tabindex="-1">
+    <div class="big">✨</div>
+    <h2>תודה, קיבלתי</h2>
+    <p>אעבור על התשובות ואחזור אליכם.</p>
+  </div>
+</main>
+
+<footer>
+  <img src="../assets/logo-dark.png" alt="Ronig.ai" width="86" height="30">
+  <a href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">@ronig.ai</a>
+  <nav class="legal"><a href="../terms.html" target="_blank" rel="noopener">תקנון ותנאי שימוש</a><a href="../privacy.html" target="_blank" rel="noopener">מדיניות פרטיות</a><a href="../accessibility.html" target="_blank" rel="noopener">הצהרת נגישות</a></nav>
+</footer>
+
+<script>
+var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzXtzoWbSPaTie7X6G_GFLqfRd97-MVySbeYx7hdIFcsj2bn4qu8rDDjACk4PQkZPrRSA/exec';
+var KEY = 'ronig_start_draft';
+var $ = function(id){ return document.getElementById(id); };
+var fields = [].slice.call(document.querySelectorAll('[data-k]'));
+var required = fields.filter(function(f){ return f.hasAttribute('data-required'); });
+
+function val(f){
+  if(f.classList.contains('chips')){
+    var b = f.querySelector('button[aria-pressed=true]'); return b ? b.textContent : '';
+  }
+  return f.value.trim();
+}
+function update(){
+  $('pcNote').classList.toggle('hidden', val(document.querySelector('[data-k="מחשב"]')) !== 'אין לי מחשב');
+}
+function save(){
+  var d = {}; fields.forEach(function(f){ d[f.dataset.k] = val(f); });
+  try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){}
+}
+function restore(){
+  var d; try{ d = JSON.parse(localStorage.getItem(KEY) || 'null'); }catch(e){}
+  if(!d) return;
+  fields.forEach(function(f){
+    var v = d[f.dataset.k]; if(!v) return;
+    if(f.classList.contains('chips')){
+      f.querySelectorAll('button').forEach(function(b){ if(b.textContent === v) b.setAttribute('aria-pressed','true'); });
+    } else f.value = v;
+  });
+}
+
+document.querySelectorAll('.chips').forEach(function(g){
+  g.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed','false'); });
+  g.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    var on = b.getAttribute('aria-pressed') === 'true';
+    g.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+    b.setAttribute('aria-pressed', on ? 'false' : 'true');
+    g.classList.remove('bad'); save(); update();
+  });
+});
+$('f').addEventListener('input', function(e){ e.target.classList.remove('bad'); save(); update(); });
+
+function check(){
+  var first = null;
+  required.forEach(function(f){
+    if(!val(f)){ f.classList.add('bad'); first = first || f; }
+  });
+  if(!first && $('phone').value.replace(/\D/g,'').length < 9){ $('phone').classList.add('bad'); first = $('phone'); }
+  if(first){
+    $('err').textContent = 'חסרות כמה תשובות שמסומנות בכוכבית';
+    first.scrollIntoView({block:'center', behavior:'smooth'});
+    return false;
+  }
+  $('err').textContent = '';
+  return true;
+}
+$('f').addEventListener('submit', function(e){
+  e.preventDefault();
+  if(document.querySelector('[name=website]').value) return;
+  if(!check()) return;
+  var btn = $('go'); btn.disabled = true; btn.textContent = 'שולח...';
+  var d = {
+    form: 'start',
+    name: $('name').value.trim(),
+    website: '',
+    answers: fields.map(function(f){ return [f.dataset.k, val(f)]; })
+  };
+  fetch(ENDPOINT, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(d)})
+    .then(function(){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      $('f').classList.add('hidden'); document.querySelector('.hero').classList.add('hidden');
+      $('thanks').classList.remove('hidden'); $('thanks').focus();
+      window.scrollTo(0, 0);
+    }, function(){
+      btn.disabled = false; btn.textContent = 'שליחה ✓';
+      $('err').textContent = 'משהו לא עבד בשליחה. נסו שוב בעוד רגע.';
+    });
+});
+
+restore();
+update();
+</script>
+</body>
+</html>
