@@ -1,0 +1,9 @@
+# pip install -r requirements.txt  (same on Mac and Windows; no Homebrew or system tools needed)
+fonttools
+opencv-python-headless
+numpy
+pillow
+pillow-heif
+potracer
+python-bidi
+reportlab

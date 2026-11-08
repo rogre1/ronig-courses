@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>כתב היד שלכם כפונט במחשב | Ronig.ai</title>
+<meta name="description" content="פרומפט בעברית: מצלמים דף בכתב היד, ו-Claude הופך אותו לפונט אמיתי שמתקינים במחשב. עובד במק ובווינדוס, חינמי ומקומי.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="כתב היד שלכם כפונט במחשב | Ronig.ai">
+<meta property="og:description" content="מצלמים דף בכתב היד, ו-Claude בונה ממנו פונט שמתקינים במחשב. תבנית להורדה ופרומפט מוכן להעתקה.">
+<meta property="og:url" content="https://rogre1.github.io/ronig-courses/handwriting-font/">
+<meta name="twitter:card" content="summary">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../claude-code-start/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../claude-code-start/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FBF9F4;--cream-deep:#F1EFE7;--mint:#F0F3E8;
+  --forest:#333E27;--forest-deep:#20261A;--forest-tile:#2A3122;
+  --olive:#788C5D;--olive-bright:#8BA36B;--leaf:#B7C29F;
+  --ink:#1B1D16;--ink-2:#5B5F52;--ink-3:#8A8672;
+  --ink-dark-1:#F1EFE7;--ink-dark-2:#B9BDA9;
+  --line:#E3E0D5;--coral:#D9785F;
+  --shadow-sm:0 10px 22px rgba(35,38,30,.10);
+  --shadow-md:0 12px 28px rgba(35,38,30,.16);
+  --r:22px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:'Assistant',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:18px;overflow-x:hidden}
+a{color:var(--olive);font-weight:700}
+code,.ltr{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em}
+code{background:var(--cream-deep);border:1px solid var(--line);padding:.05em .4em;border-radius:6px;color:var(--forest)}
+b,strong{font-weight:800;color:var(--forest-deep)}
+img{max-width:100%;height:auto;display:block}
+
+header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.hwrap img{height:36px;width:auto;display:block}
+.btn-back{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:.85rem;font-weight:700;color:var(--forest);border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;white-space:nowrap}
+.btn-back:hover{border-color:var(--olive)}
+
+.narrow{max-width:780px;margin:0 auto;padding:0 16px 60px}
+.hero{padding:56px 0 10px}
+.eyebrow{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:700;font-size:.88rem;padding:4px 14px;border-radius:99px;margin-bottom:16px}
+h1{font-size:clamp(2.1rem,5.6vw,3.4rem);line-height:1.1;font-weight:200;color:var(--forest-deep);letter-spacing:-.01em}
+h1 em{font-style:normal;font-weight:800;color:var(--olive)}
+.lead{font-size:1.18rem;color:var(--ink-2);margin-top:14px;max-width:640px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border:0;font:inherit;font-weight:700;padding:12px 24px;border-radius:99px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--forest-deep)}
+.need{display:inline-block;margin-top:18px;background:#fff;border:1.5px solid var(--leaf);border-radius:18px;padding:8px 18px;font-size:1rem;color:var(--ink-2)}
+.os{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.os span{background:var(--forest);color:var(--ink-dark-1);border-radius:99px;padding:3px 14px;font-size:.9rem;font-weight:700}
+.beginner{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--forest);color:var(--ink-dark-1);border-radius:18px;padding:20px 22px;margin-top:18px}
+.beginner b{color:#fff}
+.beginner p{flex:1;min-width:220px;margin:0}
+.beginner .btn{background:var(--leaf);color:var(--forest-deep)}
+
+.sample{margin-top:26px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-md);overflow:hidden}
+.sample img{width:100%}
+.sample figcaption{font-size:.85rem;color:var(--ink-3);padding:8px 16px;border-top:1px solid var(--line);background:var(--cream)}
+
+section.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;margin-top:18px;box-shadow:var(--shadow-sm)}
+.step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px}
+.num{flex:none;width:46px;height:46px;border-radius:50%;background:var(--mint);border:1.5px solid var(--leaf);color:var(--forest);display:grid;place-items:center;font-weight:800;font-size:1.15rem}
+h2{font-size:clamp(1.45rem,3.4vw,1.9rem);line-height:1.25;font-weight:800;color:var(--forest-deep)}
+.step-head p{color:var(--ink-3);font-size:.98rem;margin-top:2px}
+h3{font-size:1.18rem;font-weight:800;color:var(--forest);margin:26px 0 8px}
+section p+p{margin-top:10px}
+ul.dots{margin:12px 0 0;padding-right:0;list-style:none}
+ul.dots li{position:relative;padding-right:22px;margin-bottom:8px}
+ul.dots li::before{content:"";position:absolute;right:4px;top:.7em;width:7px;height:7px;border-radius:50%;background:var(--olive)}
+
+.note{border-radius:16px;padding:16px 18px;margin-top:18px;display:flex;gap:12px;font-size:1rem}
+.note .ic{flex:none;font-size:1.25rem;line-height:1.4}
+.note.tip{background:var(--mint);border:1px solid var(--leaf)}
+.note.warn{background:#FBEFE9;border:1px solid #EFC9BB}
+
+details.acc{border:1px solid var(--line);border-radius:16px;margin-top:12px;background:var(--cream);overflow:hidden}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-size:1.3rem;color:var(--olive);font-weight:400;transition:transform .2s}
+details.acc[open] summary::after{transform:rotate(45deg)}
+details.acc .in{padding:0 18px 16px;color:var(--ink-2)}
+details.acc .in b{color:var(--forest)}
+
+.prompt{position:relative;background:var(--forest-deep);color:var(--ink-dark-1);border-radius:16px;padding:18px;margin-top:14px;white-space:pre-wrap;font-size:.98rem;line-height:1.75;border:1px solid var(--forest-tile)}
+.prompt .lbl{display:block;font-size:.78rem;font-weight:800;color:var(--leaf);letter-spacing:.05em;margin-bottom:6px;padding-left:80px}
+.copy{position:absolute;top:12px;left:12px;background:var(--olive);color:#fff;border:0;font:inherit;font-size:.8rem;font-weight:700;padding:5px 12px;border-radius:99px;cursor:pointer;direction:rtl}
+.copy.ok{background:var(--leaf);color:var(--forest-deep)}
+.prompt.long{max-height:520px;overflow:auto}
+.prompt.long.open{max-height:none}
+.expand{display:block;margin:10px auto 0;font:inherit;font-weight:700;font-size:.9rem;background:none;border:1.5px solid var(--line);color:var(--forest);padding:6px 16px;border-radius:99px;cursor:pointer}
+
+/* flow */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:stretch;gap:8px;margin-top:22px}
+.flow .box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 10px;text-align:center;box-shadow:var(--shadow-sm)}
+.flow .box .ico{font-size:1.7rem;line-height:1.2}
+.flow .box h4{font-size:1rem;font-weight:800;color:var(--forest-deep);margin-top:4px}
+.flow .box p{font-size:.86rem;color:var(--ink-2);margin-top:2px;line-height:1.45}
+.flow .box.end{background:var(--forest);border-color:var(--forest)}
+.flow .box.end h4{color:#fff}.flow .box.end p{color:var(--ink-dark-2)}
+.flow .arr{display:grid;place-items:center;color:var(--olive);font-size:1.3rem;font-weight:800}
+
+/* two paths */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.path{border:1px solid var(--line);border-radius:18px;padding:18px;background:var(--cream);display:flex;flex-direction:column;gap:10px}
+.path.rec{background:#fff;border:2px solid var(--olive)}
+.path .tag{align-self:flex-start;font-size:.78rem;font-weight:800;border-radius:99px;padding:2px 12px;background:var(--mint);color:var(--olive);border:1px solid var(--leaf)}
+.path h4{font-size:1.15rem;font-weight:800;color:var(--forest-deep);line-height:1.3}
+.path p{font-size:.97rem;color:var(--ink-2)}
+.path ul{list-style:none;font-size:.95rem}
+.path li{padding:2px 0}
+.path .btn{align-self:flex-start;margin-top:auto;font-size:.95rem;padding:10px 20px}
+.thumb{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)}
+.thumb img{width:100%;height:150px;object-fit:cover;object-position:top}
+
+/* notebook mock */
+.nb{background:#FFFDF6;border-radius:10px;border:1px solid #E8E2CF;padding:12px 14px;background-image:repeating-linear-gradient(to bottom,transparent 0 27px,#D8E3EE 27px 28px);font-family:'Assistant',sans-serif;font-size:19px;line-height:28px;color:#2F3A6B;font-style:italic;min-height:96px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.9rem;color:var(--ink-2)}
+.chips span{border-radius:8px;padding:0 9px;font-weight:800;background:#FBEFE9;border:1px solid #EFC9BB;color:#9A4B37}
+
+/* chat mock */
+figure.mock{margin:22px 0 4px}
+.win{background:#fff;border:1px solid #DDD9CC;border-radius:14px;box-shadow:var(--shadow-md);overflow:hidden;font-size:14px;color:#2b2b28}
+.win-bar{direction:ltr;display:flex;align-items:center;gap:7px;padding:9px 12px;background:#F4F2EC;border-bottom:1px solid #E6E2D6}
+.win-bar i{width:11px;height:11px;border-radius:50%;background:#E0DCCF}
+.win-bar i:nth-child(1){background:#EC6A5E}.win-bar i:nth-child(2){background:#F4BF4F}.win-bar i:nth-child(3){background:#61C554}
+.win-bar span{margin-left:10px;color:#8a8672;font-size:12px;font-family:system-ui,sans-serif}
+.chat{background:#FBFAF6;display:grid;gap:8px;padding:16px}
+.bub{border-radius:12px;padding:9px 12px;max-width:85%;font-size:14px;line-height:1.55}
+.bub.cl{background:#fff;border:1px solid #ECE8DD;justify-self:start}
+.bub.me{background:#F0F3E8;justify-self:end}
+.bub img{border-radius:8px;border:1px solid #ECE8DD;margin-top:6px}
+.opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.opts span{border:1px solid #DDD9CC;border-radius:99px;padding:1px 10px;font-size:12.5px;background:#FBFAF6}
+.mock-note{font-size:.82rem;color:var(--ink-3);margin-top:8px}
+
+/* install */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.duo div{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--cream)}
+.duo h4{font-size:1.05rem;font-weight:800;color:var(--forest-deep);margin-bottom:6px}
+.duo ol{padding-right:18px;font-size:.97rem}
+.duo li{padding:2px 0}
+
+.final{background:var(--forest);color:var(--ink-dark-1);border-radius:var(--r);padding:40px 30px;margin-top:22px;text-align:center}
+.final h2{color:#fff}
+.final p{color:var(--ink-dark-2);max-width:560px;margin:10px auto 0}
+.final .btn{background:var(--leaf);color:var(--forest-deep);margin-top:20px}
+footer{border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--ink-3);font-size:.9rem}
+footer img{height:30px;display:block;margin:0 auto 10px}
+
+@media (max-width:640px){
+  body{font-size:17px}
+  .hwrap img{height:30px}
+  .btn-back span{display:none}
+  section.step{padding:26px 18px}
+  .hero{padding-top:34px}
+  .flow{grid-template-columns:1fr}
+  .flow .arr{transform:rotate(-90deg);height:16px}
+  .paths,.duo,  .final{padding:32px 18px}
+}
+@media print{
+  header,.copy,.expand,.beginner .btn{display:none!important}
+  .prompt.long{max-height:none}
+  section.step{box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <a href="../courses/" aria-label="Ronig.ai, לעמוד הקורסים"><img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36"></a>
+    <a class="btn-back" href="https://rogre1.github.io/ronig-courses/courses/">← <span>חזרה לעמוד הקורסים</span></a>
+  </div>
+</header>
+
+<main class="narrow">
+
+<section class="hero">
+  <span class="eyebrow">פרומפט חינם · Ronig.ai</span>
+  <h1>כתב היד שלכם,<br><em>כפונט במחשב</em></h1>
+  <p class="lead">כותבים על דף, מצלמים בטלפון, ו-Claude בונה מזה פונט אמיתי. מתקינים אותו, ומקלידים בכתב היד שלכם, למשל בוורד ובקאפקאט.</p>
+  <p class="need">💳 <b>מה צריך:</b> מנוי Claude Pro (או יותר), ודף עם כתב יד שמצלמים או סורקים. כל השאר חינמי ונשאר אצלכם במחשב.</p>
+  <div class="os"><span>🍎 מק</span><span>🪟 ווינדוס</span></div>
+  <div class="beginner">
+    <p><b>פעם ראשונה עם Claude Code?</b> עברו קודם על מדריך המתחילים שלי (20 דקות, בלי קוד), ואז חזרו לכאן.</p>
+    <a class="btn" href="../claude-code-start/?from=handwriting-font">למדריך המתחילים ←</a>
+  </div>
+  <figure class="sample">
+    <img src="sample.jpg" alt="המשפט 'זה כתב היד שלי! הפכתי אותו לפונט עם קלוד' מוקלד בפונט שנבנה מכתב יד" width="1500" height="430">
+    <figcaption>זה לא צילום. זה טקסט שהוקלד בפונט שנבנה מכתב יד.</figcaption>
+  </figure>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">1</div><div><h2>איך זה עובד</h2><p>ארבעה שלבים, ו-Claude מוביל אתכם בכולם</p></div></div>
+  <div class="flow" role="img" aria-label="כותבים, מצלמים, Claude בונה את הפונט, מתקינים">
+    <div class="box"><div class="ico">✍️</div><h4>כותבים</h4><p>בתבנית, או דף שכבר כתוב</p></div>
+    <div class="arr">←</div>
+    <div class="box"><div class="ico">📱</div><h4>מצלמים</h4><p>בטלפון או בסורק</p></div>
+    <div class="arr">←</div>
+    <div class="box"><div class="ico">🪄</div><h4>Claude בונה</h4><p>מיישר, מרווח ושואל אתכם</p></div>
+    <div class="arr">←</div>
+    <div class="box end"><div class="ico">⌨️</div><h4>מתקינים</h4><p>ומקלידים בכתב היד</p></div>
+  </div>
+  <div class="note tip"><span class="ic">🔒</span><div><b>כתב היד לא יוצא מהמחשב.</b> Claude בונה את הפונט אצלכם, בכלים חינמיים, בלי לשלוח את הצילום לשום אתר.</div></div>
+</section>
+
+<section class="step" id="paths">
+  <div class="step-head"><div class="num">2</div><div><h2>בוחרים דרך וכותבים</h2><p>שתי דרכים, ושתיהן עובדות</p></div></div>
+  <div class="paths">
+    <div class="path rec">
+      <span class="tag">מומלץ</span>
+      <h4>א. תבנית עם משבצות</h4>
+      <a class="thumb" href="handwriting-template.pdf" download><img src="template-preview.png" alt="תבנית ההדפסה: משבצת לכל אות, עם קו לכתוב עליו" width="579" height="818" loading="lazy"></a>
+      <p>מדפיסים, וכותבים אות אחת בכל משבצת. Claude יודע בדיוק איזו אות נמצאת בכל משבצת, ולכן התוצאה הכי נקייה.</p>
+      <ul><li>✔ כל האותיות, כולל ך ם ן ף ץ</li><li>✔ ספרות וסימני פיסוק</li><li>✔ עמוד שני באנגלית, אם רוצים</li></ul>
+      <a class="btn" href="handwriting-template.pdf" download>להורדת התבנית (PDF) ←</a>
+    </div>
+    <div class="path">
+      <span class="tag">בלי מדפסת</span>
+      <h4>ב. מחברת, פנקס או מכתב</h4>
+      <div class="nb" aria-hidden="true">דג סקרן שט בים מאוכזב<br>ולפתע מצא חברה</div>
+      <p>מצלמים דף שכבר כתוב בכתב היד, למשל מחברת, פנקס או מכתב ישן. Claude מוצא את האותיות לבד ומראה לכם מה מצא.</p>
+      <div class="chips">חסרות: <span>ך</span><span>ן</span><span>ף</span><span>ץ</span></div>
+      <p><b>כדאי לדעת:</b> דף רגיל כמעט אף פעם לא כולל את כל האותיות. Claude יגיד לכם מה חסר, ותכתבו רק את האותיות האלה על דף לבן.</p>
+    </div>
+  </div>
+
+  <h3>איך כותבים כדי שייצא יפה</h3>
+  <ul class="dots">
+    <li><b>טוש שחור או עט כהה ועבה.</b> עט כחול דק יוצא חלש.</li>
+    <li><b>כתב דפוס, אות ליד אות.</b> אותיות שנוגעות זו בזו קשה להפריד.</li>
+    <li><b>בתבנית:</b> האות יושבת על הקו התחתון. ק, ך, ן, ף, ץ יורדות מתחתיו, ול' עולה למעלה.</li>
+    <li><b>מכתב של מישהו אחר?</b> רק באישור שלו. ולא משתמשים בזה כדי לחקות חתימה.</li>
+  </ul>
+
+  <h3>איך מצלמים</h3>
+  <ul class="dots">
+    <li>מלמעלה, באור יום ובלי צל של הטלפון על הדף. לא צריך לצלם ישר לגמרי, Claude מיישר.</li>
+    <li>בתבנית: כל ארבעת הריבועים השחורים שבפינות צריכים להיות בתמונה.</li>
+    <li>שולחים את הצילום למחשב, למשל ב-AirDrop, בוואטסאפ או במייל. גם קבצי HEIC מהאייפון עובדים.</li>
+  </ul>
+</section>
+
+<section class="step" id="prompt">
+  <div class="step-head"><div class="num">3</div><div><h2>פותחים שיחה ומדביקים</h2><p>Claude כבר ידריך אתכם משם</p></div></div>
+  <p>באפליקציית Claude עוברים למצב <b>Code</b> (האייקון <code>&lt;/&gt;</code> למעלה), לוחצים <b>New session</b> ובוחרים ב-<b>Select folder</b> תיקייה חדשה, למשל "הפונט שלי". מעתיקים את הפרומפט ומדביקים.</p>
+  <div class="prompt long"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>אני רוצה להפוך את כתב היד שלי לפונט שאפשר להתקין במחשב ולהקליד בו. תדריך אותי צעד אחרי צעד, בעברית פשוטה: בכל שלב תגיד לי בדיוק מה לעשות, תחכה שאכתוב "עשיתי", ורק אז תמשיך.
+
+1. הכנה: תבדוק אם אני על מק או על ווינדוס, ואם מותקן אצלי Python 3.10 ומעלה. אם לא, תתקין אותו בעצמך. אם קופץ חלון שצריך ללחוץ בו (למשל אישור התקנה או סיסמה של המחשב), תגיד לי בדיוק על מה ללחוץ ותחכה. אחר כך תוריד לתיקייה את הכלים של המדריך, שלושה קבצים:
+https://rogre1.github.io/ronig-courses/handwriting-font/tool/build_font.py
+https://rogre1.github.io/ronig-courses/handwriting-font/tool/layout.py
+https://rogre1.github.io/ronig-courses/handwriting-font/tool/requirements.txt
+תיצור סביבת venv בתיקייה ותתקין בה את requirements.txt. בלי Homebrew ובלי תוכנות נוספות, כדי שזה יעבוד אותו דבר במק ובווינדוס.
+
+2. תשאל אותי באיזו דרך אני עובד/ת:
+א. תבנית: הדפסתי את תבנית המשבצות מהמדריך ומילאתי.
+ב. מחברת: דף שכבר כתוב בכתב היד, כמו מחברת, פנקס או מכתב.
+אחר כך תבקש שאגרור את הצילום לשיחה (אפשר כמה צילומים, וגם HEIC מהאייפון), או שאשים אותו בתיקייה.
+
+3א. בתבנית: תריץ את build_font.py עם הדגל --align ועם שם זמני. הוא מיישר את הדף לפי הריבועים בפינות, חותך כל משבצת והופך כל אות לקווים חלקים. תסתכל על הקובץ debug_page1.png שנוצר ליד הצילום, ותבדוק שכל האותיות נקלטו נקי. אם יש משבצת ריקה או לכלוך, תגיד לי איזו אות ותבקש שאכתוב אותה שוב.
+
+3ב. במחברת אין משבצות, אז אתה עושה את העבודה בעצמך:
+- מיישר את הדף, מנקה את הרקע ואת קווי המחברת, ומפריד את הכתב לאותיות. חלקים של אותה אות (כמו בה' ובק', או הנקודה של סימן קריאה) נשארים יחד.
+- מזהה כל אות, ומכין לי תמונת בדיקה: כל האותיות שמצאת, כל אחת עם התווית שנתת לה, כדי שאאשר או אתקן.
+- כשאות מופיעה כמה פעמים, בוחר את הגרסה הכי ברורה ויפה.
+- מחשב לכל שורה בנפרד את הקו שהיא כתובה עליו, גם אם השורה עקומה או נוטה, ושומר על המיקום של כל אות ביחס לקו.
+- רושם לי בדיוק אילו תווים חסרים מתוך: 27 האותיות (כולל ך ם ן ף ץ), הספרות 0 עד 9, ו-. , ! ? - ' " : ( ) /. תבקש שאכתוב רק אותם על דף לבן, בטוש שחור, אות ליד אות עם רווח, אצלם ואשלח, ותוסיף אותם.
+- לבנייה עצמה תשתמש בפונקציות מ-build_font.py: trace להפיכה לקווים, side_gaps לריווח, ואותה בנייה עם fontTools.
+
+4. יישור וריווח, בשתי הדרכים:
+- כל האותיות יושבות על קו אחד. אותיות רגילות על הקו, ק ך ן ף ץ יורדות מתחתיו ול' עולה מעליו.
+- לא משנים את הגודל של האותיות. השוני בין אות לאות הוא מה שהופך את זה לכתב יד.
+- ריווח אופטי: אות שפתוחה בצד אחד (כמו כ' או ר') מקבלת פחות רווח באותו צד, ואות צרה (ו', ן, !) מקבלת קצת יותר.
+- תכין תמונת דוגמה בפונט: "זה כתב היד שלי!", את כל האלף-בית, וספרות. תוודא שהעברית בתמונה מוצגת מימין לשמאל ובסדר הנכון, ותפתח לי אותה.
+- תשאל אותי: זה מספיק ישר ואחיד בשבילך, או שנשפר? ותציע לי אפשרויות: ליישר עוד, להשוות גדלים (רק אם אני מבקש/ת, ובעדינות), לצופף או לרווח, או להחליף אות שלא יצאה טוב. אחרי כל שינוי תראה לי תמונת לפני ואחרי, עד שאגיד שזה מוכן.
+
+5. שם: תשאל אותי איך לקרוא לפונט. שם בעברית זה בסדר גמור. שם הקובץ יהיה באותיות באנגלית (בעזרת --ps=), כי קבצי פונט צריכים שם כזה.
+
+6. התקנה: תשמור את קובץ ה-ttf בתיקייה, ותפתח לי את התיקייה כשהקובץ מסומן (Finder במק, סייר הקבצים בווינדוס). אל תנסה להתקין את הפונט או לפתוח את Font Book בעצמך. תסביר לי להתקין לפי המחשב שלי:
+- מק: לוחצים פעמיים על הקובץ, ואז "התקן".
+- ווינדוס: קליק ימני על הקובץ, ואז "התקן".
+אחר כך תסביר לי איפה הוא יעבוד: Word, Pages, קאפקאט, וקאנבה (רק בחשבון בתשלום). ב-Google Docs אי אפשר להוסיף פונט משלך, אבל אפשר לכתוב ב-Word או ב-Pages ולהכניס כתמונה.
+
+כללים:
+- הכול חינמי ונשאר אצלי במחשב. לא שולחים את הצילומים לשום שירות.
+- לא מוחקים את הצילומים שלי.
+- אם משהו לא ברור, תשאל אותי. לא לנחש.</div>
+  <button class="expand" type="button">להצגת כל הפרומפט</button>
+  <div class="note tip"><span class="ic">🧰</span><div><b>Claude מוריד מהמדריך כלי קטן, שלושה קבצים.</b> זה הכלי שמיישר את הצילום, חותך את האותיות ובונה את הפונט, וכך התוצאה יוצאת נקייה ואחידה אצל כולם. הכול רץ אצלכם במחשב.</div></div>
+  <div class="note tip"><span class="ic">💡</span><div>יקפצו חלונות אישור (להוריד את הכלים, להתקין, לשמור קבצים). מאשרים, ואפשר לבחור <b>Allow for this session</b> כדי שלא ישאל כל פעם.</div></div>
+  <details class="acc">
+    <summary>מק או ווינדוס: מה ההבדל?</summary>
+    <div class="in">
+      <p>כמעט אין הבדל. הפרומפט זהה, וגם הכלים. ההבדל היחיד הוא בהתקנה הראשונה של Python:</p>
+      <ul class="dots">
+        <li><b>במק</b> הוא בדרך כלל כבר מותקן. אם לא, יקפוץ חלון שמציע להתקין כלים למפתחים. מאשרים וממתינים כמה דקות.</li>
+        <li><b>בווינדוס</b> בדרך כלל צריך להתקין אותו, ו-Claude מתקין בעצמו. אם קופץ חלון שמבקש אישור, לוחצים <b>Yes</b>.</li>
+      </ul>
+      <p>זה קורה פעם אחת בלבד. בפונט הבא מתחילים ישר מהצילום.</p>
+    </div>
+  </details>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">4</div><div><h2>בודקים, מתקנים ונותנים שם</h2><p>Claude מראה דוגמה ושואל אתכם</p></div></div>
+  <p>Claude מיישר את כל האותיות לאותו קו ומסדר את הרווחים ביניהן, בלי לשנות את הגודל שלהן. אחר כך הוא מראה לכם משפט לדוגמה ושואל אם זה מספיק טוב.</p>
+  <figure class="mock" aria-label="איור של Claude מראה דוגמה ושואל אם הפונט מספיק אחיד">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>Claude</span></div>
+      <div class="chat">
+        <div class="bub cl">הפונט מוכן לבדיקה. כל האותיות יושבות על אותו קו, והרווחים סודרו:
+          <img src="sample.jpg" alt="" width="1500" height="430" loading="lazy">
+          זה מספיק ישר ואחיד בשבילך, או שנשפר?
+          <div class="opts"><span>ליישר עוד</span><span>לרווח יותר</span><span>להחליף אות</span></div>
+        </div>
+        <div class="bub me">מושלם. רק הא' יצאה קצת גדולה</div>
+        <div class="bub cl">הקטנתי רק את הא'. הנה לפני ואחרי. איך לקרוא לפונט?</div>
+      </div>
+    </div>
+    <p class="mock-note">איור להמחשה. השיחה אצלכם תיראה קצת אחרת.</p>
+  </figure>
+  <div class="note tip"><span class="ic">✋</span><div><b>אל תוותרו על השוני בין האותיות.</b> אם כל האותיות באותו גודל בדיוק, זה כבר נראה כמו פונט מחשב רגיל. עדיף לתקן רק את מה שבאמת מפריע לכם.</div></div>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">5</div><div><h2>מתקינים ומקלידים</h2><p>לחיצה כפולה, וזהו</p></div></div>
+  <p>Claude יפתח לכם את התיקייה, וקובץ הפונט (סיומת <code>.ttf</code>) יהיה מסומן בה.</p>
+  <div class="duo">
+    <div><h4>🍎 מק</h4><ol><li>לוחצים פעמיים על הקובץ</li><li>נפתח חלון עם הפונט. לוחצים <b>התקן</b></li><li>סוגרים ופותחים מחדש את התוכנה שרוצים לכתוב בה</li></ol></div>
+    <div><h4>🪟 ווינדוס</h4><ol><li>קליק ימני על הקובץ</li><li>בוחרים <b>התקן</b> (או Install)</li><li>סוגרים ופותחים מחדש את התוכנה שרוצים לכתוב בה</li></ol></div>
+  </div>
+  <div class="note warn"><span class="ic">⚠️</span><div><b>אם מופיעה הודעה ש-Font Book "פגום" ומציעה להעביר אותו לפח, לוחצים Cancel.</b> התוכנה תקינה. ההודעה מופיעה לפעמים כש-Claude מנסה לפתוח אותה בעצמו. פשוט לוחצים בעצמכם פעמיים על קובץ הפונט.</div></div>
+  <details class="acc">
+    <summary>מה הפונט יודע, ומה לא</summary>
+    <div class="in">
+      <ul class="dots">
+        <li><b>לכל אות יש צורה אחת.</b> אם כותבים אותה מילה פעמיים, היא תיראה זהה.</li>
+        <li><b>כתב מחובר לא יתחבר</b> בין האותיות. כתב דפוס יוצא הכי טוב.</li>
+        <li><b>אנגלית</b> תופיע רק אם מילאתם גם את העמוד השני של התבנית.</li>
+        <li><b>רוצים לתקן משהו אחר כך?</b> פותחים שיחה באותה תיקייה ומבקשים. הצילומים והכלים כבר שם.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<section class="final">
+  <h2>זהו, אתם מקלידים בכתב היד שלכם ✍️</h2>
+  <p>רוצים עוד פרומפטים ומדריכים כאלה?</p>
+  <a class="btn" href="https://rogre1.github.io/ronig-courses/courses/">לכל המדריכים והקורסים ←</a>
+</section>
+
+</main>
+
+<footer>
+  <img src="../assets/logo-dark.png" alt="Ronig.ai">
+  <a href="../courses/">לקורסים שלי</a> · <a href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">@ronig.ai</a>
+</footer>
+
+<script>
+document.querySelectorAll('.copy').forEach(function(btn){btn.addEventListener('click',function(){
+  var box=btn.parentNode.cloneNode(true);box.querySelectorAll('.copy,.lbl').forEach(function(x){x.remove()});
+  var txt=box.textContent.trim();
+  function ok(){btn.textContent='הועתק ✓';btn.classList.add('ok');setTimeout(function(){btn.textContent='העתקה';btn.classList.remove('ok')},1800)}
+  function fallback(){var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(e){}t.remove()}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback)}else fallback();
+})});
+document.querySelectorAll('.expand').forEach(function(b){b.addEventListener('click',function(){
+  var p=b.previousElementSibling;var open=p.classList.toggle('open');b.textContent=open?'לכווץ':'להצגת כל הפרומפט';
+})});
+</script>
+</body>
+</html>
