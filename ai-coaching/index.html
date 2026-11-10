@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://rogre1.github.io/ronig-courses/start/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;800&display=swap" rel="stylesheet">
 <link rel="icon" href="../assets/navy/favicon.svg?v=3" type="image/svg+xml">
 <link rel="icon" href="../assets/navy/favicon-32.png?v=3" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../assets/navy/apple-touch-icon.png?v=3">
@@ -27,7 +27,7 @@
   --r:22px;
 }
 html{scroll-behavior:smooth;scroll-padding-top:80px;background:var(--pale)}
-body{font-family:'Assistant',system-ui,sans-serif;font-weight:200;background:var(--pale);color:var(--navy);line-height:1.6;font-size:18px;overflow-x:hidden}
+body{font-family:'Assistant',system-ui,sans-serif;font-weight:300;background:var(--pale);color:var(--navy);line-height:1.6;font-size:18px;overflow-x:hidden}
 b,strong{font-weight:800;color:var(--navy)}
 a{color:var(--blue);font-weight:800;text-decoration-color:var(--turq);text-decoration-thickness:2px;text-underline-offset:4px}
 
@@ -36,7 +36,7 @@ header{position:fixed;inset:0 0 auto;z-index:50;transition:background .3s,box-sh
 header.on{background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
 .hwrap{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px}
 .logo{font-weight:800;font-size:23px;color:#fff;line-height:1;transition:color .3s}
-.logo i{font-style:normal;font-weight:200}
+.logo i{font-style:normal;font-weight:300}
 header.on .logo{color:var(--navy)}
 .hcta{display:inline-flex;align-items:center;text-decoration:none;font-size:.9rem;font-weight:800;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:99px;padding:8px 18px;white-space:nowrap;transition:all .3s}
 header.on .hcta{background:var(--navy);border-color:var(--navy);color:#fff}
@@ -59,10 +59,10 @@ header.on .hcta{background:var(--navy);border-color:var(--navy);color:#fff}
 @keyframes pop{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:none}}
 .namechip{margin-top:-30px;position:relative;display:inline-flex;flex-direction:column;align-items:center;text-align:center;line-height:1.3;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:22px;padding:10px 22px;animation:pop .6s ease 1.2s both}
 .namechip b{color:#fff;font-size:1rem}
-.namechip span{color:var(--pale);font-size:.86rem;font-weight:200}
+.namechip span{color:var(--pale);font-size:.86rem;font-weight:300}
 .hero-txt{grid-column:1;grid-row:1}
 h1{font-size:clamp(2.2rem,5.6vw,3.6rem);line-height:1.08;font-weight:800;color:#fff;letter-spacing:-.01em}
-h1 .l{font-weight:200;display:block}
+h1 .l{font-weight:300;display:block}
 h1 em{font-style:normal;color:var(--turq)}
 .lead{font-size:1.15rem;color:var(--pale);margin-top:18px;max-width:560px}
 .term{display:inline-flex;align-items:center;gap:8px;margin-top:22px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:99px;padding:9px 18px;font-size:.98rem;color:#fff;max-width:100%}
@@ -88,7 +88,7 @@ section{margin-top:72px}
 main>section:first-child{margin-top:44px}
 .kicker{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-weight:800;font-size:.95rem;margin-bottom:10px}
 .kicker::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--turq);box-shadow:0 0 0 3px rgba(127,227,216,.3)}
-h2{font-size:clamp(1.75rem,3.9vw,2.4rem);line-height:1.15;font-weight:200;color:var(--navy);letter-spacing:-.01em}
+h2{font-size:clamp(1.75rem,3.9vw,2.4rem);line-height:1.15;font-weight:300;color:var(--navy);letter-spacing:-.01em}
 h2 em{font-style:normal;font-weight:800;background:linear-gradient(transparent 62%,rgba(127,227,216,.55) 62%,rgba(127,227,216,.55) 92%,transparent 92%)}
 .sub{color:var(--navy);font-size:1.12rem;margin-top:12px;max-width:640px}
 .center{text-align:center}
@@ -150,7 +150,7 @@ h2 em{font-style:normal;font-weight:800;background:linear-gradient(transparent 6
 .calc-out{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;text-align:center}
 .calc-out div{background:var(--pale);border-radius:18px;padding:16px 8px}
 .calc-out b{display:block;font-size:clamp(1.7rem,4.5vw,2.4rem);font-weight:800;color:var(--navy);line-height:1.1;font-variant-numeric:tabular-nums}
-.calc-out span{font-size:.88rem;color:var(--navy);font-weight:200;display:block;line-height:1.35;margin-top:4px}
+.calc-out span{font-size:.88rem;color:var(--navy);font-weight:300;display:block;line-height:1.35;margin-top:4px}
 .calc-out .hl{background:var(--navy)}
 .calc-out .hl b{color:var(--turq)}
 .calc-out .hl span{color:var(--pale)}
@@ -233,7 +233,7 @@ h2 em{font-style:normal;font-weight:800;background:linear-gradient(transparent 6
 footer{padding:34px 20px 40px;text-align:center;color:var(--blue);font-size:.92rem;margin-top:40px}
 footer .logo{display:block;color:var(--navy);margin-bottom:10px}
 .legal{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:12px}
-.legal a{color:var(--blue);font-weight:200;font-size:.9rem}
+.legal a{color:var(--blue);font-weight:300;font-size:.9rem}
 
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
