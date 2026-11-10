@@ -11,40 +11,41 @@
 <meta property="og:description" content="Claude מחפש במייל, מוריד, מסדר לפי חודשים ומגלה אילו חשבוניות חסרות לכם. פרומפט מוכן להעתקה.">
 <meta property="og:url" content="https://rogre1.github.io/ronig-courses/email-invoices/">
 <meta name="twitter:card" content="summary">
-<link rel="icon" href="../claude-code-start/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="../claude-code-start/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;800&display=swap" rel="stylesheet">
+<link rel="icon" href="../assets/navy/favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="../assets/navy/favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/navy/apple-touch-icon.png?v=3">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --cream:#FBF9F4;--cream-deep:#F1EFE7;--mint:#F0F3E8;
-  --forest:#333E27;--forest-deep:#20261A;--forest-tile:#2A3122;
-  --olive:#788C5D;--olive-bright:#8BA36B;--leaf:#B7C29F;
-  --ink:#1B1D16;--ink-2:#5B5F52;--ink-3:#8A8672;
-  --ink-dark-1:#F1EFE7;--ink-dark-2:#B9BDA9;
-  --line:#E3E0D5;--coral:#D9785F;
-  --shadow-sm:0 10px 22px rgba(35,38,30,.10);
-  --shadow-md:0 12px 28px rgba(35,38,30,.16);
+  --cream:#EEF3F8;--cream-deep:#E1E9F1;--mint:#E2F6F4;
+  --forest:#27415E;--forest-deep:#1F3550;--forest-tile:#34557A;
+  --olive:#4F7DB0;--olive-bright:#7FE3D8;--leaf:#7FE3D8;
+  --ink:#27415E;--ink-2:#3D5877;--ink-3:#6E86A1;
+  --ink-dark-1:#EEF3F8;--ink-dark-2:#C3D2E2;
+  --line:#D5DEE8;--coral:#4F7DB0;
+  --shadow-sm:0 10px 22px rgba(39,65,94,.10);
+  --shadow-md:0 12px 28px rgba(39,65,94,.16);
   --r:22px;
 }
 html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{font-family:'Heebo',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
-a{color:var(--olive);font-weight:600}
+body{font-family:'Assistant',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
+a{color:var(--olive);font-weight:800}
 code,.ltr{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em}
 code{background:var(--cream-deep);border:1px solid var(--line);padding:.05em .4em;border-radius:6px;color:var(--forest)}
-b,strong{font-weight:700;color:var(--forest-deep)}
+b,strong{font-weight:800;color:var(--forest-deep)}
 
 /* header */
-header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:50;background:rgba(238,243,248,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .hwrap{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
 .hwrap img{height:36px;width:auto;display:block}
-.progress{flex:1;max-width:340px;display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--ink-2);font-weight:600}
+.progress{flex:1;max-width:340px;display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--ink-2);font-weight:800}
 .bar{flex:1;height:8px;background:var(--cream-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--olive-bright));border-radius:99px;transition:width .4s}
 .os-switch{display:flex;background:var(--cream-deep);border:1px solid var(--line);border-radius:99px;padding:3px}
-.os-switch button{border:0;background:none;font:inherit;font-size:.8rem;font-weight:700;color:var(--ink-2);padding:5px 12px;border-radius:99px;cursor:pointer}
+.os-switch button{border:0;background:none;font:inherit;font-size:.8rem;font-weight:800;color:var(--ink-2);padding:5px 12px;border-radius:99px;cursor:pointer}
 .os-switch button[aria-pressed=true]{background:var(--forest);color:var(--cream)}
 
 /* return banner */
@@ -56,22 +57,22 @@ header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.94);backdro
 .layout{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:48px;padding:0 16px}
 nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px}
 nav.toc p{font-size:.78rem;font-weight:800;color:var(--ink-3);letter-spacing:.06em;margin-bottom:10px}
-nav.toc a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-2);font-weight:500;font-size:.92rem;padding:6px 12px;border-radius:12px;border-right:3px solid transparent}
+nav.toc a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-2);font-weight:400;font-size:.92rem;padding:6px 12px;border-radius:12px;border-right:3px solid transparent}
 nav.toc a:hover{background:var(--mint)}
-nav.toc a.active{background:var(--mint);color:var(--forest-deep);font-weight:700;border-right-color:var(--olive)}
+nav.toc a.active{background:var(--mint);color:var(--forest-deep);font-weight:800;border-right-color:var(--olive)}
 nav.toc a .tick{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--leaf);flex:none;display:grid;place-items:center;font-size:10px;color:#fff}
 nav.toc a.done .tick{background:var(--olive);border-color:var(--olive)}
 main{min-width:0;padding-bottom:60px}
 
 /* hero */
 .hero{padding:56px 0 28px}
-.eyebrow{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:700;font-size:.85rem;padding:4px 14px;border-radius:99px;margin-bottom:16px}
-h1{font-size:clamp(2rem,5.4vw,3.3rem);line-height:1.15;font-weight:900;color:var(--forest-deep);letter-spacing:-.01em}
+.eyebrow{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:800;font-size:.85rem;padding:4px 14px;border-radius:99px;margin-bottom:16px}
+h1{font-size:clamp(2rem,5.4vw,3.3rem);line-height:1.15;font-weight:800;color:var(--forest-deep);letter-spacing:-.01em}
 h1 em{font-style:normal;color:var(--olive)}
 .lead{font-size:1.15rem;color:var(--ink-2);margin-top:14px;max-width:640px}
 .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.chip{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;font-weight:600;color:var(--ink-2);box-shadow:var(--shadow-sm)}
-.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border:0;font:inherit;font-weight:700;padding:12px 24px;border-radius:99px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
+.chip{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;font-weight:800;color:var(--ink-2);box-shadow:var(--shadow-sm)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border:0;font:inherit;font-weight:800;padding:12px 24px;border-radius:99px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
 .btn:hover{transform:translateY(-2px);background:var(--forest-deep)}
 .btn.ghost{background:transparent;color:var(--forest);border:1.5px solid var(--forest);box-shadow:none}
 .hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
@@ -79,7 +80,7 @@ h1 em{font-style:normal;color:var(--olive)}
 /* sections */
 section.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;margin-top:22px;box-shadow:var(--shadow-sm)}
 .step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px}
-.num{flex:none;width:46px;height:46px;border-radius:50%;background:var(--mint);border:1.5px solid var(--leaf);color:var(--forest);display:grid;place-items:center;font-weight:900;font-size:1.15rem}
+.num{flex:none;width:46px;height:46px;border-radius:50%;background:var(--mint);border:1.5px solid var(--leaf);color:var(--forest);display:grid;place-items:center;font-weight:800;font-size:1.15rem}
 h2{font-size:clamp(1.4rem,3.4vw,1.85rem);line-height:1.25;font-weight:800;color:var(--forest-deep)}
 .step-head p{color:var(--ink-3);font-size:.95rem;margin-top:2px}
 h3{font-size:1.15rem;font-weight:800;color:var(--forest);margin:26px 0 8px}
@@ -90,7 +91,7 @@ ol.steps li::before{content:counter(s);position:absolute;right:0;top:1px;width:2
 ul.dots li{position:relative;padding-right:22px;margin-bottom:8px}
 ul.dots li::before{content:"";position:absolute;right:4px;top:.7em;width:7px;height:7px;border-radius:50%;background:var(--olive)}
 .done-row{margin-top:26px;padding-top:20px;border-top:1px dashed var(--line);display:flex;justify-content:flex-start}
-.done-btn{display:inline-flex;align-items:center;gap:10px;background:var(--cream);border:1.5px solid var(--leaf);color:var(--forest);font:inherit;font-weight:700;padding:10px 20px;border-radius:99px;cursor:pointer;transition:all .2s}
+.done-btn{display:inline-flex;align-items:center;gap:10px;background:var(--cream);border:1.5px solid var(--leaf);color:var(--forest);font:inherit;font-weight:800;padding:10px 20px;border-radius:99px;cursor:pointer;transition:all .2s}
 .done-btn .box{width:20px;height:20px;border-radius:6px;border:2px solid var(--olive);display:grid;place-items:center;font-size:13px;color:#fff}
 .done-btn[aria-pressed=true]{background:var(--olive);border-color:var(--olive);color:#fff}
 .done-btn[aria-pressed=true] .box{background:#fff;color:var(--olive);border-color:#fff}
@@ -115,29 +116,29 @@ ul.dots li::before{content:"";position:absolute;right:4px;top:.7em;width:7px;hei
 .prompt{position:relative;background:var(--forest-deep);color:var(--ink-dark-1);border-radius:16px;padding:18px 18px 18px 18px;margin-top:14px;white-space:pre-wrap;font-size:.95rem;line-height:1.75;border:1px solid var(--forest-tile)}
 .prompt .lbl{display:block;font-size:.75rem;font-weight:800;color:var(--leaf);letter-spacing:.05em;margin-bottom:6px}
 .prompt.en{direction:ltr;text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
-.copy{position:absolute;top:12px;left:12px;background:var(--olive);color:#fff;border:0;font:inherit;font-size:.78rem;font-weight:700;padding:5px 12px;border-radius:99px;cursor:pointer;direction:rtl}
+.copy{position:absolute;top:12px;left:12px;background:var(--olive);color:#fff;border:0;font:inherit;font-size:.78rem;font-weight:800;padding:5px 12px;border-radius:99px;cursor:pointer;direction:rtl}
 .copy.ok{background:var(--leaf);color:var(--forest-deep)}
 .prompt .lbl{padding-left:80px}
 
 /* tabs */
 .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.tabs button{font:inherit;font-weight:700;font-size:.9rem;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--cream);color:var(--ink-2);cursor:pointer}
+.tabs button{font:inherit;font-weight:800;font-size:.9rem;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--cream);color:var(--ink-2);cursor:pointer}
 .tabs button[aria-selected=true]{background:var(--forest);border-color:var(--forest);color:var(--cream)}
 .tabpanel[hidden]{display:none}
 
 /* table */
 .tbl{width:100%;border-collapse:separate;border-spacing:0;margin-top:16px;font-size:.93rem;border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.tbl th{background:var(--forest);color:var(--cream);font-weight:700;padding:10px 12px;text-align:right}
+.tbl th{background:var(--forest);color:var(--cream);font-weight:800;padding:10px 12px;text-align:right}
 .tbl td{padding:11px 12px;border-top:1px solid var(--line);vertical-align:top}
 .tbl tr:nth-child(even) td{background:var(--cream)}
-.tbl td:first-child{font-weight:700;color:var(--forest);white-space:nowrap}
+.tbl td:first-child{font-weight:800;color:var(--forest);white-space:nowrap}
 .tbl-wrap{overflow-x:auto}
 
 /* accordion */
 details.acc{border:1px solid var(--line);border-radius:16px;margin-top:12px;background:var(--cream);overflow:hidden}
-details.acc summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:800;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center;gap:10px}
 details.acc summary::-webkit-details-marker{display:none}
-details.acc summary::after{content:"+";font-size:1.3rem;color:var(--olive);font-weight:500;transition:transform .2s}
+details.acc summary::after{content:"+";font-size:1.3rem;color:var(--olive);font-weight:400;transition:transform .2s}
 details.acc[open] summary::after{transform:rotate(45deg)}
 details.acc .in{padding:0 18px 16px;color:var(--ink-2)}
 details.acc .in b{color:var(--forest)}
@@ -147,7 +148,7 @@ details.acc .in b{color:var(--forest)}
 .gloss details{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
 .gloss summary{cursor:pointer;list-style:none;font-weight:800;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center}
 .gloss summary::-webkit-details-marker{display:none}
-.gloss summary small{font-weight:500;color:var(--ink-3);font-size:.78rem;direction:ltr}
+.gloss summary small{font-weight:400;color:var(--ink-3);font-size:.78rem;direction:ltr}
 .gloss p{margin-top:8px;font-size:.93rem;color:var(--ink-2)}
 dfn{font-style:normal;border-bottom:2px dotted var(--olive);cursor:help;position:relative}
 .tip-pop{position:absolute;z-index:80;max-width:280px;background:var(--forest-deep);color:var(--ink-dark-1);font-size:.85rem;line-height:1.55;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-md);pointer-events:none;opacity:0;transition:opacity .15s}
@@ -162,43 +163,43 @@ figure.mock{margin:22px 0 4px}
 .win-bar span{margin-left:10px;color:#8a8672;font-size:12px}
 .win-body{padding:16px;position:relative}
 .ui-tabs{display:inline-flex;background:#EFECE3;border-radius:10px;padding:3px;gap:2px}
-.ui-tabs span{padding:6px 16px;border-radius:8px;color:#6b6a62;font-weight:600}
+.ui-tabs span{padding:6px 16px;border-radius:8px;color:#6b6a62;font-weight:800}
 .ui-tabs span.on{background:#fff;color:#1b1d16;box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .ui-row{display:flex;gap:14px}
 .ui-side{width:150px;flex:none;border-right:1px solid #ECE8DD;padding-right:12px;color:#6b6a62;font-size:12px}
 .ui-side div{padding:6px 8px;border-radius:7px;margin-bottom:3px}
-.ui-side .cur{position:relative;background:#F0F3E8;color:#333E27;font-weight:600}
+.ui-side .cur{position:relative;background:#E2F6F4;color:#27415E;font-weight:800}
 .ui-main{flex:1;min-width:0}
 .ui-input{border:1px solid #DDD9CC;border-radius:14px;padding:12px;background:#FFFEFB}
 .ui-input .ph{color:#a6a394;min-height:34px}
 .ui-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
 .pill{display:inline-flex;align-items:center;gap:5px;border:1px solid #E1DDD0;border-radius:99px;padding:4px 10px;font-size:12px;color:#4a4a44;background:#fff;white-space:nowrap}
 .pill.plus{width:28px;height:28px;padding:0;justify-content:center;font-size:16px}
-.send{margin-left:auto;width:30px;height:30px;border-radius:50%;background:#333E27;color:#fff;display:grid;place-items:center;font-size:14px}
+.send{margin-left:auto;width:30px;height:30px;border-radius:50%;background:#27415E;color:#fff;display:grid;place-items:center;font-size:14px}
 .menu{background:#fff;border:1px solid #DDD9CC;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:6px;width:230px;font-size:12.5px}
 .menu div{padding:7px 10px;border-radius:8px;display:flex;justify-content:space-between;gap:8px}
 .menu div small{color:#9a978a}
-.menu .hl{background:#F0F3E8;color:#333E27;font-weight:600}
+.menu .hl{background:#E2F6F4;color:#27415E;font-weight:800}
 .menu .sep{height:1px;background:#EEE;padding:0;margin:4px 0}
 .card-perm{border:1px solid #E1DDD0;border-radius:12px;padding:12px 14px;background:#FFFEFB}
-.card-perm .t{font-weight:600;margin-bottom:6px}
-.card-perm pre{direction:rtl;text-align:right;font-family:Heebo,sans-serif;background:#F6F4EE;border-radius:8px;padding:8px 10px;font-size:12px;margin:6px 0 10px;white-space:pre-wrap;color:#333}
-.card-perm pre .add{color:#4f7a2b}
+.card-perm .t{font-weight:800;margin-bottom:6px}
+.card-perm pre{direction:rtl;text-align:right;font-family:'Assistant',sans-serif;background:#F6F4EE;border-radius:8px;padding:8px 10px;font-size:12px;margin:6px 0 10px;white-space:pre-wrap;color:#333}
+.card-perm pre .add{color:#2E8A7F}
 .btnrow{display:flex;gap:8px;flex-wrap:wrap}
-.ub{border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;border:1px solid #DDD9CC;background:#fff}
-.ub.pri{background:#333E27;color:#fff;border-color:#333E27}
+.ub{border-radius:8px;padding:6px 12px;font-size:12px;font-weight:800;border:1px solid #DDD9CC;background:#fff}
+.ub.pri{background:#27415E;color:#fff;border-color:#27415E}
 .msg{border-radius:12px;padding:9px 12px;margin-bottom:8px;max-width:85%}
-.msg.me{background:#F0F3E8;margin-left:auto;direction:rtl;text-align:right;font-family:'Heebo',sans-serif}
-.msg.cl{background:#fff;border:1px solid #ECE8DD;direction:rtl;text-align:right;font-family:'Heebo',sans-serif}
-.slash-chip{display:inline-block;background:#E5ECD7;color:#333E27;border-radius:6px;padding:1px 6px;font-weight:600}
-.file{font-family:Heebo,sans-serif;font-size:13px;line-height:1.7;white-space:pre-wrap;direction:rtl;text-align:right;color:#333}
-.file .h{color:#788C5D;font-weight:700}
+.msg.me{background:#E2F6F4;margin-left:auto;direction:rtl;text-align:right;font-family:'Assistant',sans-serif}
+.msg.cl{background:#fff;border:1px solid #ECE8DD;direction:rtl;text-align:right;font-family:'Assistant',sans-serif}
+.slash-chip{display:inline-block;background:#D6F3F0;color:#27415E;border-radius:6px;padding:1px 6px;font-weight:800}
+.file{font-family:'Assistant',sans-serif;font-size:13px;line-height:1.7;white-space:pre-wrap;direction:rtl;text-align:right;color:#333}
+.file .h{color:#4F7DB0;font-weight:800}
 .finder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:11.5px;color:#4a4a44}
 .finder div{padding:8px 4px;border-radius:10px}
 .finder .ico{font-size:30px;line-height:1.2}
-.finder .sel{background:#F0F3E8;outline:2px solid #B7C29F}
+.finder .sel{background:#E2F6F4;outline:2px solid #7FE3D8}
 .pt{position:relative}
-.pin{position:absolute;top:-13px;right:-13px;width:26px;height:26px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(217,120,95,.25);font-family:'Heebo',sans-serif;z-index:3}
+.pin{position:absolute;top:-13px;right:-13px;width:26px;height:26px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(79,125,176,.25);font-family:'Assistant',sans-serif;z-index:3}
 .ring{position:absolute;border:2.5px solid var(--coral);border-radius:12px;pointer-events:none;z-index:2}
 figcaption{margin-top:14px;font-size:.93rem;color:var(--ink-2)}
 figcaption ol{list-style:none;padding:0;counter-reset:c;display:grid;gap:6px}
@@ -269,7 +270,7 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 .print-only,.print-logo{display:none}
 
 /* ===== additions for this guide ===== */
-.btn-back{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:.82rem;font-weight:700;color:var(--forest);border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;white-space:nowrap}
+.btn-back{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:.82rem;font-weight:800;color:var(--forest);border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;white-space:nowrap}
 .btn-back:hover{border-color:var(--olive)}
 .beginner{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--forest);color:var(--ink-dark-1);border-radius:18px;padding:20px 22px;margin-top:18px}
 .beginner b{color:#fff}
@@ -282,34 +283,34 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 
 /* fill-in form */
 .fill-form{display:grid;gap:14px;margin-top:18px;background:var(--mint);border:1px solid var(--leaf);border-radius:18px;padding:20px}
-.fill-form label{display:block;font-weight:700;color:var(--forest-deep);font-size:.95rem;margin-bottom:6px}
-.fill-form label small{font-weight:500;color:var(--ink-3)}
+.fill-form label{display:block;font-weight:800;color:var(--forest-deep);font-size:.95rem;margin-bottom:6px}
+.fill-form label small{font-weight:400;color:var(--ink-3)}
 .fill-form input{width:100%;font:inherit;font-size:1rem;padding:11px 14px;border-radius:12px;border:1.5px solid var(--leaf);background:#fff;color:var(--ink)}
-.fill-form input:focus{outline:none;border-color:var(--olive);box-shadow:0 0 0 3px rgba(120,140,93,.18)}
+.fill-form input:focus{outline:none;border-color:var(--olive);box-shadow:0 0 0 3px rgba(79,125,176,.18)}
 .fill-form .hint{font-size:.82rem;color:var(--ink-3);margin-top:4px}
-.prompt .fill{background:rgba(183,194,159,.22);color:#E5ECD7;border-radius:5px;padding:0 4px;font-weight:700}
-.prompt .fill.empty{color:#F2B8A6;background:rgba(217,120,95,.18)}
+.prompt .fill{background:rgba(157,176,198,.22);color:#D6F3F0;border-radius:5px;padding:0 4px;font-weight:800}
+.prompt .fill.empty{color:#F2B8A6;background:rgba(79,125,176,.18)}
 .prompt.long{max-height:520px;overflow:auto}
 .prompt.long.open{max-height:none}
-.expand{display:block;margin:10px auto 0;font:inherit;font-weight:700;font-size:.88rem;background:none;border:1.5px solid var(--line);color:var(--forest);padding:6px 16px;border-radius:99px;cursor:pointer}
+.expand{display:block;margin:10px auto 0;font:inherit;font-weight:800;font-size:.88rem;background:none;border:1.5px solid var(--line);color:var(--forest);padding:6px 16px;border-radius:99px;cursor:pointer}
 
 /* folder tree */
-.tree{font-family:'Heebo',sans-serif;direction:rtl;text-align:right;font-size:13.5px;line-height:1.95;color:#333}
+.tree{font-family:'Assistant',sans-serif;direction:rtl;text-align:right;font-size:13.5px;line-height:1.95;color:#333}
 .tree div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tree .l1{padding-right:22px}.tree .l2{padding-right:44px;color:#6b6a62}
-.tree .x{color:#788C5D;font-weight:700}
+.tree .x{color:#4F7DB0;font-weight:800}
 .tree .ltr{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
 
 /* mock table */
-.mtbl{width:100%;border-collapse:collapse;font-family:'Heebo',sans-serif;direction:rtl;text-align:right;font-size:12px;margin-top:6px}
-.mtbl th{background:#F0F3E8;color:#333E27;font-weight:700;padding:6px 8px}
+.mtbl{width:100%;border-collapse:collapse;font-family:'Assistant',sans-serif;direction:rtl;text-align:right;font-size:12px;margin-top:6px}
+.mtbl th{background:#E2F6F4;color:#27415E;font-weight:800;padding:6px 8px}
 .mtbl td{border-top:1px solid #EEE;padding:6px 8px}
-.mtbl .warnc{color:#B5543C;font-weight:600}
-.tag{display:inline-block;border-radius:99px;padding:0 8px;font-size:11px;font-weight:700}
-.tag.att{background:#E5ECD7;color:#333E27}.tag.lnk{background:#E8EEF7;color:#2F4A72}.tag.bdy{background:#FBEFE9;color:#9A4630}
+.mtbl .warnc{color:#B5543C;font-weight:800}
+.tag{display:inline-block;border-radius:99px;padding:0 8px;font-size:11px;font-weight:800}
+.tag.att{background:#D6F3F0;color:#27415E}.tag.lnk{background:#E8EEF7;color:#2F4A72}.tag.bdy{background:#FBEFE9;color:#9A4630}
 
 /* vendor table */
-.tbl td small{display:block;color:var(--ink-3);font-size:.82rem;font-weight:500;margin-top:2px}
+.tbl td small{display:block;color:var(--ink-3);font-size:.82rem;font-weight:400;margin-top:2px}
 
 @media (max-width:640px){
   .duo{grid-template-columns:1fr}
@@ -325,20 +326,128 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 .narrow{max-width:780px;margin:0 auto;padding:0 16px 60px}
 .narrow section.step{margin-top:18px}
 .narrow .hero{padding-bottom:10px}
+
+/* ===== navy design layer ===== */
+:root{--navy:#27415E;--blue:#4F7DB0;--mist:#9DB0C6;--turq:#7FE3D8;--pale:#EEF3F8}
+html{background:var(--pale)}
+/* guides are read at length, so body text is 400; 200 stays for the big hero title only */
+body{font-weight:400;color:var(--navy)}
+b,strong{font-weight:800}
+h2,h3{letter-spacing:-.005em}
+a{color:var(--blue)}
+
+/* floating menu: a pale bar at the top; on scroll it detaches into a rounded pill below the top edge */
+header{position:fixed;inset:0 0 auto;background:transparent;border-bottom:0;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;transition:padding .35s ease}
+header .hwrap{border:1px solid transparent;border-radius:0;background:rgba(238,243,248,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:max-width .35s ease,border-radius .35s ease,padding .35s ease,background .3s,box-shadow .3s,border-color .3s}
+header.on{padding:12px 14px 0}
+header.on .hwrap{max-width:1100px;border-radius:99px;padding:8px 10px;padding-inline-start:22px;background:rgba(255,255,255,.92);border-color:rgba(213,222,232,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 14px 34px rgba(39,65,94,.16)}
+header .logo{--li:#4F7DB0;color:var(--navy)}
+.logo svg{height:26px!important}
+.btn-back{border-color:var(--line);color:var(--navy)}
+.btn-back:hover{border-color:var(--turq);background:#E2F6F4}
+.bar{background:#E1E9F1}
+.bar i{background:linear-gradient(90deg,var(--blue),var(--turq))}
+.os-switch button[aria-pressed=true]{background:var(--navy);color:#fff}
+body{padding-top:62px}
+.from-banner a{color:var(--turq)}
+nav.toc{top:96px}
+
+/* hero: the navy band with the turning rings */
+.hero{position:relative;overflow:hidden;isolation:isolate;margin-top:28px;padding:54px 44px 46px;border-radius:34px;color:#fff;background:radial-gradient(120% 90% at 15% 10%,#4F7DB0 0%,#27415E 62%);box-shadow:0 22px 50px rgba(39,65,94,.22)}
+.hring{position:absolute;z-index:-1;width:340px;aspect-ratio:1;left:-70px;top:50%;margin-top:-170px;opacity:.95;pointer-events:none}
+.hring svg{width:100%;height:100%;overflow:visible}
+.hring .sp{transform-box:view-box;transform-origin:100px 100px;will-change:transform}
+.arc{stroke-dashoffset:var(--len);animation:draw 1.5s cubic-bezier(.6,0,.2,1) .1s both}
+.arc2{animation-delay:.6s}
+@keyframes draw{0%{stroke-dashoffset:var(--len);opacity:0}6%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+.hero .eyebrow{background:rgba(127,227,216,.14);border-color:rgba(127,227,216,.4);color:var(--turq)}
+.hero h1{color:#fff;font-weight:200;line-height:1.08;letter-spacing:-.015em}
+.hero h1 em{display:inline;font-weight:800;color:var(--turq)}
+.hero .lead{color:var(--pale);max-width:560px}
+.hero .chip{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#fff;box-shadow:none;font-weight:400}
+.hero .btn{background:var(--turq);color:var(--navy);box-shadow:0 10px 24px rgba(127,227,216,.3)}
+.hero .btn:hover{background:#9BEBE2}
+.hero .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.55);box-shadow:none}
+
+/* steps: white cards with a turquoise-ringed number */
+section.step{border-color:#fff;border-radius:26px;box-shadow:0 14px 34px rgba(39,65,94,.08)}
+.num{background:#fff;border:0;box-shadow:inset 0 0 0 3px var(--turq);color:var(--navy)}
+h2{color:var(--navy)}
+h3{color:var(--blue)}
+ol.steps li::before{background:var(--navy);color:#fff}
+ul.dots li::before{background:var(--turq)}
+.done-btn{background:#fff;border-color:var(--mist);color:var(--navy)}
+.done-btn .box{border-color:var(--blue)}
+.done-btn[aria-pressed=true]{background:var(--navy);border-color:var(--navy)}
+.done-btn[aria-pressed=true] .box{color:var(--navy)}
+.note.tip{background:#E2F6F4;border-color:rgba(127,227,216,.7)}
+.note.why{background:var(--pale);border-color:var(--line)}
+.compare .b{background:var(--navy);border-color:var(--navy)}
+.compare .b h4{color:var(--turq)}
+.prompt{background:var(--navy);border-color:#34557A}
+.copy{background:var(--turq);color:var(--navy)}
+.copy.ok{background:#fff}
+.tbl th{background:var(--navy)}
+details.acc,.gloss details{background:var(--pale)}
+details.acc summary::after{color:var(--blue)}
+dfn{border-bottom-color:var(--turq)}
+.tip-pop{background:var(--navy)}
+.final{background:radial-gradient(120% 120% at 85% 0%,#3A5E87 0%,var(--navy) 62%);border-radius:30px}
+.final .btn{background:var(--turq);color:var(--navy)}
+footer{background:#fff}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:640px){
+  body{padding-top:56px}
+  header.on{padding:10px 10px 0}
+  header.on .hwrap{padding-inline-start:14px}
+  .logo svg{height:22px!important}
+  .hero{margin-top:16px;padding:38px 22px 32px;border-radius:28px}
+  .hring{width:230px;left:auto;right:-90px;top:-80px;margin-top:0;opacity:.5}
+}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.arc{animation:none}}
+@media print{
+  header,.hring{display:none!important}
+  body{padding-top:0}
+  .hero{background:none;color:var(--navy);box-shadow:none;padding:6px 0}
+  .hero h1,.hero .lead,.hero .chip{color:var(--navy)}
+  .rv{opacity:1;transform:none}
+}
+
+/* the logo sits on the same center line as the back button */
+.hstart>a:first-child,.hwrap>a:first-child{display:flex;align-items:center}
+header .logo svg{display:block}
+
+/* boxes that sit inside the navy hero: translucent glass instead of solid cards */
+.hero .need{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);border-radius:18px;color:var(--pale)}
+.hero .need b{color:#fff}
+.hero .beginner{background:rgba(255,255,255,.08);border:1px solid rgba(127,227,216,.35)}
+.hero .beginner .btn{background:var(--turq);color:var(--navy)}
+.hero .os span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.hero .tl{background:rgba(20,36,56,.55);border:1px solid rgba(255,255,255,.14)}
+
+/* inline logo: wordmark follows color, mark follows --li */
+.logo{display:inline-flex;align-items:center;--li:#7FE3D8;color:#fff}
+.logo-svg{display:block;height:28px;width:auto;aspect-ratio:247/77}
+header.on .logo{--li:#4F7DB0;color:var(--navy)}
+footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margin:0 auto 10px}
 </style>
 </head>
 <body>
 
-<header>
+<header id="hdr">
   <div class="hwrap">
-    <a href="../courses/" aria-label="Ronig.ai, לעמוד הקורסים"><img src="../assets/logo-dark.png" alt="Ronig.ai" width="103" height="36"></a>
+    <a href="../courses/" aria-label="Ronig.ai, לעמוד הקורסים"><span class="logo"><svg class="logo-svg" role="img" aria-label="Ronig.ai" viewBox="0 0 247 77" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M89.059 18.5276H99.6081C101.853 18.5276 103.801 18.8919 105.451 19.6205C107.102 20.349 108.373 21.427 109.265 22.8543C110.172 24.2668 110.626 26.0064 110.626 28.0731C110.626 29.6045 110.298 30.9947 109.644 32.2436C109.005 33.4926 108.12 34.5408 106.99 35.3883C105.86 36.2209 104.552 36.7933 103.065 37.1056L102.106 37.4624H90.8432L90.7986 35.1207H100.233C101.928 35.1207 103.34 34.7936 104.47 34.1394C105.6 33.4851 106.448 32.6228 107.013 31.5523C107.592 30.4669 107.882 29.3072 107.882 28.0731C107.882 26.6011 107.563 25.3299 106.923 24.2594C106.299 23.174 105.37 22.3414 104.135 21.7615C102.901 21.1816 101.392 20.8917 99.6081 20.8917H91.8022V51H89.059V18.5276ZM109.109 51L100.701 36.4811L103.645 36.4588L112.031 50.7101V51H109.109ZM116.067 39.3135V38.5775C116.067 36.8231 116.32 35.2024 116.826 33.7156C117.331 32.2288 118.052 30.9427 118.989 29.8573C119.94 28.7719 121.078 27.9318 122.401 27.3371C123.724 26.7275 125.196 26.4227 126.817 26.4227C128.453 26.4227 129.932 26.7275 131.255 27.3371C132.579 27.9318 133.716 28.7719 134.668 29.8573C135.619 30.9427 136.348 32.2288 136.853 33.7156C137.359 35.2024 137.611 36.8231 137.611 38.5775V39.3135C137.611 41.068 137.359 42.6886 136.853 44.1755C136.348 45.6474 135.619 46.9261 134.668 48.0115C133.731 49.0969 132.601 49.9444 131.278 50.554C129.954 51.1487 128.482 51.446 126.862 51.446C125.226 51.446 123.747 51.1487 122.424 50.554C121.1 49.9444 119.963 49.0969 119.011 48.0115C118.06 46.9261 117.331 45.6474 116.826 44.1755C116.32 42.6886 116.067 41.068 116.067 39.3135ZM118.721 38.5775V39.3135C118.721 40.6368 118.9 41.8932 119.257 43.0826C119.613 44.2572 120.134 45.3054 120.818 46.2273C121.502 47.1342 122.349 47.8479 123.36 48.3683C124.371 48.8887 125.538 49.1489 126.862 49.1489C128.17 49.1489 129.322 48.8887 130.319 48.3683C131.33 47.8479 132.177 47.1342 132.861 46.2273C133.545 45.3054 134.058 44.2572 134.4 43.0826C134.757 41.8932 134.935 40.6368 134.935 39.3135V38.5775C134.935 37.2691 134.757 36.0276 134.4 34.853C134.058 33.6784 133.538 32.6302 132.839 31.7084C132.155 30.7866 131.307 30.058 130.296 29.5227C129.285 28.9875 128.125 28.7199 126.817 28.7199C125.509 28.7199 124.349 28.9875 123.338 29.5227C122.342 30.058 121.494 30.7866 120.795 31.7084C120.111 32.6302 119.591 33.6784 119.234 34.853C118.892 36.0276 118.721 37.2691 118.721 38.5775ZM145.796 32.0206V51H143.142V26.8688H145.685L145.796 32.0206ZM145.194 37.4401L144.012 36.771C144.101 35.3437 144.391 34.0055 144.882 32.7566C145.373 31.5077 146.034 30.4074 146.867 29.4558C147.714 28.5043 148.703 27.7609 149.833 27.2256C150.978 26.6903 152.242 26.4227 153.625 26.4227C154.829 26.4227 155.907 26.5863 156.858 26.9134C157.81 27.2405 158.62 27.7609 159.289 28.4745C159.959 29.1882 160.464 30.1026 160.806 31.2177C161.163 32.3329 161.341 33.6933 161.341 35.2991V51H158.665V35.2768C158.665 33.6115 158.435 32.3106 157.974 31.3738C157.513 30.4223 156.858 29.7458 156.011 29.3443C155.163 28.9429 154.16 28.7422 153 28.7422C151.721 28.7422 150.599 29.0247 149.632 29.5897C148.681 30.1398 147.878 30.8609 147.224 31.753C146.584 32.6302 146.094 33.5744 145.752 34.5854C145.41 35.5816 145.224 36.5331 145.194 37.4401ZM171.221 26.8688V51H168.567V26.8688H171.221ZM168.099 19.9104C168.099 19.39 168.255 18.9588 168.567 18.6169C168.894 18.26 169.348 18.0816 169.928 18.0816C170.478 18.0816 170.916 18.26 171.244 18.6169C171.586 18.9588 171.757 19.39 171.757 19.9104C171.757 20.3862 171.586 20.8025 171.244 21.1593C170.916 21.5013 170.478 21.6723 169.928 21.6723C169.348 21.6723 168.894 21.5013 168.567 21.1593C168.255 20.8025 168.099 20.3862 168.099 19.9104ZM194.393 26.8688H196.869V50.5763C196.869 52.6727 196.468 54.4717 195.665 55.9734C194.877 57.4751 193.754 58.6274 192.297 59.4303C190.855 60.2332 189.152 60.6347 187.19 60.6347C186.194 60.6347 185.168 60.4785 184.112 60.1663C183.071 59.8689 182.083 59.408 181.146 58.7836C180.224 58.174 179.436 57.4157 178.782 56.5087L180.276 54.8806C181.257 56.0701 182.306 56.9399 183.421 57.49C184.536 58.055 185.74 58.3375 187.034 58.3375C188.565 58.3375 189.859 58.0327 190.914 57.4231C191.985 56.8135 192.795 55.9363 193.345 54.7914C193.91 53.6466 194.193 52.2712 194.193 50.6655V32.1767L194.393 26.8688ZM177.444 39.1797V38.7114C177.444 36.8379 177.652 35.1504 178.068 33.6487C178.499 32.1321 179.116 30.8386 179.919 29.7681C180.722 28.6827 181.696 27.8575 182.841 27.2925C184.001 26.7126 185.309 26.4227 186.766 26.4227C188.164 26.4227 189.405 26.6532 190.491 27.1141C191.576 27.575 192.513 28.2366 193.301 29.099C194.089 29.9614 194.721 30.9873 195.196 32.1767C195.687 33.3662 196.044 34.6895 196.267 36.1466V42.1013C196.088 43.4692 195.761 44.7256 195.286 45.8704C194.81 47.0004 194.178 47.9892 193.39 48.8367C192.602 49.6693 191.65 50.3161 190.535 50.777C189.435 51.223 188.164 51.446 186.721 51.446C185.279 51.446 183.986 51.1487 182.841 50.554C181.696 49.9592 180.722 49.1192 179.919 48.0338C179.116 46.9335 178.499 45.6325 178.068 44.1308C177.652 42.6292 177.444 40.9788 177.444 39.1797ZM180.12 38.7114V39.1797C180.12 40.5922 180.261 41.9006 180.544 43.1049C180.826 44.3093 181.257 45.3575 181.837 46.2496C182.417 47.1417 183.153 47.8405 184.045 48.346C184.937 48.8515 185.985 49.1043 187.19 49.1043C188.721 49.1043 190.007 48.8144 191.048 48.2345C192.089 47.6398 192.914 46.8592 193.524 45.8927C194.133 44.9114 194.579 43.8409 194.862 42.6812V35.7451C194.698 34.9571 194.446 34.1542 194.104 33.3365C193.776 32.5187 193.316 31.7679 192.721 31.0839C192.141 30.3851 191.398 29.8275 190.491 29.4112C189.598 28.9801 188.513 28.7645 187.234 28.7645C186.015 28.7645 184.952 29.0172 184.045 29.5227C183.153 30.0283 182.417 30.7345 181.837 31.6415C181.257 32.5336 180.826 33.5818 180.544 34.7861C180.261 35.9905 180.12 37.2989 180.12 38.7114ZM203.337 48.3237C203.337 47.4911 203.619 46.7923 204.184 46.2273C204.749 45.6474 205.515 45.3575 206.481 45.3575C207.463 45.3575 208.228 45.6474 208.779 46.2273C209.344 46.7923 209.626 47.4911 209.626 48.3237C209.626 49.1563 209.344 49.8551 208.779 50.4201C208.228 50.9851 207.463 51.2676 206.481 51.2676C205.515 51.2676 204.749 50.9851 204.184 50.4201C203.619 49.8551 203.337 49.1563 203.337 48.3237ZM229.431 46.1604V34.6523C229.431 33.7899 229.275 33.0465 228.962 32.4221C228.65 31.7976 228.174 31.3144 227.535 30.9724C226.91 30.6304 226.122 30.4594 225.171 30.4594C224.294 30.4594 223.535 30.6081 222.896 30.9055C222.257 31.2029 221.759 31.6043 221.402 32.1098C221.045 32.6154 220.866 33.1878 220.866 33.8271H215.514C215.514 32.8755 215.744 31.9537 216.205 31.0616C216.666 30.1695 217.335 29.3741 218.212 28.6753C219.09 27.9764 220.138 27.4263 221.357 27.0249C222.576 26.6234 223.944 26.4227 225.461 26.4227C227.275 26.4227 228.88 26.7275 230.278 27.3371C231.691 27.9467 232.798 28.8685 233.601 30.1026C234.419 31.3218 234.828 32.8532 234.828 34.6969V45.4244C234.828 46.5246 234.902 47.5134 235.051 48.3906C235.214 49.253 235.445 50.0038 235.742 50.6432V51H230.234C229.981 50.4201 229.78 49.6842 229.631 48.7921C229.498 47.8851 229.431 47.0079 229.431 46.1604ZM230.211 36.325L230.256 39.6481H226.397C225.401 39.6481 224.524 39.7447 223.766 39.938C223.008 40.1164 222.376 40.384 221.87 40.7409C221.365 41.0977 220.985 41.5289 220.733 42.0344C220.48 42.5399 220.354 43.1124 220.354 43.7517C220.354 44.391 220.502 44.9783 220.8 45.5136C221.097 46.034 221.528 46.4429 222.093 46.7402C222.673 47.0376 223.372 47.1863 224.19 47.1863C225.29 47.1863 226.249 46.9633 227.067 46.5172C227.899 46.0563 228.553 45.4987 229.029 44.8445C229.505 44.1755 229.758 43.5435 229.787 42.9488L231.527 45.3352C231.349 45.9448 231.044 46.599 230.613 47.2978C230.181 47.9966 229.616 48.6657 228.918 49.305C228.234 49.9295 227.409 50.4424 226.442 50.8439C225.491 51.2453 224.39 51.446 223.141 51.446C221.565 51.446 220.16 51.1338 218.926 50.5093C217.692 49.87 216.726 49.0151 216.027 47.9446C215.328 46.8592 214.979 45.6325 214.979 44.2647C214.979 42.986 215.217 41.856 215.692 40.8747C216.183 39.8785 216.897 39.0459 217.833 38.3768C218.785 37.7077 219.945 37.2022 221.313 36.8603C222.68 36.5034 224.242 36.325 225.996 36.325H230.211ZM246.202 26.8688V51H240.805V26.8688H246.202ZM240.448 20.5349C240.448 19.7171 240.716 19.0406 241.251 18.5053C241.801 17.9552 242.559 17.6801 243.526 17.6801C244.477 17.6801 245.228 17.9552 245.778 18.5053C246.328 19.0406 246.604 19.7171 246.604 20.5349C246.604 21.3378 246.328 22.0068 245.778 22.5421C245.228 23.0773 244.477 23.345 243.526 23.345C242.559 23.345 241.801 23.0773 241.251 22.5421C240.716 22.0068 240.448 21.3378 240.448 20.5349Z" fill="currentColor"/><path d="M36.919 72.8232C36.2769 72.8586 35.6275 72.8772 34.9763 72.8772C15.658 72.8772 6.10352e-05 57.0988 6.10352e-05 37.632H7.14548C19.3128 37.632 23.9067 47.2139 26.0044 53.2021C30.3197 65.5374 33.8619 70.2372 36.919 72.8232Z" style="fill:var(--li)"/><path d="M67.0645 46.377C67.5155 47.2708 67.8356 48.2258 68.0147 49.2121C68.0193 49.226 68.0193 49.241 68.0147 49.2549C64.6754 58.8981 59.0797 65.8977 49.7019 69.6606C49.724 69.6792 49.6742 69.6717 49.7019 69.6606C46.6873 67.2028 43.3147 65.2173 38.1434 51.8856C36.2117 46.905 31.616 39.3811 22.1866 37.7749C22.1146 37.7624 22.0496 37.724 22.0037 37.6668C21.9577 37.6096 21.934 37.5375 21.9369 37.464C21.9399 37.3905 21.9693 37.3205 22.0196 37.2673C22.07 37.214 22.1378 37.1809 22.2106 37.1744C25.7159 36.7133 27.2435 36.4307 29.8763 35.4881C34.3779 33.8726 36.9017 31.8406 38.2781 30.7028C42.2892 27.6317 45.0586 23.1987 46.0723 18.2263C47.0861 13.2538 46.2754 8.07963 43.7907 3.66378C43.7829 3.65043 43.7791 3.63502 43.78 3.61952C43.7809 3.60402 43.7863 3.58914 43.7956 3.57676C43.8049 3.56439 43.8177 3.5551 43.8323 3.55007C43.8468 3.54504 43.8626 3.5445 43.8775 3.54852C58.196 7.33368 68.9316 20.037 69.8818 35.4138C69.8823 35.4246 69.8806 35.4354 69.8768 35.4455C69.873 35.4556 69.8673 35.4649 69.8599 35.4727C69.8525 35.4805 69.8435 35.4868 69.8337 35.491C69.8238 35.4953 69.8132 35.4975 69.8024 35.4974L52.2756 35.596C51.6926 35.596 50.0285 35.596 50.0285 36.5701C50.0285 37.1279 50.4509 37.5889 52.4269 37.5889C63.3765 37.7414 67.0018 46.2338 67.059 46.3751L67.0645 46.377Z" style="fill:var(--li)"/><path d="M32.3939 14.653C32.3939 23.1175 26.848 30.4034 18.8834 33.668C15.8989 34.8818 12.7093 35.5017 9.49087 35.4937H0.0669556C0.101394 34.8975 0.151207 34.3045 0.216395 33.7145C1.04954 26.2221 4.24431 19.1962 9.33172 13.6682C14.4191 8.14014 21.1312 4.40113 28.4826 3.00005C31.0086 6.35273 32.3817 10.4435 32.3939 14.653Z" style="fill:var(--li)"/></svg></span></a>
     <a class="btn-back" href="https://rogre1.github.io/ronig-courses/courses/">← <span>חזרה לעמוד הקורסים</span></a>
   </div>
 </header>
 
 <main class="narrow">
 
-<section class="hero">
+<section class="hero"><div class="hring" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><linearGradient id="rg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7FE3D8"/><stop offset="1" stop-color="#4F7DB0"/></linearGradient></defs><g class="sp" data-r=".16"><circle class="arc" style="--len:76" cx="100" cy="100" r="86" fill="none" stroke="url(#rg1)" stroke-width="12" stroke-linecap="round" pathLength="100" stroke-dasharray="76 200" transform="rotate(150 100 100)"/></g><g class="sp" data-r="-.38"><circle class="arc arc2" style="--len:12" cx="100" cy="100" r="86" fill="none" stroke="#9DB0C6" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="12 200" transform="rotate(91.6 100 100)"/></g><g class="sp" data-r="-.08"><circle cx="100" cy="100" r="98" fill="none" stroke="#9DB0C6" stroke-width=".8" stroke-dasharray="1.5 4.5" opacity=".55"/></g></svg></div>
   <img class="print-logo" src="../assets/logo-dark.png" alt="Ronig.ai">
   <span class="eyebrow">פרומפט חינם · Ronig.ai</span>
   <h1>כל החשבוניות מהמייל,<br><em>בתיקייה מסודרת</em></h1>
@@ -389,8 +498,8 @@ footer img{height:30px;display:block;margin:0 auto 10px}
 </main>
 
 <footer>
-  <img src="../assets/logo-dark.png" alt="Ronig.ai">
-  נכתב באהבה על ידי רוני גרין · <a href="../courses/">לקורסים שלי</a> · <a href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">@ronig.ai</a>
+  <span class="logo"><svg class="logo-svg" role="img" aria-label="Ronig.ai" viewBox="0 0 247 77" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M89.059 18.5276H99.6081C101.853 18.5276 103.801 18.8919 105.451 19.6205C107.102 20.349 108.373 21.427 109.265 22.8543C110.172 24.2668 110.626 26.0064 110.626 28.0731C110.626 29.6045 110.298 30.9947 109.644 32.2436C109.005 33.4926 108.12 34.5408 106.99 35.3883C105.86 36.2209 104.552 36.7933 103.065 37.1056L102.106 37.4624H90.8432L90.7986 35.1207H100.233C101.928 35.1207 103.34 34.7936 104.47 34.1394C105.6 33.4851 106.448 32.6228 107.013 31.5523C107.592 30.4669 107.882 29.3072 107.882 28.0731C107.882 26.6011 107.563 25.3299 106.923 24.2594C106.299 23.174 105.37 22.3414 104.135 21.7615C102.901 21.1816 101.392 20.8917 99.6081 20.8917H91.8022V51H89.059V18.5276ZM109.109 51L100.701 36.4811L103.645 36.4588L112.031 50.7101V51H109.109ZM116.067 39.3135V38.5775C116.067 36.8231 116.32 35.2024 116.826 33.7156C117.331 32.2288 118.052 30.9427 118.989 29.8573C119.94 28.7719 121.078 27.9318 122.401 27.3371C123.724 26.7275 125.196 26.4227 126.817 26.4227C128.453 26.4227 129.932 26.7275 131.255 27.3371C132.579 27.9318 133.716 28.7719 134.668 29.8573C135.619 30.9427 136.348 32.2288 136.853 33.7156C137.359 35.2024 137.611 36.8231 137.611 38.5775V39.3135C137.611 41.068 137.359 42.6886 136.853 44.1755C136.348 45.6474 135.619 46.9261 134.668 48.0115C133.731 49.0969 132.601 49.9444 131.278 50.554C129.954 51.1487 128.482 51.446 126.862 51.446C125.226 51.446 123.747 51.1487 122.424 50.554C121.1 49.9444 119.963 49.0969 119.011 48.0115C118.06 46.9261 117.331 45.6474 116.826 44.1755C116.32 42.6886 116.067 41.068 116.067 39.3135ZM118.721 38.5775V39.3135C118.721 40.6368 118.9 41.8932 119.257 43.0826C119.613 44.2572 120.134 45.3054 120.818 46.2273C121.502 47.1342 122.349 47.8479 123.36 48.3683C124.371 48.8887 125.538 49.1489 126.862 49.1489C128.17 49.1489 129.322 48.8887 130.319 48.3683C131.33 47.8479 132.177 47.1342 132.861 46.2273C133.545 45.3054 134.058 44.2572 134.4 43.0826C134.757 41.8932 134.935 40.6368 134.935 39.3135V38.5775C134.935 37.2691 134.757 36.0276 134.4 34.853C134.058 33.6784 133.538 32.6302 132.839 31.7084C132.155 30.7866 131.307 30.058 130.296 29.5227C129.285 28.9875 128.125 28.7199 126.817 28.7199C125.509 28.7199 124.349 28.9875 123.338 29.5227C122.342 30.058 121.494 30.7866 120.795 31.7084C120.111 32.6302 119.591 33.6784 119.234 34.853C118.892 36.0276 118.721 37.2691 118.721 38.5775ZM145.796 32.0206V51H143.142V26.8688H145.685L145.796 32.0206ZM145.194 37.4401L144.012 36.771C144.101 35.3437 144.391 34.0055 144.882 32.7566C145.373 31.5077 146.034 30.4074 146.867 29.4558C147.714 28.5043 148.703 27.7609 149.833 27.2256C150.978 26.6903 152.242 26.4227 153.625 26.4227C154.829 26.4227 155.907 26.5863 156.858 26.9134C157.81 27.2405 158.62 27.7609 159.289 28.4745C159.959 29.1882 160.464 30.1026 160.806 31.2177C161.163 32.3329 161.341 33.6933 161.341 35.2991V51H158.665V35.2768C158.665 33.6115 158.435 32.3106 157.974 31.3738C157.513 30.4223 156.858 29.7458 156.011 29.3443C155.163 28.9429 154.16 28.7422 153 28.7422C151.721 28.7422 150.599 29.0247 149.632 29.5897C148.681 30.1398 147.878 30.8609 147.224 31.753C146.584 32.6302 146.094 33.5744 145.752 34.5854C145.41 35.5816 145.224 36.5331 145.194 37.4401ZM171.221 26.8688V51H168.567V26.8688H171.221ZM168.099 19.9104C168.099 19.39 168.255 18.9588 168.567 18.6169C168.894 18.26 169.348 18.0816 169.928 18.0816C170.478 18.0816 170.916 18.26 171.244 18.6169C171.586 18.9588 171.757 19.39 171.757 19.9104C171.757 20.3862 171.586 20.8025 171.244 21.1593C170.916 21.5013 170.478 21.6723 169.928 21.6723C169.348 21.6723 168.894 21.5013 168.567 21.1593C168.255 20.8025 168.099 20.3862 168.099 19.9104ZM194.393 26.8688H196.869V50.5763C196.869 52.6727 196.468 54.4717 195.665 55.9734C194.877 57.4751 193.754 58.6274 192.297 59.4303C190.855 60.2332 189.152 60.6347 187.19 60.6347C186.194 60.6347 185.168 60.4785 184.112 60.1663C183.071 59.8689 182.083 59.408 181.146 58.7836C180.224 58.174 179.436 57.4157 178.782 56.5087L180.276 54.8806C181.257 56.0701 182.306 56.9399 183.421 57.49C184.536 58.055 185.74 58.3375 187.034 58.3375C188.565 58.3375 189.859 58.0327 190.914 57.4231C191.985 56.8135 192.795 55.9363 193.345 54.7914C193.91 53.6466 194.193 52.2712 194.193 50.6655V32.1767L194.393 26.8688ZM177.444 39.1797V38.7114C177.444 36.8379 177.652 35.1504 178.068 33.6487C178.499 32.1321 179.116 30.8386 179.919 29.7681C180.722 28.6827 181.696 27.8575 182.841 27.2925C184.001 26.7126 185.309 26.4227 186.766 26.4227C188.164 26.4227 189.405 26.6532 190.491 27.1141C191.576 27.575 192.513 28.2366 193.301 29.099C194.089 29.9614 194.721 30.9873 195.196 32.1767C195.687 33.3662 196.044 34.6895 196.267 36.1466V42.1013C196.088 43.4692 195.761 44.7256 195.286 45.8704C194.81 47.0004 194.178 47.9892 193.39 48.8367C192.602 49.6693 191.65 50.3161 190.535 50.777C189.435 51.223 188.164 51.446 186.721 51.446C185.279 51.446 183.986 51.1487 182.841 50.554C181.696 49.9592 180.722 49.1192 179.919 48.0338C179.116 46.9335 178.499 45.6325 178.068 44.1308C177.652 42.6292 177.444 40.9788 177.444 39.1797ZM180.12 38.7114V39.1797C180.12 40.5922 180.261 41.9006 180.544 43.1049C180.826 44.3093 181.257 45.3575 181.837 46.2496C182.417 47.1417 183.153 47.8405 184.045 48.346C184.937 48.8515 185.985 49.1043 187.19 49.1043C188.721 49.1043 190.007 48.8144 191.048 48.2345C192.089 47.6398 192.914 46.8592 193.524 45.8927C194.133 44.9114 194.579 43.8409 194.862 42.6812V35.7451C194.698 34.9571 194.446 34.1542 194.104 33.3365C193.776 32.5187 193.316 31.7679 192.721 31.0839C192.141 30.3851 191.398 29.8275 190.491 29.4112C189.598 28.9801 188.513 28.7645 187.234 28.7645C186.015 28.7645 184.952 29.0172 184.045 29.5227C183.153 30.0283 182.417 30.7345 181.837 31.6415C181.257 32.5336 180.826 33.5818 180.544 34.7861C180.261 35.9905 180.12 37.2989 180.12 38.7114ZM203.337 48.3237C203.337 47.4911 203.619 46.7923 204.184 46.2273C204.749 45.6474 205.515 45.3575 206.481 45.3575C207.463 45.3575 208.228 45.6474 208.779 46.2273C209.344 46.7923 209.626 47.4911 209.626 48.3237C209.626 49.1563 209.344 49.8551 208.779 50.4201C208.228 50.9851 207.463 51.2676 206.481 51.2676C205.515 51.2676 204.749 50.9851 204.184 50.4201C203.619 49.8551 203.337 49.1563 203.337 48.3237ZM229.431 46.1604V34.6523C229.431 33.7899 229.275 33.0465 228.962 32.4221C228.65 31.7976 228.174 31.3144 227.535 30.9724C226.91 30.6304 226.122 30.4594 225.171 30.4594C224.294 30.4594 223.535 30.6081 222.896 30.9055C222.257 31.2029 221.759 31.6043 221.402 32.1098C221.045 32.6154 220.866 33.1878 220.866 33.8271H215.514C215.514 32.8755 215.744 31.9537 216.205 31.0616C216.666 30.1695 217.335 29.3741 218.212 28.6753C219.09 27.9764 220.138 27.4263 221.357 27.0249C222.576 26.6234 223.944 26.4227 225.461 26.4227C227.275 26.4227 228.88 26.7275 230.278 27.3371C231.691 27.9467 232.798 28.8685 233.601 30.1026C234.419 31.3218 234.828 32.8532 234.828 34.6969V45.4244C234.828 46.5246 234.902 47.5134 235.051 48.3906C235.214 49.253 235.445 50.0038 235.742 50.6432V51H230.234C229.981 50.4201 229.78 49.6842 229.631 48.7921C229.498 47.8851 229.431 47.0079 229.431 46.1604ZM230.211 36.325L230.256 39.6481H226.397C225.401 39.6481 224.524 39.7447 223.766 39.938C223.008 40.1164 222.376 40.384 221.87 40.7409C221.365 41.0977 220.985 41.5289 220.733 42.0344C220.48 42.5399 220.354 43.1124 220.354 43.7517C220.354 44.391 220.502 44.9783 220.8 45.5136C221.097 46.034 221.528 46.4429 222.093 46.7402C222.673 47.0376 223.372 47.1863 224.19 47.1863C225.29 47.1863 226.249 46.9633 227.067 46.5172C227.899 46.0563 228.553 45.4987 229.029 44.8445C229.505 44.1755 229.758 43.5435 229.787 42.9488L231.527 45.3352C231.349 45.9448 231.044 46.599 230.613 47.2978C230.181 47.9966 229.616 48.6657 228.918 49.305C228.234 49.9295 227.409 50.4424 226.442 50.8439C225.491 51.2453 224.39 51.446 223.141 51.446C221.565 51.446 220.16 51.1338 218.926 50.5093C217.692 49.87 216.726 49.0151 216.027 47.9446C215.328 46.8592 214.979 45.6325 214.979 44.2647C214.979 42.986 215.217 41.856 215.692 40.8747C216.183 39.8785 216.897 39.0459 217.833 38.3768C218.785 37.7077 219.945 37.2022 221.313 36.8603C222.68 36.5034 224.242 36.325 225.996 36.325H230.211ZM246.202 26.8688V51H240.805V26.8688H246.202ZM240.448 20.5349C240.448 19.7171 240.716 19.0406 241.251 18.5053C241.801 17.9552 242.559 17.6801 243.526 17.6801C244.477 17.6801 245.228 17.9552 245.778 18.5053C246.328 19.0406 246.604 19.7171 246.604 20.5349C246.604 21.3378 246.328 22.0068 245.778 22.5421C245.228 23.0773 244.477 23.345 243.526 23.345C242.559 23.345 241.801 23.0773 241.251 22.5421C240.716 22.0068 240.448 21.3378 240.448 20.5349Z" fill="currentColor"/><path d="M36.919 72.8232C36.2769 72.8586 35.6275 72.8772 34.9763 72.8772C15.658 72.8772 6.10352e-05 57.0988 6.10352e-05 37.632H7.14548C19.3128 37.632 23.9067 47.2139 26.0044 53.2021C30.3197 65.5374 33.8619 70.2372 36.919 72.8232Z" style="fill:var(--li)"/><path d="M67.0645 46.377C67.5155 47.2708 67.8356 48.2258 68.0147 49.2121C68.0193 49.226 68.0193 49.241 68.0147 49.2549C64.6754 58.8981 59.0797 65.8977 49.7019 69.6606C49.724 69.6792 49.6742 69.6717 49.7019 69.6606C46.6873 67.2028 43.3147 65.2173 38.1434 51.8856C36.2117 46.905 31.616 39.3811 22.1866 37.7749C22.1146 37.7624 22.0496 37.724 22.0037 37.6668C21.9577 37.6096 21.934 37.5375 21.9369 37.464C21.9399 37.3905 21.9693 37.3205 22.0196 37.2673C22.07 37.214 22.1378 37.1809 22.2106 37.1744C25.7159 36.7133 27.2435 36.4307 29.8763 35.4881C34.3779 33.8726 36.9017 31.8406 38.2781 30.7028C42.2892 27.6317 45.0586 23.1987 46.0723 18.2263C47.0861 13.2538 46.2754 8.07963 43.7907 3.66378C43.7829 3.65043 43.7791 3.63502 43.78 3.61952C43.7809 3.60402 43.7863 3.58914 43.7956 3.57676C43.8049 3.56439 43.8177 3.5551 43.8323 3.55007C43.8468 3.54504 43.8626 3.5445 43.8775 3.54852C58.196 7.33368 68.9316 20.037 69.8818 35.4138C69.8823 35.4246 69.8806 35.4354 69.8768 35.4455C69.873 35.4556 69.8673 35.4649 69.8599 35.4727C69.8525 35.4805 69.8435 35.4868 69.8337 35.491C69.8238 35.4953 69.8132 35.4975 69.8024 35.4974L52.2756 35.596C51.6926 35.596 50.0285 35.596 50.0285 36.5701C50.0285 37.1279 50.4509 37.5889 52.4269 37.5889C63.3765 37.7414 67.0018 46.2338 67.059 46.3751L67.0645 46.377Z" style="fill:var(--li)"/><path d="M32.3939 14.653C32.3939 23.1175 26.848 30.4034 18.8834 33.668C15.8989 34.8818 12.7093 35.5017 9.49087 35.4937H0.0669556C0.101394 34.8975 0.151207 34.3045 0.216395 33.7145C1.04954 26.2221 4.24431 19.1962 9.33172 13.6682C14.4191 8.14014 21.1312 4.40113 28.4826 3.00005C31.0086 6.35273 32.3817 10.4435 32.3939 14.653Z" style="fill:var(--li)"/></svg></span>
+  <a href="../courses/">לקורסים שלי</a> · <a href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">@ronig.ai</a>
 </footer>
 
 <script>
@@ -401,6 +510,29 @@ document.querySelectorAll('.copy').forEach(function(btn){btn.addEventListener('c
   function fallback(){var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(e){}t.remove()}
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback)}else fallback();
 })});
+</script>
+<script>
+(function(){
+  var hdr = document.getElementById('hdr');
+  function hd(){ hdr.classList.toggle('on', window.scrollY > 40); }
+  window.addEventListener('scroll', hd, {passive:true}); hd();
+  // the cards rise in as they reach the screen
+  if('IntersectionObserver' in window && !/[?&]print=1/.test(location.search)){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('main>section:not(.hero),.final').forEach(function(e){ e.classList.add('rv'); io.observe(e); });
+  }
+  // the rings in the hero turn with the scroll and trail the finger a little
+  var hr = document.querySelector('.hring');
+  if(!hr || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var sps = hr.querySelectorAll('.sp'), big = hr.querySelector('.arc:not(.arc2)'), cur = window.scrollY, loop = 0, last = 0;
+  function paint(y){ y = Math.min(y, 1400);
+    sps.forEach(function(g){ g.style.transform = 'rotate(' + (y * g.dataset.r) + 'deg)'; });
+    big.setAttribute('stroke-dasharray', (76 + Math.min(1, y / 400) * 20) + ' 200'); }
+  function step(now){ var dt = last ? Math.min(100, now - last) : 16.7, t = window.scrollY; last = now;
+    cur += (t - cur) * (1 - Math.pow(1 - .1, dt / 16.7)); if(Math.abs(t - cur) < .3) cur = t;
+    paint(cur); if(cur === t){ loop = 0; last = 0; } else loop = requestAnimationFrame(step); }
+  window.addEventListener('scroll', function(){ if(!loop) loop = requestAnimationFrame(step); }, {passive:true}); paint(cur);
+})();
 </script>
 </body>
 </html>
