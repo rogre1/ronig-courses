@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדריך הקמה במסלול Unified login | Ronig.ai</title>
+<meta name="description" content="מדריך משלים להקמת המענה האוטומטי באינסטגרם במסלול Unified login של מטא: כל הצעדים, הערכים והתקלות המוכרות.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;800&display=swap" rel="stylesheet">
+<link rel="icon" href="../assets/navy/favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="../assets/navy/favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/navy/apple-touch-icon.png?v=3">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#EEF3F8;--cream-deep:#E1E9F1;--mint:#E2F6F4;
+  --forest:#27415E;--forest-deep:#1F3550;--forest-tile:#34557A;
+  --olive:#4F7DB0;--olive-bright:#7FE3D8;--leaf:#7FE3D8;
+  --ink:#27415E;--ink-2:#3D5877;--ink-3:#6E86A1;
+  --ink-dark-1:#EEF3F8;--ink-dark-2:#C3D2E2;
+  --line:#D5DEE8;--coral:#4F7DB0;
+  --shadow-sm:0 10px 22px rgba(39,65,94,.10);
+  --shadow-md:0 12px 28px rgba(39,65,94,.16);
+  --r:22px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:'Assistant',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
+a{color:var(--olive);font-weight:800}
+code,.ltr{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em}
+code{background:var(--cream-deep);border:1px solid var(--line);padding:.05em .4em;border-radius:6px;color:var(--forest)}
+b,strong{font-weight:800;color:var(--forest-deep)}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(238,243,248,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.hwrap img{height:36px;width:auto;display:block}
+.progress{flex:1;max-width:340px;display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--ink-2);font-weight:800}
+.bar{flex:1;height:8px;background:var(--cream-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--olive-bright));border-radius:99px;transition:width .4s}
+.os-switch{display:flex;background:var(--cream-deep);border:1px solid var(--line);border-radius:99px;padding:3px}
+.os-switch button{border:0;background:none;font:inherit;font-size:.8rem;font-weight:800;color:var(--ink-2);padding:5px 12px;border-radius:99px;cursor:pointer}
+.os-switch button[aria-pressed=true]{background:var(--forest);color:var(--cream)}
+
+/* return banner */
+.from-banner{display:none;background:var(--forest);color:var(--cream);text-align:center;padding:10px 16px;font-size:.95rem}
+.from-banner a{color:var(--leaf)}
+.from-banner.show{display:block}
+
+/* layout */
+.layout{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:48px;padding:0 16px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px}
+nav.toc p{font-size:.78rem;font-weight:800;color:var(--ink-3);letter-spacing:.06em;margin-bottom:10px}
+nav.toc a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-2);font-weight:400;font-size:.92rem;padding:6px 12px;border-radius:12px;border-right:3px solid transparent}
+nav.toc a:hover{background:var(--mint)}
+nav.toc a.active{background:var(--mint);color:var(--forest-deep);font-weight:800;border-right-color:var(--olive)}
+nav.toc a .tick{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--leaf);flex:none;display:grid;place-items:center;font-size:10px;color:#fff}
+nav.toc a.done .tick{background:var(--olive);border-color:var(--olive)}
+main{min-width:0;padding-bottom:60px}
+
+/* hero */
+.hero{padding:56px 0 28px}
+.eyebrow{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:800;font-size:.85rem;padding:4px 14px;border-radius:99px;margin-bottom:16px}
+h1{font-size:clamp(2rem,5.4vw,3.3rem);line-height:1.15;font-weight:800;color:var(--forest-deep);letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--olive)}
+.lead{font-size:1.15rem;color:var(--ink-2);margin-top:14px;max-width:640px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;font-weight:800;color:var(--ink-2);box-shadow:var(--shadow-sm)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border:0;font:inherit;font-weight:800;padding:12px 24px;border-radius:99px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--forest-deep)}
+.btn.ghost{background:transparent;color:var(--forest);border:1.5px solid var(--forest);box-shadow:none}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+
+/* sections */
+section.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;margin-top:22px;box-shadow:var(--shadow-sm)}
+.step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px}
+.num{flex:none;width:46px;height:46px;border-radius:50%;background:var(--mint);border:1.5px solid var(--leaf);color:var(--forest);display:grid;place-items:center;font-weight:800;font-size:1.15rem}
+h2{font-size:clamp(1.4rem,3.4vw,1.85rem);line-height:1.25;font-weight:800;color:var(--forest-deep)}
+.step-head p{color:var(--ink-3);font-size:.95rem;margin-top:2px}
+h3{font-size:1.15rem;font-weight:800;color:var(--forest);margin:26px 0 8px}
+section p+p{margin-top:10px}
+ol.steps,ul.dots{margin:12px 0 0;padding-right:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding-right:40px;margin-bottom:12px}
+ol.steps li::before{content:counter(s);position:absolute;right:0;top:1px;width:28px;height:28px;border-radius:50%;background:var(--forest);color:var(--cream);font-weight:800;font-size:.85rem;display:grid;place-items:center}
+ul.dots li{position:relative;padding-right:22px;margin-bottom:8px}
+ul.dots li::before{content:"";position:absolute;right:4px;top:.7em;width:7px;height:7px;border-radius:50%;background:var(--olive)}
+.done-row{margin-top:26px;padding-top:20px;border-top:1px dashed var(--line);display:flex;justify-content:flex-start}
+.done-btn{display:inline-flex;align-items:center;gap:10px;background:var(--cream);border:1.5px solid var(--leaf);color:var(--forest);font:inherit;font-weight:800;padding:10px 20px;border-radius:99px;cursor:pointer;transition:all .2s}
+.done-btn .box{width:20px;height:20px;border-radius:6px;border:2px solid var(--olive);display:grid;place-items:center;font-size:13px;color:#fff}
+.done-btn[aria-pressed=true]{background:var(--olive);border-color:var(--olive);color:#fff}
+.done-btn[aria-pressed=true] .box{background:#fff;color:var(--olive);border-color:#fff}
+
+/* callouts */
+.note{border-radius:16px;padding:16px 18px;margin-top:18px;display:flex;gap:12px;font-size:.97rem}
+.note .ic{flex:none;font-size:1.25rem;line-height:1.4}
+.note.tip{background:var(--mint);border:1px solid var(--leaf)}
+.note.warn{background:#FBEFE9;border:1px solid #EFC9BB}
+.note.why{background:var(--cream);border:1px solid var(--line)}
+
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.compare div{border-radius:16px;padding:18px;border:1px solid var(--line)}
+.compare .a{background:var(--cream)}
+.compare .b{background:var(--forest);color:var(--ink-dark-1);border-color:var(--forest)}
+.compare .b b{color:#fff}
+.compare h4{font-size:1rem;font-weight:800;margin-bottom:6px}
+.compare .b h4{color:var(--leaf)}
+
+/* prompt boxes */
+.prompt{position:relative;background:var(--forest-deep);color:var(--ink-dark-1);border-radius:16px;padding:18px 18px 18px 18px;margin-top:14px;white-space:pre-wrap;font-size:.95rem;line-height:1.75;border:1px solid var(--forest-tile)}
+.prompt .lbl{display:block;font-size:.75rem;font-weight:800;color:var(--leaf);letter-spacing:.05em;margin-bottom:6px}
+.prompt.en{direction:ltr;text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
+.copy{position:absolute;top:12px;left:12px;background:var(--olive);color:#fff;border:0;font:inherit;font-size:.78rem;font-weight:800;padding:5px 12px;border-radius:99px;cursor:pointer;direction:rtl}
+.copy.ok{background:var(--leaf);color:var(--forest-deep)}
+.prompt .lbl{padding-left:80px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tabs button{font:inherit;font-weight:800;font-size:.9rem;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--cream);color:var(--ink-2);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.tabpanel[hidden]{display:none}
+
+/* table */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;margin-top:16px;font-size:.93rem;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.tbl th{background:var(--forest);color:var(--cream);font-weight:800;padding:10px 12px;text-align:right}
+.tbl td{padding:11px 12px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:var(--cream)}
+.tbl td:first-child{font-weight:800;color:var(--forest);white-space:nowrap}
+.tbl-wrap{overflow-x:auto}
+
+/* accordion */
+details.acc{border:1px solid var(--line);border-radius:16px;margin-top:12px;background:var(--cream);overflow:hidden}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:800;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-size:1.3rem;color:var(--olive);font-weight:400;transition:transform .2s}
+details.acc[open] summary::after{transform:rotate(45deg)}
+details.acc .in{padding:0 18px 16px;color:var(--ink-2)}
+details.acc .in b{color:var(--forest)}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:16px}
+.gloss details{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.gloss summary{cursor:pointer;list-style:none;font-weight:800;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center}
+.gloss summary::-webkit-details-marker{display:none}
+.gloss summary small{font-weight:400;color:var(--ink-3);font-size:.78rem;direction:ltr}
+.gloss p{margin-top:8px;font-size:.93rem;color:var(--ink-2)}
+dfn{font-style:normal;border-bottom:2px dotted var(--olive);cursor:help;position:relative}
+.tip-pop{position:absolute;z-index:80;max-width:280px;background:var(--forest-deep);color:var(--ink-dark-1);font-size:.85rem;line-height:1.55;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-md);pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.show{opacity:1}
+
+/* ===== UI mockups ===== */
+figure.mock{margin:22px 0 4px}
+.win{direction:ltr;text-align:left;background:#fff;border:1px solid #DDD9CC;border-radius:14px;box-shadow:var(--shadow-md);overflow:hidden;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;color:#2b2b28;position:relative}
+.win-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;background:#F4F2EC;border-bottom:1px solid #E6E2D6}
+.win-bar i{width:11px;height:11px;border-radius:50%;background:#E0DCCF}
+.win-bar i:nth-child(1){background:#EC6A5E}.win-bar i:nth-child(2){background:#F4BF4F}.win-bar i:nth-child(3){background:#61C554}
+.win-bar span{margin-left:10px;color:#8a8672;font-size:12px}
+.win-body{padding:16px;position:relative}
+.ui-tabs{display:inline-flex;background:#EFECE3;border-radius:10px;padding:3px;gap:2px}
+.ui-tabs span{padding:6px 16px;border-radius:8px;color:#6b6a62;font-weight:800}
+.ui-tabs span.on{background:#fff;color:#1b1d16;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ui-row{display:flex;gap:14px}
+.ui-side{width:150px;flex:none;border-right:1px solid #ECE8DD;padding-right:12px;color:#6b6a62;font-size:12px}
+.ui-side div{padding:6px 8px;border-radius:7px;margin-bottom:3px}
+.ui-side .cur{position:relative;background:#E2F6F4;color:#27415E;font-weight:800}
+.ui-main{flex:1;min-width:0}
+.ui-input{border:1px solid #DDD9CC;border-radius:14px;padding:12px;background:#FFFEFB}
+.ui-input .ph{color:#a6a394;min-height:34px}
+.ui-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.pill{display:inline-flex;align-items:center;gap:5px;border:1px solid #E1DDD0;border-radius:99px;padding:4px 10px;font-size:12px;color:#4a4a44;background:#fff;white-space:nowrap}
+.pill.plus{width:28px;height:28px;padding:0;justify-content:center;font-size:16px}
+.send{margin-left:auto;width:30px;height:30px;border-radius:50%;background:#27415E;color:#fff;display:grid;place-items:center;font-size:14px}
+.menu{background:#fff;border:1px solid #DDD9CC;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:6px;width:230px;font-size:12.5px}
+.menu div{padding:7px 10px;border-radius:8px;display:flex;justify-content:space-between;gap:8px}
+.menu div small{color:#9a978a}
+.menu .hl{background:#E2F6F4;color:#27415E;font-weight:800}
+.menu .sep{height:1px;background:#EEE;padding:0;margin:4px 0}
+.card-perm{border:1px solid #E1DDD0;border-radius:12px;padding:12px 14px;background:#FFFEFB}
+.card-perm .t{font-weight:800;margin-bottom:6px}
+.card-perm pre{direction:rtl;text-align:right;font-family:'Assistant',sans-serif;background:#F6F4EE;border-radius:8px;padding:8px 10px;font-size:12px;margin:6px 0 10px;white-space:pre-wrap;color:#333}
+.card-perm pre .add{color:#2E8A7F}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.ub{border-radius:8px;padding:6px 12px;font-size:12px;font-weight:800;border:1px solid #DDD9CC;background:#fff}
+.ub.pri{background:#27415E;color:#fff;border-color:#27415E}
+.msg{border-radius:12px;padding:9px 12px;margin-bottom:8px;max-width:85%}
+.msg.me{background:#E2F6F4;margin-left:auto;direction:rtl;text-align:right;font-family:'Assistant',sans-serif}
+.msg.cl{background:#fff;border:1px solid #ECE8DD;direction:rtl;text-align:right;font-family:'Assistant',sans-serif}
+.slash-chip{display:inline-block;background:#D6F3F0;color:#27415E;border-radius:6px;padding:1px 6px;font-weight:800}
+.file{font-family:'Assistant',sans-serif;font-size:13px;line-height:1.7;white-space:pre-wrap;direction:rtl;text-align:right;color:#333}
+.file .h{color:#4F7DB0;font-weight:800}
+.finder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:11.5px;color:#4a4a44}
+.finder div{padding:8px 4px;border-radius:10px}
+.finder .ico{font-size:30px;line-height:1.2}
+.finder .sel{background:#E2F6F4;outline:2px solid #7FE3D8}
+.pt{position:relative}
+.pin{position:absolute;top:-13px;right:-13px;width:26px;height:26px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(79,125,176,.25);font-family:'Assistant',sans-serif;z-index:3}
+.ring{position:absolute;border:2.5px solid var(--coral);border-radius:12px;pointer-events:none;z-index:2}
+figcaption{margin-top:14px;font-size:.93rem;color:var(--ink-2)}
+figcaption ol{list-style:none;padding:0;counter-reset:c;display:grid;gap:6px}
+figcaption li{counter-increment:c;position:relative;padding-right:32px}
+figcaption li::before{content:counter(c);position:absolute;right:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:.75rem;display:grid;place-items:center}
+.mock-note{font-size:.78rem;color:var(--ink-3);margin-top:6px}
+
+/* OS */
+body.os-win .mac-only{display:none!important}
+body:not(.os-win) .win-only{display:none!important}
+.os-tag{display:none}
+
+/* end */
+.final{background:var(--forest);color:var(--ink-dark-1);border-radius:var(--r);padding:40px 30px;margin-top:22px;text-align:center}
+.final h2{color:#fff}
+.final p{color:var(--ink-dark-2);max-width:560px;margin:10px auto 0}
+.final .btn{background:var(--leaf);color:var(--forest-deep);margin-top:20px}
+footer{border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--ink-3);font-size:.88rem}
+footer img{height:30px;display:block;margin:0 auto 10px}
+
+/* mobile */
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding-top:18px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+  nav.toc::-webkit-scrollbar{display:none}
+  nav.toc p{display:none}
+  nav.toc a{flex:none;border:1px solid var(--line);border-radius:99px;background:#fff;padding:5px 12px;font-size:.84rem}
+  nav.toc a.active{border-right-color:var(--line)}
+  .progress span{display:none}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .hwrap img{height:30px}
+  .progress{max-width:none}
+  section.step{padding:26px 18px}
+  .compare{grid-template-columns:1fr}
+  .hero{padding-top:34px}
+  .ui-side{display:none}
+  .win{font-size:12px}
+  .final{padding:32px 18px}
+}
+
+/* print / PDF */
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  body{background:#fff;font-size:12.5pt}
+  header,.from-banner,nav.toc,.done-row,.copy,.tabs,.hero-cta,.os-switch,.tip-pop{display:none!important}
+  .layout{display:block;padding:0}
+  section.step{box-shadow:none;break-inside:auto;padding:22px 20px;margin-top:14px}
+  .step-head,figure.mock,.prompt,.note,.tbl,.compare{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  .tabpanel[hidden]{display:block!important}
+  .tabpanel{margin-top:10px}
+  .tabpanel::before{content:attr(data-title);display:block;font-weight:800;color:var(--olive);margin-top:10px}
+  details>*:not(summary){display:block}
+  details.acc .in{display:block}
+  .win,.chip{box-shadow:none}
+  body .mac-only,body .win-only{display:inline!important}
+  div.mac-only,div.win-only,p.mac-only,p.win-only,li.mac-only,li.win-only{display:block!important}
+  .os-tag{display:inline;font-weight:800;color:var(--olive)}
+  .print-only{display:block!important}
+  .hero{padding-top:6px}
+  .print-logo{display:block!important;height:38px;margin-bottom:18px}
+  a{text-decoration:none}
+  details.acc summary::after{display:none}
+  .gloss summary{pointer-events:none}
+}
+.print-only,.print-logo{display:none}
+
+/* ===== additions for this guide ===== */
+.btn-back{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:.82rem;font-weight:800;color:var(--forest);border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;white-space:nowrap}
+.btn-back:hover{border-color:var(--olive)}
+.beginner{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--forest);color:var(--ink-dark-1);border-radius:18px;padding:20px 22px;margin-top:18px}
+.beginner b{color:#fff}
+.beginner p{flex:1;min-width:220px;margin:0}
+.beginner .btn{background:var(--leaf);color:var(--forest-deep)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.duo div{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--cream)}
+.duo h4{font-size:1rem;font-weight:800;color:var(--forest-deep);margin-bottom:4px}
+.duo p{font-size:.93rem;color:var(--ink-2)}
+
+/* fill-in form */
+.fill-form{display:grid;gap:14px;margin-top:18px;background:var(--mint);border:1px solid var(--leaf);border-radius:18px;padding:20px}
+.fill-form label{display:block;font-weight:800;color:var(--forest-deep);font-size:.95rem;margin-bottom:6px}
+.fill-form label small{font-weight:400;color:var(--ink-3)}
+.fill-form input{width:100%;font:inherit;font-size:1rem;padding:11px 14px;border-radius:12px;border:1.5px solid var(--leaf);background:#fff;color:var(--ink)}
+.fill-form input:focus{outline:none;border-color:var(--olive);box-shadow:0 0 0 3px rgba(79,125,176,.18)}
+.fill-form .hint{font-size:.82rem;color:var(--ink-3);margin-top:4px}
+.prompt .fill{background:rgba(157,176,198,.22);color:#D6F3F0;border-radius:5px;padding:0 4px;font-weight:800}
+.prompt .fill.empty{color:#F2B8A6;background:rgba(79,125,176,.18)}
+.prompt.long{max-height:520px;overflow:auto}
+.prompt.long.open{max-height:none}
+.expand{display:block;margin:10px auto 0;font:inherit;font-weight:800;font-size:.88rem;background:none;border:1.5px solid var(--line);color:var(--forest);padding:6px 16px;border-radius:99px;cursor:pointer}
+
+/* folder tree */
+.tree{font-family:'Assistant',sans-serif;direction:rtl;text-align:right;font-size:13.5px;line-height:1.95;color:#333}
+.tree div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree .l1{padding-right:22px}.tree .l2{padding-right:44px;color:#6b6a62}
+.tree .x{color:#4F7DB0;font-weight:800}
+.tree .ltr{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+
+/* mock table */
+.mtbl{width:100%;border-collapse:collapse;font-family:'Assistant',sans-serif;direction:rtl;text-align:right;font-size:12px;margin-top:6px}
+.mtbl th{background:#E2F6F4;color:#27415E;font-weight:800;padding:6px 8px}
+.mtbl td{border-top:1px solid #EEE;padding:6px 8px}
+.mtbl .warnc{color:#B5543C;font-weight:800}
+.tag{display:inline-block;border-radius:99px;padding:0 8px;font-size:11px;font-weight:800}
+.tag.att{background:#D6F3F0;color:#27415E}.tag.lnk{background:#E8EEF7;color:#2F4A72}.tag.bdy{background:#FBEFE9;color:#9A4630}
+
+/* vendor table */
+.tbl td small{display:block;color:var(--ink-3);font-size:.82rem;font-weight:400;margin-top:2px}
+
+@media (max-width:640px){
+  .duo{grid-template-columns:1fr}
+  .btn-back span{display:none}
+  .mtbl{font-size:11px}
+  .mtbl .hide-sm{display:none}
+}
+@media print{
+  .btn-back,.fill-form,.expand,.beginner .btn{display:none!important}
+  .prompt.long{max-height:none}
+}
+
+.narrow{max-width:780px;margin:0 auto;padding:0 16px 60px}
+.narrow section.step{margin-top:18px}
+.narrow .hero{padding-bottom:10px}
+
+/* ===== navy design layer ===== */
+:root{--navy:#27415E;--blue:#4F7DB0;--mist:#9DB0C6;--turq:#7FE3D8;--pale:#EEF3F8}
+html{background:var(--pale)}
+/* guides are read at length, so body text is 400; 200 stays for the big hero title only */
+body{font-weight:400;color:var(--navy)}
+b,strong{font-weight:800}
+h2,h3{letter-spacing:-.005em}
+a{color:var(--blue)}
+
+/* floating menu: a pale bar at the top; on scroll it detaches into a rounded pill below the top edge */
+header{position:fixed;inset:0 0 auto;background:transparent;border-bottom:0;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;transition:padding .35s ease}
+header .hwrap{border:1px solid transparent;border-radius:0;background:rgba(238,243,248,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:max-width .35s ease,border-radius .35s ease,padding .35s ease,background .3s,box-shadow .3s,border-color .3s}
+header.on{padding:12px 14px 0}
+header.on .hwrap{max-width:1100px;border-radius:99px;padding:8px 10px;padding-inline-start:22px;background:rgba(255,255,255,.92);border-color:rgba(213,222,232,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 14px 34px rgba(39,65,94,.16)}
+header .logo{--li:#4F7DB0;color:var(--navy)}
+.logo svg{height:26px!important}
+.btn-back{border-color:var(--line);color:var(--navy)}
+.btn-back:hover{border-color:var(--turq);background:#E2F6F4}
+.bar{background:#E1E9F1}
+.bar i{background:linear-gradient(90deg,var(--blue),var(--turq))}
+.os-switch button[aria-pressed=true]{background:var(--navy);color:#fff}
+body{padding-top:62px}
+.from-banner a{color:var(--turq)}
+nav.toc{top:96px}
+
+/* hero: the navy band with the turning rings */
+.hero{position:relative;overflow:hidden;isolation:isolate;margin-top:28px;padding:54px 44px 46px;border-radius:34px;color:#fff;background:radial-gradient(120% 90% at 15% 10%,#4F7DB0 0%,#27415E 62%);box-shadow:0 22px 50px rgba(39,65,94,.22)}
+.hring{position:absolute;z-index:-1;width:340px;aspect-ratio:1;left:-70px;top:50%;margin-top:-170px;opacity:.95;pointer-events:none}
+.hring svg{width:100%;height:100%;overflow:visible}
+.hring .sp{transform-box:view-box;transform-origin:100px 100px;will-change:transform}
+.arc{stroke-dashoffset:var(--len);animation:draw 1.5s cubic-bezier(.6,0,.2,1) .1s both}
+.arc2{animation-delay:.6s}
+@keyframes draw{0%{stroke-dashoffset:var(--len);opacity:0}6%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+.hero .eyebrow{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.28);color:rgba(255,255,255,.78)}
+.hero h1{color:#fff;font-weight:300;line-height:1.08;letter-spacing:-.015em}
+.hero h1 em{display:inline;font-weight:800;color:var(--turq)}
+.hero .lead{color:var(--pale);max-width:560px}
+.hero .chip{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#fff;box-shadow:none;font-weight:400}
+.hero .btn{background:var(--turq);color:var(--navy);box-shadow:0 10px 24px rgba(127,227,216,.3)}
+.hero .btn:hover{background:#9BEBE2}
+.hero .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.55);box-shadow:none}
+
+/* steps: white cards with a turquoise-ringed number */
+section.step{border-color:#fff;border-radius:26px;box-shadow:0 14px 34px rgba(39,65,94,.08)}
+.num{background:#fff;border:0;box-shadow:inset 0 0 0 3px var(--turq);color:var(--navy)}
+h2{color:var(--navy)}
+h3{color:var(--blue)}
+ol.steps li::before{background:var(--navy);color:#fff}
+ul.dots li::before{background:var(--turq)}
+.done-btn{background:#fff;border-color:var(--mist);color:var(--navy)}
+.done-btn .box{border-color:var(--blue)}
+.done-btn[aria-pressed=true]{background:var(--navy);border-color:var(--navy)}
+.done-btn[aria-pressed=true] .box{color:var(--navy)}
+.note.tip{background:#E2F6F4;border-color:rgba(127,227,216,.7)}
+.note.why{background:var(--pale);border-color:var(--line)}
+.compare .b{background:var(--navy);border-color:var(--navy)}
+.compare .b h4{color:var(--turq)}
+.prompt{background:var(--navy);border-color:#34557A}
+.copy{background:var(--turq);color:var(--navy)}
+.copy.ok{background:#fff}
+.tbl th{background:var(--navy)}
+details.acc,.gloss details{background:var(--pale)}
+details.acc summary::after{color:var(--blue)}
+dfn{border-bottom-color:var(--turq)}
+.tip-pop{background:var(--navy)}
+.final{background:radial-gradient(120% 120% at 85% 0%,#3A5E87 0%,var(--navy) 62%);border-radius:30px}
+.final .btn{background:var(--turq);color:var(--navy)}
+footer{background:#fff}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:640px){
+  body{padding-top:56px}
+  header.on{padding:10px 10px 0}
+  header.on .hwrap{padding-inline-start:14px}
+  .logo svg{height:22px!important}
+  .hero{margin-top:16px;padding:38px 22px 32px;border-radius:28px}
+  .hring{width:230px;right:auto;left:-90px;top:-80px;margin-top:0;opacity:.5}
+}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.arc{animation:none}}
+@media print{
+  header,.hring{display:none!important}
+  body{padding-top:0}
+  .hero{background:none;color:var(--navy);box-shadow:none;padding:6px 0}
+  .hero h1,.hero .lead,.hero .chip{color:var(--navy)}
+  .rv{opacity:1;transform:none}
+}
+
+/* the logo sits on the same center line as the back button */
+.hstart>a:first-child,.hwrap>a:first-child{display:flex;align-items:center}
+header .logo svg{display:block}
+
+/* boxes that sit inside the navy hero: translucent glass instead of solid cards */
+.hero .need{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);border-radius:18px;color:var(--pale)}
+.hero .need b{color:#fff}
+.hero .beginner{background:rgba(255,255,255,.08);border:1px solid rgba(127,227,216,.35)}
+.hero .beginner .btn{background:var(--turq);color:var(--navy)}
+.hero .os span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.hero .tl{background:rgba(20,36,56,.55);border:1px solid rgba(255,255,255,.14)}
+
+/* inline logo: wordmark follows color, mark follows --li */
+.logo{display:inline-flex;align-items:center;--li:#7FE3D8;color:#fff}
+.logo-svg{display:block;height:28px;width:auto;aspect-ratio:247/77}
+header.on .logo{--li:#4F7DB0;color:var(--navy)}
+footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margin:0 auto 10px}
+</style>
+<style>
+/* ===== instagram-dm guide ===== */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:10px;margin-top:22px}
+.flow .box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 14px;text-align:center;box-shadow:var(--shadow-sm)}
+.flow .box .ico{font-size:1.9rem;line-height:1.2}
+.flow .box h4{font-size:1rem;font-weight:800;color:var(--forest-deep);margin-top:4px}
+.flow .box p{font-size:.86rem;color:var(--ink-2);margin-top:2px;line-height:1.5}
+.flow .box.end{background:var(--forest);border-color:var(--forest)}
+.flow .box.end h4{color:#fff}.flow .box.end p{color:var(--ink-dark-2)}
+.flow .arr{display:grid;place-items:center;color:var(--olive);font-size:1.4rem;font-weight:800}
+
+/* phone mock */
+.phones{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.phone{background:#fff;border:1px solid #DDD9CC;border-radius:26px;box-shadow:var(--shadow-md);padding:14px 14px 18px;font-family:'Heebo',sans-serif;font-size:13px;color:#2b2b28}
+.phone .top{display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid #EEE;margin-bottom:12px;font-weight:700;font-size:12.5px}
+.phone .av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--leaf),var(--olive));flex:none}
+.phone .av.b{background:linear-gradient(135deg,#F2C6B6,var(--coral))}
+.cm{display:flex;gap:8px;margin-bottom:10px}
+.cm .t{flex:1}
+.cm .t b{font-size:12px;margin-left:4px}
+.cm .t small{display:block;color:#9a978a;font-size:11px}
+.cm.reply{margin-right:30px}
+.kw-hl{background:#E5ECD7;color:#27415E;border-radius:5px;padding:0 5px;font-weight:700}
+.bub{background:#F1EFE7;border-radius:16px 16px 16px 4px;padding:10px 12px;max-width:92%}
+.bub .bt{display:block;margin-top:10px;text-align:center;background:#fff;border:1px solid #E1DDD0;border-radius:10px;padding:7px;font-weight:700;color:#27415E}
+.phone .stamp{color:#9a978a;font-size:11px;margin-top:6px}
+
+/* need list */
+.need{display:grid;gap:10px;margin-top:16px}
+.need>div{display:flex;gap:14px;align-items:flex-start;background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.need .ic{font-size:1.5rem;line-height:1.3;flex:none}
+.need h4{font-size:1rem;font-weight:800;color:var(--forest-deep)}
+.need p{font-size:.93rem;color:var(--ink-2)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.facts div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow-sm)}
+.facts small{display:block;color:var(--ink-3);font-size:.82rem;font-weight:600}
+.facts b{display:block;font-size:1.15rem;font-weight:800;color:var(--forest-deep);margin-top:2px}
+.facts p{font-size:.86rem;color:var(--ink-2);margin-top:4px;line-height:1.55}
+.compare ul{list-style:none;margin-top:6px}
+.compare li{position:relative;padding-right:20px;margin-bottom:6px;font-size:.94rem}
+.compare .a li::before{content:"✕";position:absolute;right:0;top:0;color:var(--coral);font-weight:800}
+.compare .b li::before{content:"✓";position:absolute;right:0;top:0;color:var(--leaf);font-weight:800}
+@media (max-width:640px){
+  .flow{grid-template-columns:1fr}
+  .flow .arr{transform:rotate(90deg);height:18px}
+  .phones{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="hwrap">
+    <span><span class="logo"><svg class="logo-svg" role="img" aria-label="Ronig.ai" viewBox="0 0 247 77" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M89.059 18.5276H99.6081C101.853 18.5276 103.801 18.8919 105.451 19.6205C107.102 20.349 108.373 21.427 109.265 22.8543C110.172 24.2668 110.626 26.0064 110.626 28.0731C110.626 29.6045 110.298 30.9947 109.644 32.2436C109.005 33.4926 108.12 34.5408 106.99 35.3883C105.86 36.2209 104.552 36.7933 103.065 37.1056L102.106 37.4624H90.8432L90.7986 35.1207H100.233C101.928 35.1207 103.34 34.7936 104.47 34.1394C105.6 33.4851 106.448 32.6228 107.013 31.5523C107.592 30.4669 107.882 29.3072 107.882 28.0731C107.882 26.6011 107.563 25.3299 106.923 24.2594C106.299 23.174 105.37 22.3414 104.135 21.7615C102.901 21.1816 101.392 20.8917 99.6081 20.8917H91.8022V51H89.059V18.5276ZM109.109 51L100.701 36.4811L103.645 36.4588L112.031 50.7101V51H109.109ZM116.067 39.3135V38.5775C116.067 36.8231 116.32 35.2024 116.826 33.7156C117.331 32.2288 118.052 30.9427 118.989 29.8573C119.94 28.7719 121.078 27.9318 122.401 27.3371C123.724 26.7275 125.196 26.4227 126.817 26.4227C128.453 26.4227 129.932 26.7275 131.255 27.3371C132.579 27.9318 133.716 28.7719 134.668 29.8573C135.619 30.9427 136.348 32.2288 136.853 33.7156C137.359 35.2024 137.611 36.8231 137.611 38.5775V39.3135C137.611 41.068 137.359 42.6886 136.853 44.1755C136.348 45.6474 135.619 46.9261 134.668 48.0115C133.731 49.0969 132.601 49.9444 131.278 50.554C129.954 51.1487 128.482 51.446 126.862 51.446C125.226 51.446 123.747 51.1487 122.424 50.554C121.1 49.9444 119.963 49.0969 119.011 48.0115C118.06 46.9261 117.331 45.6474 116.826 44.1755C116.32 42.6886 116.067 41.068 116.067 39.3135ZM118.721 38.5775V39.3135C118.721 40.6368 118.9 41.8932 119.257 43.0826C119.613 44.2572 120.134 45.3054 120.818 46.2273C121.502 47.1342 122.349 47.8479 123.36 48.3683C124.371 48.8887 125.538 49.1489 126.862 49.1489C128.17 49.1489 129.322 48.8887 130.319 48.3683C131.33 47.8479 132.177 47.1342 132.861 46.2273C133.545 45.3054 134.058 44.2572 134.4 43.0826C134.757 41.8932 134.935 40.6368 134.935 39.3135V38.5775C134.935 37.2691 134.757 36.0276 134.4 34.853C134.058 33.6784 133.538 32.6302 132.839 31.7084C132.155 30.7866 131.307 30.058 130.296 29.5227C129.285 28.9875 128.125 28.7199 126.817 28.7199C125.509 28.7199 124.349 28.9875 123.338 29.5227C122.342 30.058 121.494 30.7866 120.795 31.7084C120.111 32.6302 119.591 33.6784 119.234 34.853C118.892 36.0276 118.721 37.2691 118.721 38.5775ZM145.796 32.0206V51H143.142V26.8688H145.685L145.796 32.0206ZM145.194 37.4401L144.012 36.771C144.101 35.3437 144.391 34.0055 144.882 32.7566C145.373 31.5077 146.034 30.4074 146.867 29.4558C147.714 28.5043 148.703 27.7609 149.833 27.2256C150.978 26.6903 152.242 26.4227 153.625 26.4227C154.829 26.4227 155.907 26.5863 156.858 26.9134C157.81 27.2405 158.62 27.7609 159.289 28.4745C159.959 29.1882 160.464 30.1026 160.806 31.2177C161.163 32.3329 161.341 33.6933 161.341 35.2991V51H158.665V35.2768C158.665 33.6115 158.435 32.3106 157.974 31.3738C157.513 30.4223 156.858 29.7458 156.011 29.3443C155.163 28.9429 154.16 28.7422 153 28.7422C151.721 28.7422 150.599 29.0247 149.632 29.5897C148.681 30.1398 147.878 30.8609 147.224 31.753C146.584 32.6302 146.094 33.5744 145.752 34.5854C145.41 35.5816 145.224 36.5331 145.194 37.4401ZM171.221 26.8688V51H168.567V26.8688H171.221ZM168.099 19.9104C168.099 19.39 168.255 18.9588 168.567 18.6169C168.894 18.26 169.348 18.0816 169.928 18.0816C170.478 18.0816 170.916 18.26 171.244 18.6169C171.586 18.9588 171.757 19.39 171.757 19.9104C171.757 20.3862 171.586 20.8025 171.244 21.1593C170.916 21.5013 170.478 21.6723 169.928 21.6723C169.348 21.6723 168.894 21.5013 168.567 21.1593C168.255 20.8025 168.099 20.3862 168.099 19.9104ZM194.393 26.8688H196.869V50.5763C196.869 52.6727 196.468 54.4717 195.665 55.9734C194.877 57.4751 193.754 58.6274 192.297 59.4303C190.855 60.2332 189.152 60.6347 187.19 60.6347C186.194 60.6347 185.168 60.4785 184.112 60.1663C183.071 59.8689 182.083 59.408 181.146 58.7836C180.224 58.174 179.436 57.4157 178.782 56.5087L180.276 54.8806C181.257 56.0701 182.306 56.9399 183.421 57.49C184.536 58.055 185.74 58.3375 187.034 58.3375C188.565 58.3375 189.859 58.0327 190.914 57.4231C191.985 56.8135 192.795 55.9363 193.345 54.7914C193.91 53.6466 194.193 52.2712 194.193 50.6655V32.1767L194.393 26.8688ZM177.444 39.1797V38.7114C177.444 36.8379 177.652 35.1504 178.068 33.6487C178.499 32.1321 179.116 30.8386 179.919 29.7681C180.722 28.6827 181.696 27.8575 182.841 27.2925C184.001 26.7126 185.309 26.4227 186.766 26.4227C188.164 26.4227 189.405 26.6532 190.491 27.1141C191.576 27.575 192.513 28.2366 193.301 29.099C194.089 29.9614 194.721 30.9873 195.196 32.1767C195.687 33.3662 196.044 34.6895 196.267 36.1466V42.1013C196.088 43.4692 195.761 44.7256 195.286 45.8704C194.81 47.0004 194.178 47.9892 193.39 48.8367C192.602 49.6693 191.65 50.3161 190.535 50.777C189.435 51.223 188.164 51.446 186.721 51.446C185.279 51.446 183.986 51.1487 182.841 50.554C181.696 49.9592 180.722 49.1192 179.919 48.0338C179.116 46.9335 178.499 45.6325 178.068 44.1308C177.652 42.6292 177.444 40.9788 177.444 39.1797ZM180.12 38.7114V39.1797C180.12 40.5922 180.261 41.9006 180.544 43.1049C180.826 44.3093 181.257 45.3575 181.837 46.2496C182.417 47.1417 183.153 47.8405 184.045 48.346C184.937 48.8515 185.985 49.1043 187.19 49.1043C188.721 49.1043 190.007 48.8144 191.048 48.2345C192.089 47.6398 192.914 46.8592 193.524 45.8927C194.133 44.9114 194.579 43.8409 194.862 42.6812V35.7451C194.698 34.9571 194.446 34.1542 194.104 33.3365C193.776 32.5187 193.316 31.7679 192.721 31.0839C192.141 30.3851 191.398 29.8275 190.491 29.4112C189.598 28.9801 188.513 28.7645 187.234 28.7645C186.015 28.7645 184.952 29.0172 184.045 29.5227C183.153 30.0283 182.417 30.7345 181.837 31.6415C181.257 32.5336 180.826 33.5818 180.544 34.7861C180.261 35.9905 180.12 37.2989 180.12 38.7114ZM203.337 48.3237C203.337 47.4911 203.619 46.7923 204.184 46.2273C204.749 45.6474 205.515 45.3575 206.481 45.3575C207.463 45.3575 208.228 45.6474 208.779 46.2273C209.344 46.7923 209.626 47.4911 209.626 48.3237C209.626 49.1563 209.344 49.8551 208.779 50.4201C208.228 50.9851 207.463 51.2676 206.481 51.2676C205.515 51.2676 204.749 50.9851 204.184 50.4201C203.619 49.8551 203.337 49.1563 203.337 48.3237ZM229.431 46.1604V34.6523C229.431 33.7899 229.275 33.0465 228.962 32.4221C228.65 31.7976 228.174 31.3144 227.535 30.9724C226.91 30.6304 226.122 30.4594 225.171 30.4594C224.294 30.4594 223.535 30.6081 222.896 30.9055C222.257 31.2029 221.759 31.6043 221.402 32.1098C221.045 32.6154 220.866 33.1878 220.866 33.8271H215.514C215.514 32.8755 215.744 31.9537 216.205 31.0616C216.666 30.1695 217.335 29.3741 218.212 28.6753C219.09 27.9764 220.138 27.4263 221.357 27.0249C222.576 26.6234 223.944 26.4227 225.461 26.4227C227.275 26.4227 228.88 26.7275 230.278 27.3371C231.691 27.9467 232.798 28.8685 233.601 30.1026C234.419 31.3218 234.828 32.8532 234.828 34.6969V45.4244C234.828 46.5246 234.902 47.5134 235.051 48.3906C235.214 49.253 235.445 50.0038 235.742 50.6432V51H230.234C229.981 50.4201 229.78 49.6842 229.631 48.7921C229.498 47.8851 229.431 47.0079 229.431 46.1604ZM230.211 36.325L230.256 39.6481H226.397C225.401 39.6481 224.524 39.7447 223.766 39.938C223.008 40.1164 222.376 40.384 221.87 40.7409C221.365 41.0977 220.985 41.5289 220.733 42.0344C220.48 42.5399 220.354 43.1124 220.354 43.7517C220.354 44.391 220.502 44.9783 220.8 45.5136C221.097 46.034 221.528 46.4429 222.093 46.7402C222.673 47.0376 223.372 47.1863 224.19 47.1863C225.29 47.1863 226.249 46.9633 227.067 46.5172C227.899 46.0563 228.553 45.4987 229.029 44.8445C229.505 44.1755 229.758 43.5435 229.787 42.9488L231.527 45.3352C231.349 45.9448 231.044 46.599 230.613 47.2978C230.181 47.9966 229.616 48.6657 228.918 49.305C228.234 49.9295 227.409 50.4424 226.442 50.8439C225.491 51.2453 224.39 51.446 223.141 51.446C221.565 51.446 220.16 51.1338 218.926 50.5093C217.692 49.87 216.726 49.0151 216.027 47.9446C215.328 46.8592 214.979 45.6325 214.979 44.2647C214.979 42.986 215.217 41.856 215.692 40.8747C216.183 39.8785 216.897 39.0459 217.833 38.3768C218.785 37.7077 219.945 37.2022 221.313 36.8603C222.68 36.5034 224.242 36.325 225.996 36.325H230.211ZM246.202 26.8688V51H240.805V26.8688H246.202ZM240.448 20.5349C240.448 19.7171 240.716 19.0406 241.251 18.5053C241.801 17.9552 242.559 17.6801 243.526 17.6801C244.477 17.6801 245.228 17.9552 245.778 18.5053C246.328 19.0406 246.604 19.7171 246.604 20.5349C246.604 21.3378 246.328 22.0068 245.778 22.5421C245.228 23.0773 244.477 23.345 243.526 23.345C242.559 23.345 241.801 23.0773 241.251 22.5421C240.716 22.0068 240.448 21.3378 240.448 20.5349Z" fill="currentColor"/><path d="M36.919 72.8232C36.2769 72.8586 35.6275 72.8772 34.9763 72.8772C15.658 72.8772 6.10352e-05 57.0988 6.10352e-05 37.632H7.14548C19.3128 37.632 23.9067 47.2139 26.0044 53.2021C30.3197 65.5374 33.8619 70.2372 36.919 72.8232Z" style="fill:var(--li)"/><path d="M67.0645 46.377C67.5155 47.2708 67.8356 48.2258 68.0147 49.2121C68.0193 49.226 68.0193 49.241 68.0147 49.2549C64.6754 58.8981 59.0797 65.8977 49.7019 69.6606C49.724 69.6792 49.6742 69.6717 49.7019 69.6606C46.6873 67.2028 43.3147 65.2173 38.1434 51.8856C36.2117 46.905 31.616 39.3811 22.1866 37.7749C22.1146 37.7624 22.0496 37.724 22.0037 37.6668C21.9577 37.6096 21.934 37.5375 21.9369 37.464C21.9399 37.3905 21.9693 37.3205 22.0196 37.2673C22.07 37.214 22.1378 37.1809 22.2106 37.1744C25.7159 36.7133 27.2435 36.4307 29.8763 35.4881C34.3779 33.8726 36.9017 31.8406 38.2781 30.7028C42.2892 27.6317 45.0586 23.1987 46.0723 18.2263C47.0861 13.2538 46.2754 8.07963 43.7907 3.66378C43.7829 3.65043 43.7791 3.63502 43.78 3.61952C43.7809 3.60402 43.7863 3.58914 43.7956 3.57676C43.8049 3.56439 43.8177 3.5551 43.8323 3.55007C43.8468 3.54504 43.8626 3.5445 43.8775 3.54852C58.196 7.33368 68.9316 20.037 69.8818 35.4138C69.8823 35.4246 69.8806 35.4354 69.8768 35.4455C69.873 35.4556 69.8673 35.4649 69.8599 35.4727C69.8525 35.4805 69.8435 35.4868 69.8337 35.491C69.8238 35.4953 69.8132 35.4975 69.8024 35.4974L52.2756 35.596C51.6926 35.596 50.0285 35.596 50.0285 36.5701C50.0285 37.1279 50.4509 37.5889 52.4269 37.5889C63.3765 37.7414 67.0018 46.2338 67.059 46.3751L67.0645 46.377Z" style="fill:var(--li)"/><path d="M32.3939 14.653C32.3939 23.1175 26.848 30.4034 18.8834 33.668C15.8989 34.8818 12.7093 35.5017 9.49087 35.4937H0.0669556C0.101394 34.8975 0.151207 34.3045 0.216395 33.7145C1.04954 26.2221 4.24431 19.1962 9.33172 13.6682C14.4191 8.14014 21.1312 4.40113 28.4826 3.00005C31.0086 6.35273 32.3817 10.4435 32.3939 14.653Z" style="fill:var(--li)"/></svg></span></span>
+  </div>
+</header>
+
+<style>
+/* ===== unified guide ===== */
+.who{display:inline-flex;gap:5px;flex-wrap:wrap;margin-inline-start:6px;vertical-align:middle}
+.who span{font-size:.72rem;font-weight:800;border-radius:99px;padding:1px 9px;line-height:1.7}
+.who .u{background:#FBEFE9;color:#9A4630}
+.who .c{background:#E2F6F4;color:var(--navy)}
+.who .s{background:var(--pale);color:var(--ink-3);border:1px solid var(--line)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-size:.88rem;color:var(--ink-2)}
+.legend .who{margin:0}
+ol.st{list-style:none;margin-top:14px;display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+ol.st>li,details.acc .in{min-width:0}
+pre.cmd{max-width:100%}
+ol.st>li{background:var(--pale);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+ol.st>li>h4{font-size:1.02rem;font-weight:800;color:var(--navy);display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+ol.st>li>h4 .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:.8rem;flex:none}
+ol.st>li p,ol.st>li ul{font-size:.95rem;color:var(--ink-2);margin-top:6px}
+ol.st>li ul{list-style:none}
+ol.st>li ul li{position:relative;padding-right:18px;margin-bottom:4px}
+ol.st>li ul li::before{content:"";position:absolute;right:3px;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--turq)}
+.why{font-size:.88rem!important;color:var(--ink-3)!important}
+.path{direction:ltr;unicode-bidi:isolate;display:inline-block;font-size:.85rem;font-weight:800;color:var(--blue);background:#fff;border:1px solid var(--line);border-radius:8px;padding:1px 8px}
+pre.cmd{direction:ltr;text-align:left;background:var(--navy);color:var(--pale);border-radius:12px;padding:10px 14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;margin-top:8px;overflow-x:auto;white-space:pre}
+.chain{list-style:none;counter-reset:k;display:grid;gap:8px;margin-top:14px}
+.chain li{counter-increment:k;position:relative;padding:10px 46px 10px 14px;background:var(--pale);border:1px solid var(--line);border-radius:14px;font-size:.95rem}
+.chain li::before{content:counter(k);position:absolute;right:12px;top:10px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2px var(--turq);color:var(--navy);font-weight:800;font-size:.8rem;display:grid;place-items:center}
+.chain b{color:var(--navy)}
+details.acc .in p+p,details.acc .in ol{margin-top:8px}
+details.acc .in ol{padding-right:20px}
+.tbl td code{white-space:nowrap}
+.copybar{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.copied{display:none;margin-top:10px;font-size:.9rem;color:var(--turq);font-weight:800}
+.copied.show{display:block}
+</style>
+<main class="narrow" id="guide">
+
+<section class="hero"><div class="hring" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><linearGradient id="rg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7FE3D8"/><stop offset="1" stop-color="#4F7DB0"/></linearGradient></defs><g class="sp" data-r=".16"><circle class="arc" style="--len:76" cx="100" cy="100" r="86" fill="none" stroke="url(#rg1)" stroke-width="12" stroke-linecap="round" pathLength="100" stroke-dasharray="76 200" transform="rotate(150 100 100)"/></g><g class="sp" data-r="-.38"><circle class="arc arc2" style="--len:12" cx="100" cy="100" r="86" fill="none" stroke="#9DB0C6" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="12 200" transform="rotate(91.6 100 100)"/></g><g class="sp" data-r="-.08"><circle cx="100" cy="100" r="98" fill="none" stroke="#9DB0C6" stroke-width=".8" stroke-dasharray="1.5 4.5" opacity=".55"/></g></svg></div>
+  <img class="print-logo" src="../assets/logo-dark.png" alt="Ronig.ai">
+  <span class="eyebrow">מדריך משלים · Unified login</span>
+  <h1>נתקעתם בהקמה?<br><em>המדריך המלא למסלול החדש</em></h1>
+  <p class="lead">המדריך נכתב מתוך הקמה שעבדה מקצה לקצה עם אפליקציה חדשה של מטא, במסלול Unified login. יש בו את כל השלבים, הערכים והתקלות שצפויות בדרך. מעתיקים אותו לשיחה עם Claude, והוא ממשיך איתכם מהמקום שבו נתקעתם.</p>
+  <div class="hero-meta"><span class="chip">7 שלבים</span><span class="chip">33 צעדים</span><span class="chip">16 תקלות מוכרות</span></div>
+  <div class="copybar no-copy">
+    <button class="btn" type="button" id="copy-all">העתקת המדריך ל-Claude</button>
+    <a class="btn ghost" href="#trouble">ישר לתקלות</a>
+  </div>
+  <p class="copied no-copy" id="copied">הועתק ✓ עכשיו מדביקים בשיחה עם Claude ושולחים.</p>
+</section>
+
+<section class="step no-copy">
+  <div class="step-head"><div class="num">?</div><div><h2>איך משתמשים בדף הזה</h2><p>שלוש פעולות</p></div></div>
+  <ol class="steps">
+    <li>לוחצים למעלה על <b>העתקת המדריך ל-Claude</b>.</li>
+    <li>חוזרים <b>לאותה שיחה</b> שבה Claude מקים לכם את המערכת, לא לשיחה חדשה. מדביקים ושולחים.</li>
+    <li>Claude יבדוק איפה עצרתם וימשיך משם, צעד אחרי צעד.</li>
+  </ol>
+  <div class="note tip"><span class="ic">💡</span><div><b>רק נתקעתם בשגיאה?</b> קפצו ל<a href="#trouble">תקלות מוכרות</a> ותחפשו לפי מה שכתוב לכם במסך.</div></div>
+  <div class="note warn"><span class="ic">🔒</span><div>גם כשנתקעים, <b>לא מדביקים בצ'אט</b> סיסמה, App secret או טוקן. Claude ייתן לכם דרך להכניס אותם בלי שיופיעו בשיחה.</div></div>
+ </section>
+
+<section class="step">
+  <div class="step-head"><div class="num">✦</div><div><h2>ל-Claude שקורא את המדריך</h2></div></div>
+  <ul class="dots">
+    <li>הקובץ <code>SETUP.md</code> שבתבנית הוא המקור הראשי, כולל הנספח Unified login בסופו. המדריך הזה משלים אותו לפי הקמה שעבדה, ומוסיף את מה שלא כתוב שם.</li>
+    <li>עובדים לפי הסדר. אחרי כל צעד שהמשתמש עושה, מחכים שיכתוב "עשיתי" לפני שממשיכים.</li>
+    <li>אומרים בדיוק על מה ללחוץ, בעברית פשוטה. אם המשתמש לא מוצא משהו, שואלים מה הוא רואה במסך.</li>
+    <li>לא מבקשים להדביק בצ'אט סיסמאות, קודים או מפתחות. ה-App secret מודבק בטרמינל מוסתר (צעד 18), וה-<code>VERIFY_TOKEN</code> נקרא מקובץ מקומי.</li>
+    <li>לפני פעולה שמשנה משהו בחשבון של המשתמש (העלאה, מעבר ל-Live) מסבירים מה היא עושה ומקבלים אישור.</li>
+    <li>צעד שמסומן "בכרום": אם Claude in Chrome מחובר, Claude לוחץ בעצמו. אחרת מדריכים את המשתמש ללחוץ על אותם כפתורים.</li>
+    <li>כשמשהו נתקע, מחפשים קודם בסעיף התקלות המוכרות.</li>
+  </ul>
+  <div class="legend"><span class="who"><span class="u">אתם</span></span> לוחצים או מקלידים בעצמכם <span class="who"><span class="c">Claude</span></span> מריץ פקודה או לוחץ בכרום <span class="who"><span class="s">לבד</span></span> המערכת עושה את זה לבד</div>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">↻</div><div><h2>מה קורה כשמישהו כותב את המילה</h2><p>כל צעד בהקמה מחבר עוד חוליה בשרשרת הזו</p></div></div>
+  <ol class="chain">
+    <li><b>מישהו כותב את מילת המפתח</b> בתגובה לפוסט או לריל, בתגובה לסטורי או בהודעה ישירה.</li>
+    <li><b>מטא שולחת התראה</b> לכתובת <code>/webhook</code> של המערכת ב-Cloudflare.</li>
+    <li><b>בדיקת חתימה:</b> המערכת מוודאת עם ה-App secret שההתראה באמת הגיעה ממטא, ועונה לה מיד.</li>
+    <li><b>התאמה לחוק:</b> מחפשת חוק פעיל עם אותה מילה ואותו פוסט. אין התאמה? לא קורה כלום ולא נרשם כלום.</li>
+    <li><b>תור:</b> כל אירוע נשמר פעם אחת בלבד, כך שגם אם מטא שולחת אותו פעמיים, יוצאת הודעה אחת.</li>
+    <li><b>שליחה:</b> הודעה פרטית עם כפתור וקישור, דרך הממשק הרשמי של אינסטגרם. ואם הוגדרה, גם תגובה פומבית קצרה.</li>
+    <li><b>רישום:</b> כל שליחה מופיעה ב"פעילות אחרונה" בדף הניהול, כולל שגיאות.</li>
+  </ol>
+  <ul class="dots" style="margin-top:16px">
+    <li><b>כל 5 דקות</b> תזמון קבוע שולח את מה שנשאר בתור.</li>
+    <li><b>עד 150 הודעות בשעה</b> (<code>MAX_PER_HOUR</code>).</li>
+    <li><b>לא עונה לעצמו:</b> תגובות של החשבון העסקי עצמו לא מקבלות הודעה.</li>
+    <li><b>אין חוק, אין הודעה:</b> שום הודעה לא יוצאת עד שיש חוק פעיל.</li>
+  </ul>
+</section>
+
+<section class="step" id="s1">
+  <div class="step-head"><div class="num">1</div><div><h2>הכנה במחשב</h2><p>צעדים 1 עד 4 · שום דבר עוד לא עולה לאינטרנט</p></div></div>
+  <ol class="st">
+    <li><h4><span class="n">1</span>הורדת התבנית <span class="who"><span class="c">Claude</span></span></h4>
+      <p>Claude מוריד את התבנית לתיקייה מקומית וקורא את <code>SETUP.md</code> עד הסוף, כולל הנספח.</p>
+      <pre class="cmd">git clone https://github.com/rogre1/instagram-dm-template</pre></li>
+    <li><h4><span class="n">2</span>התקנה ובדיקות <span class="who"><span class="c">Claude</span></span></h4>
+      <p>מריץ <code>npm install</code> ואחר כך <code>npm test</code>. כל הבדיקות צריכות לעבור לפני שממשיכים.</p></li>
+    <li><h4><span class="n">3</span>שם ומייל לעמוד הפרטיות <span class="who"><span class="u">אתם</span><span class="c">Claude</span></span></h4>
+      <p>אתם נותנים את שם העסק ומייל ליצירת קשר. Claude כותב אותם בקובץ <code>wrangler.toml</code>, בשדות <code>BRAND_NAME</code> ו-<code>CONTACT_EMAIL</code>.</p>
+      <p class="why">למה: הם מופיעים בעמוד הפרטיות ובעמוד מחיקת הנתונים, ומטא דורשת את שניהם.</p></li>
+    <li><h4><span class="n">4</span>שני קודים סודיים <span class="who"><span class="c">Claude</span></span></h4>
+      <ul><li><code>VERIFY_TOKEN</code>: מטא משתמשת בו כדי לוודא שכתובת ה-Webhook שייכת לכם.</li><li><code>ADMIN_PASSWORD</code>: הסיסמה של דף הניהול.</li></ul>
+      <p class="why">שניהם נשמרים בקובץ מקומי (למשל <code>secrets.local.txt</code>) שרשום ב-<code>.gitignore</code>, ולא מודבקים בצ'אט.</p></li>
+  </ol>
+</section>
+
+<section class="step" id="s2">
+  <div class="step-head"><div class="num">2</div><div><h2>השרת ב-Cloudflare</h2><p>צעדים 5 עד 11 · אתר קיים, דומיין ו-DNS לא משתנים</p></div></div>
+  <ol class="st">
+    <li><h4><span class="n">5</span>חיבור ל-Cloudflare בהרשאות מצומצמות <span class="who"><span class="c">Claude</span><span class="u">אתם</span></span></h4>
+      <p>Claude מריץ התחברות עם רשימת הרשאות מפורשת. בדפדפן נפתח מסך של Cloudflare. בודקים שמופיעות בו רק ההרשאות האלה, ולוחצים <b>Allow</b>:</p>
+      <pre class="cmd">npx wrangler login --scopes account:read user:read workers_scripts:write workers_tail:read d1:write</pre>
+      <p class="why">בלי הרשאות ל-DNS, לדומיינים או ל-SSL. ההרשאה <code>offline_access</code> נוספת לבד. אם נפתח מסך עם רשימה ארוכה יותר, סוגרים אותו בלי לאשר.</p></li>
+    <li><h4><span class="n">6</span>מסד נתונים <span class="who"><span class="c">Claude</span></span></h4>
+      <p>יוצר מסד D1, מעתיק את ה-<code>database_id</code> שחוזר לקובץ <code>wrangler.toml</code>, ומריץ את קובץ הטבלאות.</p>
+      <pre class="cmd">npx wrangler d1 create instagram-dm
+npx wrangler d1 execute instagram-dm --remote --file=src/schema.sql</pre></li>
+    <li><h4><span class="n">7</span>שם לכתובת workers.dev <span class="who"><span class="u">אתם</span><span class="c">Claude</span></span></h4>
+      <p>בוחרים שם קצר באנגלית, אותיות ומספרים בלי נקודות. הכתובת תהיה <code>instagram-dm.NAME.workers.dev</code>, ומעכשיו נקרא לה "כתובת ה-Worker".</p></li>
+    <li><h4><span class="n">8</span>אימות המייל של Cloudflare <span class="who"><span class="u">אתם</span></span></h4>
+      <p>Cloudflare לא מאפשרת העלאה ראשונה לפני שהמייל של החשבון מאומת. לוחצים על הקישור במייל מ-Cloudflare.</p></li>
+    <li><h4><span class="n">9</span>העלאת המערכת <span class="who"><span class="c">Claude</span></span></h4>
+      <p>מריץ <code>npx wrangler deploy</code>. ה-Worker עולה לכתובת שלו, עם תזמון שרץ כל 5 דקות.</p></li>
+    <li><h4><span class="n">10</span>שמירת הקודים כסודות <span class="who"><span class="c">Claude</span></span></h4>
+      <p>שומר את <code>VERIFY_TOKEN</code> ואת <code>ADMIN_PASSWORD</code> כסודות של ה-Worker עם <code>npx wrangler secret put</code>. הערכים עוברים מהקובץ המקומי ישר ל-Cloudflare, בלי להופיע במסך.</p></li>
+    <li><h4><span class="n">11</span>בדיקה ראשונה של הכתובות <span class="who"><span class="c">Claude</span></span></h4>
+      <ul><li><code>/privacy</code> פתוח לכולם (200)</li><li><code>/data-deletion</code> פתוח לכולם (200)</li><li><code>/admin</code> נעול בסיסמה (401)</li><li><code>/webhook</code> חוסם בלי הקוד הפנימי (403)</li></ul></li>
+  </ol>
+</section>
+
+<section class="step" id="s3">
+  <div class="step-head"><div class="num">3</div><div><h2>אפליקציה במטא</h2><p>צעדים 12 עד 22 · את רוב הלחיצות Claude יכול לעשות בכרום, את הקודים הסודיים אתם מדביקים</p></div></div>
+  <ol class="st">
+    <li><h4><span class="n">12</span>יצירת האפליקציה <span class="who"><span class="u">אתם</span></span></h4>
+      <ul>
+        <li>ב-developers.facebook.com: למעלה <b>My Apps</b>, ואז <b>Create App</b>. בפעם הראשונה מטא מבקשת להירשם כמפתח.</li>
+        <li><b>App name:</b> שם לבחירה. מטא לא מאשרת שם שכולל את המילה Instagram.</li>
+        <li><b>App contact email:</b> המייל שלכם.</li>
+        <li>ב-<b>Use cases</b> בוחרים <b>Manage messaging &amp; content on Instagram</b>.</li>
+        <li>במסך <b>Business</b> בוחרים את התיק העסקי (Business portfolio) שחשבון האינסטגרם נמצא בו.</li>
+        <li>בסוף <b>Create app</b>. ההודעה שלא זוהו דרישות תקינה.</li>
+      </ul>
+      <p class="why">תנאי מוקדם: חשבון אינסטגרם מקצועי (עסקי או יוצר) בתוך תיק עסקי של מטא. עמוד פייסבוק לא נדרש.</p></li>
+    <li><h4><span class="n">13</span>איזה מסלול התחברות מטא מציעה? <span class="who"><span class="c">Claude</span></span></h4>
+      <p><span class="path">Use cases → Customize</span> (ליד Manage messaging &amp; content on Instagram)</p>
+      <ul><li><b>אם מופיע API setup with Instagram login:</b> ממשיכים במסלול הרגיל שב-<code>SETUP.md</code>. הצעדים כאן לא נדרשים.</li>
+      <li><b>אם יש רק API setup with Unified login</b> ומופיעה ההודעה <span class="ltr">is not available for newer apps</span>: זה תקין. מסוף אוקטובר 2026 זה המצב בכל אפליקציה חדשה, והצעדים הבאים מתארים את המסלול הזה.</li></ul></li>
+    <li><h4><span class="n">14</span>שלוש הרשאות <span class="who"><span class="c">Claude</span></span></h4>
+      <p><span class="path">Use cases → Customize → Permissions</span>, ולוחצים <b>Add</b> ליד כל אחת: <code>instagram_basic</code>, <code>instagram_manage_comments</code>, <code>instagram_manage_messages</code>.</p>
+      <p class="why">למה קודם: בלי זה רשימת ההרשאות במסך יצירת הקונפיגורציה ריקה.</p></li>
+    <li><h4><span class="n">15</span>קונפיגורציית התחברות ידנית <span class="who"><span class="c">Claude</span></span></h4>
+      <p><span class="path">API setup with Unified login → Create configuration</span></p>
+      <ul><li><b>שם:</b> לבחירה</li><li><b>Login variation:</b> General</li><li><b>סוג טוקן:</b> System-user access token</li><li><b>תוקף:</b> Never</li><li><b>נכסים:</b> רק Instagram accounts, מסומן Asset required</li><li><b>הרשאות:</b> רק שלוש ההרשאות מהצעד הקודם</li></ul>
+      <p>בסוף <b>Create</b>. מטא מציגה <b>Configuration ID</b>, ו-Claude שומר אותו.</p>
+      <p class="why">למה לא התבנית המוכנה של מטא: היא מוסיפה הרשאות פרסום (<code>ads_management</code>, <code>ads_read</code>) וגישה לחשבונות מודעות, שהמערכת לא צריכה.</p></li>
+    <li><h4><span class="n">16</span>כתובת חזרה אחרי ההתחברות <span class="who"><span class="c">Claude</span></span></h4>
+      <p><span class="path">API setup with Unified login → Redirect URL → Register a new redirect URL</span></p>
+      <p>כותבים את כתובת ה-Worker ואחריה <code>/callback</code>, ולוחצים <b>Save</b>.</p></li>
+    <li><h4><span class="n">17</span>התאמת הקוד ל-Unified login <span class="who"><span class="c">Claude</span></span></h4>
+      <p>התבנית נכתבה למסלול הרגיל, ולכן Claude מתאים כמה פונקציות (הקוד המלא ב<a href="#code">ערכים וקוד</a>). מוסיף ל-<code>wrangler.toml</code> את <code>AUTH_MODE</code> במצב <code>unified</code>, את <code>FB_CONFIG_ID</code> ואת <code>GRAPH_VERSION</code>. שומר את ה-App ID (מ-<span class="path">App settings → Basic</span>) כסוד <code>IG_APP_ID</code>, ומעלה מחדש.</p></li>
+    <li><h4><span class="n">18</span>הקוד הסודי של האפליקציה <span class="who"><span class="u">אתם</span><span class="c">Claude</span></span></h4>
+      <p><span class="path">App settings → Basic → App secret → Show</span></p>
+      <ul><li>מעתיקים את ה-App secret.</li><li>Claude פותח לשונית טרמינל שמריצה את סקריפט העזר <code>set-app-secret.mjs</code> (הקוד ב<a href="#code">ערכים וקוד</a>).</li><li>מדביקים פעם אחת ולוחצים Enter. המסך נשאר ריק בכוונה.</li><li>מופיעה השורה <span class="ltr">Done. You can close this tab.</span></li></ul>
+      <p class="why">כך הקוד נשמר כסוד <code>IG_APP_SECRET</code> בלי לעבור בצ'אט. באפליקציית Claude למחשב, הטרמינל שלכם לא רואה את ההתחברות ל-Cloudflare שנעשתה מהכלים של Claude, ולכן קודם מריצים בו את פקודת ההתחברות מצעד 5.</p></li>
+    <li><h4><span class="n">19</span>עמודי פרטיות וקטגוריה <span class="who"><span class="c">Claude</span></span></h4>
+      <p><span class="path">App settings → Basic</span></p>
+      <ul><li><b>Privacy policy URL:</b> כתובת ה-Worker ואחריה <code>/privacy</code></li><li><b>User data deletion:</b> כתובת ה-Worker ואחריה <code>/data-deletion</code></li><li><b>Category:</b> Messenger bots for business</li></ul>
+      <p>שומרים עם <b>Save changes</b>. לא צריך למלא כתובת מגורים או משרד.</p></li>
+    <li><h4><span class="n">20</span>כתובת ה-Webhook <span class="who"><span class="c">Claude</span></span></h4>
+      <p><span class="path">API setup with Unified login → Configure webhooks</span></p>
+      <p>ב-<b>Callback URL</b> כותבים את כתובת ה-Worker ואחריה <code>/webhook</code>. לשם מטא תשלח כל תגובה והודעה.</p></li>
+    <li><h4><span class="n">21</span>אימות ה-Webhook <span class="who"><span class="u">אתם</span></span></h4>
+      <ul><li>פותחים את הקובץ המקומי ומעתיקים את הערך של <code>VERIFY_TOKEN</code>.</li><li>מדביקים בשדה <b>Verify token</b> ולוחצים <b>Verify and save</b>.</li><li>את המתג של client certificate משאירים כבוי.</li></ul>
+      <p class="why">המתג כבוי כי המערכת כבר בודקת עם ה-App secret שכל התראה הגיעה ממטא.</p></li>
+    <li><h4><span class="n">22</span>הרשמה לתגובות ולהודעות <span class="who"><span class="c">Claude</span></span></h4>
+      <p>באותו מסך לוחצים <b>Subscribe</b> ליד <code>comments</code> וליד <code>messages</code>. הגרסה צריכה להיות זהה ל-<code>GRAPH_VERSION</code> (בהקמה שנבדקה: <code>v27.0</code>).</p>
+      <p class="why">חשוב: כפתור Test במסך הזה שולח התראת בדיקה גם בלי הרשמה. ההרשמה היא מה שמעביר תגובות אמיתיות.</p></li>
+  </ol>
+</section>
+
+<section class="step" id="s4">
+  <div class="step-head"><div class="num">4</div><div><h2>חיבור חשבון האינסטגרם</h2><p>צעדים 23 עד 25 · החיבור לא שולח שום הודעה</p></div></div>
+  <ol class="st">
+    <li><h4><span class="n">23</span>כניסה לדף הניהול <span class="who"><span class="u">אתם</span></span></h4>
+      <p>פותחים את כתובת ה-Worker ואחריה <code>/admin</code>. שם משתמש: כל מילה. סיסמה: הערך של <code>ADMIN_PASSWORD</code> מהקובץ המקומי.</p></li>
+    <li><h4><span class="n">24</span>חיבור אינסטגרם <span class="who"><span class="u">אתם</span></span></h4>
+      <ul><li>לוחצים על כפתור החיבור בדף הניהול.</li><li>במסך של מטא בוחרים את התיק העסקי ואת חשבון האינסטגרם, ולוחצים הבא.</li><li>מאשרים את ההרשאות עד הסוף: קריאת החשבון, תגובות והודעות.</li><li>חוזרים לדף הניהול, והסטטוס הוא "מחובר".</li></ul></li>
+    <li><h4><span class="n">25</span>מה קורה ברקע <span class="who"><span class="s">לבד</span></span></h4>
+      <ul><li>המערכת מחליפה את הקוד שמטא החזירה בטוקן קבוע שלא פג.</li><li>מאתרת את חשבון האינסטגרם שהוקצה לאפליקציה.</li><li>רושמת את האפליקציה לתגובות ולהודעות של החשבון: <code>POST /&lt;ig-id&gt;/subscribed_apps</code> עם <code>comments,messages</code>.</li></ul>
+      <p class="why">בלי הרישום הזה התראות הבדיקה של מטא עדיין מגיעות, אבל תגובות אמיתיות לא. אם החיבור נכשל, דף השגיאה מציג את ההודעה של מטא.</p></li>
+  </ol>
+</section>
+
+<section class="step" id="s5">
+  <div class="step-head"><div class="num">5</div><div><h2>הפעלה</h2><p>צעדים 26 עד 27 · שתי הגדרות שבלעדיהן זה לא יעבוד לעוקבים</p></div></div>
+  <ol class="st">
+    <li><h4><span class="n">26</span>מעבר למצב Live <span class="who"><span class="c">Claude</span><span class="u">באישורכם</span></span></h4>
+      <p>בתפריט הצד של האפליקציה: <b>Publish</b>. הכפתור מתחלף ל-<b>Unpublish</b>, וזה הסימן שהמעבר הצליח.</p>
+      <p class="why">במצב פיתוח מטא לא מעבירה תגובות של אנשים שאין להם תפקיד באפליקציה, כלומר של העוקבים. המעבר עצמו לא שולח כלום.</p></li>
+    <li><h4><span class="n">27</span>Allow access to messages <span class="who"><span class="u">אתם, בטלפון</span></span></h4>
+      <p>בחשבון העסקי, <b>באפליקציית אינסטגרם בטלפון</b>. באתר של אינסטגרם האפשרות לא מופיעה.</p>
+      <p><span class="path">Profile → ☰ → Settings and activity → Messages and story replies → Message controls → Connected tools → Allow access to messages</span></p>
+      <p class="why">בלי זה אינסטגרם חוסם כל שליחה עם השגיאה <span class="ltr">(#200) The account owner has disabled access to Instagram Direct Messaging Outside of Instagram App</span>.</p></li>
+  </ol>
+</section>
+
+<section class="step" id="s6">
+  <div class="step-head"><div class="num">6</div><div><h2>חוקים ובדיקה</h2><p>צעדים 28 עד 30 · בדף הניהול, בלי קוד</p></div></div>
+  <ol class="st">
+    <li><h4><span class="n">28</span>חוק ראשון <span class="who"><span class="u">אתם</span></span></h4>
+      <p>לוחצים "חוק חדש" וממלאים:</p>
+      <ul><li><b>איפה:</b> פוסט או ריל מסוים, כל הפוסטים, תגובה לסטורי או הודעה ישירה</li><li><b>מילת מפתח:</b> המילה שאנשים יכתבו</li><li><b>הודעה פרטית:</b> אפשר לכתוב <code>{username}</code> כדי לפנות בשם</li><li><b>כפתור:</b> טקסט וקישור. כדי למדוד כניסות, מוסיפים לקישור למשל <code>?utm_source=instagram&amp;utm_medium=social</code></li><li><b>תגובה פומבית:</b> לא חובה. מופיעה מתחת לתגובה של האדם</li></ul></li>
+    <li><h4><span class="n">29</span>בדיקה מחשבון אחר <span class="who"><span class="u">אתם</span></span></h4>
+      <p>מגיבים את המילה <b>מחשבון אחר</b>, על הפוסט שהחוק מוגדר עליו. בהקמה שנבדקה ההודעה הגיעה תוך שניות.</p>
+      <p class="why">אי אפשר לבדוק מהחשבון העסקי עצמו, כי המערכת לא עונה לתגובות שלו. כדי לראות אם ההתראה בכלל הגיעה, Claude מריץ <code>npx wrangler tail</code> בזמן התגובה. שגיאות שליחה מופיעות ב"פעילות אחרונה".</p></li>
+    <li><h4><span class="n">30</span>כיבוי חוק הבדיקה <span class="who"><span class="u">אתם</span></span></h4>
+      <p>אחרי הבדיקה מכבים או מוחקים את חוק הבדיקה, כדי שעוקבים שיכתבו את המילה לא יקבלו הודעת בדיקה.</p></li>
+  </ol>
+</section>
+
+<section class="step" id="s7">
+  <div class="step-head"><div class="num">7</div><div><h2>דף ניהול ממותג</h2><p>צעדים 31 עד 33 · Claude חייב לשאול אם רוצים</p></div></div>
+  <ol class="st">
+    <li><h4><span class="n">31</span>שם, צבעים ולוגו <span class="who"><span class="u">אתם</span><span class="c">Claude</span></span></h4>
+      <p>בוחרים שם לכותרת, צבעים, פונט ולוגו (למשל מהאתר שלכם). Claude מעתיק את <code>extras/dashboard/admin.js</code> במקום <code>src/admin.js</code>, שומר את המקורי כגיבוי, ומשנה רק את בלוק <code>BRAND</code>.</p></li>
+    <li><h4><span class="n">32</span>תצוגה מקדימה <span class="who"><span class="c">Claude</span></span></h4>
+      <p>מריץ את הדף במחשב עם <code>npx wrangler dev --remote</code> ושולח לכם צילומי מסך של מחשב ושל טלפון. הדף החי לא משתנה בזמן הזה.</p>
+      <p class="why">התצוגה המקדימה קוראת את המסד האמיתי, ולכן רק מסתכלים ולא שומרים בה שינויים.</p></li>
+    <li><h4><span class="n">33</span>אישור והעלאה <span class="who"><span class="u">אתם</span><span class="c">Claude</span></span></h4>
+      <p>אחרי שאתם מאשרים: <code>npm test</code>, <code>npx wrangler deploy</code>, ובדיקה שכל הכתובות עונות כמו בצעד 11 ושהחיבור לאינסטגרם נשמר. החוקים והנתונים לא משתנים.</p></li>
+  </ol>
+</section>
+
+<section class="step" id="trouble">
+  <div class="step-head"><div class="num">!</div><div><h2>תקלות מוכרות ופתרונן</h2><p>כל המקרים קרו בהקמות אמיתיות · מחפשים לפי מה שרואים במסך</p></div></div>
+  <details class="acc"><summary>כתוב "API setup with Instagram login is not available for newer apps"</summary><div class="in"><p>תקין. עוברים למסלול Unified login, צעדים 13 עד 17.</p></div></details>
+  <details class="acc"><summary>רשימת ההרשאות ריקה במסך יצירת הקונפיגורציה</summary><div class="in"><p>מוסיפים קודם את שלוש ההרשאות ב-Use case (צעד 14), ורק אז יוצרים קונפיגורציה.</p></div></details>
+  <details class="acc"><summary>הקונפיגורציה המוכנה כוללת ads_management, ads_read וחשבונות מודעות</summary><div class="in"><p>מבטלים אותה ובונים קונפיגורציה ידנית לפי צעד 15.</p></div></details>
+  <details class="acc"><summary>ההעלאה ל-Cloudflare נכשלת עם קוד 10034</summary><div class="in"><p>המייל של חשבון Cloudflare לא מאומת. מאמתים מהמייל ומעלים שוב.</p></div></details>
+  <details class="acc"><summary>השם לכתובת workers.dev תפוס או נדחה</summary><div class="in"><p>בוחרים שם אחר, רק אותיות ומספרים, בלי נקודות.</p></div></details>
+  <details class="acc"><summary>ב-Windows, PowerShell חוסם את npx (npx.ps1, execution policy)</summary><div class="in"><p>מריצים <code>npx.cmd</code> במקום <code>npx</code>. לא משנים את ה-execution policy.</p></div></details>
+  <details class="acc"><summary>wrangler בטרמינל שלכם לא מכיר את ההתחברות (שגיאת ENOENT על קובץ ההגדרות)</summary><div class="in"><p>באפליקציית Claude למחשב, הכלים של Claude שומרים את ההתחברות במקום נפרד מהטרמינל שלכם. מתחברים פעם נוספת בטרמינל שלכם, עם אותה פקודה מצעד 5.</p></div></details>
+  <details class="acc"><summary>נפתח מסך התחברות של Cloudflare עם רשימת הרשאות ארוכה</summary><div class="in"><p>פקודת wrangler רצה בלי התחברות ופתחה התחברות רחבה. סוגרים בלי לאשר, ומתחברים עם <code>--scopes</code> מפורש (צעד 5).</p></div></details>
+  <details class="acc"><summary>שגיאה שמבקשת CLOUDFLARE_API_TOKEN בהרצה לא אינטראקטיבית</summary><div class="in"><p>משתנה הסביבה <code>CI</code> גורם ל-wrangler להתעלם מההתחברות השמורה. מריצים בלי <code>CI</code>. סקריפט העזר מסנן אותו לבד.</p></div></details>
+  <details class="acc"><summary>הוספת סוד בלוח הבקרה של Cloudflare מחזירה "An unknown error occurred"</summary><div class="in"><p>שומרים את הסוד מהטרמינל עם סקריפט העזר (צעד 18).</p></div></details>
+  <details class="acc"><summary>החיבור נכשל: /me/assigned_instagram_accounts ריק, או שגיאה 100 / subcode 33</summary><div class="in"><p>הקוד ב<a href="#code">ערכים וקוד</a> מנסה גיבוי דרך <code>debug_token</code>. אם גם הוא ריק, מוסיפים את <code>business_management</code> לקונפיגורציה ומתחברים מחדש. זה דיווח של מפתחים ולא תיעוד רשמי של מטא.</p></div></details>
+  <details class="acc"><summary>התראת Test ממטא מגיעה, אבל תגובות אמיתיות לא</summary><div class="in"><p>בודקים לפי הסדר:</p><ol>
+    <li>מריצים <code>npx wrangler tail</code> ומגיבים מחשבון אחר. אם מופיע <code>POST /webhook</code>, מטא שולחת, והבעיה בהתאמה לחוק.</li>
+    <li>ש-<code>comments</code> ו-<code>messages</code> מסומנים Subscribed, ולא רק נבדקו ב-Test.</li>
+    <li>את <code>GET /&lt;ig-id&gt;/subscribed_apps</code> עם הטוקן השמור. אם ריק, לוחצים "חיבור מחדש" בדף הניהול, ומוודאים שהרישום רץ על מזהה האינסטגרם ולא על <code>/me</code>.</li>
+    <li>שהאפליקציה במצב Live.</li>
+    <li>שהאפליקציה וחשבון האינסטגרם באותו תיק עסקי, ושאתם מנהלים באפליקציה.</li></ol></div></details>
+  <details class="acc"><summary>התגובה הגיעה, אבל השליחה נכשלה עם (#200) ... disabled access to Instagram Direct Messaging</summary><div class="in"><p>חסרה ההגדרה בטלפון מצעד 27. אחרי שמפעילים אותה, מגיבים שוב מחשבון אחר.</p></div></details>
+  <details class="acc"><summary>"פעילות אחרונה" ריקה אחרי תגובה</summary><div class="in"><p>המערכת רושמת רק כשיש התאמה לחוק. בודקים עם <code>npx wrangler tail</code> אם ההתראה הגיעה, ואחר כך את המילה ואת הפוסט שבחוק.</p></div></details>
+  <details class="acc"><summary>תגובה מהחשבון העסקי לא נענית</summary><div class="in"><p>ככה זה בכוונה. בודקים מחשבון אחר.</p></div></details>
+  <details class="acc"><summary>יוצאות שתי הודעות על אותה תגובה</summary><div class="in"><p>כלי נוסף, למשל ManyChat, מגיב לאותה מילה. מכבים את החוק באחד מהם.</p></div></details>
+</section>
+
+<section class="step" id="code">
+  <div class="step-head"><div class="num">{ }</div><div><h2>ערכים וקוד</h2><p>בשביל Claude · אף ערך סודי לא נכתב בצ'אט ולא נשמר ב-Git</p></div></div>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>ערך</th><th>מה זה</th><th>איפה שמור</th><th>מי מכניס</th></tr>
+    <tr><td><code>VERIFY_TOKEN</code></td><td>קוד שמטא שולחת כדי לאמת את כתובת ה-Webhook</td><td>קובץ מקומי, וסוד ב-Worker</td><td>Claude יוצר, אתם מדביקים במטא</td></tr>
+    <tr><td><code>ADMIN_PASSWORD</code></td><td>סיסמת דף הניהול</td><td>קובץ מקומי, וסוד ב-Worker</td><td>Claude</td></tr>
+    <tr><td><code>IG_APP_ID</code></td><td>ה-App ID של האפליקציה במטא</td><td>סוד ב-Worker</td><td>Claude</td></tr>
+    <tr><td><code>IG_APP_SECRET</code></td><td>ה-App secret של האפליקציה</td><td>סוד ב-Worker בלבד</td><td>אתם, בטרמינל מוסתר</td></tr>
+    <tr><td><code>AUTH_MODE</code>, <code>FB_CONFIG_ID</code></td><td>מסלול Unified ומספר הקונפיגורציה</td><td><code>wrangler.toml</code>, לא סודי</td><td>Claude</td></tr>
+    <tr><td><code>GRAPH_VERSION</code></td><td>גרסת הממשק של מטא, זהה לגרסת ה-Webhook</td><td><code>wrangler.toml</code></td><td>Claude</td></tr>
+    <tr><td><code>BRAND_NAME</code>, <code>CONTACT_EMAIL</code></td><td>שם ומייל בעמוד הפרטיות</td><td><code>wrangler.toml</code></td><td>אתם נותנים, Claude ממלא</td></tr>
+  </table></div>
+
+  <details class="acc"><summary>wrangler.toml</summary><div class="in"><p>שלוש השורות שמפעילות את מסלול Unified. ה-Configuration ID מגיע מצעד 15.</p>
+<pre class="cmd">[vars]
+GRAPH_VERSION = "v27.0"
+AUTH_MODE = "unified"
+FB_CONFIG_ID = "&lt;Configuration ID&gt;"</pre></div></details>
+
+  <details class="acc"><summary>src/meta.js</summary><div class="in"><p>השינויים במסלול Unified. המסלול הרגיל של התבנית נשאר כמו שהוא, מאחורי הבדיקה <code>unified(env)</code>.</p>
+<pre class="cmd">const unified = (env) =&gt; env.AUTH_MODE === 'unified';
+function graph(env, path) {
+  const host = unified(env) ? 'https://graph.facebook.com' : 'https://graph.instagram.com';
+  return `${host}/${env.GRAPH_VERSION}${path}`;
+}
+
+// authorizeUrl, unified branch: no scope, the configuration decides
+const u = new URLSearchParams({
+  client_id: env.IG_APP_ID,
+  config_id: env.FB_CONFIG_ID,
+  redirect_uri: redirectUri,
+  response_type: 'code',
+  override_default_response_type: 'true',
+  state,
+});
+return `https://www.facebook.com/dialog/oauth?${u}`;
+
+// exchangeCode, unified branch: system user token, never expires
+const u = new URLSearchParams({
+  client_id: env.IG_APP_ID, client_secret: env.IG_APP_SECRET,
+  redirect_uri: redirectUri, code,
+});
+return (await call(graph(env, `/oauth/access_token?${u}`))).access_token;
+
+// getMe, unified branch: find the Instagram account assigned at login
+async function getAssignedInstagram(env, token) {
+  const profile = async (id) =&gt; {
+    const p = new URLSearchParams({ fields: 'id,username', access_token: token });
+    const ig = await call(graph(env, `/${id}?${p}`));
+    return { user_id: ig.id, username: ig.username || '' };
+  };
+  try {
+    const p = new URLSearchParams({ fields: 'id,username', access_token: token });
+    const res = await call(graph(env, `/me/assigned_instagram_accounts?${p}`));
+    const first = res.data?.[0];
+    if (first?.id) return first.username ? { user_id: first.id, username: first.username } : profile(first.id);
+  } catch (e) {
+    console.error('assigned_instagram_accounts', e.message);
+  }
+  // fallback: debug_token lists the asset ids granted for each permission
+  const d = new URLSearchParams({ input_token: token, access_token: `${env.IG_APP_ID}|${env.IG_APP_SECRET}` });
+  const dbg = await call(graph(env, `/debug_token?${d}`));
+  const scopes = dbg.data?.granular_scopes || [];
+  const ids = (scopes.find((s) =&gt; s.scope === 'instagram_basic')
+    || scopes.find((s) =&gt; s.scope?.startsWith('instagram_')) || {}).target_ids || [];
+  if (!ids.length) throw new Error('No Instagram account was granted at login');
+  return profile(ids[0]);
+}
+
+// subscribe and listMedia: the Instagram account id instead of "me"
+export async function subscribe(env, token, igUserId) {
+  const target = unified(env) ? igUserId : 'me';
+  const p = new URLSearchParams({ subscribed_fields: 'comments,messages', access_token: token });
+  return call(graph(env, `/${target}/subscribed_apps?${p}`), { method: 'POST' });
+}</pre></div></details>
+
+  <details class="acc"><summary>src/index.js</summary><div class="in"><ul class="dots">
+    <li>בתחילת <code>maybeRefreshToken</code>: <code>if (env.AUTH_MODE === 'unified') return;</code> כי הטוקן לא פג.</li>
+    <li>אחרי החיבור: <code>meta.subscribe(env, token, me.user_id)</code>.</li>
+    <li>ברשימת הפוסטים: <code>meta.listMedia(env, s.token, s.ig_user_id)</code>, ו-<code>listMedia</code> פונה למזהה הזה במקום <code>/me</code>.</li></ul></div></details>
+
+  <details class="acc"><summary>set-app-secret.mjs (סקריפט העזר לצעד 18)</summary><div class="in"><p>שומרים אותו בתיקיית התבנית ומריצים <code>node set-app-secret.mjs</code> בטרמינל שלכם, אחרי התחברות ל-Cloudflare באותו טרמינל.</p>
+<pre class="cmd">// Asks for the Meta App secret with hidden input and stores it as IG_APP_SECRET.
+// The value is never printed. Uses the existing narrow Cloudflare login.
+import { spawn } from 'node:child_process';
+import readline from 'node:readline';
+import { fileURLToPath } from 'node:url';
+
+const wrangler = fileURLToPath(new URL('./node_modules/wrangler/bin/wrangler.js', import.meta.url));
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout, terminal: true });
+console.log('Paste the Meta App secret here and press Enter. Nothing will show while you paste.');
+rl._writeToOutput = () =&gt; {};
+rl.question('', (answer) =&gt; {
+  rl.close();
+  process.stdout.write('\n');
+  const value = answer.trim();
+  if (value.length &lt; 16 || /\s/.test(value)) {
+    console.log('This does not look like an App secret. Nothing was saved. Run the command again.');
+    process.exit(1);
+  }
+  const child = spawn(process.execPath, [wrangler, 'secret', 'put', 'IG_APP_SECRET'], {
+    cwd: fileURLToPath(new URL('.', import.meta.url)),
+    // stdin is a pipe, so wrangler runs non-interactively; CI must stay unset or it ignores the saved login
+    env: Object.fromEntries(Object.entries(process.env).filter(([k]) =&gt; k !== 'CI')),
+    stdio: ['pipe', 'inherit', 'inherit'],
+  });
+  child.stdin.end(value);
+  child.on('exit', (code) =&gt; {
+    console.log(code === 0 ? 'Done. You can close this tab.' : 'Saving failed. Tell Claude what you see above.');
+    process.exit(code ?? 1);
+  });
+});</pre></div></details>
+  <p class="mock-note">נכון לנובמבר 2026. מטא משנה מסכים מדי פעם, ולכן שמות של כפתורים יכולים להיות קצת שונים.</p>
+</section>
+
+<section class="final no-copy">
+  <h2>עדיין תקועים?</h2>
+  <p>העתיקו את המדריך ל-Claude, ותכתבו לו בדיוק מה מופיע לכם במסך. ככה הוא יכול להתאים את הצעד הבא.</p>
+</section>
+
+</main>
+
+<footer>
+  <span class="logo"><svg class="logo-svg" role="img" aria-label="Ronig.ai" viewBox="0 0 247 77" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M89.059 18.5276H99.6081C101.853 18.5276 103.801 18.8919 105.451 19.6205C107.102 20.349 108.373 21.427 109.265 22.8543C110.172 24.2668 110.626 26.0064 110.626 28.0731C110.626 29.6045 110.298 30.9947 109.644 32.2436C109.005 33.4926 108.12 34.5408 106.99 35.3883C105.86 36.2209 104.552 36.7933 103.065 37.1056L102.106 37.4624H90.8432L90.7986 35.1207H100.233C101.928 35.1207 103.34 34.7936 104.47 34.1394C105.6 33.4851 106.448 32.6228 107.013 31.5523C107.592 30.4669 107.882 29.3072 107.882 28.0731C107.882 26.6011 107.563 25.3299 106.923 24.2594C106.299 23.174 105.37 22.3414 104.135 21.7615C102.901 21.1816 101.392 20.8917 99.6081 20.8917H91.8022V51H89.059V18.5276ZM109.109 51L100.701 36.4811L103.645 36.4588L112.031 50.7101V51H109.109ZM116.067 39.3135V38.5775C116.067 36.8231 116.32 35.2024 116.826 33.7156C117.331 32.2288 118.052 30.9427 118.989 29.8573C119.94 28.7719 121.078 27.9318 122.401 27.3371C123.724 26.7275 125.196 26.4227 126.817 26.4227C128.453 26.4227 129.932 26.7275 131.255 27.3371C132.579 27.9318 133.716 28.7719 134.668 29.8573C135.619 30.9427 136.348 32.2288 136.853 33.7156C137.359 35.2024 137.611 36.8231 137.611 38.5775V39.3135C137.611 41.068 137.359 42.6886 136.853 44.1755C136.348 45.6474 135.619 46.9261 134.668 48.0115C133.731 49.0969 132.601 49.9444 131.278 50.554C129.954 51.1487 128.482 51.446 126.862 51.446C125.226 51.446 123.747 51.1487 122.424 50.554C121.1 49.9444 119.963 49.0969 119.011 48.0115C118.06 46.9261 117.331 45.6474 116.826 44.1755C116.32 42.6886 116.067 41.068 116.067 39.3135ZM118.721 38.5775V39.3135C118.721 40.6368 118.9 41.8932 119.257 43.0826C119.613 44.2572 120.134 45.3054 120.818 46.2273C121.502 47.1342 122.349 47.8479 123.36 48.3683C124.371 48.8887 125.538 49.1489 126.862 49.1489C128.17 49.1489 129.322 48.8887 130.319 48.3683C131.33 47.8479 132.177 47.1342 132.861 46.2273C133.545 45.3054 134.058 44.2572 134.4 43.0826C134.757 41.8932 134.935 40.6368 134.935 39.3135V38.5775C134.935 37.2691 134.757 36.0276 134.4 34.853C134.058 33.6784 133.538 32.6302 132.839 31.7084C132.155 30.7866 131.307 30.058 130.296 29.5227C129.285 28.9875 128.125 28.7199 126.817 28.7199C125.509 28.7199 124.349 28.9875 123.338 29.5227C122.342 30.058 121.494 30.7866 120.795 31.7084C120.111 32.6302 119.591 33.6784 119.234 34.853C118.892 36.0276 118.721 37.2691 118.721 38.5775ZM145.796 32.0206V51H143.142V26.8688H145.685L145.796 32.0206ZM145.194 37.4401L144.012 36.771C144.101 35.3437 144.391 34.0055 144.882 32.7566C145.373 31.5077 146.034 30.4074 146.867 29.4558C147.714 28.5043 148.703 27.7609 149.833 27.2256C150.978 26.6903 152.242 26.4227 153.625 26.4227C154.829 26.4227 155.907 26.5863 156.858 26.9134C157.81 27.2405 158.62 27.7609 159.289 28.4745C159.959 29.1882 160.464 30.1026 160.806 31.2177C161.163 32.3329 161.341 33.6933 161.341 35.2991V51H158.665V35.2768C158.665 33.6115 158.435 32.3106 157.974 31.3738C157.513 30.4223 156.858 29.7458 156.011 29.3443C155.163 28.9429 154.16 28.7422 153 28.7422C151.721 28.7422 150.599 29.0247 149.632 29.5897C148.681 30.1398 147.878 30.8609 147.224 31.753C146.584 32.6302 146.094 33.5744 145.752 34.5854C145.41 35.5816 145.224 36.5331 145.194 37.4401ZM171.221 26.8688V51H168.567V26.8688H171.221ZM168.099 19.9104C168.099 19.39 168.255 18.9588 168.567 18.6169C168.894 18.26 169.348 18.0816 169.928 18.0816C170.478 18.0816 170.916 18.26 171.244 18.6169C171.586 18.9588 171.757 19.39 171.757 19.9104C171.757 20.3862 171.586 20.8025 171.244 21.1593C170.916 21.5013 170.478 21.6723 169.928 21.6723C169.348 21.6723 168.894 21.5013 168.567 21.1593C168.255 20.8025 168.099 20.3862 168.099 19.9104ZM194.393 26.8688H196.869V50.5763C196.869 52.6727 196.468 54.4717 195.665 55.9734C194.877 57.4751 193.754 58.6274 192.297 59.4303C190.855 60.2332 189.152 60.6347 187.19 60.6347C186.194 60.6347 185.168 60.4785 184.112 60.1663C183.071 59.8689 182.083 59.408 181.146 58.7836C180.224 58.174 179.436 57.4157 178.782 56.5087L180.276 54.8806C181.257 56.0701 182.306 56.9399 183.421 57.49C184.536 58.055 185.74 58.3375 187.034 58.3375C188.565 58.3375 189.859 58.0327 190.914 57.4231C191.985 56.8135 192.795 55.9363 193.345 54.7914C193.91 53.6466 194.193 52.2712 194.193 50.6655V32.1767L194.393 26.8688ZM177.444 39.1797V38.7114C177.444 36.8379 177.652 35.1504 178.068 33.6487C178.499 32.1321 179.116 30.8386 179.919 29.7681C180.722 28.6827 181.696 27.8575 182.841 27.2925C184.001 26.7126 185.309 26.4227 186.766 26.4227C188.164 26.4227 189.405 26.6532 190.491 27.1141C191.576 27.575 192.513 28.2366 193.301 29.099C194.089 29.9614 194.721 30.9873 195.196 32.1767C195.687 33.3662 196.044 34.6895 196.267 36.1466V42.1013C196.088 43.4692 195.761 44.7256 195.286 45.8704C194.81 47.0004 194.178 47.9892 193.39 48.8367C192.602 49.6693 191.65 50.3161 190.535 50.777C189.435 51.223 188.164 51.446 186.721 51.446C185.279 51.446 183.986 51.1487 182.841 50.554C181.696 49.9592 180.722 49.1192 179.919 48.0338C179.116 46.9335 178.499 45.6325 178.068 44.1308C177.652 42.6292 177.444 40.9788 177.444 39.1797ZM180.12 38.7114V39.1797C180.12 40.5922 180.261 41.9006 180.544 43.1049C180.826 44.3093 181.257 45.3575 181.837 46.2496C182.417 47.1417 183.153 47.8405 184.045 48.346C184.937 48.8515 185.985 49.1043 187.19 49.1043C188.721 49.1043 190.007 48.8144 191.048 48.2345C192.089 47.6398 192.914 46.8592 193.524 45.8927C194.133 44.9114 194.579 43.8409 194.862 42.6812V35.7451C194.698 34.9571 194.446 34.1542 194.104 33.3365C193.776 32.5187 193.316 31.7679 192.721 31.0839C192.141 30.3851 191.398 29.8275 190.491 29.4112C189.598 28.9801 188.513 28.7645 187.234 28.7645C186.015 28.7645 184.952 29.0172 184.045 29.5227C183.153 30.0283 182.417 30.7345 181.837 31.6415C181.257 32.5336 180.826 33.5818 180.544 34.7861C180.261 35.9905 180.12 37.2989 180.12 38.7114ZM203.337 48.3237C203.337 47.4911 203.619 46.7923 204.184 46.2273C204.749 45.6474 205.515 45.3575 206.481 45.3575C207.463 45.3575 208.228 45.6474 208.779 46.2273C209.344 46.7923 209.626 47.4911 209.626 48.3237C209.626 49.1563 209.344 49.8551 208.779 50.4201C208.228 50.9851 207.463 51.2676 206.481 51.2676C205.515 51.2676 204.749 50.9851 204.184 50.4201C203.619 49.8551 203.337 49.1563 203.337 48.3237ZM229.431 46.1604V34.6523C229.431 33.7899 229.275 33.0465 228.962 32.4221C228.65 31.7976 228.174 31.3144 227.535 30.9724C226.91 30.6304 226.122 30.4594 225.171 30.4594C224.294 30.4594 223.535 30.6081 222.896 30.9055C222.257 31.2029 221.759 31.6043 221.402 32.1098C221.045 32.6154 220.866 33.1878 220.866 33.8271H215.514C215.514 32.8755 215.744 31.9537 216.205 31.0616C216.666 30.1695 217.335 29.3741 218.212 28.6753C219.09 27.9764 220.138 27.4263 221.357 27.0249C222.576 26.6234 223.944 26.4227 225.461 26.4227C227.275 26.4227 228.88 26.7275 230.278 27.3371C231.691 27.9467 232.798 28.8685 233.601 30.1026C234.419 31.3218 234.828 32.8532 234.828 34.6969V45.4244C234.828 46.5246 234.902 47.5134 235.051 48.3906C235.214 49.253 235.445 50.0038 235.742 50.6432V51H230.234C229.981 50.4201 229.78 49.6842 229.631 48.7921C229.498 47.8851 229.431 47.0079 229.431 46.1604ZM230.211 36.325L230.256 39.6481H226.397C225.401 39.6481 224.524 39.7447 223.766 39.938C223.008 40.1164 222.376 40.384 221.87 40.7409C221.365 41.0977 220.985 41.5289 220.733 42.0344C220.48 42.5399 220.354 43.1124 220.354 43.7517C220.354 44.391 220.502 44.9783 220.8 45.5136C221.097 46.034 221.528 46.4429 222.093 46.7402C222.673 47.0376 223.372 47.1863 224.19 47.1863C225.29 47.1863 226.249 46.9633 227.067 46.5172C227.899 46.0563 228.553 45.4987 229.029 44.8445C229.505 44.1755 229.758 43.5435 229.787 42.9488L231.527 45.3352C231.349 45.9448 231.044 46.599 230.613 47.2978C230.181 47.9966 229.616 48.6657 228.918 49.305C228.234 49.9295 227.409 50.4424 226.442 50.8439C225.491 51.2453 224.39 51.446 223.141 51.446C221.565 51.446 220.16 51.1338 218.926 50.5093C217.692 49.87 216.726 49.0151 216.027 47.9446C215.328 46.8592 214.979 45.6325 214.979 44.2647C214.979 42.986 215.217 41.856 215.692 40.8747C216.183 39.8785 216.897 39.0459 217.833 38.3768C218.785 37.7077 219.945 37.2022 221.313 36.8603C222.68 36.5034 224.242 36.325 225.996 36.325H230.211ZM246.202 26.8688V51H240.805V26.8688H246.202ZM240.448 20.5349C240.448 19.7171 240.716 19.0406 241.251 18.5053C241.801 17.9552 242.559 17.6801 243.526 17.6801C244.477 17.6801 245.228 17.9552 245.778 18.5053C246.328 19.0406 246.604 19.7171 246.604 20.5349C246.604 21.3378 246.328 22.0068 245.778 22.5421C245.228 23.0773 244.477 23.345 243.526 23.345C242.559 23.345 241.801 23.0773 241.251 22.5421C240.716 22.0068 240.448 21.3378 240.448 20.5349Z" fill="currentColor"/><path d="M36.919 72.8232C36.2769 72.8586 35.6275 72.8772 34.9763 72.8772C15.658 72.8772 6.10352e-05 57.0988 6.10352e-05 37.632H7.14548C19.3128 37.632 23.9067 47.2139 26.0044 53.2021C30.3197 65.5374 33.8619 70.2372 36.919 72.8232Z" style="fill:var(--li)"/><path d="M67.0645 46.377C67.5155 47.2708 67.8356 48.2258 68.0147 49.2121C68.0193 49.226 68.0193 49.241 68.0147 49.2549C64.6754 58.8981 59.0797 65.8977 49.7019 69.6606C49.724 69.6792 49.6742 69.6717 49.7019 69.6606C46.6873 67.2028 43.3147 65.2173 38.1434 51.8856C36.2117 46.905 31.616 39.3811 22.1866 37.7749C22.1146 37.7624 22.0496 37.724 22.0037 37.6668C21.9577 37.6096 21.934 37.5375 21.9369 37.464C21.9399 37.3905 21.9693 37.3205 22.0196 37.2673C22.07 37.214 22.1378 37.1809 22.2106 37.1744C25.7159 36.7133 27.2435 36.4307 29.8763 35.4881C34.3779 33.8726 36.9017 31.8406 38.2781 30.7028C42.2892 27.6317 45.0586 23.1987 46.0723 18.2263C47.0861 13.2538 46.2754 8.07963 43.7907 3.66378C43.7829 3.65043 43.7791 3.63502 43.78 3.61952C43.7809 3.60402 43.7863 3.58914 43.7956 3.57676C43.8049 3.56439 43.8177 3.5551 43.8323 3.55007C43.8468 3.54504 43.8626 3.5445 43.8775 3.54852C58.196 7.33368 68.9316 20.037 69.8818 35.4138C69.8823 35.4246 69.8806 35.4354 69.8768 35.4455C69.873 35.4556 69.8673 35.4649 69.8599 35.4727C69.8525 35.4805 69.8435 35.4868 69.8337 35.491C69.8238 35.4953 69.8132 35.4975 69.8024 35.4974L52.2756 35.596C51.6926 35.596 50.0285 35.596 50.0285 36.5701C50.0285 37.1279 50.4509 37.5889 52.4269 37.5889C63.3765 37.7414 67.0018 46.2338 67.059 46.3751L67.0645 46.377Z" style="fill:var(--li)"/><path d="M32.3939 14.653C32.3939 23.1175 26.848 30.4034 18.8834 33.668C15.8989 34.8818 12.7093 35.5017 9.49087 35.4937H0.0669556C0.101394 34.8975 0.151207 34.3045 0.216395 33.7145C1.04954 26.2221 4.24431 19.1962 9.33172 13.6682C14.4191 8.14014 21.1312 4.40113 28.4826 3.00005C31.0086 6.35273 32.3817 10.4435 32.3939 14.653Z" style="fill:var(--li)"/></svg></span>
+</footer>
+
+<script>
+(function(){
+  var b=document.getElementById('copy-all'),ok=document.getElementById('copied');
+  b.addEventListener('click',function(){
+    var m=document.getElementById('guide').cloneNode(true);
+    m.querySelectorAll('.no-copy,.hring,.print-logo,.copy').forEach(function(x){x.remove()});
+    m.querySelectorAll('details').forEach(function(d){d.setAttribute('open','')});
+    var box=document.createElement('div');box.style.cssText='position:fixed;left:-9999px;top:0;white-space:pre-wrap';box.appendChild(m);document.body.appendChild(box);
+    var txt='זה מדריך הקמה שעבד במסלול Unified login, לתבנית instagram-dm-template. תקרא אותו עד הסוף, תבדוק איפה עצרנו, ותמשיך איתי משם צעד אחרי צעד:\n\n'+m.innerText.replace(/\n{3,}/g,'\n\n').trim();
+    box.remove();
+    function done(){ok.classList.add('show');b.textContent='הועתק ✓';setTimeout(function(){b.textContent='העתקת המדריך ל-Claude'},2500)}
+    function fb(){var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}t.remove()}
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,fb);else fb();
+  });
+})();
+</script>
+<script>
+(function(){
+  var hdr = document.getElementById('hdr');
+  function hd(){ hdr.classList.toggle('on', window.scrollY > 40); }
+  window.addEventListener('scroll', hd, {passive:true}); hd();
+  // the cards rise in as they reach the screen
+  if('IntersectionObserver' in window && !/[?&]print=1/.test(location.search)){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('main>section:not(.hero),.final').forEach(function(e){ e.classList.add('rv'); io.observe(e); });
+  }
+  // the rings in the hero turn with the scroll and trail the finger a little
+  var hr = document.querySelector('.hring');
+  if(!hr || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var sps = hr.querySelectorAll('.sp'), big = hr.querySelector('.arc:not(.arc2)'), cur = window.scrollY, loop = 0, last = 0;
+  function paint(y){ y = Math.min(y, 1400);
+    sps.forEach(function(g){ g.style.transform = 'rotate(' + (y * g.dataset.r) + 'deg)'; });
+    big.setAttribute('stroke-dasharray', (76 + Math.min(1, y / 400) * 20) + ' 200'); }
+  function step(now){ var dt = last ? Math.min(100, now - last) : 16.7, t = window.scrollY; last = now;
+    cur += (t - cur) * (1 - Math.pow(1 - .1, dt / 16.7)); if(Math.abs(t - cur) < .3) cur = t;
+    paint(cur); if(cur === t){ loop = 0; last = 0; } else loop = requestAnimationFrame(step); }
+  window.addEventListener('scroll', function(){ if(!loop) loop = requestAnimationFrame(step); }, {passive:true}); paint(cur);
+})();
+</script>
+
+</body>
+</html>
