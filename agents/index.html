@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הסוכן הראשון שלכם עם Claude | Ronig.ai</title>
+<meta name="description" content="מדריך למתחילים: מה זה סוכן, איך בונים את הסוכן הראשון שלכם עם Claude, נותנים לו שם ודמות, ומוסיפים עוד סוכנים לצוות.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="הסוכן הראשון שלכם, מאפס | Ronig.ai">
+<meta property="og:description" content="סוכן זה כמו עובד בצוות: נותנים לו תפקיד, והוא עושה אותו לבד. פרומפט מוכן שבונה איתכם את הראשון.">
+<meta property="og:url" content="https://roni-green.com/agents/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;800&display=swap" rel="stylesheet">
+<link rel="icon" href="../assets/navy/favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="../assets/navy/favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/navy/apple-touch-icon.png?v=3">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#EEF3F8;--cream-deep:#E1E9F1;--mint:#E2F6F4;
+  --forest:#27415E;--forest-deep:#1F3550;--forest-tile:#34557A;
+  --olive:#4F7DB0;--olive-bright:#7FE3D8;--leaf:#7FE3D8;
+  --ink:#27415E;--ink-2:#3D5877;--ink-3:#6E86A1;
+  --ink-dark-1:#EEF3F8;--ink-dark-2:#C3D2E2;
+  --line:#D5DEE8;--coral:#4F7DB0;
+  --shadow-sm:0 10px 22px rgba(39,65,94,.10);
+  --shadow-md:0 12px 28px rgba(39,65,94,.16);
+  --r:22px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:'Assistant',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:17px;overflow-x:hidden}
+a{color:var(--olive);font-weight:800}
+code,.ltr{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em}
+code{background:var(--cream-deep);border:1px solid var(--line);padding:.05em .4em;border-radius:6px;color:var(--forest)}
+b,strong{font-weight:800;color:var(--forest-deep)}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(238,243,248,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.hwrap img{height:36px;width:auto;display:block}
+.progress{flex:1;max-width:340px;display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--ink-2);font-weight:800}
+.bar{flex:1;height:8px;background:var(--cream-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--olive-bright));border-radius:99px;transition:width .4s}
+.os-switch{display:flex;background:var(--cream-deep);border:1px solid var(--line);border-radius:99px;padding:3px}
+.os-switch button{border:0;background:none;font:inherit;font-size:.8rem;font-weight:800;color:var(--ink-2);padding:5px 12px;border-radius:99px;cursor:pointer}
+.os-switch button[aria-pressed=true]{background:var(--forest);color:var(--cream)}
+
+/* return banner */
+.from-banner{display:none;background:var(--forest);color:var(--cream);text-align:center;padding:10px 16px;font-size:.95rem}
+.from-banner a{color:var(--leaf)}
+.from-banner.show{display:block}
+
+/* layout */
+.layout{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:48px;padding:0 16px}
+nav.toc{position:sticky;top:90px;align-self:start;padding-top:40px}
+nav.toc p{font-size:.78rem;font-weight:800;color:var(--ink-3);letter-spacing:.06em;margin-bottom:10px}
+nav.toc a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-2);font-weight:400;font-size:.92rem;padding:6px 12px;border-radius:12px;border-right:3px solid transparent}
+nav.toc a:hover{background:var(--mint)}
+nav.toc a.active{background:var(--mint);color:var(--forest-deep);font-weight:800;border-right-color:var(--olive)}
+nav.toc a .tick{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--leaf);flex:none;display:grid;place-items:center;font-size:10px;color:#fff}
+nav.toc a.done .tick{background:var(--olive);border-color:var(--olive)}
+main{min-width:0;padding-bottom:60px}
+
+/* hero */
+.hero{padding:56px 0 28px}
+.eyebrow{display:inline-block;background:var(--mint);color:var(--olive);border:1px solid var(--leaf);font-weight:800;font-size:.85rem;padding:4px 14px;border-radius:99px;margin-bottom:16px}
+h1{font-size:clamp(2rem,5.4vw,3.3rem);line-height:1.15;font-weight:800;color:var(--forest-deep);letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--olive)}
+.lead{font-size:1.15rem;color:var(--ink-2);margin-top:14px;max-width:640px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;font-weight:800;color:var(--ink-2);box-shadow:var(--shadow-sm)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:var(--cream);border:0;font:inherit;font-weight:800;padding:12px 24px;border-radius:99px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--forest-deep)}
+.btn.ghost{background:transparent;color:var(--forest);border:1.5px solid var(--forest);box-shadow:none}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+
+/* sections */
+section.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;margin-top:22px;box-shadow:var(--shadow-sm)}
+.step-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px}
+.num{flex:none;width:46px;height:46px;border-radius:50%;background:var(--mint);border:1.5px solid var(--leaf);color:var(--forest);display:grid;place-items:center;font-weight:800;font-size:1.15rem}
+h2{font-size:clamp(1.4rem,3.4vw,1.85rem);line-height:1.25;font-weight:800;color:var(--forest-deep)}
+.step-head p{color:var(--ink-3);font-size:.95rem;margin-top:2px}
+h3{font-size:1.15rem;font-weight:800;color:var(--forest);margin:26px 0 8px}
+section p+p{margin-top:10px}
+ol.steps,ul.dots{margin:12px 0 0;padding-right:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding-right:40px;margin-bottom:12px}
+ol.steps li::before{content:counter(s);position:absolute;right:0;top:1px;width:28px;height:28px;border-radius:50%;background:var(--forest);color:var(--cream);font-weight:800;font-size:.85rem;display:grid;place-items:center}
+ul.dots li{position:relative;padding-right:22px;margin-bottom:8px}
+ul.dots li::before{content:"";position:absolute;right:4px;top:.7em;width:7px;height:7px;border-radius:50%;background:var(--olive)}
+.done-row{margin-top:26px;padding-top:20px;border-top:1px dashed var(--line);display:flex;justify-content:flex-start}
+.done-btn{display:inline-flex;align-items:center;gap:10px;background:var(--cream);border:1.5px solid var(--leaf);color:var(--forest);font:inherit;font-weight:800;padding:10px 20px;border-radius:99px;cursor:pointer;transition:all .2s}
+.done-btn .box{width:20px;height:20px;border-radius:6px;border:2px solid var(--olive);display:grid;place-items:center;font-size:13px;color:#fff}
+.done-btn[aria-pressed=true]{background:var(--olive);border-color:var(--olive);color:#fff}
+.done-btn[aria-pressed=true] .box{background:#fff;color:var(--olive);border-color:#fff}
+
+/* callouts */
+.note{border-radius:16px;padding:16px 18px;margin-top:18px;display:flex;gap:12px;font-size:.97rem}
+.note .ic{flex:none;font-size:1.25rem;line-height:1.4}
+.note.tip{background:var(--mint);border:1px solid var(--leaf)}
+.note.warn{background:#FBEFE9;border:1px solid #EFC9BB}
+.note.why{background:var(--cream);border:1px solid var(--line)}
+
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.compare div{border-radius:16px;padding:18px;border:1px solid var(--line)}
+.compare .a{background:var(--cream)}
+.compare .b{background:var(--forest);color:var(--ink-dark-1);border-color:var(--forest)}
+.compare .b b{color:#fff}
+.compare h4{font-size:1rem;font-weight:800;margin-bottom:6px}
+.compare .b h4{color:var(--leaf)}
+
+/* prompt boxes */
+.prompt{position:relative;background:var(--forest-deep);color:var(--ink-dark-1);border-radius:16px;padding:18px 18px 18px 18px;margin-top:14px;white-space:pre-wrap;font-size:.95rem;line-height:1.75;border:1px solid var(--forest-tile)}
+.prompt .lbl{display:block;font-size:.75rem;font-weight:800;color:var(--leaf);letter-spacing:.05em;margin-bottom:6px}
+.prompt.en{direction:ltr;text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
+.copy{position:absolute;top:12px;left:12px;background:var(--olive);color:#fff;border:0;font:inherit;font-size:.78rem;font-weight:800;padding:5px 12px;border-radius:99px;cursor:pointer;direction:rtl}
+.copy.ok{background:var(--leaf);color:var(--forest-deep)}
+.prompt .lbl{padding-left:80px}
+
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tabs button{font:inherit;font-weight:800;font-size:.9rem;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--cream);color:var(--ink-2);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.tabpanel[hidden]{display:none}
+
+/* table */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;margin-top:16px;font-size:.93rem;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.tbl th{background:var(--forest);color:var(--cream);font-weight:800;padding:10px 12px;text-align:right}
+.tbl td{padding:11px 12px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:var(--cream)}
+.tbl td:first-child{font-weight:800;color:var(--forest);white-space:nowrap}
+.tbl-wrap{overflow-x:auto}
+
+/* accordion */
+details.acc{border:1px solid var(--line);border-radius:16px;margin-top:12px;background:var(--cream);overflow:hidden}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:800;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-size:1.3rem;color:var(--olive);font-weight:400;transition:transform .2s}
+details.acc[open] summary::after{transform:rotate(45deg)}
+details.acc .in{padding:0 18px 16px;color:var(--ink-2)}
+details.acc .in b{color:var(--forest)}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:16px}
+.gloss details{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.gloss summary{cursor:pointer;list-style:none;font-weight:800;color:var(--forest-deep);display:flex;justify-content:space-between;align-items:center}
+.gloss summary::-webkit-details-marker{display:none}
+.gloss summary small{font-weight:400;color:var(--ink-3);font-size:.78rem;direction:ltr}
+.gloss p{margin-top:8px;font-size:.93rem;color:var(--ink-2)}
+dfn{font-style:normal;border-bottom:2px dotted var(--olive);cursor:help;position:relative}
+.tip-pop{position:absolute;z-index:80;max-width:280px;background:var(--forest-deep);color:var(--ink-dark-1);font-size:.85rem;line-height:1.55;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-md);pointer-events:none;opacity:0;transition:opacity .15s}
+.tip-pop.show{opacity:1}
+
+/* ===== UI mockups ===== */
+figure.mock{margin:22px 0 4px}
+.win{direction:ltr;text-align:left;background:#fff;border:1px solid #DDD9CC;border-radius:14px;box-shadow:var(--shadow-md);overflow:hidden;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:13px;color:#2b2b28;position:relative}
+.win-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;background:#F4F2EC;border-bottom:1px solid #E6E2D6}
+.win-bar i{width:11px;height:11px;border-radius:50%;background:#E0DCCF}
+.win-bar i:nth-child(1){background:#EC6A5E}.win-bar i:nth-child(2){background:#F4BF4F}.win-bar i:nth-child(3){background:#61C554}
+.win-bar span{margin-left:10px;color:#8a8672;font-size:12px}
+.win-body{padding:16px;position:relative}
+.ui-tabs{display:inline-flex;background:#EFECE3;border-radius:10px;padding:3px;gap:2px}
+.ui-tabs span{padding:6px 16px;border-radius:8px;color:#6b6a62;font-weight:800}
+.ui-tabs span.on{background:#fff;color:#1b1d16;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ui-row{display:flex;gap:14px}
+.ui-side{width:150px;flex:none;border-right:1px solid #ECE8DD;padding-right:12px;color:#6b6a62;font-size:12px}
+.ui-side div{padding:6px 8px;border-radius:7px;margin-bottom:3px}
+.ui-side .cur{position:relative;background:#E2F6F4;color:#27415E;font-weight:800}
+.ui-main{flex:1;min-width:0}
+.ui-input{border:1px solid #DDD9CC;border-radius:14px;padding:12px;background:#FFFEFB}
+.ui-input .ph{color:#a6a394;min-height:34px}
+.ui-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.pill{display:inline-flex;align-items:center;gap:5px;border:1px solid #E1DDD0;border-radius:99px;padding:4px 10px;font-size:12px;color:#4a4a44;background:#fff;white-space:nowrap}
+.pill.plus{width:28px;height:28px;padding:0;justify-content:center;font-size:16px}
+.send{margin-left:auto;width:30px;height:30px;border-radius:50%;background:#27415E;color:#fff;display:grid;place-items:center;font-size:14px}
+.menu{background:#fff;border:1px solid #DDD9CC;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:6px;width:230px;font-size:12.5px}
+.menu div{padding:7px 10px;border-radius:8px;display:flex;justify-content:space-between;gap:8px}
+.menu div small{color:#9a978a}
+.menu .hl{background:#E2F6F4;color:#27415E;font-weight:800}
+.menu .sep{height:1px;background:#EEE;padding:0;margin:4px 0}
+.card-perm{border:1px solid #E1DDD0;border-radius:12px;padding:12px 14px;background:#FFFEFB}
+.card-perm .t{font-weight:800;margin-bottom:6px}
+.card-perm pre{direction:rtl;text-align:right;font-family:'Assistant',sans-serif;background:#F6F4EE;border-radius:8px;padding:8px 10px;font-size:12px;margin:6px 0 10px;white-space:pre-wrap;color:#333}
+.card-perm pre .add{color:#2E8A7F}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.ub{border-radius:8px;padding:6px 12px;font-size:12px;font-weight:800;border:1px solid #DDD9CC;background:#fff}
+.ub.pri{background:#27415E;color:#fff;border-color:#27415E}
+.msg{border-radius:12px;padding:9px 12px;margin-bottom:8px;max-width:85%}
+.msg.me{background:#E2F6F4;margin-left:auto;direction:rtl;text-align:right;font-family:'Assistant',sans-serif}
+.msg.cl{background:#fff;border:1px solid #ECE8DD;direction:rtl;text-align:right;font-family:'Assistant',sans-serif}
+.slash-chip{display:inline-block;background:#D6F3F0;color:#27415E;border-radius:6px;padding:1px 6px;font-weight:800}
+.file{font-family:'Assistant',sans-serif;font-size:13px;line-height:1.7;white-space:pre-wrap;direction:rtl;text-align:right;color:#333}
+.file .h{color:#4F7DB0;font-weight:800}
+.finder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:11.5px;color:#4a4a44}
+.finder div{padding:8px 4px;border-radius:10px}
+.finder .ico{font-size:30px;line-height:1.2}
+.finder .sel{background:#E2F6F4;outline:2px solid #7FE3D8}
+.pt{position:relative}
+.pin{position:absolute;top:-13px;right:-13px;width:26px;height:26px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(79,125,176,.25);font-family:'Assistant',sans-serif;z-index:3}
+.ring{position:absolute;border:2.5px solid var(--coral);border-radius:12px;pointer-events:none;z-index:2}
+figcaption{margin-top:14px;font-size:.93rem;color:var(--ink-2)}
+figcaption ol{list-style:none;padding:0;counter-reset:c;display:grid;gap:6px}
+figcaption li{counter-increment:c;position:relative;padding-right:32px}
+figcaption li::before{content:counter(c);position:absolute;right:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:.75rem;display:grid;place-items:center}
+.mock-note{font-size:.78rem;color:var(--ink-3);margin-top:6px}
+
+/* OS */
+body.os-win .mac-only{display:none!important}
+body:not(.os-win) .win-only{display:none!important}
+.os-tag{display:none}
+
+/* end */
+.final{background:var(--forest);color:var(--ink-dark-1);border-radius:var(--r);padding:40px 30px;margin-top:22px;text-align:center}
+.final h2{color:#fff}
+.final p{color:var(--ink-dark-2);max-width:560px;margin:10px auto 0}
+.final .btn{background:var(--leaf);color:var(--forest-deep);margin-top:20px}
+footer{border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--ink-3);font-size:.88rem}
+footer img{height:30px;display:block;margin:0 auto 10px}
+
+/* mobile */
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:0}
+  nav.toc{position:static;padding-top:18px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+  nav.toc::-webkit-scrollbar{display:none}
+  nav.toc p{display:none}
+  nav.toc a{flex:none;border:1px solid var(--line);border-radius:99px;background:#fff;padding:5px 12px;font-size:.84rem}
+  nav.toc a.active{border-right-color:var(--line)}
+  .progress span{display:none}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .hwrap img{height:30px}
+  .progress{max-width:none}
+  section.step{padding:26px 18px}
+  .compare{grid-template-columns:1fr}
+  .hero{padding-top:34px}
+  .ui-side{display:none}
+  .win{font-size:12px}
+  .final{padding:32px 18px}
+}
+
+/* print / PDF */
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  body{background:#fff;font-size:12.5pt}
+  header,.from-banner,nav.toc,.done-row,.copy,.tabs,.hero-cta,.os-switch,.tip-pop{display:none!important}
+  .layout{display:block;padding:0}
+  section.step{box-shadow:none;break-inside:auto;padding:22px 20px;margin-top:14px}
+  .step-head,figure.mock,.prompt,.note,.tbl,.compare{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  .tabpanel[hidden]{display:block!important}
+  .tabpanel{margin-top:10px}
+  .tabpanel::before{content:attr(data-title);display:block;font-weight:800;color:var(--olive);margin-top:10px}
+  details>*:not(summary){display:block}
+  details.acc .in{display:block}
+  .win,.chip{box-shadow:none}
+  body .mac-only,body .win-only{display:inline!important}
+  div.mac-only,div.win-only,p.mac-only,p.win-only,li.mac-only,li.win-only{display:block!important}
+  .os-tag{display:inline;font-weight:800;color:var(--olive)}
+  .print-only{display:block!important}
+  .hero{padding-top:6px}
+  .print-logo{display:block!important;height:38px;margin-bottom:18px}
+  a{text-decoration:none}
+  details.acc summary::after{display:none}
+  .gloss summary{pointer-events:none}
+}
+.print-only,.print-logo{display:none}
+
+/* ===== additions for this guide ===== */
+.btn-back{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:.82rem;font-weight:800;color:var(--forest);border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;white-space:nowrap}
+.btn-back:hover{border-color:var(--olive)}
+.beginner{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--forest);color:var(--ink-dark-1);border-radius:18px;padding:20px 22px;margin-top:18px}
+.beginner b{color:#fff}
+.beginner p{flex:1;min-width:220px;margin:0}
+.beginner .btn{background:var(--leaf);color:var(--forest-deep)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.duo div{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:var(--cream)}
+.duo h4{font-size:1rem;font-weight:800;color:var(--forest-deep);margin-bottom:4px}
+.duo p{font-size:.93rem;color:var(--ink-2)}
+
+/* fill-in form */
+.fill-form{display:grid;gap:14px;margin-top:18px;background:var(--mint);border:1px solid var(--leaf);border-radius:18px;padding:20px}
+.fill-form label{display:block;font-weight:800;color:var(--forest-deep);font-size:.95rem;margin-bottom:6px}
+.fill-form label small{font-weight:400;color:var(--ink-3)}
+.fill-form input{width:100%;font:inherit;font-size:1rem;padding:11px 14px;border-radius:12px;border:1.5px solid var(--leaf);background:#fff;color:var(--ink)}
+.fill-form input:focus{outline:none;border-color:var(--olive);box-shadow:0 0 0 3px rgba(79,125,176,.18)}
+.fill-form .hint{font-size:.82rem;color:var(--ink-3);margin-top:4px}
+.prompt .fill{background:rgba(157,176,198,.22);color:#D6F3F0;border-radius:5px;padding:0 4px;font-weight:800}
+.prompt .fill.empty{color:#F2B8A6;background:rgba(79,125,176,.18)}
+.prompt.long{max-height:520px;overflow:auto}
+.prompt.long.open{max-height:none}
+.expand{display:block;margin:10px auto 0;font:inherit;font-weight:800;font-size:.88rem;background:none;border:1.5px solid var(--line);color:var(--forest);padding:6px 16px;border-radius:99px;cursor:pointer}
+
+/* folder tree */
+.tree{font-family:'Assistant',sans-serif;direction:rtl;text-align:right;font-size:13.5px;line-height:1.95;color:#333}
+.tree div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree .l1{padding-right:22px}.tree .l2{padding-right:44px;color:#6b6a62}
+.tree .x{color:#4F7DB0;font-weight:800}
+.tree .ltr{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+
+/* mock table */
+.mtbl{width:100%;border-collapse:collapse;font-family:'Assistant',sans-serif;direction:rtl;text-align:right;font-size:12px;margin-top:6px}
+.mtbl th{background:#E2F6F4;color:#27415E;font-weight:800;padding:6px 8px}
+.mtbl td{border-top:1px solid #EEE;padding:6px 8px}
+.mtbl .warnc{color:#B5543C;font-weight:800}
+.tag{display:inline-block;border-radius:99px;padding:0 8px;font-size:11px;font-weight:800}
+.tag.att{background:#D6F3F0;color:#27415E}.tag.lnk{background:#E8EEF7;color:#2F4A72}.tag.bdy{background:#FBEFE9;color:#9A4630}
+
+/* vendor table */
+.tbl td small{display:block;color:var(--ink-3);font-size:.82rem;font-weight:400;margin-top:2px}
+
+@media (max-width:640px){
+  .duo{grid-template-columns:1fr}
+  .btn-back span{display:none}
+  .mtbl{font-size:11px}
+  .mtbl .hide-sm{display:none}
+}
+@media print{
+  .btn-back,.fill-form,.expand,.beginner .btn{display:none!important}
+  .prompt.long{max-height:none}
+}
+
+.narrow{max-width:780px;margin:0 auto;padding:0 16px 60px}
+.narrow section.step{margin-top:18px}
+.narrow .hero{padding-bottom:10px}
+
+/* ===== navy design layer ===== */
+:root{--navy:#27415E;--blue:#4F7DB0;--mist:#9DB0C6;--turq:#7FE3D8;--pale:#EEF3F8}
+html{background:var(--pale)}
+/* guides are read at length, so body text is 400; 200 stays for the big hero title only */
+body{font-weight:400;color:var(--navy)}
+b,strong{font-weight:800}
+h2,h3{letter-spacing:-.005em}
+a{color:var(--blue)}
+
+/* floating menu: a pale bar at the top; on scroll it detaches into a rounded pill below the top edge */
+header{position:fixed;inset:0 0 auto;background:transparent;border-bottom:0;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;transition:padding .35s ease}
+header .hwrap{border:1px solid transparent;border-radius:0;background:rgba(238,243,248,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:max-width .35s ease,border-radius .35s ease,padding .35s ease,background .3s,box-shadow .3s,border-color .3s}
+header.on{padding:12px 14px 0}
+header.on .hwrap{max-width:1100px;border-radius:99px;padding:8px 10px;padding-inline-start:22px;background:rgba(255,255,255,.92);border-color:rgba(213,222,232,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 14px 34px rgba(39,65,94,.16)}
+header .logo{--li:#4F7DB0;color:var(--navy)}
+.logo svg{height:26px!important}
+.btn-back{border-color:var(--line);color:var(--navy)}
+.btn-back:hover{border-color:var(--turq);background:#E2F6F4}
+.bar{background:#E1E9F1}
+.bar i{background:linear-gradient(90deg,var(--blue),var(--turq))}
+.os-switch button[aria-pressed=true]{background:var(--navy);color:#fff}
+body{padding-top:62px}
+.from-banner a{color:var(--turq)}
+nav.toc{top:96px}
+
+/* hero: the navy band with the turning rings */
+.hero{position:relative;overflow:hidden;isolation:isolate;margin-top:28px;padding:54px 44px 46px;border-radius:34px;color:#fff;background:radial-gradient(120% 90% at 15% 10%,#4F7DB0 0%,#27415E 62%);box-shadow:0 22px 50px rgba(39,65,94,.22)}
+.hring{position:absolute;z-index:-1;width:340px;aspect-ratio:1;left:-70px;top:-110px;opacity:.95;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,#000 42%,rgba(0,0,0,.3) 78%);mask-image:linear-gradient(to bottom,#000 42%,rgba(0,0,0,.3) 78%)}
+.hring svg{width:100%;height:100%;overflow:visible}
+.hring .sp{transform-box:view-box;transform-origin:100px 100px;will-change:transform}
+.arc{stroke-dashoffset:var(--len);animation:draw 1.5s cubic-bezier(.6,0,.2,1) .1s both}
+.arc2{animation-delay:.6s}
+@keyframes draw{0%{stroke-dashoffset:var(--len);opacity:0}6%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+.hero .eyebrow{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.28);color:rgba(255,255,255,.78)}
+.hero h1{color:#fff;font-weight:300;line-height:1.08;letter-spacing:-.015em}
+.hero h1 em{display:inline;font-weight:800;color:var(--turq)}
+.hero .lead{color:var(--pale);max-width:560px}
+.hero .chip{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#fff;box-shadow:none;font-weight:400}
+.hero .btn{background:var(--turq);color:var(--navy);box-shadow:0 10px 24px rgba(127,227,216,.3)}
+.hero .btn:hover{background:#9BEBE2}
+.hero .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.55);box-shadow:none}
+
+/* steps: white cards with a turquoise-ringed number */
+section.step{border-color:#fff;border-radius:26px;box-shadow:0 14px 34px rgba(39,65,94,.08)}
+.num{background:#fff;border:0;box-shadow:inset 0 0 0 3px var(--turq);color:var(--navy)}
+h2{color:var(--navy)}
+h3{color:var(--blue)}
+ol.steps li::before{background:var(--navy);color:#fff}
+ul.dots li::before{background:var(--turq)}
+.done-btn{background:#fff;border-color:var(--mist);color:var(--navy)}
+.done-btn .box{border-color:var(--blue)}
+.done-btn[aria-pressed=true]{background:var(--navy);border-color:var(--navy)}
+.done-btn[aria-pressed=true] .box{color:var(--navy)}
+.note.tip{background:#E2F6F4;border-color:rgba(127,227,216,.7)}
+.note.why{background:var(--pale);border-color:var(--line)}
+.compare .b{background:var(--navy);border-color:var(--navy)}
+.compare .b h4{color:var(--turq)}
+.prompt{background:var(--navy);border-color:#34557A}
+.copy{background:var(--turq);color:var(--navy)}
+.copy.ok{background:#fff}
+.tbl th{background:var(--navy)}
+details.acc,.gloss details{background:var(--pale)}
+details.acc summary::after{color:var(--blue)}
+dfn{border-bottom-color:var(--turq)}
+.tip-pop{background:var(--navy)}
+.final{background:radial-gradient(120% 120% at 85% 0%,#3A5E87 0%,var(--navy) 62%);border-radius:30px}
+.final .btn{background:var(--turq);color:var(--navy)}
+footer{background:#fff}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:640px){
+  body{padding-top:56px}
+  header.on{padding:10px 10px 0}
+  header.on .hwrap{padding-inline-start:14px}
+  .logo svg{height:22px!important}
+  .hero{margin-top:16px;padding:38px 22px 32px;border-radius:28px}
+  .hring{width:230px;right:auto;left:-90px;top:-70px;margin-top:0;opacity:.6}
+}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.arc{animation:none}}
+@media print{
+  header,.hring{display:none!important}
+  body{padding-top:0}
+  .hero{background:none;color:var(--navy);box-shadow:none;padding:6px 0}
+  .hero h1,.hero .lead,.hero .chip{color:var(--navy)}
+  .rv{opacity:1;transform:none}
+}
+
+/* the logo sits on the same center line as the back button */
+.hstart>a:first-child,.hwrap>a:first-child{display:flex;align-items:center}
+header .logo svg{display:block}
+
+/* boxes that sit inside the navy hero: translucent glass instead of solid cards */
+.hero .need{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);border-radius:18px;color:var(--pale)}
+.hero .need b{color:#fff}
+.hero .beginner{background:rgba(255,255,255,.08);border:1px solid rgba(127,227,216,.35)}
+.hero .beginner .btn{background:var(--turq);color:var(--navy)}
+.hero .os span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.hero .tl{background:rgba(20,36,56,.55);border:1px solid rgba(255,255,255,.14)}
+
+/* inline logo: wordmark follows color, mark follows --li */
+.logo{display:inline-flex;align-items:center;--li:#7FE3D8;color:#fff}
+.logo-svg{display:block;height:28px;width:auto;aspect-ratio:247/77}
+header.on .logo{--li:#4F7DB0;color:var(--navy)}
+footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margin:0 auto 10px}
+</style>
+<style>
+/* ===== agents guide ===== */
+.agent-show{display:grid;grid-template-columns:170px 1fr;gap:20px;align-items:center;margin-top:18px;background:var(--pale);border:1px solid var(--line);border-radius:22px;padding:18px}
+.agent-show img{width:170px;height:170px;border-radius:50%;object-fit:cover;box-shadow:var(--shadow-sm);background:#EDF0F5}
+.agent-show .tag{display:inline-block;font-size:.8rem;font-weight:800;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:99px;padding:2px 12px;margin-bottom:6px}
+.agent-show p{font-size:.96rem;color:var(--ink-2)}
+.agent-show p+p{margin-top:8px}
+@media(max-width:600px){.agent-show{grid-template-columns:1fr;text-align:center}.agent-show img{margin:0 auto;width:140px;height:140px}}
+.ring-sec{background:radial-gradient(120% 100% at 50% 0%,#3A5E87 0%,var(--navy) 65%);color:#fff;border-radius:30px;padding:10px 30px 36px;margin-top:22px;text-align:center;overflow:hidden}
+.ring-host{width:min(340px,80vw);aspect-ratio:1;margin:0 auto;touch-action:pan-y}
+.ring-host canvas{width:100%!important;height:100%!important;display:block}
+.ring-host .fb{font-size:5rem;display:grid;place-items:center;height:100%}
+.ring-hint{display:inline-block;font-size:.8rem;color:var(--turq);border:1px solid rgba(127,227,216,.35);border-radius:99px;padding:2px 12px;margin-top:-6px}
+.ring-sec h2{color:#fff;margin-top:14px}
+.ring-sec p{color:var(--pale);max-width:580px;margin:10px auto 0;font-size:.98rem}
+@media(max-width:600px){.ring-sec{padding:6px 18px 30px}}
+.showcase{margin-top:22px;text-align:center;padding:34px 24px 30px;border-radius:30px;background:radial-gradient(70% 60% at 85% 0%,#dcf5f1 0,transparent 60%),radial-gradient(70% 60% at 10% 100%,#dde7f4 0,transparent 62%),#fff;border:1px solid var(--line);overflow:hidden}
+.showcase .tag{display:inline-block;font-size:.8rem;font-weight:800;color:var(--navy);background:var(--pale);border:1px solid var(--line);border-radius:99px;padding:2px 12px}
+.showcase h2{margin-top:8px}
+.showcase>p{max-width:600px;margin:10px auto 0;color:var(--ink-2)}
+.showcase p.small{font-size:.9rem;margin-top:14px}
+.laptop{width:min(440px,92%);margin:26px auto 4px;perspective:1600px}
+.lap-lid{background:#141b26;border-radius:14px 14px 5px 5px;padding:2.6% 2.6% 3.2%;box-shadow:inset 0 0 0 2px #2b3442,0 24px 40px -18px rgba(39,65,94,.45);transform-origin:50% 100%;transition:transform 1.3s cubic-bezier(.2,1.2,.4,1)}
+.lap-scr{position:relative;border-radius:5px;overflow:hidden;background:#EEF3F8;aspect-ratio:1120/700}
+.lap-scr img{display:block;width:100%;height:100%;object-fit:cover}
+.lap-ring{position:absolute;left:40.2%;top:50.4%;width:23.5%;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none}
+.lap-ring canvas{width:100%!important;height:100%!important;display:block}
+.lap-glare{position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.16) 45%,transparent 60%);pointer-events:none}
+.lap-base{position:relative;height:12px;margin:0 -6%;background:linear-gradient(#e4e8ee,#b9c2ce);border-radius:2px 2px 16px 16px;box-shadow:0 14px 22px -10px rgba(39,65,94,.4)}
+.lap-base span{position:absolute;left:50%;top:0;width:16%;height:6px;margin-left:-8%;background:#c7ced8;border-radius:0 0 8px 8px}
+.laptop.closed .lap-lid{transform:rotateX(-78deg)}
+@media(prefers-reduced-motion:reduce){.lap-lid{transition:none}}
+@media(max-width:600px){.showcase{padding:28px 16px 24px}.lap-lid{border-radius:12px 12px 4px 4px}.lap-base{height:11px}}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:10px;margin-top:22px}
+.flow .box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 14px;text-align:center;box-shadow:var(--shadow-sm)}
+.flow .box .ico{font-size:1.9rem;line-height:1.2}
+.flow .box h4{font-size:1rem;font-weight:800;color:var(--forest-deep);margin-top:4px}
+.flow .box p{font-size:.86rem;color:var(--ink-2);margin-top:2px;line-height:1.5}
+.flow .box.end{background:var(--forest);border-color:var(--forest)}
+.flow .box.end h4{color:#fff}.flow .box.end p{color:var(--ink-dark-2)}
+.flow .arr{display:grid;place-items:center;color:var(--olive);font-size:1.4rem;font-weight:800}
+@media (max-width:640px){
+  .flow{grid-template-columns:1fr}
+  .flow .arr{transform:rotate(-90deg);font-size:1.2rem}
+}
+</style>
+<body>
+
+<header id="hdr">
+  <div class="hwrap">
+    <a href="../ai/" aria-label="Ronig.ai, לעמוד הקורסים"><span class="logo"><svg class="logo-svg" role="img" aria-label="Ronig.ai" viewBox="0 0 247 77" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M89.059 18.5276H99.6081C101.853 18.5276 103.801 18.8919 105.451 19.6205C107.102 20.349 108.373 21.427 109.265 22.8543C110.172 24.2668 110.626 26.0064 110.626 28.0731C110.626 29.6045 110.298 30.9947 109.644 32.2436C109.005 33.4926 108.12 34.5408 106.99 35.3883C105.86 36.2209 104.552 36.7933 103.065 37.1056L102.106 37.4624H90.8432L90.7986 35.1207H100.233C101.928 35.1207 103.34 34.7936 104.47 34.1394C105.6 33.4851 106.448 32.6228 107.013 31.5523C107.592 30.4669 107.882 29.3072 107.882 28.0731C107.882 26.6011 107.563 25.3299 106.923 24.2594C106.299 23.174 105.37 22.3414 104.135 21.7615C102.901 21.1816 101.392 20.8917 99.6081 20.8917H91.8022V51H89.059V18.5276ZM109.109 51L100.701 36.4811L103.645 36.4588L112.031 50.7101V51H109.109ZM116.067 39.3135V38.5775C116.067 36.8231 116.32 35.2024 116.826 33.7156C117.331 32.2288 118.052 30.9427 118.989 29.8573C119.94 28.7719 121.078 27.9318 122.401 27.3371C123.724 26.7275 125.196 26.4227 126.817 26.4227C128.453 26.4227 129.932 26.7275 131.255 27.3371C132.579 27.9318 133.716 28.7719 134.668 29.8573C135.619 30.9427 136.348 32.2288 136.853 33.7156C137.359 35.2024 137.611 36.8231 137.611 38.5775V39.3135C137.611 41.068 137.359 42.6886 136.853 44.1755C136.348 45.6474 135.619 46.9261 134.668 48.0115C133.731 49.0969 132.601 49.9444 131.278 50.554C129.954 51.1487 128.482 51.446 126.862 51.446C125.226 51.446 123.747 51.1487 122.424 50.554C121.1 49.9444 119.963 49.0969 119.011 48.0115C118.06 46.9261 117.331 45.6474 116.826 44.1755C116.32 42.6886 116.067 41.068 116.067 39.3135ZM118.721 38.5775V39.3135C118.721 40.6368 118.9 41.8932 119.257 43.0826C119.613 44.2572 120.134 45.3054 120.818 46.2273C121.502 47.1342 122.349 47.8479 123.36 48.3683C124.371 48.8887 125.538 49.1489 126.862 49.1489C128.17 49.1489 129.322 48.8887 130.319 48.3683C131.33 47.8479 132.177 47.1342 132.861 46.2273C133.545 45.3054 134.058 44.2572 134.4 43.0826C134.757 41.8932 134.935 40.6368 134.935 39.3135V38.5775C134.935 37.2691 134.757 36.0276 134.4 34.853C134.058 33.6784 133.538 32.6302 132.839 31.7084C132.155 30.7866 131.307 30.058 130.296 29.5227C129.285 28.9875 128.125 28.7199 126.817 28.7199C125.509 28.7199 124.349 28.9875 123.338 29.5227C122.342 30.058 121.494 30.7866 120.795 31.7084C120.111 32.6302 119.591 33.6784 119.234 34.853C118.892 36.0276 118.721 37.2691 118.721 38.5775ZM145.796 32.0206V51H143.142V26.8688H145.685L145.796 32.0206ZM145.194 37.4401L144.012 36.771C144.101 35.3437 144.391 34.0055 144.882 32.7566C145.373 31.5077 146.034 30.4074 146.867 29.4558C147.714 28.5043 148.703 27.7609 149.833 27.2256C150.978 26.6903 152.242 26.4227 153.625 26.4227C154.829 26.4227 155.907 26.5863 156.858 26.9134C157.81 27.2405 158.62 27.7609 159.289 28.4745C159.959 29.1882 160.464 30.1026 160.806 31.2177C161.163 32.3329 161.341 33.6933 161.341 35.2991V51H158.665V35.2768C158.665 33.6115 158.435 32.3106 157.974 31.3738C157.513 30.4223 156.858 29.7458 156.011 29.3443C155.163 28.9429 154.16 28.7422 153 28.7422C151.721 28.7422 150.599 29.0247 149.632 29.5897C148.681 30.1398 147.878 30.8609 147.224 31.753C146.584 32.6302 146.094 33.5744 145.752 34.5854C145.41 35.5816 145.224 36.5331 145.194 37.4401ZM171.221 26.8688V51H168.567V26.8688H171.221ZM168.099 19.9104C168.099 19.39 168.255 18.9588 168.567 18.6169C168.894 18.26 169.348 18.0816 169.928 18.0816C170.478 18.0816 170.916 18.26 171.244 18.6169C171.586 18.9588 171.757 19.39 171.757 19.9104C171.757 20.3862 171.586 20.8025 171.244 21.1593C170.916 21.5013 170.478 21.6723 169.928 21.6723C169.348 21.6723 168.894 21.5013 168.567 21.1593C168.255 20.8025 168.099 20.3862 168.099 19.9104ZM194.393 26.8688H196.869V50.5763C196.869 52.6727 196.468 54.4717 195.665 55.9734C194.877 57.4751 193.754 58.6274 192.297 59.4303C190.855 60.2332 189.152 60.6347 187.19 60.6347C186.194 60.6347 185.168 60.4785 184.112 60.1663C183.071 59.8689 182.083 59.408 181.146 58.7836C180.224 58.174 179.436 57.4157 178.782 56.5087L180.276 54.8806C181.257 56.0701 182.306 56.9399 183.421 57.49C184.536 58.055 185.74 58.3375 187.034 58.3375C188.565 58.3375 189.859 58.0327 190.914 57.4231C191.985 56.8135 192.795 55.9363 193.345 54.7914C193.91 53.6466 194.193 52.2712 194.193 50.6655V32.1767L194.393 26.8688ZM177.444 39.1797V38.7114C177.444 36.8379 177.652 35.1504 178.068 33.6487C178.499 32.1321 179.116 30.8386 179.919 29.7681C180.722 28.6827 181.696 27.8575 182.841 27.2925C184.001 26.7126 185.309 26.4227 186.766 26.4227C188.164 26.4227 189.405 26.6532 190.491 27.1141C191.576 27.575 192.513 28.2366 193.301 29.099C194.089 29.9614 194.721 30.9873 195.196 32.1767C195.687 33.3662 196.044 34.6895 196.267 36.1466V42.1013C196.088 43.4692 195.761 44.7256 195.286 45.8704C194.81 47.0004 194.178 47.9892 193.39 48.8367C192.602 49.6693 191.65 50.3161 190.535 50.777C189.435 51.223 188.164 51.446 186.721 51.446C185.279 51.446 183.986 51.1487 182.841 50.554C181.696 49.9592 180.722 49.1192 179.919 48.0338C179.116 46.9335 178.499 45.6325 178.068 44.1308C177.652 42.6292 177.444 40.9788 177.444 39.1797ZM180.12 38.7114V39.1797C180.12 40.5922 180.261 41.9006 180.544 43.1049C180.826 44.3093 181.257 45.3575 181.837 46.2496C182.417 47.1417 183.153 47.8405 184.045 48.346C184.937 48.8515 185.985 49.1043 187.19 49.1043C188.721 49.1043 190.007 48.8144 191.048 48.2345C192.089 47.6398 192.914 46.8592 193.524 45.8927C194.133 44.9114 194.579 43.8409 194.862 42.6812V35.7451C194.698 34.9571 194.446 34.1542 194.104 33.3365C193.776 32.5187 193.316 31.7679 192.721 31.0839C192.141 30.3851 191.398 29.8275 190.491 29.4112C189.598 28.9801 188.513 28.7645 187.234 28.7645C186.015 28.7645 184.952 29.0172 184.045 29.5227C183.153 30.0283 182.417 30.7345 181.837 31.6415C181.257 32.5336 180.826 33.5818 180.544 34.7861C180.261 35.9905 180.12 37.2989 180.12 38.7114ZM203.337 48.3237C203.337 47.4911 203.619 46.7923 204.184 46.2273C204.749 45.6474 205.515 45.3575 206.481 45.3575C207.463 45.3575 208.228 45.6474 208.779 46.2273C209.344 46.7923 209.626 47.4911 209.626 48.3237C209.626 49.1563 209.344 49.8551 208.779 50.4201C208.228 50.9851 207.463 51.2676 206.481 51.2676C205.515 51.2676 204.749 50.9851 204.184 50.4201C203.619 49.8551 203.337 49.1563 203.337 48.3237ZM229.431 46.1604V34.6523C229.431 33.7899 229.275 33.0465 228.962 32.4221C228.65 31.7976 228.174 31.3144 227.535 30.9724C226.91 30.6304 226.122 30.4594 225.171 30.4594C224.294 30.4594 223.535 30.6081 222.896 30.9055C222.257 31.2029 221.759 31.6043 221.402 32.1098C221.045 32.6154 220.866 33.1878 220.866 33.8271H215.514C215.514 32.8755 215.744 31.9537 216.205 31.0616C216.666 30.1695 217.335 29.3741 218.212 28.6753C219.09 27.9764 220.138 27.4263 221.357 27.0249C222.576 26.6234 223.944 26.4227 225.461 26.4227C227.275 26.4227 228.88 26.7275 230.278 27.3371C231.691 27.9467 232.798 28.8685 233.601 30.1026C234.419 31.3218 234.828 32.8532 234.828 34.6969V45.4244C234.828 46.5246 234.902 47.5134 235.051 48.3906C235.214 49.253 235.445 50.0038 235.742 50.6432V51H230.234C229.981 50.4201 229.78 49.6842 229.631 48.7921C229.498 47.8851 229.431 47.0079 229.431 46.1604ZM230.211 36.325L230.256 39.6481H226.397C225.401 39.6481 224.524 39.7447 223.766 39.938C223.008 40.1164 222.376 40.384 221.87 40.7409C221.365 41.0977 220.985 41.5289 220.733 42.0344C220.48 42.5399 220.354 43.1124 220.354 43.7517C220.354 44.391 220.502 44.9783 220.8 45.5136C221.097 46.034 221.528 46.4429 222.093 46.7402C222.673 47.0376 223.372 47.1863 224.19 47.1863C225.29 47.1863 226.249 46.9633 227.067 46.5172C227.899 46.0563 228.553 45.4987 229.029 44.8445C229.505 44.1755 229.758 43.5435 229.787 42.9488L231.527 45.3352C231.349 45.9448 231.044 46.599 230.613 47.2978C230.181 47.9966 229.616 48.6657 228.918 49.305C228.234 49.9295 227.409 50.4424 226.442 50.8439C225.491 51.2453 224.39 51.446 223.141 51.446C221.565 51.446 220.16 51.1338 218.926 50.5093C217.692 49.87 216.726 49.0151 216.027 47.9446C215.328 46.8592 214.979 45.6325 214.979 44.2647C214.979 42.986 215.217 41.856 215.692 40.8747C216.183 39.8785 216.897 39.0459 217.833 38.3768C218.785 37.7077 219.945 37.2022 221.313 36.8603C222.68 36.5034 224.242 36.325 225.996 36.325H230.211ZM246.202 26.8688V51H240.805V26.8688H246.202ZM240.448 20.5349C240.448 19.7171 240.716 19.0406 241.251 18.5053C241.801 17.9552 242.559 17.6801 243.526 17.6801C244.477 17.6801 245.228 17.9552 245.778 18.5053C246.328 19.0406 246.604 19.7171 246.604 20.5349C246.604 21.3378 246.328 22.0068 245.778 22.5421C245.228 23.0773 244.477 23.345 243.526 23.345C242.559 23.345 241.801 23.0773 241.251 22.5421C240.716 22.0068 240.448 21.3378 240.448 20.5349Z" fill="currentColor"/><path d="M36.919 72.8232C36.2769 72.8586 35.6275 72.8772 34.9763 72.8772C15.658 72.8772 6.10352e-05 57.0988 6.10352e-05 37.632H7.14548C19.3128 37.632 23.9067 47.2139 26.0044 53.2021C30.3197 65.5374 33.8619 70.2372 36.919 72.8232Z" style="fill:var(--li)"/><path d="M67.0645 46.377C67.5155 47.2708 67.8356 48.2258 68.0147 49.2121C68.0193 49.226 68.0193 49.241 68.0147 49.2549C64.6754 58.8981 59.0797 65.8977 49.7019 69.6606C49.724 69.6792 49.6742 69.6717 49.7019 69.6606C46.6873 67.2028 43.3147 65.2173 38.1434 51.8856C36.2117 46.905 31.616 39.3811 22.1866 37.7749C22.1146 37.7624 22.0496 37.724 22.0037 37.6668C21.9577 37.6096 21.934 37.5375 21.9369 37.464C21.9399 37.3905 21.9693 37.3205 22.0196 37.2673C22.07 37.214 22.1378 37.1809 22.2106 37.1744C25.7159 36.7133 27.2435 36.4307 29.8763 35.4881C34.3779 33.8726 36.9017 31.8406 38.2781 30.7028C42.2892 27.6317 45.0586 23.1987 46.0723 18.2263C47.0861 13.2538 46.2754 8.07963 43.7907 3.66378C43.7829 3.65043 43.7791 3.63502 43.78 3.61952C43.7809 3.60402 43.7863 3.58914 43.7956 3.57676C43.8049 3.56439 43.8177 3.5551 43.8323 3.55007C43.8468 3.54504 43.8626 3.5445 43.8775 3.54852C58.196 7.33368 68.9316 20.037 69.8818 35.4138C69.8823 35.4246 69.8806 35.4354 69.8768 35.4455C69.873 35.4556 69.8673 35.4649 69.8599 35.4727C69.8525 35.4805 69.8435 35.4868 69.8337 35.491C69.8238 35.4953 69.8132 35.4975 69.8024 35.4974L52.2756 35.596C51.6926 35.596 50.0285 35.596 50.0285 36.5701C50.0285 37.1279 50.4509 37.5889 52.4269 37.5889C63.3765 37.7414 67.0018 46.2338 67.059 46.3751L67.0645 46.377Z" style="fill:var(--li)"/><path d="M32.3939 14.653C32.3939 23.1175 26.848 30.4034 18.8834 33.668C15.8989 34.8818 12.7093 35.5017 9.49087 35.4937H0.0669556C0.101394 34.8975 0.151207 34.3045 0.216395 33.7145C1.04954 26.2221 4.24431 19.1962 9.33172 13.6682C14.4191 8.14014 21.1312 4.40113 28.4826 3.00005C31.0086 6.35273 32.3817 10.4435 32.3939 14.653Z" style="fill:var(--li)"/></svg></span></a>
+    <a class="btn-back" href="https://roni-green.com/ai/">← <span>חזרה לעמוד הקורסים</span></a>
+  </div>
+</header>
+
+<main class="narrow">
+
+<section class="hero"><div class="hring" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><linearGradient id="rg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7FE3D8"/><stop offset="1" stop-color="#4F7DB0"/></linearGradient></defs><g class="sp" data-r=".16"><circle class="arc" style="--len:76" cx="100" cy="100" r="86" fill="none" stroke="url(#rg1)" stroke-width="12" stroke-linecap="round" pathLength="100" stroke-dasharray="76 200" transform="rotate(150 100 100)"/></g><g class="sp" data-r="-.38"><circle class="arc arc2" style="--len:12" cx="100" cy="100" r="86" fill="none" stroke="#9DB0C6" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="12 200" transform="rotate(91.6 100 100)"/></g><g class="sp" data-r="-.08"><circle cx="100" cy="100" r="98" fill="none" stroke="#9DB0C6" stroke-width=".8" stroke-dasharray="1.5 4.5" opacity=".55"/></g></svg></div>
+    <img class="print-logo" src="../assets/logo-dark.png" alt="Ronig.ai">
+  <span class="eyebrow">מדריך חינם · Ronig.ai</span>
+  <h1>הסוכן הראשון שלכם,<br><em>מאפס</em></h1>
+  <p class="lead">סוכן זה כמו עובד בצוות: אתם נותנים לו תפקיד, והוא עושה אותו לבד. במדריך הזה Claude יראיין אתכם, ותמצאו ביחד את המשימה שהכי מכבידה עליכם. ממנה תבנו את הסוכן הראשון, תתנו לו שם ודמות אם בא לכם, ותראו איך נותנים לו עוד סמכויות ובונים צוות.</p>
+  <div class="beginner">
+    <p><b>פעם ראשונה עם Claude Code?</b> עברו קודם על מדריך המתחילים שלי (20 דקות, בלי קוד), ואז חזרו לכאן.</p>
+    <a class="btn" href="../claude-code-start/?from=agents">למדריך המתחילים ←</a>
+  </div>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">1</div><div><h2>מה זה סוכן</h2><p>שלושה דברים, וזהו</p></div></div>
+  <div class="flow" role="img" aria-label="תפקיד, ואז הסוכן עושה את העבודה לבד, ואז אתם מקבלים סיכום">
+    <div class="box"><div class="ico">📝</div><h4>תפקיד</h4><p>אתם כותבים לו פעם אחת מה הוא עושה</p></div>
+    <div class="arr">←</div>
+    <div class="box"><div class="ico">⏰</div><h4>עושה לבד</h4><p>כשאתם מבקשים, או בזמן קבוע שקבעתם מראש</p></div>
+    <div class="arr">←</div>
+    <div class="box end"><div class="ico">📋</div><h4>סיכום</h4><p>מה הוא עשה, ומה מחכה לכם</p></div>
+  </div>
+  <p style="margin-top:18px">נגיד שכל בוקר אתם עוברים על המייל, על היומן ועל מה שחדש בתחום שלכם. סוכן יכול לעשות את זה במקומכם בשבע בבוקר, וכשתגיעו למחשב יחכה לכם בריף קצר. זו רק דוגמה: את התפקיד של הסוכן שלכם תמצאו ביחד עם Claude.</p>
+  <div class="note tip"><span class="ic">💡</span><div><b>סוכן לא חייב לרוץ בשעה קבועה.</b> אפשר להפעיל אותו רק כשצריך, בלחיצה אחת. אם התפקיד חוזר כל יום או כל שבוע, כדאי לתזמן אותו, כי אז רואים את הקסם: הוא עובד גם כשאתם לא חושבים עליו.</div></div>
+</section>
+
+<section class="showcase">
+  <span class="tag">ככה זה נראה אצלי</span>
+  <h2>הצוות שבניתי לעבודה השוטפת שלי</h2>
+  <p>שישה סוכנים, לכל אחד תחום משלו: כסף וחשבוניות, קהל, תוכן, לקוחות, החיים האישיים והמוצרים. לכל אחד נתתי דמות, ועל כולם מפקחת הטבעת. בעמוד אחד אני רואה מי עשה את העבודה (ירוק) ומי צריך אותי (כתום).</p>
+  <div class="laptop" id="laptop">
+    <div class="lap-lid"><div class="lap-scr"><img src="team-page.webp" alt="עמוד הסוכנים של רוני: שש דמויות בעיגולים סביב טבעת זהב, לכל אחת סימן מצב ירוק או כתום" width="1120" height="700" loading="lazy"><div class="lap-ring" id="ringLap"></div><div class="lap-glare"></div></div></div>
+    <div class="lap-base"><span></span></div>
+  </div>
+  <p class="small">לא צריך להגיע לזה ביום הראשון. מתחילים מסוכן אחד, וזה מה שנבנה עכשיו. וכשיהיו לכם כמה סוכנים שעובדים, תוכלו לבקש מ-Claude לסדר אותם איך שנוח לכם: עמוד אחד שמרכז את כולם, שמות, דמויות, צבעים, מה שבא לכם. גם העמוד שבמחשב התחיל ככה, מבקשה אחת בכל פעם.</p>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">2</div><div><h2>מה להכין</h2></div></div>
+  <ul class="dots">
+    <li><b>אפליקציית Claude במחשב, עם מנוי בתשלום</b> (Pro ומעלה), ובמצב <b>Code</b>. אם עוד לא עבדתם במצב הזה, מדריך המתחילים מסביר הכל.</li>
+  </ul>
+  <div class="note warn"><span class="ic">💻</span><div><b>הסוכן המתוזמן רץ על המחשב שלכם.</b> הוא עובד רק כשהמחשב דלוק והאפליקציה פתוחה. אם המחשב היה סגור בשעה שקבעתם, הוא ירוץ פעם אחת כשתפתחו אותו.</div></div>
+</section>
+
+<section class="step" id="prompt">
+  <div class="step-head"><div class="num">3</div><div><h2>הסוכן הראשון: המשימה שהכי מכבידה עליכם</h2><p>Claude מראיין, מציע, ובונה איתכם צעד אחרי צעד</p></div></div>
+  <h3>איך סוכן רץ לבד</h3>
+  <p>אתם לא צריכים לזכור להפעיל אותו. Claude שומר את ההוראות כ<b>משימה מתוזמנת</b>: הוראות קבועות ותזמון (כל שעה, כל יום, רק בימי חול, פעם בשבוע, או בלי תזמון בכלל ורק כשלוחצים). בזמן שקבעתם האפליקציה פותחת לבד שיחה חדשה, נותנת לה את ההוראות, והסוכן עושה את העבודה ושומר סיכום. למשל, בריף בוקר:</p>
+  <div class="flow" role="img" aria-label="הוראות ושעה, ואז ריצה לבד בשעה שקבעתם, ואז בריף שמחכה לכם">
+    <div class="box"><div class="ico">🗂️</div><h4>הוראות + שעה</h4><p>Claude כותב אותן איתכם ושומר כמשימה</p></div>
+    <div class="arr">←</div>
+    <div class="box"><div class="ico">⏰</div><h4>7:00, לבד</h4><p>האפליקציה פותחת שיחה ומריצה את ההוראות</p></div>
+    <div class="arr">←</div>
+    <div class="box end"><div class="ico">☕</div><h4>בריף מחכה</h4><p>בתיקייה "סיכומים", ובשיחה של המשימה</p></div>
+  </div>
+  <p style="margin-top:22px">באפליקציית Claude עוברים למצב <b>Code</b> (האייקון <code>&lt;/&gt;</code> למעלה), לוחצים <b>New session</b>, ובוחרים ב-<b>Select folder</b> תיקייה כלשהי, למשל Documents. Claude ייצור לסוכן תיקייה משלו. מעתיקים את הפרומפט ומדביקים.</p>
+  <div class="prompt long"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>אני רוצה לבנות את הסוכן הראשון שלי: סוכן שעושה בשבילי משימה שחוזרת על עצמה. אני מתחיל/ה מאפס, אז תדריך אותי צעד אחרי צעד: בכל שלב תגיד לי בדיוק מה לעשות, תחכה שאכתוב "עשיתי" או שאענה, ורק אז תמשיך. תכתוב לי בעברית פשוטה, בלי מונחים טכניים.
+
+1. שם: לפני שבונים, תשאל אותי אם אני רוצה לתת לסוכן שם משלו. אם כן, תשאל איזה. אם לא, נקרא לו לפי התפקיד שנבחר.
+
+2. דמות: תשאל אותי אם אני רוצה שתהיה לו גם דמות, כלומר תמונה שמייצגת אותו. אם כן, תסביר לי בקצרה את הדרכים, ותן לי לבחור:
+- תמונה שלי: יש לי תמונה או איור שאני אוהב/ת? אני שם/ה אותה בתיקייה, ואתה שומר אותה כתמונה של הסוכן.
+- Higgsfield: אתר ליצירת תמונות עם AI, במנוי בתשלום. תכתוב לי פרומפט מוכן, ואני יוצר/ת שם. ואם Higgsfield מחובר אצלי ל-Claude, אתה יכול ליצור את התמונה בעצמך, אבל רק אחרי שתגיד לי כמה קרדיטים זה יעלה ואני אאשר. בלי אישור שלי לא יוצרים כלום.
+- בחינם: ChatGPT ו-Gemini יוצרים תמונות גם בלי מנוי, עם מגבלה יומית. תכתוב לי פרומפט מוכן להדביק באחד מהם. או שאתה מצייר לו איור פשוט בעצמך, ישר בתיקייה.
+
+3. ראיון: תראיין אותי כדי שנמצא ביחד את התפקיד הראשון. שאלה אחת בכל פעם, עד 5 שאלות. למשל: במה אני עוסק/ת, מה אני עושה שוב ושוב כל יום או כל שבוע, מה הכי מעייף או מעצבן אותי, על מה אני מתעכב/ת או שוכח/ת, ומה הייתי שמח/ה שמישהו אחר יעשה בשבילי.
+
+4. הצעה: לפי התשובות, תציע לי 2 עד 3 תפקידים. לכל אחד תכתוב: מה הוא עושה, כמה זמן בערך זה יחסוך לי, למה הוא צריך גישה, והאם כדאי שירוץ בזמן קבוע או רק כשאבקש. ביחד נבחר אחד. אם לא עולה לי כלום, תציע בריף בוקר: סיכום קצר של מה שחשוב לי כל בוקר (למשל מייל, יומן ומה חדש בתחום שלי).
+תיצור לסוכן תיקייה משלו. את שם התיקייה ושם המשימה תקבע לפי התפקיד ולא לפי השם או הדמות, כדי שאפשר יהיה להחליף אותם בלי לשבור כלום.
+
+5. אם זה מסובך: אם התפקיד שבחרנו גדול (צריך הרבה חיבורים, פעולות שיוצאות לאנשים אחרים, או החלטות שרק אני יכול/ה לקבל), תגיד לי את זה בכנות. תפרק אותו ל-3 עד 4 שלבים, ונבנה עכשיו רק את הראשון, בגרסה שרק קוראת, מסכמת או מכינה טיוטה. את כל השלבים תשמור בתיקייה, כדי שנוכל להמשיך משם בפעם הבאה. אם משהו לא אפשרי כרגע, תגיד לי ותציע דרך אחרת (למשל קובץ שאני מייצא/ת לתיקייה פעם בשבוע).
+
+6. חיבורים: תגיד לי למה הסוכן צריך גישה (למשל מייל, יומן, תיקייה במחשב או חיפוש באינטרנט). תבדוק מה כבר מחובר, ואם משהו חסר, תסביר לי איך לחבר אותו ותחכה.
+
+7. הוראות: תכתוב לסוכן הוראות קצרות וברורות: מי הוא, מה התפקיד, מה בדיוק לבדוק או להכין, ואיך נראה הסיכום (קצר, הכי חשוב למעלה, ובסוף "מה מחכה לך"). כל סיכום הוא ישמור גם כקובץ בתיקייה "סיכומים", עם התאריך בשם הקובץ. תוסיף להוראות את החוקים האלה:
+- רק לקרוא, לסכם ולהכין טיוטות. לא לשלוח, לא לפרסם, לא לשלם, לא לבטל ולא למחוק כלום. דבר כזה הוא רק כותב לי בסיכום, ואני מחליט/ה.
+- לכתוב רק לתיקייה שלו.
+- אם משהו לא עובד, לכתוב את זה בראש הסיכום ולהמשיך בשאר. לא לנחש ולא להשלים מה היה שם.
+תראה לי את ההוראות ותשאל אם לשנות משהו.
+
+8. ריצת ניסיון: תריץ את ההוראות עכשיו פעם אחת, בדיוק כמו שהסוכן ירוץ לבד, ותראה לי את התוצאה. תשאל אותי מה לשפר, ותעדכן את ההוראות.
+
+9. מתי הוא רץ: תיצור משימה עם ההוראות. אם בחרנו זמן קבוע, תשאל באיזו שעה ובאילו ימים, ותתזמן אותה. אם בחרנו "רק כשאבקש", תיצור אותה בלי תזמון ותסביר לי איך מפעילים אותה. תבחר למשימה את המודל שמתאים לה וחוסך מהמכסה שלי, ותגיד לי במשפט אחד מה בחרת ולמה. תסביר לי במשפט או שניים איפה אני רואה את המשימה ואת הסיכומים, ומה קורה אם המחשב היה סגור. אחר כך תגיד לי להריץ אותה פעם אחת עם Run now ולבחור always allow בכל חלון אישור, כדי שבריצות הבאות היא לא תיתקע ותחכה לי.
+
+10. דף לתוצאות: תשאל אותי אם אני רוצה לראות את מה שהסוכן מוצא בדף אינטרנט, במקום לפתוח קבצים בתיקייה. תסביר לי בקצרה את שתי האפשרויות: דף שנשמר רק במחשב ונפתח בדפדפן, או דף אינטרנט פרטי שרק אני רואה, ואפשר לפתוח גם מהטלפון (אם האפשרות הזאת זמינה אצלי). אם אני רוצה, תבנה דף פשוט וברור: מה מחכה לי למעלה, אחר כך הסיכום האחרון, ומתי הסוכן רץ לאחרונה. תוסיף להוראות של הסוכן שבכל ריצה הוא מעדכן את הדף, ותן לי את הקישור.
+
+11. סיכום: תראה לי בסוף כרטיס קצר של הסוכן: שם, דמות (אם יש), מה הוא עושה, מתי הוא רץ, מה מותר לו, והקישור לדף (אם יש). ואם פירקנו לשלבים, מה השלב הבא בתוכנית.
+
+כללים בזמן הבנייה: אל תשלח מיילים או הודעות, אל תקליד סיסמאות, ואם משהו לא ברור לך, תשאל אותי ואל תנחש.</div>
+  <button class="expand" type="button">להצגת כל הפרומפט</button>
+  <div class="note why"><span class="ic">🧩</span><div><b>הגעתם למשימה גדולה?</b> לא מוותרים עליה, מפרקים. Claude יבנה קודם רק את החלק הקטן שרק קורא ומסכם, ויזכור את שאר השלבים להמשך. ככה יש לכם סוכן שעובד כבר היום.</div></div>
+  <h3>לא עולה לכם רעיון? כמה תפקידים ראשונים טובים</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>התפקיד</th><th>מה מקבלים</th></tr>
+    <tr><td>בריף בוקר</td><td>כל בוקר: מה דחוף במייל, מה ביומן, ומה חדש בתחום שלכם</td></tr>
+    <tr><td>פניות חדשות במייל</td><td>רשימה של מי פנה אליכם במייל, מה הוא רוצה, ומי מחכה לתשובה</td></tr>
+    <tr><td>חשבוניות</td><td>פעם בחודשיים: מוריד מהמייל את כל החשבוניות לתיקייה אחת, מסודרות לפי חודש</td></tr>
+    <tr><td>מה חדש בתחום</td><td>פעם בשבוע: שלושה דברים שקרו בתחום שלכם, עם קישור לכל אחד</td></tr>
+  </table></div>
+  <ul class="dots" style="margin-top:16px">
+    <li>בזמן הבנייה יקפצו חלונות אישור (לקרוא מייל, ליצור קובץ, ליצור משימה). קוראים ומאשרים.</li>
+    <li><b>חשוב כדי שהסוכן לא ייתקע:</b> אחרי שהמשימה נוצרה, לוחצים עליה <b>Run now</b> פעם אחת, ובכל חלון אישור שקופץ בוחרים <b>always allow</b>. ככה בריצות הבאות הוא לא יעצור לחכות לכם. אם ריצה בכל זאת נתקעה, פותחים אותה ומאשרים שם.</li>
+    <li><b>בסוף Claude ישאל אם תרצו דף אינטרנט פרטי לסוכן</b>, כדי לראות את מה שהוא מוצא בלי לפתוח תיקיות: דף שנשמר רק במחשב, או דף פרטי שאפשר לפתוח גם מהטלפון.</li>
+    <li>את המשימות שלכם תמצאו בתפריט הצד של האפליקציה, תחת <b>Scheduled</b>. שם רואים כל ריצה ומה הוא עשה, ואפשר להריץ ידנית, לשנות שעה או להשהות.</li>
+  </ul>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">4</div><div><h2>שם ודמות</h2><p>לא חובה, אבל כיף, וגם עוזר</p></div></div>
+  <p>כשיש לכם סוכן אחד, הוא יכול להיקרא פשוט לפי התפקיד שלו. כשמגיעים כמה, שם ודמות עוזרים לזכור מי אחראי על מה. הפרומפט שואל אתכם על זה כבר בהתחלה.</p>
+  <div class="agent-show">
+    <img src="gandalf.webp" alt="איור תלת-ממדי של קוסם זקן וחייכן עם זקן לבן וכובע אפור" width="640" height="640" loading="lazy">
+    <div>
+      <span class="tag">ככה זה נראה אצלי</span>
+      <p>זה גנדלף, הסוכן שאחראי אצלי על הקהל. את התמונות של כל הסוכנים שלי יצרתי עם Higgsfield, שמחובר אצלי ל-Claude: תיארתי לו איך כל דמות צריכה להיראות, והוא יצר את התמונות ישר מהשיחה.</p>
+      <p>אתם לא חייבים ללכת על זה. אפשר להעלות תמונה שאתם אוהבים, ליצור אחת בחינם, או לחבר את Higgsfield כמו שעשיתי, אם יש לכם מנוי.</p>
+    </div>
+  </div>
+  <p style="margin-top:18px">שלוש הדרכים ליצור תמונה לדמות:</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>הדרך</th><th>מה זה</th><th>עלות</th></tr>
+    <tr><td>תמונה שלכם</td><td>איור, תמונה או אימוג'י שאתם אוהבים. שמים בתיקייה, ו-Claude שומר אותה כתמונה של הסוכן</td><td>חינם</td></tr>
+    <tr><td>Higgsfield</td><td>יצירת תמונה עם AI. Claude כותב לכם את הפרומפט ואתם יוצרים באתר, או שמחברים את Higgsfield ל-Claude והוא יוצר את התמונה בעצמו, רק אחרי שאמר לכם כמה זה עולה ואישרתם</td><td>מנוי בתשלום</td></tr>
+    <tr><td>ChatGPT, Gemini או איור של Claude</td><td>ChatGPT ו-Gemini יוצרים תמונות גם בלי מנוי (עם מגבלה יומית). או ש-Claude מצייר איור פשוט בעצמו</td><td>חינם</td></tr>
+  </table></div>
+  <div class="note tip"><span class="ic">💡</span><div><b>התיקייה נקראת לפי התפקיד, לא לפי השם.</b> ככה אפשר להחליף לסוכן שם או דמות מתי שבא לכם, בלי לשבור כלום. הפרומפט כבר דואג לזה.</div></div>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">5</div><div><h2>החוקים שכל סוכן מקבל</h2><p>כדי שלא יעשה שטויות בשמכם</p></div></div>
+  <div class="duo four">
+    <div><h4>1. מתחילים רק מקריאה</h4><p>סוכן חדש לא שולח, לא מפרסם, לא משלם, לא מבטל ולא מוחק. הוא כותב לכם מה מחכה להחלטה שלכם.</p></div>
+    <div><h4>2. כל אחד בתיקייה שלו</h4><p>סוכן כותב רק לתיקייה שלו. לקרוא מאחרים מותר, לכתוב אצלם אסור.</p></div>
+    <div><h4>3. מקום אחד משותף</h4><p>הסוכנים לא מדברים ביניהם. כל אחד שומר את הסיכום שלו, ומשם האחרים קוראים.</p></div>
+    <div><h4>4. נכשל? כותב וממשיך</h4><p>אם משהו לא עובד, הוא כותב את זה בראש הסיכום וממשיך בשאר, בלי לנחש מה היה שם. סוכן שכבר מבצע פעולות עוצר אותן ומספר מה הספיק.</p></div>
+  </div>
+  <div class="note tip"><span class="ic">💡</span><div><b>החוקים כבר בתוך הפרומפטים בדף הזה.</b> החוק הראשון הוא נקודת ההתחלה, לא תקרה. כשהסוכן מוכיח את עצמו, נותנים לו עוד סמכויות.</div></div>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">6</div><div><h2>נותנים לסוכן עוד סמכויות</h2><p>בהדרגה, כמו לעובד חדש</p></div></div>
+  <p>סוכן לא חייב להישאר רק עם קריאה וסיכום. כמו עובד חדש, הוא מקבל עוד אחריות כשאתם סומכים עליו. אחרי שבוע או שבועיים של עבודה טובה, אפשר להוסיף לו סמכות אחת בכל פעם:</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>שלב</th><th>מה מותר לו</th><th>דוגמה</th></tr>
+    <tr><td>1. קורא ומסכם</td><td>רק לקרוא ולכתוב לכם (ככה מתחילים)</td><td>סיכום של מה שמחכה לכם</td></tr>
+    <tr><td>2. מכין טיוטות</td><td>להכין דברים שאתם רק מאשרים</td><td>טיוטת תשובה למייל שמחכה בתיבת הטיוטות</td></tr>
+    <tr><td>3. מסדר אצלכם</td><td>לשנות דברים במחשב שלכם או בכלים שלכם</td><td>לתייק קבצים, לעדכן טבלה, לסמן מיילים</td></tr>
+    <tr><td>4. פועל בחוץ</td><td>דברים שיוצאים לאנשים אחרים או עולים כסף</td><td>לשלוח, לפרסם, לשלם. רק אחרי הרבה זמן, ועדיף שתמיד יחכה לאישור שלכם</td></tr>
+  </table></div>
+  <p style="margin-top:18px">פותחים שיחה חדשה, ממלאים את הקו ומדביקים:</p>
+  <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>אני רוצה להוסיף לסוכן שלי סמכות חדשה: ________.
+תסביר לי במשפט מה זה אומר בפועל ומה יכול להשתבש. אחר כך תכתוב את הסמכות בהוראות שלו במפורש: מה מותר לו עכשיו, מה עדיין אסור, ושאם משהו נכשל באמצע פעולה, הוא עוצר ומספר לי מה הספיק. תריץ ריצת ניסיון אחת ותראה לי מה הוא עשה, לפני שזה נכנס למשימה המתוזמנת.</div>
+  <div class="note warn"><span class="ic">✋</span><div><b>סמכות אחת בכל פעם.</b> ככה, אם משהו לא עובד כמו שציפיתם, אתם יודעים בדיוק מה לבטל. וכל מה שיוצא החוצה בשמכם, שווה שיחכה לאישור שלכם.</div></div>
+</section>
+
+<section class="step">
+  <div class="step-head"><div class="num">7</div><div><h2>רוצים עוד? בונים צוות</h2><p>לא חובה. רק אחרי שהסוכן הראשון עובד כמה ימים</p></div></div>
+  <p>כשהסוכן הראשון רץ כמה ימים והוא טוב, אפשר להוסיף עוד סוכנים, סוכן אחד שמפקח על כולם, ודף אחד שמראה את כל הצוות. פותחים שיחה חדשה ומדביקים:</p>
+  <div class="prompt long"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>יש לי כבר סוכן אחד שעובד, ואני רוצה להפוך אותו לצוות. תדריך אותי צעד אחרי צעד, ותחכה שאכתוב "עשיתי" לפני כל שלב חדש. תכתוב לי בעברית פשוטה.
+
+1. תסתכל על הסוכן שיש לי ותסביר לי במשפט מה הוא עושה. אחר כך תשאל אותי מה עוד אני עושה שוב ושוב, ותציע לי 2 עד 3 סוכנים נוספים. לכל אחד תחום משלו, בלי חפיפה עם האחרים.
+
+2. מקום משותף: תיצור תיקייה "הצוות שלי", ובתוכה תיקייה לכל סוכן לפי התפקיד שלו. תעדכן את הסוכן הקיים שישמור את הסיכומים שלו בתיקייה שלו שם.
+
+3. לכל סוכן חדש, אחד אחד: תשאל אם אני רוצה לתת לו שם ודמות, הוראות קצרות, ריצת ניסיון, ומשימה מתוזמנת עם המודל שמתאים לה וחוסך מהמכסה שלי. כל סוכן מקבל את החוקים:
+- רק לקרוא ולסכם. לא לשלוח, לא לפרסם, לא לשלם, לא לבטל ולא למחוק. דבר כזה הוא רק כותב בסיכום, תחת "מחכה להחלטה".
+- לכתוב רק לתיקייה שלו. מותר לקרוא סיכומים של סוכנים אחרים, אסור לכתוב אצלם.
+- אם משהו לא עובד, לכתוב את זה בראש הסיכום ולהמשיך בשאר. לא לנחש ולא להשלים מה היה שם.
+
+4. המפקח: תבנה סוכן אחד נוסף שרץ אחרי כל השאר. הוא בודק שכל סוכן רץ בזמן, ומרכז ברשימה אחת קצרה רק את מה שמחכה לי, עם שם הסוכן ליד כל פריט. הוא לא עושה את העבודה של האחרים ולא מחליט שום דבר בשמי.
+
+5. לוח הצוות: אם כבר יש לי דף לסוכן הראשון, תהפוך אותו ללוח של כל הצוות. אם אין, תשאל אם אני רוצה דף כזה, ותסביר לי את שתי האפשרויות (דף שנשמר רק במחשב, או דף אינטרנט פרטי שאפשר לפתוח גם מהטלפון). בלוח: למעלה רשימה אחת של מה מחכה לי היום, ומתחת כרטיס לכל סוכן עם השם, התמונה (אם יש), מתי רץ לאחרונה, וצבע מצב: ירוק אם עשה את העבודה, כתום אם הוא צריך אותי, ואדום אם משהו לא עבד. לחיצה על כרטיס מראה את הסיכום המלא שלו. המפקח מעדכן את הלוח בכל ריצה.
+
+6. מה שכבר טיפלתי בו: כדי שהמפקח לא יזכיר לי שוב דברים שכבר עשיתי, כשאטפל במשהו מהרשימה אני פשוט אכתוב לך, למשל "שילמתי את החשבון של החשמל". אתה תרשום את זה, והמפקח לא יחזיר את זה לרשימה.
+
+7. בסוף תראה לי טבלה: שם, דמות, תפקיד, מתי כל אחד רץ, ומה מותר לו, ואת הקישור ללוח. ותזכיר לי שכל הצוות רץ רק כשהמחשב דלוק והאפליקציה פתוחה.
+
+כללים בזמן הבנייה: אל תשלח מיילים או הודעות, אל תקליד סיסמאות, ואם משהו לא ברור לך, תשאל אותי ואל תנחש.</div>
+  <button class="expand" type="button">להצגת כל הפרומפט</button>
+  <div class="note tip"><span class="ic">💡</span><div><b>בכל בוקר פותחים דף אחד.</b> לוח הצוות מראה מי רץ, מה מחכה לכם, ומה כל סוכן מצא. טיפלתם במשהו מהרשימה? כותבים את זה ל-Claude, והוא לא יופיע שוב.</div></div>
+</section>
+
+<section class="ring-sec">
+  <div class="ring-host" id="ring3d" aria-label="טבעת זהב תלת-ממדית שנוטה לכיוון העכבר"></div>
+  <span class="ring-hint" id="ringHint">הזיזו את העכבר ליד הטבעת</span>
+  <h2>בונוס: איך Claude בנה לי טבעת תלת-ממדית</h2>
+  <p>הטבעת הזאת יושבת אצלי במרכז הדף של הצוות, כי היא זו שמפקחת על כולם. אין כאן סרטון ולא תוכנת תלת-ממד: Claude כתב אותה בקוד, עם ספרייה חינמית בשם three.js שמציירת תלת-ממד ישר בדפדפן.</p>
+  <p>הוא בנה את צורת הטבעת, נתן לה זהב מבריק שמחזיר אור, כתב סביבה אותיות מומצאות שזוהרות כמו אש, וחיבר אותה לעכבר כדי שתנטה לכיוונו. בטלפון היא זזה כשגוללים.</p>
+</section>
+
+<section class="final">
+  <h2>זהו, יש לכם סוכן 🎉</h2>
+  <p>רוצים עוד פרומפטים ומדריכים כאלה?</p>
+  <a class="btn" href="https://roni-green.com/ai/">לכל המדריכים והקורסים ←</a>
+</section>
+
+</main>
+
+<footer>
+  <span class="logo"><svg class="logo-svg" role="img" aria-label="Ronig.ai" viewBox="0 0 247 77" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M89.059 18.5276H99.6081C101.853 18.5276 103.801 18.8919 105.451 19.6205C107.102 20.349 108.373 21.427 109.265 22.8543C110.172 24.2668 110.626 26.0064 110.626 28.0731C110.626 29.6045 110.298 30.9947 109.644 32.2436C109.005 33.4926 108.12 34.5408 106.99 35.3883C105.86 36.2209 104.552 36.7933 103.065 37.1056L102.106 37.4624H90.8432L90.7986 35.1207H100.233C101.928 35.1207 103.34 34.7936 104.47 34.1394C105.6 33.4851 106.448 32.6228 107.013 31.5523C107.592 30.4669 107.882 29.3072 107.882 28.0731C107.882 26.6011 107.563 25.3299 106.923 24.2594C106.299 23.174 105.37 22.3414 104.135 21.7615C102.901 21.1816 101.392 20.8917 99.6081 20.8917H91.8022V51H89.059V18.5276ZM109.109 51L100.701 36.4811L103.645 36.4588L112.031 50.7101V51H109.109ZM116.067 39.3135V38.5775C116.067 36.8231 116.32 35.2024 116.826 33.7156C117.331 32.2288 118.052 30.9427 118.989 29.8573C119.94 28.7719 121.078 27.9318 122.401 27.3371C123.724 26.7275 125.196 26.4227 126.817 26.4227C128.453 26.4227 129.932 26.7275 131.255 27.3371C132.579 27.9318 133.716 28.7719 134.668 29.8573C135.619 30.9427 136.348 32.2288 136.853 33.7156C137.359 35.2024 137.611 36.8231 137.611 38.5775V39.3135C137.611 41.068 137.359 42.6886 136.853 44.1755C136.348 45.6474 135.619 46.9261 134.668 48.0115C133.731 49.0969 132.601 49.9444 131.278 50.554C129.954 51.1487 128.482 51.446 126.862 51.446C125.226 51.446 123.747 51.1487 122.424 50.554C121.1 49.9444 119.963 49.0969 119.011 48.0115C118.06 46.9261 117.331 45.6474 116.826 44.1755C116.32 42.6886 116.067 41.068 116.067 39.3135ZM118.721 38.5775V39.3135C118.721 40.6368 118.9 41.8932 119.257 43.0826C119.613 44.2572 120.134 45.3054 120.818 46.2273C121.502 47.1342 122.349 47.8479 123.36 48.3683C124.371 48.8887 125.538 49.1489 126.862 49.1489C128.17 49.1489 129.322 48.8887 130.319 48.3683C131.33 47.8479 132.177 47.1342 132.861 46.2273C133.545 45.3054 134.058 44.2572 134.4 43.0826C134.757 41.8932 134.935 40.6368 134.935 39.3135V38.5775C134.935 37.2691 134.757 36.0276 134.4 34.853C134.058 33.6784 133.538 32.6302 132.839 31.7084C132.155 30.7866 131.307 30.058 130.296 29.5227C129.285 28.9875 128.125 28.7199 126.817 28.7199C125.509 28.7199 124.349 28.9875 123.338 29.5227C122.342 30.058 121.494 30.7866 120.795 31.7084C120.111 32.6302 119.591 33.6784 119.234 34.853C118.892 36.0276 118.721 37.2691 118.721 38.5775ZM145.796 32.0206V51H143.142V26.8688H145.685L145.796 32.0206ZM145.194 37.4401L144.012 36.771C144.101 35.3437 144.391 34.0055 144.882 32.7566C145.373 31.5077 146.034 30.4074 146.867 29.4558C147.714 28.5043 148.703 27.7609 149.833 27.2256C150.978 26.6903 152.242 26.4227 153.625 26.4227C154.829 26.4227 155.907 26.5863 156.858 26.9134C157.81 27.2405 158.62 27.7609 159.289 28.4745C159.959 29.1882 160.464 30.1026 160.806 31.2177C161.163 32.3329 161.341 33.6933 161.341 35.2991V51H158.665V35.2768C158.665 33.6115 158.435 32.3106 157.974 31.3738C157.513 30.4223 156.858 29.7458 156.011 29.3443C155.163 28.9429 154.16 28.7422 153 28.7422C151.721 28.7422 150.599 29.0247 149.632 29.5897C148.681 30.1398 147.878 30.8609 147.224 31.753C146.584 32.6302 146.094 33.5744 145.752 34.5854C145.41 35.5816 145.224 36.5331 145.194 37.4401ZM171.221 26.8688V51H168.567V26.8688H171.221ZM168.099 19.9104C168.099 19.39 168.255 18.9588 168.567 18.6169C168.894 18.26 169.348 18.0816 169.928 18.0816C170.478 18.0816 170.916 18.26 171.244 18.6169C171.586 18.9588 171.757 19.39 171.757 19.9104C171.757 20.3862 171.586 20.8025 171.244 21.1593C170.916 21.5013 170.478 21.6723 169.928 21.6723C169.348 21.6723 168.894 21.5013 168.567 21.1593C168.255 20.8025 168.099 20.3862 168.099 19.9104ZM194.393 26.8688H196.869V50.5763C196.869 52.6727 196.468 54.4717 195.665 55.9734C194.877 57.4751 193.754 58.6274 192.297 59.4303C190.855 60.2332 189.152 60.6347 187.19 60.6347C186.194 60.6347 185.168 60.4785 184.112 60.1663C183.071 59.8689 182.083 59.408 181.146 58.7836C180.224 58.174 179.436 57.4157 178.782 56.5087L180.276 54.8806C181.257 56.0701 182.306 56.9399 183.421 57.49C184.536 58.055 185.74 58.3375 187.034 58.3375C188.565 58.3375 189.859 58.0327 190.914 57.4231C191.985 56.8135 192.795 55.9363 193.345 54.7914C193.91 53.6466 194.193 52.2712 194.193 50.6655V32.1767L194.393 26.8688ZM177.444 39.1797V38.7114C177.444 36.8379 177.652 35.1504 178.068 33.6487C178.499 32.1321 179.116 30.8386 179.919 29.7681C180.722 28.6827 181.696 27.8575 182.841 27.2925C184.001 26.7126 185.309 26.4227 186.766 26.4227C188.164 26.4227 189.405 26.6532 190.491 27.1141C191.576 27.575 192.513 28.2366 193.301 29.099C194.089 29.9614 194.721 30.9873 195.196 32.1767C195.687 33.3662 196.044 34.6895 196.267 36.1466V42.1013C196.088 43.4692 195.761 44.7256 195.286 45.8704C194.81 47.0004 194.178 47.9892 193.39 48.8367C192.602 49.6693 191.65 50.3161 190.535 50.777C189.435 51.223 188.164 51.446 186.721 51.446C185.279 51.446 183.986 51.1487 182.841 50.554C181.696 49.9592 180.722 49.1192 179.919 48.0338C179.116 46.9335 178.499 45.6325 178.068 44.1308C177.652 42.6292 177.444 40.9788 177.444 39.1797ZM180.12 38.7114V39.1797C180.12 40.5922 180.261 41.9006 180.544 43.1049C180.826 44.3093 181.257 45.3575 181.837 46.2496C182.417 47.1417 183.153 47.8405 184.045 48.346C184.937 48.8515 185.985 49.1043 187.19 49.1043C188.721 49.1043 190.007 48.8144 191.048 48.2345C192.089 47.6398 192.914 46.8592 193.524 45.8927C194.133 44.9114 194.579 43.8409 194.862 42.6812V35.7451C194.698 34.9571 194.446 34.1542 194.104 33.3365C193.776 32.5187 193.316 31.7679 192.721 31.0839C192.141 30.3851 191.398 29.8275 190.491 29.4112C189.598 28.9801 188.513 28.7645 187.234 28.7645C186.015 28.7645 184.952 29.0172 184.045 29.5227C183.153 30.0283 182.417 30.7345 181.837 31.6415C181.257 32.5336 180.826 33.5818 180.544 34.7861C180.261 35.9905 180.12 37.2989 180.12 38.7114ZM203.337 48.3237C203.337 47.4911 203.619 46.7923 204.184 46.2273C204.749 45.6474 205.515 45.3575 206.481 45.3575C207.463 45.3575 208.228 45.6474 208.779 46.2273C209.344 46.7923 209.626 47.4911 209.626 48.3237C209.626 49.1563 209.344 49.8551 208.779 50.4201C208.228 50.9851 207.463 51.2676 206.481 51.2676C205.515 51.2676 204.749 50.9851 204.184 50.4201C203.619 49.8551 203.337 49.1563 203.337 48.3237ZM229.431 46.1604V34.6523C229.431 33.7899 229.275 33.0465 228.962 32.4221C228.65 31.7976 228.174 31.3144 227.535 30.9724C226.91 30.6304 226.122 30.4594 225.171 30.4594C224.294 30.4594 223.535 30.6081 222.896 30.9055C222.257 31.2029 221.759 31.6043 221.402 32.1098C221.045 32.6154 220.866 33.1878 220.866 33.8271H215.514C215.514 32.8755 215.744 31.9537 216.205 31.0616C216.666 30.1695 217.335 29.3741 218.212 28.6753C219.09 27.9764 220.138 27.4263 221.357 27.0249C222.576 26.6234 223.944 26.4227 225.461 26.4227C227.275 26.4227 228.88 26.7275 230.278 27.3371C231.691 27.9467 232.798 28.8685 233.601 30.1026C234.419 31.3218 234.828 32.8532 234.828 34.6969V45.4244C234.828 46.5246 234.902 47.5134 235.051 48.3906C235.214 49.253 235.445 50.0038 235.742 50.6432V51H230.234C229.981 50.4201 229.78 49.6842 229.631 48.7921C229.498 47.8851 229.431 47.0079 229.431 46.1604ZM230.211 36.325L230.256 39.6481H226.397C225.401 39.6481 224.524 39.7447 223.766 39.938C223.008 40.1164 222.376 40.384 221.87 40.7409C221.365 41.0977 220.985 41.5289 220.733 42.0344C220.48 42.5399 220.354 43.1124 220.354 43.7517C220.354 44.391 220.502 44.9783 220.8 45.5136C221.097 46.034 221.528 46.4429 222.093 46.7402C222.673 47.0376 223.372 47.1863 224.19 47.1863C225.29 47.1863 226.249 46.9633 227.067 46.5172C227.899 46.0563 228.553 45.4987 229.029 44.8445C229.505 44.1755 229.758 43.5435 229.787 42.9488L231.527 45.3352C231.349 45.9448 231.044 46.599 230.613 47.2978C230.181 47.9966 229.616 48.6657 228.918 49.305C228.234 49.9295 227.409 50.4424 226.442 50.8439C225.491 51.2453 224.39 51.446 223.141 51.446C221.565 51.446 220.16 51.1338 218.926 50.5093C217.692 49.87 216.726 49.0151 216.027 47.9446C215.328 46.8592 214.979 45.6325 214.979 44.2647C214.979 42.986 215.217 41.856 215.692 40.8747C216.183 39.8785 216.897 39.0459 217.833 38.3768C218.785 37.7077 219.945 37.2022 221.313 36.8603C222.68 36.5034 224.242 36.325 225.996 36.325H230.211ZM246.202 26.8688V51H240.805V26.8688H246.202ZM240.448 20.5349C240.448 19.7171 240.716 19.0406 241.251 18.5053C241.801 17.9552 242.559 17.6801 243.526 17.6801C244.477 17.6801 245.228 17.9552 245.778 18.5053C246.328 19.0406 246.604 19.7171 246.604 20.5349C246.604 21.3378 246.328 22.0068 245.778 22.5421C245.228 23.0773 244.477 23.345 243.526 23.345C242.559 23.345 241.801 23.0773 241.251 22.5421C240.716 22.0068 240.448 21.3378 240.448 20.5349Z" fill="currentColor"/><path d="M36.919 72.8232C36.2769 72.8586 35.6275 72.8772 34.9763 72.8772C15.658 72.8772 6.10352e-05 57.0988 6.10352e-05 37.632H7.14548C19.3128 37.632 23.9067 47.2139 26.0044 53.2021C30.3197 65.5374 33.8619 70.2372 36.919 72.8232Z" style="fill:var(--li)"/><path d="M67.0645 46.377C67.5155 47.2708 67.8356 48.2258 68.0147 49.2121C68.0193 49.226 68.0193 49.241 68.0147 49.2549C64.6754 58.8981 59.0797 65.8977 49.7019 69.6606C49.724 69.6792 49.6742 69.6717 49.7019 69.6606C46.6873 67.2028 43.3147 65.2173 38.1434 51.8856C36.2117 46.905 31.616 39.3811 22.1866 37.7749C22.1146 37.7624 22.0496 37.724 22.0037 37.6668C21.9577 37.6096 21.934 37.5375 21.9369 37.464C21.9399 37.3905 21.9693 37.3205 22.0196 37.2673C22.07 37.214 22.1378 37.1809 22.2106 37.1744C25.7159 36.7133 27.2435 36.4307 29.8763 35.4881C34.3779 33.8726 36.9017 31.8406 38.2781 30.7028C42.2892 27.6317 45.0586 23.1987 46.0723 18.2263C47.0861 13.2538 46.2754 8.07963 43.7907 3.66378C43.7829 3.65043 43.7791 3.63502 43.78 3.61952C43.7809 3.60402 43.7863 3.58914 43.7956 3.57676C43.8049 3.56439 43.8177 3.5551 43.8323 3.55007C43.8468 3.54504 43.8626 3.5445 43.8775 3.54852C58.196 7.33368 68.9316 20.037 69.8818 35.4138C69.8823 35.4246 69.8806 35.4354 69.8768 35.4455C69.873 35.4556 69.8673 35.4649 69.8599 35.4727C69.8525 35.4805 69.8435 35.4868 69.8337 35.491C69.8238 35.4953 69.8132 35.4975 69.8024 35.4974L52.2756 35.596C51.6926 35.596 50.0285 35.596 50.0285 36.5701C50.0285 37.1279 50.4509 37.5889 52.4269 37.5889C63.3765 37.7414 67.0018 46.2338 67.059 46.3751L67.0645 46.377Z" style="fill:var(--li)"/><path d="M32.3939 14.653C32.3939 23.1175 26.848 30.4034 18.8834 33.668C15.8989 34.8818 12.7093 35.5017 9.49087 35.4937H0.0669556C0.101394 34.8975 0.151207 34.3045 0.216395 33.7145C1.04954 26.2221 4.24431 19.1962 9.33172 13.6682C14.4191 8.14014 21.1312 4.40113 28.4826 3.00005C31.0086 6.35273 32.3817 10.4435 32.3939 14.653Z" style="fill:var(--li)"/></svg></span>
+  <a href="../ai/">לקורסים שלי</a> · <a href="https://www.instagram.com/ronig.ai/" target="_blank" rel="noopener">@ronig.ai</a>
+</footer>
+
+<script>
+document.querySelectorAll('.copy').forEach(function(btn){btn.addEventListener('click',function(){
+  var box=btn.parentNode.cloneNode(true);box.querySelectorAll('.copy,.lbl').forEach(function(x){x.remove()});
+  var txt=box.textContent.trim();
+  function ok(){btn.textContent='הועתק ✓';btn.classList.add('ok');setTimeout(function(){btn.textContent='העתקה';btn.classList.remove('ok')},1800)}
+  function fallback(){var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(e){}t.remove()}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback)}else fallback();
+})});
+document.querySelectorAll('.expand').forEach(function(b){b.addEventListener('click',function(){
+  var p=b.previousElementSibling;var open=p.classList.toggle('open');b.textContent=open?'לכווץ':'להצגת כל הפרומפט';
+})});
+</script>
+<script>
+(function(){
+  var hdr = document.getElementById('hdr');
+  function hd(){ hdr.classList.toggle('on', window.scrollY > 40); }
+  window.addEventListener('scroll', hd, {passive:true}); hd();
+  // the cards rise in as they reach the screen
+  if('IntersectionObserver' in window && !/[?&]print=1/.test(location.search)){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('main>section:not(.hero),.final').forEach(function(e){ e.classList.add('rv'); io.observe(e); });
+  }
+  // the rings in the hero turn with the scroll and trail the finger a little
+  var hr = document.querySelector('.hring');
+  if(!hr || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var sps = hr.querySelectorAll('.sp'), big = hr.querySelector('.arc:not(.arc2)'), cur = window.scrollY, loop = 0, last = 0;
+  function paint(y){ y = Math.min(y, 1400);
+    sps.forEach(function(g){ g.style.transform = 'rotate(' + (y * g.dataset.r) + 'deg)'; });
+    big.setAttribute('stroke-dasharray', (76 + Math.min(1, y / 400) * 20) + ' 200'); }
+  function step(now){ var dt = last ? Math.min(100, now - last) : 16.7, t = window.scrollY; last = now;
+    cur += (t - cur) * (1 - Math.pow(1 - .1, dt / 16.7)); if(Math.abs(t - cur) < .3) cur = t;
+    paint(cur); if(cur === t){ loop = 0; last = 0; } else loop = requestAnimationFrame(step); }
+  window.addEventListener('scroll', function(){ if(!loop) loop = requestAnimationFrame(step); }, {passive:true}); paint(cur);
+})();
+</script>
+<script>
+(function(){ // the laptop lid opens when it scrolls into view
+  var l=document.getElementById('laptop'); if(!l||!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  l.classList.add('closed');
+  new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){setTimeout(function(){l.classList.remove('closed')},150);o.disconnect()}})},{threshold:.45}).observe(l);
+})();
+</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+// The same 3D ring as on Roni's team page: gold band with glowing made-up runes.
+// Mouse: tilts toward the cursor. Touch (no hover): tilts and turns with the page scroll.
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+function runes(seed) {
+  // Glyphs are made up, drawn in the manner of a flowing elvish hand: stems, bows, arches and marks above.
+  let s = seed;
+  const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const W = 4096, H = 1024, cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const g = cv.getContext('2d');
+  g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
+  g.lineCap = 'round'; g.lineJoin = 'round';
+  // Broad-nib calligraphy: every stroke is drawn as a fan of thin offset lines along a fixed pen angle,
+  // so verticals come out thick and diagonals thin, like ink from a flat pen.
+  function nib(path, size) {
+    const n = 6, len = size * 0.045, ang = -0.6;
+    g.lineWidth = size * 0.014;
+    for (let i = 0; i < n; i++) {
+      const f = i / (n - 1) - 0.5;
+      g.save(); g.translate(Math.cos(ang) * len * f, Math.sin(ang) * len * f); g.stroke(path); g.restore();
+    }
+  }
+  function row(cy, size, gap = 1) {
+    let x = 30;
+    g.strokeStyle = '#fff'; g.fillStyle = '#fff'; g.shadowColor = '#fff';
+    const X = size * 0.2;                       // half x-height
+    while (x < W - size) {
+      g.save(); g.translate(x, cy); g.transform(1, 0, -0.12, 1, 0, 0); g.shadowBlur = size * 0.12;
+      const p = new Path2D(), kind = rnd();
+      let w = size * 0.5;
+      if (kind < 0.78) {
+        // stem with one or two bows on the right
+        const st = rnd(), top = st < 0.45 ? -size * 1.05 : -X, bot = st > 0.5 ? size * 1.0 : X;
+        p.moveTo(0, top); p.lineTo(0, bot);
+        const bows = rnd() < 0.55 ? 1 : 2, closed = rnd() < 0.5;
+        for (let k = 0; k < bows; k++) {
+          const ox = k * size * 0.24;
+          p.moveTo(ox, -X * 0.9);
+          p.bezierCurveTo(ox + size * 0.36, -X * 1.5, ox + size * 0.38, X * 0.9, closed ? ox : ox + size * 0.08, X);
+        }
+        w = size * (0.3 + (bows - 1) * 0.24);
+      } else if (kind < 0.9) {
+        // arches with no stem
+        const n = rnd() < 0.6 ? 1 : 2;
+        p.moveTo(0, X);
+        for (let k = 0; k < n; k++) { const ox = k * size * 0.36; p.bezierCurveTo(ox, -X * 1.6, ox + size * 0.36, -X * 1.6, ox + size * 0.36, X); }
+        w = size * (0.36 * n + 0.06);
+      } else {
+        // open bow facing left or right, with a tail
+        const r = rnd() < 0.5;
+        p.moveTo(r ? 0 : size * 0.4, -X);
+        p.bezierCurveTo(r ? size * 0.55 : -size * 0.15, -X * 1.2, r ? size * 0.55 : -size * 0.15, X * 1.2, r ? 0 : size * 0.4, X);
+        if (rnd() < 0.5) p.quadraticCurveTo(size * 0.2, X * 2.2, size * 0.45, X * 1.9);
+        w = size * 0.48;
+      }
+      nib(p, size);
+      // marks above the letter
+      const t = rnd(), mx = w * 0.45, my = -X - size * 0.26;
+      if (t < 0.22) { g.beginPath(); g.arc(mx, my, size * 0.045, 0, 7); g.fill(); }
+      else if (t < 0.36) { for (const [dx, dy] of [[-0.09, 0.03], [0.09, 0.03], [0, -0.1]]) { g.beginPath(); g.arc(mx + dx * size, my + dy * size, size * 0.038, 0, 7); g.fill(); } }
+      else if (t < 0.56) { const q = new Path2D(); q.moveTo(mx - size * 0.1, my + size * 0.06); q.lineTo(mx + size * 0.08, my - size * 0.08); nib(q, size * 0.8); }
+      else if (t < 0.7) { const q = new Path2D(); q.moveTo(mx - size * 0.16, my); q.bezierCurveTo(mx - size * 0.05, my - size * 0.12, mx + size * 0.05, my + size * 0.12, mx + size * 0.16, my); nib(q, size * 0.7); }
+      else if (t < 0.8) { const q = new Path2D(); q.moveTo(mx - size * 0.1, my + size * 0.04); q.quadraticCurveTo(mx + size * 0.05, my - size * 0.2, mx + size * 0.12, my + size * 0.02); nib(q, size * 0.7); }
+      g.restore();
+      x += w + size * (0.1 + rnd() * 0.07) * gap;
+      if (rnd() < 0.09) x += size * 0.35 * gap;
+    }
+  }
+  row(H * 0.75, 120);   // outer face (v ≈ 0.25)
+  row(H * 0.25, 90, 1.8);   // inner face (v ≈ 0.75)
+  const t = new THREE.CanvasTexture(cv);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  return t;
+}
+
+function mountRing(host) {
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.45;
+  host.appendChild(renderer.domElement);
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  const cam = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
+  cam.position.set(0, 0, 5.6);
+
+  const pts = [], R = 1, w = 0.17, h = 0.3;
+  for (let i = 0; i <= 96; i++) {
+    const a = -Math.PI / 2 + (i / 96) * Math.PI * 2;
+    const c = Math.cos(a), sx = c > 0 ? w : w * 0.55;
+    pts.push(new THREE.Vector2(R + sx * c, h * Math.sin(a)));
+  }
+  const geo = new THREE.LatheGeometry(pts, 256);
+  const mat = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color(1.0, 0.8, 0.38), metalness: 1, roughness: 0.2, envMapIntensity: 2.4, clearcoat: 0.4, clearcoatRoughness: 0.2,
+    emissive: new THREE.Color(1.0, 0.2, 0.01), emissiveMap: runes(20261111), emissiveIntensity: 1.5,
+  });
+  const ring = new THREE.Mesh(geo, mat);
+  const rig = new THREE.Group(); rig.add(ring); scene.add(rig);
+  const key = new THREE.DirectionalLight(0xfff1d6, 3); key.position.set(2, 3, 4); scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffe2b0, 1.6); fill.position.set(-3, -1, 3); scene.add(fill);
+  const rim = new THREE.PointLight(0xff8a2a, 6, 6); rim.position.set(0, 0, 0); scene.add(rim);
+
+  const touch = matchMedia('(hover: none)').matches;
+  const base = { x: 1.05, z: 0.12 };
+  let tx = 0, ty = 0, cx = 0, cy = 0, spin = 0, lastMove = 0;
+  if (!touch) addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    const r = host.getBoundingClientRect();
+    tx = ((e.clientY - (r.top + r.height / 2)) / innerHeight) * 1.2;
+    ty = ((e.clientX - (r.left + r.width / 2)) / innerWidth) * 1.6;
+    lastMove = performance.now();
+  });
+  function fromScroll() {
+    const r = host.getBoundingClientRect();
+    const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;   // -0.5..0.5 while on screen
+    tx = Math.max(-0.7, Math.min(0.7, p * 1.3));
+    ty = Math.sin(scrollY * 0.004) * 0.45;
+  }
+
+  // layout size, not getBoundingClientRect: the laptop lid is rotated while it opens, which would squash the ring
+  function size() { const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h, false); cam.aspect = w / h || 1; cam.updateProjectionMatrix(); }
+  new ResizeObserver(size).observe(host); size();
+
+  let raf = 0, visible = false;
+  const clock = new THREE.Clock();
+  function frame() {
+    const t = clock.getElapsedTime();
+    if (touch) fromScroll();
+    else if (performance.now() - lastMove > 2500) spin += 0.0012;
+    if (touch) spin += 0.0008;
+    cx += (tx - cx) * 0.06; cy += (ty - cy) * 0.06;
+    rig.rotation.set(base.x + cx, cy, base.z);
+    ring.rotation.y = spin;
+    mat.emissiveIntensity = 1.4 + Math.sin(t * 2.1) * 0.18 + Math.sin(t * 7.3) * 0.06;
+    rim.intensity = 5 + Math.sin(t * 2.1) * 1.2;
+    renderer.render(scene, cam);
+    raf = visible ? requestAnimationFrame(frame) : 0;
+  }
+  // render only while the ring is on screen
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible && !raf) frame(); }, { rootMargin: '200px' }).observe(host);
+  frame();
+}
+
+const host = document.getElementById('ring3d');
+if (matchMedia('(hover: none)').matches) document.getElementById('ringHint').textContent = 'גללו וראו איך היא זזה';
+try { mountRing(host); window.__ringOk = true; } catch (e) { host.innerHTML = '<div class="fb">💍</div>'; }
+// the small ring inside the laptop screen, on the team page screenshot
+try { mountRing(document.getElementById('ringLap')); } catch (e) {}
+</script>
+<script>setTimeout(()=>{if(!window.__ringOk){const h=document.getElementById('ring3d');if(h&&!h.firstChild)h.innerHTML='<div class="fb">💍</div>'}},8000)</script>
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "zbj402lsq5");</script>
+</body>
+</html>
