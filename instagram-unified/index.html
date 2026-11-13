@@ -490,6 +490,9 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
 
 <style>
 /* ===== unified guide ===== */
+/* hero ring: smaller, higher and faded so it never sits behind the text */
+.hero .hring{width:220px;top:-70px;left:-60px;margin-top:0;opacity:.35}
+@media (max-width:640px){.hero .hring{width:150px;top:-55px;left:-55px;opacity:.28}}
 .who{display:inline-flex;gap:5px;flex-wrap:wrap;margin-inline-start:6px;vertical-align:middle}
 .who span{font-size:.72rem;font-weight:800;border-radius:99px;padding:1px 9px;line-height:1.7}
 .who .u{background:#FBEFE9;color:#9A4630}
