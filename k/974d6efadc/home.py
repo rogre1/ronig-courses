@@ -5,6 +5,7 @@ works like Roni's own home: every page is a copy kept next to the home and publi
   python3 home.py rebuild  <home.html> <template.html>   new template, same details, tools fixed
   python3 home.py add-page <home.html> <lesson> <source.html> <name> [title] [sub] [icon] [link]
   python3 home.py files    <home.html>                    the `files` map to publish with (JSON)
+  python3 home.py add-file <home.html> <published path> <source>   a data file a page reads (for example data.json)
   python3 home.py check    <home.html>                    says OK or lists what is wrong
 """
 import json, os, re, shutil, sys
@@ -79,6 +80,39 @@ def add_page(home, lesson, src, name, title=None, sub=None, icon=None, link=None
     files(home)
 
 
+def extras_path(home):
+    return os.path.join(pages_dir(home), "files.json")
+
+
+def extras(home):
+    try:
+        return json.load(open(extras_path(home), encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def add_file(home, path, src):
+    if not os.path.isfile(src):
+        sys.exit("לא מצאתי את הקובץ: " + src)
+    path = path.lstrip("/")
+    d = pages_dir(home)
+    os.makedirs(d, exist_ok=True)
+    dest = os.path.join(d, "file-" + re.sub(r"[^A-Za-z0-9._-]", "_", path))
+    shutil.copyfile(src, dest)
+    e = extras(home)
+    e[path] = dest
+    json.dump(e, open(extras_path(home), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print("הקובץ נוסף לפרסום: " + path)
+
+
+def uses_db(f):
+    try:
+        t = open(f, encoding="utf-8", errors="ignore").read()
+    except Exception:
+        return False
+    return bool(re.search(r"""use\(\s*['"]db['"]""", t))
+
+
 def files(home):
     _, _, data = load(home)
     d = pages_dir(home)
@@ -90,6 +124,9 @@ def files(home):
             if not os.path.isfile(f):
                 sys.exit("חסר הקובץ של " + p + ". צריך להוסיף אותו שוב עם add-page.")
             out[p] = f
+    for k, v in extras(home).items():
+        if os.path.isfile(v):
+            out[k] = v
     print(json.dumps(out, ensure_ascii=False))
 
 
@@ -103,6 +140,8 @@ def check(home):
             bad.append(f"'{name}' צריך להיפתח בתוך הבית ואין לו עמוד. להוסיף עם add-page.")
         if t.get("page") and not os.path.isfile(os.path.join(d, os.path.basename(t["page"]))):
             bad.append(f"חסר הקובץ של '{name}'.")
+        if t.get("page") and uses_db(os.path.join(d, os.path.basename(t["page"]))) and not t.get("data"):
+            bad.append(f"'{name}' שומר את הנתונים שלו במאגר. צריך להעתיק את הנתונים מה-Artifact המקורי למאגר של הבית, ואז לכתוב בכלי \"data\": true.")
         if t.get("page") and t.get("info"):
             bad.append(f"ל'{name}' יש גם עמוד וגם חלון קטן.")
         if t.get("info") and t.get("lesson") not in INFO_LESSONS:
@@ -117,7 +156,7 @@ def check(home):
 
 if __name__ == "__main__":
     a = sys.argv[1:]
-    cmds = {"rebuild": (rebuild, 2), "add-page": (add_page, 4), "files": (files, 1), "check": (check, 1)}
+    cmds = {"rebuild": (rebuild, 2), "add-page": (add_page, 4), "add-file": (add_file, 3), "files": (files, 1), "check": (check, 1)}
     if not a or a[0] not in cmds or len(a) - 1 < cmds[a[0]][1]:
         sys.exit(__doc__)
     cmds[a[0]][0](*a[1:])
