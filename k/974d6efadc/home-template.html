@@ -367,14 +367,27 @@ document.getElementById("q").addEventListener("input", e=>drawTools(e.target.val
 const ov = document.createElement("div"); ov.className = "ov"; document.body.appendChild(ov);
 const homeMain = document.querySelector("main:not(.viewer)"), viewer = document.getElementById("viewer");
 function showHome(){
-  viewer.hidden = true; homeMain.hidden = false; document.getElementById("vframe").src = "about:blank";
+  viewer.hidden = true; homeMain.hidden = false; const vf = document.getElementById("vframe"); vf.removeAttribute("srcdoc"); vf.src = "about:blank";
   document.querySelectorAll(".rail .on").forEach(e=>e.classList.remove("on")); document.getElementById("homelnk").classList.add("on");
+}
+/* Pages are fetched and shown through srcdoc, the same way the proven home does it:
+   links inside open in a new tab, and the page stays light like the home. */
+const pageCache = {};
+const PSHIM = '<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href]");if(a&&/^https?:/.test(a.getAttribute("href"))){a.target="_blank";a.rel="noopener"}},true)<\/script>';
+async function loadPage(path){
+  const fr = document.getElementById("vframe");
+  try {
+    if (!pageCache[path]) { const r = await fetch(path); if (!r.ok) throw 0; pageCache[path] = await r.text(); }
+    let h = pageCache[path].replace(/\(\s*prefers-color-scheme:\s*dark\s*\)/g, "(max-width:0px)");
+    h = /<head[^>]*>/i.test(h) ? h.replace(/<head[^>]*>/i, m => m + PSHIM) : PSHIM + h;
+    fr.removeAttribute("src"); fr.srcdoc = h;
+  } catch (e) { fr.removeAttribute("srcdoc"); fr.src = path; }
 }
 function openPage(i){
   const x = tools[i];
   document.getElementById("vtitle").textContent = x.title;
   const a = document.getElementById("vlink"); if (x.link) { a.href = x.link; a.hidden = false; } else a.hidden = true;
-  document.getElementById("vframe").src = x.page;
+  loadPage(x.page);
   homeMain.hidden = true; viewer.hidden = false;
   document.querySelectorAll(".rail .on").forEach(e=>e.classList.remove("on"));
   const s = document.querySelector(`.rail [data-t="${i}"]`); if (s) s.classList.add("on");
