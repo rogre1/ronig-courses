@@ -62,8 +62,7 @@ def add_page(home, lesson, src, name, title=None, sub=None, icon=None, link=None
     d = pages_dir(home)
     os.makedirs(d, exist_ok=True)
     dest = os.path.join(d, name + ".html")
-    if os.path.abspath(src) != os.path.abspath(dest):
-        shutil.copyfile(src, dest)
+    embedded = copy_page(src, dest)
     s, m, data = load(home)
     tools = data.setdefault("tools", [])
     t = next((x for x in tools if x.get("lesson") == lesson), None)
@@ -72,6 +71,9 @@ def add_page(home, lesson, src, name, title=None, sub=None, icon=None, link=None
         tools.append(t)
     t["page"] = "tools/" + name + ".html"
     t.pop("info", None)
+    if embedded:
+        t["data"] = True
+        print("הנתונים נכנסו לעותק: " + ", ".join(embedded))
     for k, v in (("title", title), ("sub", sub), ("icon", icon), ("link", link)):
         if v:
             t[k] = v
@@ -111,6 +113,32 @@ def uses_db(f):
     except Exception:
         return False
     return bool(re.search(r"""use\(\s*['"]db['"]""", t))
+
+
+def copy_page(src, dest):
+    """Copies the page. Data files it loads with fetch (data.json and the like), found next to the
+    source, go inside the copy, so the copy opens with its data without changing the page itself."""
+    html = open(src, encoding="utf-8", errors="ignore").read()
+    here = os.path.dirname(os.path.abspath(src))
+    found = {}
+    for name in re.findall(r"""fetch\(\s*['"`]([^'"`?#]+)""", html):
+        key = name.replace("./", "", 1).lstrip("/")
+        f = os.path.join(here, key)
+        if not key.startswith("http") and os.path.isfile(f):
+            found[key] = open(f, encoding="utf-8", errors="ignore").read()
+    if found:
+        mp = json.dumps(found, ensure_ascii=False).replace("</", "<\\/")
+        inj = ("<script>(function(){var F=" + mp + ";var f=window.fetch;window.fetch=function(u,o){"
+               "var k=String(u&&u.url||u).split(/[?#]/)[0].replace(/^\\.\\//,'').replace(/^\\//,'');"
+               "if(Object.prototype.hasOwnProperty.call(F,k))return Promise.resolve(new Response(F[k],"
+               "{status:200,headers:{'Content-Type':k.endsWith('.json')?'application/json':'text/plain'}}));"
+               "return f.apply(this,arguments)}})();</script>")
+        if re.search(r"<head[^>]*>", html, re.I):
+            html = re.sub(r"<head[^>]*>", lambda mm: mm.group(0) + inj, html, count=1, flags=re.I)
+        else:
+            html = inj + html
+    open(dest, "w", encoding="utf-8").write(html)
+    return list(found)
 
 
 def files(home):
