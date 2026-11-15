@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>הבית שלי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;800&display=swap">
+
+<!--
+  ===== הנתונים של הבית =====
+  המלווה מעדכן רק את הבלוק הזה. את שאר הקובץ לא משנים.
+  name, business = השם ותיאור העסק
+  photo   = תמונת פרופיל כ-data:image (אפשר להשאיר ריק, ואז מופיעה האות הראשונה)
+  logo    = הלוגו של העסק כ-data:image, מופיע בראש התפריט (ריק = אייקון של בית)
+  colors  = rail (הצבע הכהה: התפריט והכרטיס הגדול) ו-accent (צבע ההדגשה הבהיר)
+  url     = הקישור של הבית אחרי שפורסם
+  updated = מתי הבית עודכן לאחרונה, במילים (למשל "היום ב-07:00")
+  star    = הכרטיס הגדול והכהה (ריק עד שיש מספר חשוב, למשל הצעות מחיר פתוחות)
+  today   = מיילים ופגישות של היום (ריק עד שמחברים Gmail ויומן)
+  cards   = עד 6 מספרים קטנים
+  tools   = הכלים שנבנו. lesson = מזהה השיעור, link = קישור אם יש, hot = האריח הבולט
+            page = עמוד שנבנה בקורס (למשל דשבורד) שמתפרסם יחד עם הבית, נתיב יחסי כמו tools/dashboard.html.
+                   נפתח בתוך הבית, והתפריט נשאר בצד
+            info = חלון קטן עם הסבר (למוח של העסק ולערכת המותג): about, colors [{c,name}], facts [[כותרת,ערך]], hint
+            link = רק לדברים חיצוניים עם כתובת משלהם (למשל אתר או בוט). נפתח בלשונית חדשה
+-->
+<script id="home-data" type="application/json">
+{
+  "name": "דנה",
+  "business": "סטודיו לעיצוב",
+  "photo": "",
+  "logo": "",
+  "colors": { "rail": "#27415E", "accent": "#7FE3D8" },
+  "url": "",
+  "updated": "",
+  "star": null,
+  "today": null,
+  "cards": [],
+  "tools": []
+}
+</script>
+
+<style>
+:root{
+  --rail:#27415E; --acc:#7FE3D8;
+  --bg:color-mix(in srgb,var(--rail) 5%,#fff);
+  --tint:color-mix(in srgb,var(--acc) 26%,#fff);
+  --line:color-mix(in srgb,var(--rail) 13%,#fff);
+  --ink:color-mix(in srgb,var(--rail) 55%,#0b0f14);
+  --soft:color-mix(in srgb,var(--rail) 40%,#7d8794);
+  --railtx:color-mix(in srgb,var(--acc) 40%,#fff);
+  --warn:#FFF3C9; --warnk:#8A6410; --ok:#46B07A;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Assistant","Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.5}
+h1,h2,p{margin:0}
+a{color:inherit}
+.ic{width:18px;height:18px;flex:none;display:inline-block}
+.ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;display:block}
+.app{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:100vh}
+
+/* תפריט */
+.rail{background:var(--rail);color:var(--railtx);padding:22px 12px;display:flex;flex-direction:column;gap:2px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;font-size:17px;margin:0 6px 20px;line-height:1.2}
+.mark{width:36px;height:36px;border-radius:12px;background:var(--acc);display:grid;place-items:center;color:var(--rail);padding:7px;flex:none}
+.mark .ic{width:100%;height:100%}
+.mark.logo{background:#fff;padding:4px}
+.mark.logo img{width:100%;height:100%;object-fit:contain;display:block}
+.lnk{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:12px;font-size:15.5px}
+.lnk.on{background:rgba(255,255,255,.14);color:#fff;font-weight:700}
+.sep{font-size:13px;opacity:.65;margin:14px 10px 4px}
+.topic summary{list-style:none;display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:12px;font-size:15px;font-weight:600;color:#fff;cursor:pointer}
+.topic summary::-webkit-details-marker{display:none}
+.topic summary:hover{background:rgba(255,255,255,.08)}
+.topic .ti{width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.12);display:grid;place-items:center;padding:5px;flex:none}
+.topic .ti .ic{width:100%;height:100%}
+.topic .n{margin-inline-start:auto;font-size:12.5px;opacity:.6}
+.chev{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;opacity:.7;transition:transform .2s;flex:none}
+.topic[open] .chev{transform:rotate(180deg)}
+.subs{display:flex;flex-direction:column;gap:1px;padding:2px 0 8px;margin-inline-start:22px;border-inline-start:1px solid rgba(255,255,255,.15)}
+.sub{display:flex;align-items:center;gap:9px;padding:6px 10px;border-radius:9px;font-size:14.5px;color:inherit;text-decoration:none}
+a.sub:hover{background:rgba(255,255,255,.08)}
+.sub .ic{width:15px;height:15px;opacity:.8}
+.course{margin-top:auto;background:rgba(255,255,255,.08);border-radius:14px;padding:12px;font-size:13.5px;display:flex;flex-direction:column;gap:6px}
+.course b{color:#fff;font-size:14px}
+.track{height:6px;border-radius:99px;background:rgba(255,255,255,.15);overflow:hidden}
+.track i{display:block;height:100%;border-radius:99px;background:var(--acc)}
+.course code{font-family:inherit;font-weight:700;color:#fff;background:rgba(255,255,255,.14);border-radius:6px;padding:0 6px}
+
+/* ראש העמוד */
+main{padding:26px 32px 48px;display:flex;flex-direction:column;gap:22px;max-width:1120px;min-width:0}
+main[hidden]{display:none}
+.viewer{max-width:none;padding:18px 22px 22px;gap:12px;height:100vh;box-sizing:border-box}
+.vbar{display:flex;align-items:center;gap:12px}
+.vbar h2{margin:0;font-size:20px;font-weight:800}
+.vbar .back{border:0;background:var(--tint);color:var(--rail);font:inherit;font-weight:700;border-radius:11px;padding:7px 14px;cursor:pointer}
+.vbar a{margin-inline-start:auto;color:var(--soft);font-size:14px}
+.vframe{flex:1;width:100%;border:1px solid var(--line);border-radius:18px;background:#fff;min-height:0}
+.lnk{cursor:pointer}
+.sub.on{background:rgba(255,255,255,.14);color:#fff;font-weight:700}
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.av{width:48px;height:48px;border-radius:50%;flex:none;box-shadow:0 0 0 3px #fff,0 0 0 5px var(--acc);overflow:hidden;background:var(--tint);color:var(--rail);display:grid;place-items:center;font-weight:800;font-size:20px}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.top h1{font-size:30px;font-weight:800;line-height:1.15}
+.top small{display:block;color:var(--soft);font-size:15px}
+.search{margin-inline-start:auto;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 14px;color:var(--soft);min-width:240px}
+.search input{border:0;outline:0;font:inherit;font-size:15px;color:var(--ink);background:transparent;width:100%}
+.search:focus-within{border-color:var(--acc)}
+
+/* כרטיסים */
+.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.card .h{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px;color:var(--soft)}
+.sic{width:34px;height:34px;border-radius:11px;background:var(--tint);color:var(--rail);display:grid;place-items:center;padding:8px;flex:none}
+.sic .ic{width:100%;height:100%}
+.big{font-size:36px;font-weight:800;line-height:1.05;font-variant-numeric:tabular-nums;margin-top:6px;color:var(--ink)}
+.big .u{font-size:.6em;font-weight:700;margin-inline-start:4px;opacity:.75}
+.card small{color:var(--soft);font-size:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:13.5px;font-weight:700;border-radius:99px;padding:3px 11px;background:var(--tint);color:var(--rail)}
+.strip{margin-top:auto;background:var(--warn);color:var(--warnk);border-radius:12px;padding:7px 11px;font-size:14px;font-weight:700}
+.spark{margin-top:auto;height:38px;width:100%;display:block}
+.card.empty{background:transparent;border:1.5px dashed color-mix(in srgb,var(--soft) 45%,transparent)}
+.card.empty .sic{background:transparent;border:1.5px dashed color-mix(in srgb,var(--soft) 45%,transparent);color:var(--soft)}
+.star{grid-column:span 2;grid-row:span 2;background:var(--rail);border-color:var(--rail);color:#fff;padding:24px;gap:8px}
+.star .h{color:var(--railtx)}
+.star .sic{background:rgba(255,255,255,.14);color:var(--acc)}
+.star .big{font-size:56px;margin-top:14px;color:#fff}
+.star small{color:var(--railtx);font-size:15px}
+.star .pill{background:var(--acc);color:var(--rail)}
+.star p{font-size:17px;line-height:1.55;color:#fff;opacity:.92;max-width:46ch;margin-top:4px}
+.star code{white-space:nowrap;background:var(--acc);color:var(--rail);border-radius:8px;padding:1px 9px;font-family:inherit;font-weight:800}
+.star .bar{height:10px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden}
+.star .bar i{display:block;height:100%;border-radius:99px;background:var(--acc)}
+.barl{margin-top:auto;display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--railtx)}
+.rows{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+.row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.09);border-radius:13px;padding:9px 12px;font-size:15px}
+.row span:last-child{margin-inline-start:auto;font-weight:700;color:var(--acc)}
+.today{grid-column:span 2}
+.today .big{font-size:30px}
+.today ul{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.today li{display:flex;gap:10px;align-items:baseline;font-size:15px;flex-wrap:wrap}
+.today li b{font-variant-numeric:tabular-nums;min-width:44px}
+.today li span{color:var(--soft);font-size:14px}
+
+/* כלים */
+.sec{display:flex;align-items:baseline;gap:10px}
+.sec h2{font-size:19px;font-weight:800}
+.sec span{font-size:14px;color:var(--soft)}
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.grp{font-size:14px;font-weight:800;color:var(--soft);margin:8px 2px -2px;grid-column:1/-1}
+.tool{display:flex;flex-direction:column;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;min-width:0;min-height:138px;text-decoration:none;color:inherit}
+a.tool:hover{border-color:var(--acc)}
+.ico{width:48px;height:48px;border-radius:15px;background:var(--tint);color:var(--rail);display:grid;place-items:center;padding:12px;flex:none}
+.ico .ic{width:100%;height:100%}
+.tool b{display:block;font-size:15.5px;line-height:1.25}
+.tool small{color:var(--soft);font-size:13.5px}
+.tool.hot{background:var(--rail);border-color:var(--rail);color:#fff}
+.tool.hot .ico{background:var(--acc)}
+.tool.hot small{color:var(--railtx)}
+.tool.lock{background:transparent;border:1.5px dashed color-mix(in srgb,var(--soft) 45%,transparent)}
+.tool.lock .ico{background:transparent;color:var(--soft)}
+button.tool,button.sub{font:inherit;text-align:start;cursor:pointer;width:100%}
+button.sub{background:none;border:0}
+.ov{position:fixed;inset:0;background:rgba(20,36,58,.38);display:none;place-items:center;padding:16px;z-index:20}
+.ov.on{display:grid}
+.mod{background:#fff;border-radius:22px;max-width:460px;width:100%;padding:22px 22px 18px;box-shadow:0 20px 50px rgba(20,36,58,.25);max-height:90vh;overflow:auto}
+.mod .top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.mod .top b{font-size:20px;font-weight:800;display:block}
+.mod .top small{display:block;color:var(--soft);font-size:14px}
+.mod .top .ico{width:42px;height:42px;padding:10px;flex:none}
+.mod .x{margin-inline-start:auto;border:0;background:var(--tint);border-radius:10px;width:32px;height:32px;font-size:19px;cursor:pointer;color:var(--soft);flex:none}
+.mod .about{margin:0 0 12px;font-size:16px}
+.facts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.facts li{background:var(--bg);border-radius:12px;padding:9px 12px;font-size:15.5px}
+.facts li span{display:block;color:var(--soft);font-size:13.5px}
+.facts li span+span{color:var(--ink);font-size:15.5px}
+.sw{display:flex;gap:14px;margin:4px 0 14px;flex-wrap:wrap}
+.sw div{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:13px;color:var(--soft)}
+.sw i{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);display:block}
+.hint{margin:14px 0 0;font-size:14.5px;color:var(--soft);border-top:1px solid var(--line);padding-top:12px}
+.go{display:inline-block;margin-top:14px;background:var(--rail);color:#fff;text-decoration:none;font-weight:800;border-radius:12px;padding:9px 18px}
+.nores{color:var(--soft);grid-column:1/-1}
+
+@media(max-width:960px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:820px){.app{grid-template-columns:1fr}.rail{display:none}main{padding:18px 16px 32px}.search{min-width:0;flex:1 1 100%;margin:0}}
+@media(max-width:520px){.bento{grid-template-columns:1fr}.star,.today{grid-column:auto;grid-row:auto}.star .big{font-size:46px}.tools{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="rail" aria-label="תפריט" id="rail"></nav>
+  <main>
+    <header class="top">
+      <div class="av" id="av"></div>
+      <div><h1 id="hello"></h1><small id="sub"></small></div>
+      <label class="search"><span class="ic" data-i="search"></span><input id="q" type="search" placeholder="איזה כלי לפתוח?" aria-label="חיפוש כלי"></label>
+    </header>
+    <section class="bento" id="bento"></section>
+    <section>
+      <div class="sec"><h2>הכלים שלי</h2><span id="count"></span></div>
+      <div class="tools" id="tools" style="margin-top:12px"></div>
+    </section>
+  </main>
+  <main class="viewer" id="viewer" hidden>
+    <div class="vbar"><button type="button" class="back" id="back">→ חזרה לבית</button><h2 id="vtitle"></h2><a id="vlink" target="_blank" rel="noopener" hidden>פתיחה בחלון חדש</a></div>
+    <iframe class="vframe" id="vframe" title="כלי"></iframe>
+  </main>
+</div>
+
+<script>
+/* מבנה הקורס. לא משנים. */
+const COURSE = [
+ {n:"מתחילים עם קלוד קוד", ic:"compass", lessons:[["c0l1","מה זה קלוד קוד"],["c0l2","הרשמה והורדה"],["c0l3","סיור בכפתורים"],["c0l4","מכסה, טוקנים והזיכרון הגלובלי"],["c0l5","ערכת המותג"],["c0l6","דשבורד מטבלה"],["c0l7","הבית שלי והמלווה"],["c0l8","הסקיל הראשון: הצעת מחיר"],["c0l9","מחברים Gmail ויומן"]]},
+ {n:"סדר ואירגון", ic:"folder", lessons:[["c1l1","סידור תיקיות"],["c1l2","סדר במייל"],["c1l3","חשבוניות מהמייל"],["c1l4","לאן הולך הכסף"],["c1l5","צייד המנויים"]]},
+ {n:"צייד הרעיונות", ic:"bulb", lessons:[["c2l1","מנהל השמורים"],["c2l2","מעקב מתחרים"],["c2l3","רעיונות ומשימות"]]},
+ {n:"קלוד המעצב", ic:"sparkle", lessons:[["c3l1","דף נחיתה"],["c3l2","קרוסלה"],["c3l3","מצגת"]]},
+ {n:"עורך הווידאו", ic:"film", lessons:[["c4l1","כתוביות וחיתוך שקטים"],["c4l2","מאגר בי-רולים"],["c4l3","מאגר אפקטים"]]},
+ {n:"עבודה עם לקוחות", ic:"users", lessons:[["c5l1","מערכת לידים"],["c5l2","שאלון התאמה"],["c5l3","לפני הפגישה ואחריה"],["c5l4","מיילים ללקוחות"]]},
+ {n:"מנהל הקמפיינים", ic:"mega", lessons:[["c6l1","דשבורד מודעות"],["c6l2","תגובה ששולחת הודעה"],["c6l3","בוט וואטסאפ"]]},
+ {n:"סוכנים ותזמונים", ic:"robot", lessons:[["c7l1","הסוכן הראשון"],["c7l2","תזמון הבדיקות"]]}
+];
+const IC = {
+ home:'<path d="M4 11 12 4l8 7v9H4z"/><path d="M10 20v-6h4v6"/>',
+ search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+ brain:'<path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 3 3h1V4z"/><path d="M15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-3 3h-1V4z"/>',
+ palette:'<circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10" r="1.3"/><circle cx="12" cy="7.5" r="1.3"/><circle cx="15.5" cy="10" r="1.3"/>',
+ chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+ doc:'<path d="M6 3h9l4 4v14H6z"/><path d="M9 12h6M9 16h4"/>',
+ star:'<path d="m12 4 2.4 5 5.6.6-4.2 3.8 1.2 5.6L12 16.3 7 19l1.2-5.6L4 9.6 9.6 9z"/>',
+ calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+ mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+ folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+ inbox:'<path d="M3 13h5l1 3h6l1-3h5"/><path d="M5 5h14l2 8v6H3v-6z"/>',
+ receipt:'<path d="M5 3v18l3-2 2 2 2-2 2 2 2-2 3 2V3z"/><path d="M9 8h6M9 12h6"/>',
+ pie:'<path d="M12 3v9h9a9 9 0 1 1-9-9z"/>',
+ wallet:'<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M16 12h2"/>',
+ bookmark:'<path d="M6 3h12v18l-6-4-6 4z"/>',
+ eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+ check:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h11"/>',
+ layout:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/>',
+ cards:'<rect x="6" y="4" width="12" height="16" rx="2"/><path d="M3 7v10M21 7v10"/>',
+ slides:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/>',
+ cc:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15h4M13 15h4"/>',
+ film:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16"/>',
+ sparkle:'<path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/>',
+ bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5V16h8v-2.5A6 6 0 0 0 12 3z"/>',
+ users:'<circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0M16 4a3.5 3.5 0 0 1 0 7M21 20a6 6 0 0 0-4-5.6"/>',
+ user:'<circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M17 11v6M14 14h6"/>',
+ form:'<path d="M9 4h6v3H9z"/><rect x="5" y="5" width="14" height="16" rx="2"/>',
+ mega:'<path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 8a5 5 0 0 1 0 8"/>',
+ chat:'<path d="M4 5h16v11H8l-4 4z"/>',
+ robot:'<rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9 16h6"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ compass:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+ lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ tick:'<path d="M5 12l5 5 9-10"/>'
+};
+const ic = n => `<span class="ic"><svg viewBox="0 0 24 24">${IC[n]||IC.star}</svg></span>`;
+const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const chev = '<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+
+let D = {};
+try { D = JSON.parse(document.getElementById("home-data").textContent) || {}; } catch(e) { D = {}; }
+const tools = D.tools||[], cards = D.cards||[];
+if (D.colors) {
+  const r = document.documentElement.style;
+  if (D.colors.rail) r.setProperty("--rail", D.colors.rail);
+  if (D.colors.accent) r.setProperty("--acc", D.colors.accent);
+}
+const name = D.name || "";
+document.title = name ? `הבית של ${name}` : "הבית שלי";
+document.querySelectorAll("[data-i]").forEach(e=>e.outerHTML = ic(e.dataset.i));
+
+/* איפה עומדים בקורס */
+const all = COURSE.flatMap((c,ci)=>c.lessons.map(l=>({id:l[0],t:l[1],ci})));
+/* ההתקדמות נמדדת לפי הכלים שנוספו לבית. אלה השיעורים שבונים כלי. */
+const TOOL_LESSONS = ["c0l4","c0l5","c0l6","c0l8","c0l9","c1l1","c1l2","c1l3","c1l4","c1l5","c2l1","c2l2","c2l3","c3l1","c3l2","c3l3","c4l1","c4l2","c4l3","c5l1","c5l2","c5l3","c5l4","c6l1","c6l2","c6l3","c7l1","c7l2"];
+const have = new Set(tools.map(t=>t.lesson));
+const nDone = TOOL_LESSONS.filter(id=>have.has(id)).length;
+const nextL = all.find(l=>TOOL_LESSONS.includes(l.id) && !have.has(l.id));
+const courseOf = id => { const m = /^c(\d+)l/.exec(id||""); return m ? +m[1] : 0; };
+
+/* ראש העמוד */
+const h = new Date().getHours();
+const greet = h < 12 ? "בוקר טוב" : h < 17 ? "צהריים טובים" : "ערב טוב";
+document.getElementById("hello").textContent = name ? `${greet}, ${name}` : greet;
+document.getElementById("sub").textContent = new Date().toLocaleDateString("he-IL",{weekday:"long",day:"numeric",month:"long"}) + (D.updated ? " · עודכן " + D.updated : (D.business ? " · " + D.business : ""));
+const av = document.getElementById("av");
+if (D.photo) av.innerHTML = `<img src="${esc(D.photo)}" alt="">`; else av.textContent = (name||"ב").trim().charAt(0);
+
+/* תפריט */
+let rail = `<div class="brand">${D.logo ? `<span class="mark logo"><img src="${esc(D.logo)}" alt=""></span>` : `<span class="mark">${ic("home")}</span>`}<span>${esc(name ? "הבית של " + name : "הבית שלי")}</span></div>
+<div class="lnk on" id="homelnk" role="button" tabindex="0">${ic("home")}הבית</div><div class="sep">הכלים שלי</div>`;
+COURSE.forEach((c,ci)=>{
+  const ts = tools.filter(t=>courseOf(t.lesson)===ci);
+  if (!ts.length) return;
+  rail += `<details class="topic"${ci===courseOf(nextL&&nextL.id)?" open":""}><summary><span class="ti">${ic(c.ic)}</span>${esc(c.n)}<span class="n">${ts.length}</span>${chev}</summary><div class="subs">` +
+    ts.map(t=> t.page ? `<button type="button" class="sub" data-t="${tools.indexOf(t)}">${ic(t.icon)}${esc(t.title)}</button>` : t.info ? `<button type="button" class="sub" data-t="${tools.indexOf(t)}">${ic(t.icon)}${esc(t.title)}</button>` : t.link ? `<a class="sub" href="${esc(t.link)}" target="_blank" rel="noopener">${ic(t.icon)}${esc(t.title)}</a>` : `<div class="sub">${ic(t.icon)}${esc(t.title)}</div>`).join("") + `</div></details>`;
+});
+rail += `<div class="course"><b>הכלים שבנית · ${nDone} מתוך ${TOOL_LESSONS.length}</b><div class="track"><i style="width:${Math.round(nDone/TOOL_LESSONS.length*100)}%"></i></div>
+  <span>${nextL ? "הכלי הבא: " + esc(nextL.t) : "בנית את כל הכלים בקורס"}</span></div>`;
+document.getElementById("rail").innerHTML = rail;
+
+/* כרטיסים */
+const num = (v,u) => `<div class="big">${esc(v)}${u?`<span class="u">${esc(u)}</span>`:""}</div>`;
+const spark = arr => {
+  if (!Array.isArray(arr) || arr.length < 2) return "";
+  const mx = Math.max(...arr), mn = Math.min(...arr), w = 120, H = 38, step = w/(arr.length-1);
+  const pts = arr.map((v,i)=>`${(i*step).toFixed(1)} ${(H-4-(mx===mn?.5:(v-mn)/(mx-mn))*(H-10)).toFixed(1)}`);
+  return `<svg class="spark" viewBox="0 0 ${w} ${H}" preserveAspectRatio="none"><path d="M${pts.join(" L")} L${w} ${H} L0 ${H}Z" fill="var(--tint)"/><path d="M${pts.join(" L")}" fill="none" stroke="var(--rail)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`;
+};
+let b = "";
+const S = D.star;
+if (S && S.title) {
+  b += `<div class="card star"><div class="h"><span class="sic">${ic(S.icon||"star")}</span>${esc(S.title)}</div>${num(S.value,S.unit)}
+    ${S.label?`<small>${esc(S.label)}</small>`:""}${S.pill?`<span class="pill">${esc(S.pill)}</span>`:""}
+    ${S.progress?`<div class="barl"><span>${esc(S.progress.label)}</span><span>${esc(S.progress.text)}</span></div><div class="bar"><i style="width:${Math.max(0,Math.min(100,+S.progress.pct||0))}%"></i></div>`:""}</div>`;
+} else {
+  const ready = tools.slice(0,3);
+  b += `<div class="card star"><div class="h"><span class="sic">${ic("compass")}</span>מה המצב בעסק</div>
+    <p>הבית של העסק מוכן. כל כלי שתבנו בקורס יופיע כאן, והמספרים החשובים יעלו למעלה.</p>
+    ${ready.length?`<div class="rows">${ready.map(t=>`<div class="row">${ic("tick")}${esc(t.title)}<span>מוכן</span></div>`).join("")}</div>`:""}</div>`;
+}
+const T = D.today;
+if (T && (T.items||T.meetings!=null)) {
+  b += `<div class="card today"><div class="h"><span class="sic">${ic("calendar")}</span>היום</div>
+    <div class="big">${esc(T.meetings??0)} פגישות · ${esc(T.mails??0)} מיילים</div>
+    <ul>${(T.items||[]).slice(0,4).map(x=>`<li><b>${esc(x.time||"")}</b>${esc(x.title)}${x.note?`<span>${esc(x.note)}</span>`:""}</li>`).join("")}</ul></div>`;
+} else {
+  b += `<div class="card empty today"><div class="h"><span class="sic">${ic("calendar")}</span>היום: מיילים ופגישות</div><small>נכנס כאן אחרי שמחברים Gmail ויומן</small></div>`;
+}
+cards.slice(0,6).forEach(c=>{
+  b += `<div class="card"><div class="h"><span class="sic">${ic(c.icon||"chart")}</span>${esc(c.title)}</div>${num(c.value,c.unit)}
+    ${c.label?`<small>${esc(c.label)}</small>`:""}${c.pill?`<span class="pill">${esc(c.pill)}</span>`:""}${spark(c.spark)}${c.warn?`<div class="strip">${esc(c.warn)}</div>`:""}</div>`;
+});
+for (let k=cards.length;k<2;k++) b += `<div class="card empty"><div class="h"><span class="sic">${ic("plus")}</span>מספר חשוב</div><small>אפשר לבקש מקלוד להציג כאן מספר מהעסק</small></div>`;
+document.getElementById("bento").innerHTML = b;
+
+/* כלים */
+function drawTools(q){
+  q = (q||"").trim();
+  let t = "", shown = 0;
+  COURSE.forEach((c,ci)=>{
+    const ts = tools.filter(x=>courseOf(x.lesson)===ci && (!q || (x.title+" "+(x.sub||"")).includes(q)));
+    if (!ts.length) return;
+    t += `<div class="grp">${esc(c.n)}</div>`;
+    ts.forEach(x=>{
+      shown++;
+      const inner = `<span class="ico">${ic(x.icon)}</span><span><b>${esc(x.title)}</b><small>${esc(x.sub)}</small></span>`;
+      const cls = "tool" + (x.hot?" hot":"");
+      t += (x.page || x.info) ? `<button type="button" class="${cls}" data-t="${tools.indexOf(x)}">${inner}</button>` : x.link ? `<a class="${cls}" href="${esc(x.link)}" target="_blank" rel="noopener">${inner}</a>` : `<div class="${cls}">${inner}</div>`;
+    });
+  });
+  if (q && !shown) t = `<p class="nores">אין כלי בשם הזה עדיין.</p>`;
+  if (!q && nextL) t += `<div class="tool lock"><span class="ico">${ic("plus")}</span><span><b>הכלי הבא</b><small>מגיע בשיעורים הבאים</small></span></div>`;
+  document.getElementById("tools").innerHTML = t;
+}
+drawTools();
+document.getElementById("q").addEventListener("input", e=>drawTools(e.target.value));
+
+/* חלון של כלי */
+const ov = document.createElement("div"); ov.className = "ov"; document.body.appendChild(ov);
+const homeMain = document.querySelector("main:not(.viewer)"), viewer = document.getElementById("viewer");
+function showHome(){
+  viewer.hidden = true; homeMain.hidden = false; document.getElementById("vframe").src = "about:blank";
+  document.querySelectorAll(".rail .on").forEach(e=>e.classList.remove("on")); document.getElementById("homelnk").classList.add("on");
+}
+function openPage(i){
+  const x = tools[i];
+  document.getElementById("vtitle").textContent = x.title;
+  const a = document.getElementById("vlink"); if (x.link) { a.href = x.link; a.hidden = false; } else a.hidden = true;
+  document.getElementById("vframe").src = x.page;
+  homeMain.hidden = true; viewer.hidden = false;
+  document.querySelectorAll(".rail .on").forEach(e=>e.classList.remove("on"));
+  const s = document.querySelector(`.rail [data-t="${i}"]`); if (s) s.classList.add("on");
+}
+document.getElementById("back").addEventListener("click", showHome);
+document.getElementById("homelnk").addEventListener("click", showHome);
+function openTool(i){
+  const x = tools[i]; if (!x) return;
+  if (x.page) { openPage(i); return; }
+  if (!x.info) return; const f = x.info;
+  let h = `<div class="mod" role="dialog" aria-modal="true"><div class="top"><span class="ico">${ic(x.icon)}</span><div><b>${esc(x.title)}</b><small>${esc(x.sub||"")}</small></div><button type="button" class="x" aria-label="סגירה">×</button></div>`;
+  if (f.about) h += `<p class="about">${esc(f.about)}</p>`;
+  if (f.colors && f.colors.length) h += `<div class="sw">${f.colors.map(c=>`<div><i style="background:${esc(c.c)}"></i>${esc(c.name||"")}</div>`).join("")}</div>`;
+  if (f.facts && f.facts.length) h += `<ul class="facts">${f.facts.map(r=>`<li><span>${esc(r[0])}</span><span>${esc(r[1])}</span></li>`).join("")}</ul>`;
+  if (x.link) h += `<a class="go" href="${esc(x.link)}" target="_blank" rel="noopener">פתיחה</a>`;
+  if (f.hint) h += `<p class="hint">${esc(f.hint)}</p>`;
+  ov.innerHTML = h + `</div>`; ov.classList.add("on");
+}
+document.addEventListener("click", e=>{
+  const b = e.target.closest("[data-t]"); if (b) { openTool(+b.dataset.t); return; }
+  if (e.target === ov || e.target.closest(".x")) ov.classList.remove("on");
+});
+document.addEventListener("keydown", e=>{ if (e.key === "Escape") ov.classList.remove("on"); });
+document.getElementById("count").textContent = tools.length ? `${tools.length} כלים` : "עוד אין כלים. הראשון מגיע ממש בקרוב";
+</script>
+</body>
+</html>
