@@ -22,7 +22,7 @@
   tools   = הכלים שנבנו. lesson = מזהה השיעור, link = קישור אם יש, hot = האריח הבולט
             page = עמוד שנבנה בקורס (למשל דשבורד) שמתפרסם יחד עם הבית, נתיב יחסי כמו tools/dashboard.html.
                    נפתח בתוך הבית, והתפריט נשאר בצד
-            info = חלון קטן עם הסבר (למוח של העסק ולערכת המותג): about, colors [{c,name}], facts [[כותרת,ערך]], hint
+            info = חלון קטן עם הסבר (למוח של העסק ולערכת המותג): about, colors [{c,name}], logo (תמונת הלוגו כ-data:image), facts [[כותרת,ערך]], hint
             link = רק לדברים חיצוניים עם כתובת משלהם (למשל אתר או בוט). נפתח בלשונית חדשה
 -->
 <script id="home-data" type="application/json">
@@ -179,6 +179,8 @@ button.sub{background:none;border:0}
 .sw{display:flex;gap:14px;margin:4px 0 14px;flex-wrap:wrap}
 .sw div{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:13px;color:var(--soft)}
 .sw i{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);display:block}
+.lg{display:flex;flex-direction:column;gap:6px;margin:0 0 14px;font-size:13.5px;color:var(--soft)}
+.lg img{max-width:150px;max-height:84px;object-fit:contain;align-self:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px}
 .hint{margin:14px 0 0;font-size:14.5px;color:var(--soft);border-top:1px solid var(--line);padding-top:12px}
 .go{display:inline-block;margin-top:14px;background:var(--rail);color:#fff;text-decoration:none;font-weight:800;border-radius:12px;padding:9px 18px}
 .nores{color:var(--soft);grid-column:1/-1}
@@ -386,7 +388,10 @@ function openTool(i){
   let h = `<div class="mod" role="dialog" aria-modal="true"><div class="top"><span class="ico">${ic(x.icon)}</span><div><b>${esc(x.title)}</b><small>${esc(x.sub||"")}</small></div><button type="button" class="x" aria-label="סגירה">×</button></div>`;
   if (f.about) h += `<p class="about">${esc(f.about)}</p>`;
   if (f.colors && f.colors.length) h += `<div class="sw">${f.colors.map(c=>`<div><i style="background:${esc(c.c)}"></i>${esc(c.name||"")}</div>`).join("")}</div>`;
-  if (f.facts && f.facts.length) h += `<ul class="facts">${f.facts.map(r=>`<li><span>${esc(r[0])}</span><span>${esc(r[1])}</span></li>`).join("")}</ul>`;
+  const lg = f.logo || ((f.facts||[]).some(r=>r[0]==="לוגו") ? D.logo : "");
+  if (lg) h += `<div class="lg">לוגו<img src="${esc(lg)}" alt="הלוגו"></div>`;
+  const fx = (f.facts||[]).filter(r=>!(lg && r[0]==="לוגו"));
+  if (fx.length) h += `<ul class="facts">${fx.map(r=>`<li><span>${esc(r[0])}</span><span>${esc(r[1])}</span></li>`).join("")}</ul>`;
   if (x.link) h += `<a class="go" href="${esc(x.link)}" target="_blank" rel="noopener">פתיחה</a>`;
   if (f.hint) h += `<p class="hint">${esc(f.hint)}</p>`;
   ov.innerHTML = h + `</div>`; ov.classList.add("on");
