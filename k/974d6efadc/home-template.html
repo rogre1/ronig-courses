@@ -11,6 +11,7 @@
   ===== הנתונים של הבית =====
   המלווה מעדכן רק את הבלוק הזה. את שאר הקובץ לא משנים.
   name, business = השם ותיאור העסק
+  brand   = שם העסק, מופיע בראש התפריט ובכותרת (ריק = "הבית של" + השם)
   photo   = תמונת פרופיל כ-data:image (אפשר להשאיר ריק, ואז מופיעה האות הראשונה)
   logo    = הלוגו של העסק כ-data:image, מופיע בראש התפריט (ריק = אייקון של בית)
   colors  = rail (הצבע הכהה: התפריט והכרטיס הגדול) ו-accent (צבע ההדגשה הבהיר)
@@ -28,6 +29,7 @@
 <script id="home-data" type="application/json">
 {
   "name": "דנה",
+  "brand": "",
   "business": "סטודיו לעיצוב",
   "photo": "",
   "logo": "",
@@ -273,7 +275,7 @@ if (D.colors) {
   if (D.colors.accent) r.setProperty("--acc", D.colors.accent);
 }
 const name = D.name || "";
-document.title = name ? `הבית של ${name}` : "הבית שלי";
+document.title = D.brand || (name ? `הבית של ${name}` : "הבית שלי");
 document.querySelectorAll("[data-i]").forEach(e=>e.outerHTML = ic(e.dataset.i));
 
 /* איפה עומדים בקורס */
@@ -294,7 +296,7 @@ const av = document.getElementById("av");
 if (D.photo) av.innerHTML = `<img src="${esc(D.photo)}" alt="">`; else av.textContent = (name||"ב").trim().charAt(0);
 
 /* תפריט */
-let rail = `<div class="brand">${D.logo ? `<span class="mark logo"><img src="${esc(D.logo)}" alt=""></span>` : `<span class="mark">${ic("home")}</span>`}<span>${esc(name ? "הבית של " + name : "הבית שלי")}</span></div>
+let rail = `<div class="brand">${D.logo ? `<span class="mark logo"><img src="${esc(D.logo)}" alt=""></span>` : `<span class="mark">${ic("home")}</span>`}<span>${esc(D.brand || (name ? "הבית של " + name : "הבית שלי"))}</span></div>
 <div class="lnk on" id="homelnk" role="button" tabindex="0">${ic("home")}הבית</div><div class="sep">הכלים שלי</div>`;
 COURSE.forEach((c,ci)=>{
   const ts = tools.filter(t=>courseOf(t.lesson)===ci);
