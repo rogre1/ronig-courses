@@ -370,10 +370,12 @@ function showHome(){
   viewer.hidden = true; homeMain.hidden = false; const vf = document.getElementById("vframe"); vf.removeAttribute("srcdoc"); vf.src = "about:blank";
   document.querySelectorAll(".rail .on").forEach(e=>e.classList.remove("on")); document.getElementById("homelnk").classList.add("on");
 }
-/* Pages are fetched and shown through srcdoc, the same way the proven home does it:
-   links inside open in a new tab, and the page stays light like the home. */
+/* Pages are copies published next to the home (tools/*.html). They are fetched and shown through srcdoc,
+   exactly like Roni's home, and stay light like the home. */
 const pageCache = {};
-const PSHIM = '<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href]");if(a&&/^https?:/.test(a.getAttribute("href"))){a.target="_blank";a.rel="noopener"}},true)<\/script>';
+/* The same bridge as Roni's home: a page inside saves to this home's database, and outside links open in a new tab. */
+const PSHIM = '<script>(function(){var P=parent;document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href]");if(a&&P.__outLink&&P.__outLink(a.href)){e.preventDefault();e.stopPropagation()}},true);var PJ=P.JSON,out=function(v){return v===undefined?v:PJ.parse(JSON.stringify(v))},inn=function(v){return v==null?v:JSON.parse(PJ.stringify(v))};function snap(x){if(!x)return x;var o={exists:x.exists,id:x.id,size:x.size,empty:x.empty,data:function(){return inn(x.data())}};if(x.docs)o.docs=x.docs.map(snap);return o}function ref(r){var o={};if(r.set)o.set=function(d,m){return r.set(out(d),m)};if(r.update)o.update=function(d){return r.update(out(d))};if(r.add)o.add=function(d){return r.add(out(d)).then(function(x){return x&&x.id!=null?ref(x):x})};if(r.delete)o.delete=function(){return r.delete()};if(r.get)o.get=function(){return r.get().then(snap)};if(r.onSnapshot)o.onSnapshot=function(f,e){return r.onSnapshot(function(x){f(snap(x))},e)};["doc","collection","where","orderBy","limit"].forEach(function(k){if(r[k])o[k]=function(){return ref(r[k].apply(r,arguments))}});if(r.id!=null)o.id=r.id;return o}window.claude={use:function(n){return n==="db"&&P.claude&&P.claude.use?P.claude.use("db").then(function(d){return d?ref(d):d}):Promise.resolve(null)}};document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href]");if(a&&!a.target&&/^https?:/.test(a.getAttribute("href"))){a.target="_blank";a.rel="noopener"}},true)})();<\/script>';
+window.__outLink = url => false;
 async function loadPage(path){
   const fr = document.getElementById("vframe");
   try {
