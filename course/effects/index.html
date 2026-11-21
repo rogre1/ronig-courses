@@ -624,6 +624,11 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
 @keyframes fxScroll{0%,10%{background-position:0 0,0 0}90%,100%{background-position:0 0,0 -60cqw}}
 @keyframes fxWipe{0%,10%{clip-path:inset(0 0 0 0)}70%,100%{clip-path:inset(0 72% 0 0)}}
 @keyframes fxLine{0%,10%{left:100%}70%,100%{left:28%}}
+.own{background:#fff;border:1px solid var(--line);border-radius:30px;padding:32px 26px;margin-top:22px}
+.own h2{color:var(--navy);text-align:center}
+.own>p{text-align:center;max-width:560px;margin:10px auto 0;color:var(--muted)}
+.own .prompt{max-width:720px;margin:20px auto 0}
+@media (max-width:560px){.own{padding:26px 16px}}
 </style>
 <meta property="og:site_name" content="Ronig.ai">
 <meta property="og:image" content="https://roni-green.com/assets/og.jpg?v=1">
@@ -810,6 +815,16 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
 <p class="empty" hidden>לא נמצא אפקט כזה. אפשר לנסות מילה אחרת.</p>
 </section>
 
+<section class="own">
+  <h2>רוצים לוח אפקטים משלכם?</h2>
+  <p>לוח כזה עם האפקטים שאתם יוצרים עם קלוד, שמתעדכן בכל פעם שתבקשו. מעתיקים את הפרומפט ומדביקים לקלוד.</p>
+  <div class="prompt"><span class="lbl">הפרומפט</span><button class="copy" id="ownCopy">העתקה</button><span id="ownText">תיכנס לעמוד <bdi dir="ltr">https://roni-green.com/course/effects/</bdi> ותבנה לי לוח אפקטים משלי באותו רעיון: כרטיס לכל אפקט, עם תמונה, שם, מתי הוא מתאים ופרומפט שאפשר להעתיק.
+קודם תשאל אותי אם לשים בלוח רק את האפקטים שלי, או להתחיל מהאפקטים שבעמוד הזה ולהוסיף אליהם את שלי.
+תעצב את הלוח בצבעים ובפונט של העסק שלי, אם הם שמורים אצלך, ותשמור עותק שלו בתיקייה שלנו.
+אם אפשר, תפרסם אותו כארטיפקט כדי שאוכל לפתוח אותו מכל מקום. אם זה לא עובד אצלי, תפתח לי את הקובץ בדפדפן.
+תרשום בזיכרון איפה הלוח נמצא (הקישור או הקובץ). מעכשיו, כשאגיד "תוסיף את האפקט הזה ללוח האפקטים", תוסיף כרטיס עם פריים קטן מהסרטון שבו יצרנו אותו ועם הפרומפט שעבד, ותעדכן את אותו לוח ולא תיצור חדש.
+בסוף תראה לי את הלוח.</span></div>
+</section>
 <section class="final">
   <h2>עוד לא עורכים עם קלוד?</h2>
   <p>במדריך למתחילים יש פרומפט פתיחה שמכין את קלוד לעריכת סרטונים: חיתוך, כתוביות, זומים ואנימציות. אחריו כל אפקט מהלוח הזה הוא העתקה והדבקה אחת.</p>
@@ -866,5 +881,6 @@ grid.addEventListener('click',function(e){
   window.addEventListener('scroll', function(){ if(!loop) loop = requestAnimationFrame(step); }, {passive:true}); paint(cur);
 })();
 </script>
+<script>(function(){var b=document.getElementById('ownCopy');if(!b)return;b.addEventListener('click',function(){var t=document.getElementById('ownText').textContent;function ok(){b.textContent='הועתק ✓';b.classList.add('ok');setTimeout(function(){b.textContent='העתקה';b.classList.remove('ok');},1800);}function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok();}catch(x){}a.remove();}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();});})();</script>
 </body>
 </html>
