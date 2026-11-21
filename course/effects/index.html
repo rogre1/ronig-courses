@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>לוח האפקטים לרילס | Ronig.ai</title>
 <meta name="robots" content="noindex,nofollow">
-<meta name="description" content="28 אפקטים לרילס עם תצוגה חיה, ולכל אחד פרומפט מוכן להעתקה לקלוד: מילה מאחורי הראש, טבעת מילים, פתקים, מונה שרץ ועוד.">
+<meta name="description" content="אפקטים לרילס עם תצוגה חיה, ולכל אחד פרומפט מוכן להעתקה לקלוד: מילה מאחורי הראש, טבעת מילים, פתקים, מונה שרץ ועוד.">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="he_IL">
 <meta property="og:title" content="לוח האפקטים לרילס | Ronig.ai">
@@ -647,7 +647,7 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
 <section class="hero"><div class="hring" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><linearGradient id="rg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7FE3D8"/><stop offset="1" stop-color="#4F7DB0"/></linearGradient></defs><g class="sp" data-r=".16"><circle class="arc" style="--len:76" cx="100" cy="100" r="86" fill="none" stroke="url(#rg1)" stroke-width="12" stroke-linecap="round" pathLength="100" stroke-dasharray="76 200" transform="rotate(150 100 100)"/></g><g class="sp" data-r="-.38"><circle class="arc arc2" style="--len:12" cx="100" cy="100" r="86" fill="none" stroke="#9DB0C6" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="12 200" transform="rotate(91.6 100 100)"/></g><g class="sp" data-r="-.08"><circle cx="100" cy="100" r="98" fill="none" stroke="#9DB0C6" stroke-width=".8" stroke-dasharray="1.5 4.5" opacity=".55"/></g></svg></div>
   <span class="eyebrow">חינם · Ronig.ai</span>
   <h1>לוח האפקטים<br><em>לרילס</em></h1>
-  <p class="lead"><span id="fxn">28</span> אפקטים שאפשר להוסיף לסרטון בעזרת קלוד. עומדים על כרטיס כדי לראות אותו זז, מעתיקים את הפרומפט, ומדביקים בשיחה שבה עורכים את הסרטון.</p>
+  <p class="lead">אפקטים שאפשר להוסיף לסרטון בעזרת קלוד. עומדים על כרטיס כדי לראות אותו זז, מעתיקים את הפרומפט, ומדביקים בשיחה שבה עורכים את הסרטון.</p>
   <ol class="how"><li>בוחרים אפקט</li><li>כותבים את המשפט מהסרטון</li><li>מעתיקים ומדביקים לקלוד</li></ol>
 </section>
 
@@ -833,7 +833,7 @@ function play(c){c.classList.remove('play');void c.offsetWidth;c.classList.add('
 function replay(){grid.querySelectorAll('.card:not([hidden])').forEach(function(c){if(c.getBoundingClientRect().top<innerHeight)play(c);});}
 var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)play(e.target);else e.target.classList.remove('play');});},{threshold:.5}):null;
 grid.querySelectorAll('.card').forEach(function(c){if(io)io.observe(c);else c.classList.add('play');c.querySelector('.fxp').addEventListener('click',function(){play(c);});});
-sent.addEventListener('input',fill);var fxn=document.getElementById('fxn');if(fxn)fxn.textContent=grid.querySelectorAll('.card').length;q.addEventListener('input',filter);
+sent.addEventListener('input',fill);q.addEventListener('input',filter);
 document.querySelectorAll('.chips button').forEach(function(b){b.addEventListener('click',function(){g=b.dataset.g;document.querySelectorAll('.chips button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});filter();});});
 grid.addEventListener('click',function(e){
   var b=e.target.closest('button');if(!b)return;var c=b.closest('.card'),k=c.querySelector('.cp').dataset.k;
