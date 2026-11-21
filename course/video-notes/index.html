@@ -551,11 +551,11 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
   <p>פותחים בקלוד קוד את התיקייה שבה אתם עורכים סרטונים, מעתיקים את הפרומפט ומדביקים.</p>
   <div class="prompt"><button class="copy" type="button">העתקה</button><span class="lbl">פרומפט להעתקה</span>תבנה לי עמוד הערות לסרטונים שאתה עורך לי, לפי הערכה שבכתובת <bdi dir="ltr">https://roni-green.com/course/video-notes/kit/</bdi>
 1. תוריד משם את שלושת הקבצים כמו שהם, בלי לשנות את הקוד: <bdi dir="ltr">index.html</bdi>, <bdi dir="ltr">serve.py</bdi> ו-<bdi dir="ltr">current.json</bdi>. תשים אותם בתיקייה חדשה בשם <bdi dir="ltr">video-notes</bdi>, בתוך התיקייה שלנו.
-2. תעדכן את <bdi dir="ltr">current.json</bdi> לסרטון האחרון שערכנו: <bdi dir="ltr">video</bdi> הוא הנתיב לסרטון ביחס לתיקייה <bdi dir="ltr">video-notes</bdi>, <bdi dir="ltr">name</bdi> הוא שם הסרטון, <bdi dir="ltr">version</bdi> מתחיל ב-1, ו-<bdi dir="ltr">fps</bdi> לפי הסרטון. אם הסרטון לא נמצא בתוך התיקייה שלנו, תעתיק אותו לתיקייה <bdi dir="ltr">video-notes/videos</bdi>.
+2. תשאל אותי על איזה סרטון נעבוד, ותציג לי את הסרטונים שאתה מוצא בתיקייה שלנו. אם עוד אין סרטון ערוך, תכין את העמוד ותגיד לי שהסרטון ייכנס אליו אחרי העריכה הראשונה. אחרי שאבחר, תעדכן את <bdi dir="ltr">current.json</bdi> לסרטון הזה: <bdi dir="ltr">video</bdi> הוא הנתיב לסרטון ביחס לתיקייה <bdi dir="ltr">video-notes</bdi>, <bdi dir="ltr">name</bdi> הוא שם הסרטון, <bdi dir="ltr">version</bdi> מתחיל ב-1, ו-<bdi dir="ltr">fps</bdi> לפי הסרטון. אם הסרטון לא נמצא בתוך התיקייה שלנו, תעתיק אותו לתיקייה <bdi dir="ltr">video-notes/videos</bdi>.
 3. תפעיל את השרת הקטן שבקובץ <bdi dir="ltr">serve.py</bdi> על פורט 8790. הוא חייב לרוץ, כי בלעדיו אי אפשר לדלג בתוך הסרטון. אם חסר אצלי משהו כדי להפעיל אותו, תגיד לי מה חסר ותדריך אותי צעד אחרי צעד.
 4. תפתח לי את העמוד <bdi dir="ltr">http://localhost:8790/video-notes/</bdi> בדפדפן שבצד של קלוד. אם זה לא אפשרי, בדפדפן הרגיל.
 5. תכתוב בקובץ <bdi dir="ltr">CLAUDE.md</bdi> של התיקייה את הכללים האלה, כדי שתזכור אותם בכל שיחה:
-- אחרי כל רינדור של סרטון, לעדכן את <bdi dir="ltr">video-notes/current.json</bdi> לסרטון החדש ולהעלות את <bdi dir="ltr">version</bdi> באחד, כדי שהעמוד יראה "יש גרסה חדשה".
+- אחרי כל רינדור של סרטון, לעדכן את <bdi dir="ltr">video-notes/current.json</bdi> לסרטון החדש ולהעלות את <bdi dir="ltr">version</bdi> באחד, ומיד לפתוח לי את העמוד בדפדפן שבצד של קלוד, כדי שאראה את הגרסה החדשה.
 - כשמגיעות ממני הערות מהעמוד: לחלץ את הפריים בזמן של כל הערה, לצייר עליו את הסימון לפי האחוזים, להסתכל עליו, ורק אז לתקן.
 - כשאני מבקש לפתוח את עמוד ההערות: להפעיל את השרת אם הוא לא רץ, ולפתוח את העמוד.
 בסוף תגיד לי במשפט אחד איך משתמשים בעמוד.</div>
