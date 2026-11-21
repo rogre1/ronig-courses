@@ -52,6 +52,8 @@
 !subscriptions/**
 !instagram-dm/
 !instagram-dm/**
+!course/
+!course/**
 !ads-manager/
 !ads-manager/**
 !start/
