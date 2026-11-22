@@ -223,7 +223,7 @@ header.on .hwrap{max-width:1040px;border-radius:99px;padding:9px;padding-inline-
     <span class="eyebrow">שאלון אפיון · לפני הפגישה</span>
     <h1><span class="l">ליווי אישי</span> <em>לייעול העבודה בעסק</em> עם AI</h1>
     <div class="term" aria-hidden="true"><span class="pr">✦ Claude</span> <span id="typed"></span><i class="cur"></i></div>
-    <p class="lead">כמה שאלות קצרות על איך נראה השבוע שלכם. תוך כדי שאתם עונים, יופיעו כיוונים אפשריים לבדיקה. אעבור על התשובות ואגיע עם כיוון ראשוני לעבודה המשותפת.</p>
+    <p class="lead">כמה שאלות קצרות על איך נראה השבוע שלכם. אעבור על התשובות ואגיע עם כיוון ראשוני לעבודה המשותפת.</p>
     <div class="hero-meta">
       <span class="chip-info">⏱ בערך 10 דקות</span>
       <span class="chip-info">💾 נשמר אוטומטית</span>
@@ -362,10 +362,6 @@ header.on .hwrap{max-width:1040px;border-radius:99px;padding:9px;padding-inline-
       <div class="note tip hidden" id="thanksReady"><span class="ic">✅</span><div><b>לפני הפגישה:</b> ודאו שאפליקציית Claude מותקנת על המחשב ושאתם מחוברים. אם צריך, <a href="../claude-code-start/" target="_blank" rel="noopener">כאן יש מדריך התקנה צעד אחרי צעד</a>.</div></div>
     </section>
 
-    <aside class="radar hidden" id="radar" aria-live="polite">
-      <div class="radar-head"><span class="pulse"></span><b id="rTitle">כיוונים אפשריים לבדיקה</b><span class="cnt" id="rCnt">0</span></div>
-      <div class="radar-chips" id="rChips"><span class="empty">ממשיכים לענות, והכיוונים יופיעו כאן...</span></div>
-    </aside>
 
     <div class="nav" id="nav">
       <button type="button" class="btn ghost" id="back">→ הקודם</button>
@@ -422,7 +418,6 @@ function collect(){
   var d = {};
   form.querySelectorAll('input[name],textarea[name]').forEach(function(el){ d[el.dataset.k || el.name] = el.value.trim(); });
   document.querySelectorAll('.chips,.scale').forEach(function(g){ d[g.dataset.name] = chipVal(g).join(', '); });
-  d.opportunities = found.join(', ');
   return d;
 }
 var t;
@@ -475,7 +470,6 @@ function show(i){
   $('pBar').style.width = (i / steps.length * 100) + '%';
   $('pLabel').textContent = (i+1) + ' מתוך ' + steps.length;
   $('err').textContent = '';
-  $('radar').classList.toggle('hidden', i < 1);
   if(i > 0) window.scrollTo({top:0,behavior:'smooth'});
 }
 $('back').addEventListener('click', function(){ if(cur > 0){ show(cur-1); save(); } });
@@ -537,8 +531,6 @@ function submit(){
     cards.forEach(function(c){ c.classList.remove('on'); });
     $('thanks').classList.add('on');
     $('nav').classList.add('hidden'); $('err').textContent = '';
-    $('rTitle').textContent = 'כיוונים אפשריים לבדיקה';
-    $('radar').classList.toggle('hidden', !found.length);
     $('pBar').style.width = '100%'; $('pLabel').textContent = 'נשלח ✓';
     window.scrollTo({top:0,behavior:'smooth'});
   }).catch(function(){
@@ -549,7 +541,7 @@ function submit(){
 
 // typing line in hero
 (function(){
-  var lines = ['מנתח איך נראה השבוע שלכם...', 'מחפש משימות שחוזרות על עצמן...', 'מזהה כיוונים אפשריים לבדיקה...'];
+  var lines = ['מנתח איך נראה השבוע שלכם...', 'מחפש משימות שחוזרות על עצמן...'];
   var li = 0, ch = 0, del = false, el = $('typed');
   (function tick(){
     var s = lines[li];
@@ -571,50 +563,8 @@ function calc(){
 }
 $('hours').addEventListener('input', calc);
 
-// opportunity radar: simple keyword matching over the answers
-var OPS = [
-  ['✉️ מיון וסידור מיילים', /מייל|אימייל|ג'ימייל|ג׳ימייל|אאוטלוק|דואר/],
-  ['🗒 סידור מידע וחומרים', /רעיונות|הערות|פתקים|מפוזר|מבולגן|בלגן/],
-  ['🧾 הצעות מחיר', /הצע(ת|ות) מחיר|תמחור|הצעה ל/],
-  ['📂 איסוף וסידור חשבוניות', /חשבוני|קבלות|הנהלת חשבונות|רואה חשבון|הוצאות/],
-  ['📱 תכנון וכתיבת תוכן', /תוכן|פוסט|אינסטגרם|רילס|קפשן|פייסבוק|טיקטוק|ניוזלטר|לינקדאין|סושיאל/],
-  ['📊 דוחות מתוך טבלאות', /טבל|אקסל|שיטס|דוח|נתונים|מספרים/],
-  ['📝 סיכומי פגישות ושיחות', /סיכום|סיכומי|פרוטוקול|זום|שיחות|הקלטה/],
-  ['🗂 סידור קבצים ומסמכים', /קבצים|תיקיות|מסמכים|דרייב|לסדר/],
-  ['📅 תיאום פגישות ותזכורות', /יומן|תיאום|לתאם|תורים|תזכור/],
-  ['📄 חוזים והסכמים', /חוזה|חוזים|הסכם|הסכמים/],
-  ['🌐 עדכון אתר ודפים', /אתר|דף נחיתה|חנות/],
-  ['🧩 תבניות למסמכים שחוזרים', /תבנית|תבניות|טופס|טפסים|שוב ושוב|כל פעם מחדש/]
-];
-var TOOL_OPS = {'מייל (ג\'ימייל / אאוטלוק)':0, 'מערכת חשבוניות':3, 'אינסטגרם / פייסבוק':4, 'גוגל שיטס / אקסל':5, 'זום':6, 'גוגל יומן':8};
-var found = [];
-function scan(){
-  var text = ['what','timeSink','repeat','hate','assistant','goal','aiTried','more','tools_other']
-    .map(function(n){ var el = form.querySelector('[name="'+n+'"]'); return el ? el.value : ''; }).join(' ');
-  var hit = {};
-  OPS.forEach(function(o, i){ if(o[1].test(text)) hit[i] = 1; });
-  chipVal(document.querySelector('[data-name=tools]')).forEach(function(t){ if(t in TOOL_OPS) hit[TOOL_OPS[t]] = 1; });
-  var next = OPS.filter(function(o, i){ return hit[i]; }).map(function(o){ return o[0]; });
-  var box = $('rChips'), added = false;
-  if(!next.length){ box.innerHTML = '<span class="empty">ממשיכים לענות, והכיוונים יופיעו כאן...</span>'; }
-  else {
-    var old = box.querySelector('.empty'); if(old) old.remove();
-    [].slice.call(box.querySelectorAll('.op')).forEach(function(c){ if(next.indexOf(c.textContent) < 0) c.remove(); });
-    next.forEach(function(n){
-      if(found.indexOf(n) < 0){ var s = document.createElement('span'); s.className = 'op'; s.textContent = n; box.appendChild(s); added = true; }
-    });
-  }
-  found = next;
-  var c = $('rCnt'); c.textContent = found.length;
-  if(added){ c.classList.add('bump'); setTimeout(function(){ c.classList.remove('bump'); }, 200); }
-}
-var st;
-form.addEventListener('input', function(){ clearTimeout(st); st = setTimeout(scan, 350); });
-document.querySelector('[data-name=tools]').addEventListener('click', function(){ setTimeout(scan, 0); });
-
 restore();
 calc();
-scan();
 show(cur);
 </script>
 </body>
