@@ -63,6 +63,20 @@ class RangeHandler(SimpleHTTPRequestHandler):
             self.send_header("Cache-Control", "no-store")
         super().end_headers()
 
+    def do_POST(self):
+        # the page saves one frame per note into frames/ next to it; nothing else can be written
+        frames = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frames")
+        path = os.path.abspath(self.translate_path(self.path))
+        size = int(self.headers.get("Content-Length") or 0)
+        if os.path.dirname(path) != frames or not path.endswith(".jpg") or not 0 < size < 30_000_000:
+            self.send_error(403)
+            return
+        os.makedirs(frames, exist_ok=True)
+        with open(path, "wb") as f:
+            f.write(self.rfile.read(size))
+        self.send_response(204)
+        self.end_headers()
+
     def log_message(self, *args):
         pass
 

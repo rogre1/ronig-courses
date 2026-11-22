@@ -241,12 +241,22 @@ function where(m){
   var x1=Math.min(m.x1,m.x2),x2=Math.max(m.x1,m.x2),y1=Math.min(m.y1,m.y2),y2=Math.max(m.y1,m.y2);
   return (m.type==='circle'?'עיגול':'מלבן')+', '+side((x1+x2)/2,(y1+y2)/2)+', '+pct(x1)+'–'+pct(x2)+' מהרוחב ו-'+pct(y1)+'–'+pct(y2)+' מהגובה';
 }
+// frames are saved next to the page (frames/), so Claude looks at the exact moment with the mark already drawn
+function shotName(i){return 'frames/'+String(FILE).replace(/[^\w\u0590-\u05FF-]+/g,'_')+'-v'+VERSION+'-'+i+'.jpg';}
+function saveShots(){
+  var bad=0,all=written().map(function(n,i){
+    return frameImage(n.t,n.mark,v.videoWidth||1080).then(function(u){
+      if(!u)throw 0;return fetch(u).then(function(r){return r.blob();});
+    }).then(function(blob){return fetch(shotName(i+1),{method:'POST',body:blob});}).then(function(r){if(!r.ok)bad++;},function(){bad++;});
+  });
+  Promise.all(all).then(function(){if(bad)toast('לא הצלחתי לשמור '+bad+' תמונות. קלוד יחלץ אותן מהסרטון',null);});
+}
 function written(){return notes.slice().sort(function(a,b){return (a.c||0)-(b.c||0);});}
 function num(n){return written().indexOf(n)+1;}
 function text(){
   var L=['הערות על גרסה '+VERSION+' של הסרטון '+FILE+':'];
-  written().forEach(function(n,i){L.push((i+1)+'. '+fmt(n.t)+': '+(n.text||'(בלי טקסט)')+(n.mark?' [סימון: '+where(n.mark)+']':''));});
-  L.push('','האחוזים נמדדים מהפינה השמאלית העליונה של הפריים. תחלץ את הפריים של כל הערה, תצייר עליו את הסימון ותסתכל לפני שאתה מתקן.');
+  written().forEach(function(n,i){L.push((i+1)+'. '+fmt(n.t)+': '+(n.text||'(בלי טקסט)')+(n.mark?' [סימון: '+where(n.mark)+']':'')+' (תמונה: video-notes/'+shotName(i+1)+')');});
+  L.push('','לכל הערה שמרתי תמונה של הרגע, עם הסימון כבר מצויר עליה. תסתכל על התמונה לפני שאתה מתקן. אם תמונה חסרה, תחלץ את הפריים מהסרטון בזמן שכתוב.');
   return L.join('\n');
 }
 function render(){
@@ -267,9 +277,9 @@ list.addEventListener('click',function(e){
   jump(n);
 });
 var tw=document.getElementById('toast'),tt=null;
-function toast(msg,undo){tw.querySelector('span').textContent=msg;tw.hidden=false;var b=tw.querySelector('button');b.onclick=function(){tw.hidden=true;clearTimeout(tt);undo();};clearTimeout(tt);tt=setTimeout(function(){tw.hidden=true;},6000);}
+function toast(msg,undo){tw.querySelector('span').textContent=msg;tw.hidden=false;var b=tw.querySelector('button');b.hidden=!undo;b.onclick=function(){tw.hidden=true;clearTimeout(tt);undo();};clearTimeout(tt);tt=setTimeout(function(){tw.hidden=true;},6000);}
 document.getElementById('send').onclick=function(){
-  if(!notes.length)return;var t=text(),b=this;
+  if(!notes.length)return;var t=text(),b=this;saveShots();
   function ok(){b.textContent='הועתק ✓ עכשיו מדביקים בשיחה';b.classList.add('ok');setTimeout(function(){b.textContent='העתקת ההערות לקלוד';b.classList.remove('ok');},3500);}
   function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok();}catch(x){}a.remove();}
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();
