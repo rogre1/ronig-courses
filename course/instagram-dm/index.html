@@ -511,6 +511,18 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
 .prompt{overflow-wrap:anywhere}
 @media(max-width:600px){.prompt bdi{white-space:normal;overflow-wrap:anywhere}}
 </style>
+<style>
+.igm{max-width:300px;margin:16px auto 6px;background:#fff;border:1px solid var(--line);border-radius:28px;padding:14px 14px 18px;box-shadow:0 10px 30px rgba(20,40,70,.12);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;direction:ltr;text-align:left;color:#111}
+.igm .igbar{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;padding:4px 4px 12px;border-bottom:1px solid #eee}
+.igm .igbar span{font-size:20px;line-height:1}
+.igm .crumb{font-size:11px;color:#888;padding:8px 4px 2px}
+.igm .row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px;border-bottom:1px solid #f1f1f1;font-size:14px}
+.igm .row small{display:block;color:#888;font-size:11.5px;margin-top:2px;line-height:1.35}
+.igm .tg{flex:none;width:42px;height:24px;border-radius:99px;background:#3b82f6;position:relative}
+.igm .tg::after{content:"";position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#fff}
+.igm .hl{background:#E2F6F4;border-radius:12px;padding:12px 8px;outline:2px solid var(--turq,#7FE3D8)}
+.igcap{text-align:center;color:var(--ink-2);font-size:.88rem}
+</style>
 </head>
 <body>
 
@@ -535,6 +547,7 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
     <li><label><input type="checkbox" data-k="b2"><span>חשבון Cloudflare חינמי<small>נרשמים ב-<bdi dir="ltr">cloudflare.com</bdi>, בלי כרטיס אשראי. שם המערכת תרוץ.</small></span></label></li>
     <li><label><input type="checkbox" data-k="b3"><span>האינסטגרם שלכם הוא חשבון מקצועי<small>עסקי או יוצר. איך עושים את זה, בשלב 2.</small></span></label></li>
     <li><label><input type="checkbox" data-k="b4"><span>האינסטגרם מחובר לתיק עסקי במטא<small>גם את זה מסבירים בשלב 2.</small></span></label></li>
+    <li><label><input type="checkbox" data-k="b7"><span>באינסטגרם דלוקה ההגדרה "אפשר גישה להודעות"<small>שלב 2, סעיף ג.</small></span></label></li>
     <li><label><input type="checkbox" data-k="b5"><span>פתחתם בקלוד קוד תיקייה חדשה, למשל "תגובה-הודעה"<small>שם קלוד יוריד את הקוד ויבנה את המערכת.</small></span></label></li>
     <li><label><input type="checkbox" data-k="b6"><span>פיניתם שעה-שעתיים בשקט<small>רוב הזמן הולך על המסכים של מטא, וכדאי לא למהר.</small></span></label></li>
   </ul>
@@ -558,6 +571,21 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
     <li>לוחצים "הוספה" (<bdi dir="ltr">Add</bdi>) ומתחברים לאינסטגרם.</li>
     <li>בודקים שהחשבון מופיע ברשימה, ושלכם יש אליו גישה מלאה.</li>
   </ol>
+  <h3>ג. מדליקים "גישה להודעות" (באפליקציית אינסטגרם בטלפון)</h3>
+  <p>בלי ההגדרה הזו אינסטגרם לא נותנת לשום כלי לשלוח הודעות בשמכם, גם לא למניצ'ט.</p>
+  <ol class="steps">
+    <li>פרופיל ← ☰ ← "הגדרות ופעילות" (<bdi dir="ltr">Settings and activity</bdi>).</li>
+    <li>"הודעות ותגובות לסטורי" (<bdi dir="ltr">Messages and story replies</bdi>).</li>
+    <li>"בקרת הודעות" (<bdi dir="ltr">Message controls</bdi>). אם אין כזה, ממשיכים ישר לשלב הבא.</li>
+    <li>"כלים מחוברים" (<bdi dir="ltr">Connected tools</bdi>), ומדליקים את "אפשר גישה להודעות" (<bdi dir="ltr">Allow access to messages</bdi>).</li>
+  </ol>
+  <div class="igm" aria-hidden="true">
+    <div class="igbar"><span>‹</span>Connected tools</div>
+    <div class="crumb">Settings › Messages and story replies › Message controls</div>
+    <div class="row hl"><div>Allow access to messages</div><div class="tg"></div></div>
+  </div>
+  <p class="igcap">איור להמחשה. אצלכם המסך יכול להיראות קצת אחרת.</p>
+  <div class="note tip"><span class="ic">🔎</span><div>לא מוצאים? כותבים <bdi dir="ltr">connected tools</bdi> או "כלים מחוברים" בשורת החיפוש שבראש ההגדרות.</div></div>
   <div class="note tip"><span class="ic">💡</span><div>מטא משנים את שמות התפריטים מדי פעם. אם משהו נראה אחרת, שולחים לקלוד צילום מסך ושואלים: "איפה אני לוחץ פה?"</div></div>
 </section>
 
@@ -591,7 +619,8 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
   <div class="step-head"><div class="num">5</div><div><h2>אם נתקעים</h2></div></div>
   <ul class="dots">
     <li><b>לא מוצאים כפתור במסך של מטא:</b> צילום מסך לקלוד, ו"מה אני רואה פה?".</li>
-    <li><b>ההודעה לא הגיעה בבדיקה:</b> בודקים שהתגובה הגיעה מחשבון אחר, ושהמילה כתובה כמו בחוק. אחרי זה כותבים לקלוד "ההודעה לא הגיעה, תבדוק בפעילות האחרונה מה קרה".</li>
+    <li><b>ההודעה לא הגיעה בבדיקה:</b> קודם בודקים שההגדרה "אפשר גישה להודעות" (<bdi dir="ltr">Allow access to messages</bdi>) דלוקה. ראו שלב 2, סעיף ג.</li>
+    <li><b>ההגדרה דלוקה וההודעה עדיין לא הגיעה:</b> בודקים שהתגובה הגיעה מחשבון אחר, ושהמילה כתובה כמו בחוק. אחרי זה כותבים לקלוד "ההודעה לא הגיעה, תבדוק בפעילות האחרונה מה קרה".</li>
     <li><b>שגיאה עם מספרים וקודים:</b> מעתיקים אותה כמו שהיא ומדביקים לקלוד. הוא יודע לקרוא אותה.</li>
   </ul>
 </section>
@@ -602,7 +631,7 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
     <li><b>כמה מילים לחוק אחד:</b> כותבים עם פסיקים, למשל <i>מדריך, מדרך, אשמח</i>, כדי לתפוס גם שגיאות כתיב.</li>
     <li><b>כפתור בהודעה:</b> טקסט קצר וקישור שמתחיל ב-<bdi dir="ltr">https</bdi>.</li>
     <li><b>תגובה פומבית:</b> כמה נוסחים, כל אחד בשורה, ונבחר אחד באקראי.</li>
-    <li><b>150 הודעות בשעה:</b> מעבר לזה ההודעות נכנסות לתור ונשלחות בשעה שאחרי.</li>
+    <li><b>150 הודעות בשעה:</b> כדי ששום דבר לא ייראה למטא כמו הצפה. מעבר לזה ההודעות לא הולכות לאיבוד, הן נכנסות לתור ונשלחות בשעה שאחרי. רוצים יותר? כותבים לקלוד "תגדיל את המגבלה ל-300 הודעות בשעה". כדאי להתחיל עם 150, לראות שהכל עובד חלק, ולהגדיל בהדרגה.</li>
     <li><b>לא במקביל למניצ'ט</b> על אותה מילה, אחרת אנשים יקבלו שתי הודעות.</li>
   </ul>
   <div class="note why"><span class="ic">🔒</span><div>זו אפליקציה רשמית של מטא, בלי לתת סיסמה לאף אחד. ועדיין, מטא יכולה לשנות כללים או להגביל, ואין לנו שליטה על זה. השימוש באחריותכם, וכדאי להתחיל בעדינות עם מילת מפתח אחת.</div></div>
