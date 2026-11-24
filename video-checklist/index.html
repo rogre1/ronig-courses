@@ -520,7 +520,7 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
 <script>// 11 steps, shared by all three directions
 const DS_URL='https://roni-green.com/design-system/';
 const GROUPS=[['הנראות',[0,1,2,3,4,5,6]],['החומרים',[7]],['העריכה',[8,9]],['בסוף',[10]]];
-const INTRO='אנחנו מכינים סרטון. קודם אתן לך את כל מה שקשור לנראות, אחר כך את התסריט והסרטון הגולמי, ובסוף תכין 3 סטוריבורדים. לא עורכים עד שאני מאשרת סטוריבורד.';
+const INTRO='אנחנו הולכים להכין סרטון ביחד. קודם אשלח לך את כל מה שקשור לנראות: דיזיין סיסטם, השראות, פונט ואנימציות. אחר כך אשלח את התסריט ואת הסרטון הגולמי.\nבינתיים רק תאסוף הכל, ואל תתחיל לערוך.\nכשאכתוב "סיימתי", תכין לי 3 סטוריבורדים בכיוונים שונים. תתחיל לערוך רק אחרי שאאשר אחד מהם.';
 const ITEMS=[
  {id:'ds',t:'הדיזיין סיסטם שלכם',s:'צבעים, פונטים ולוגו בקובץ אחד',
   d:'קלוד קורא את הקובץ הזה ועורך בצבעים ובפונטים שלכם. בלי זה הוא מנחש.',
@@ -550,7 +550,7 @@ const ITEMS=[
   say:'זה התסריט וזה הסרטון הגולמי. עדיין לא לערוך.'},
  {id:'sb',t:'3 סטוריבורדים',s:'בוחרים כיוון לפני שהוא עורך',
   d:'עכשיו, כשהוא יודע הכל על הנראות ועל התוכן, הוא מכין 3 כיוונים שונים כתמונות. בוחרים אחד, ורק אז הוא מתחיל לערוך. חוסך המון סבבי תיקונים.',
-  say:'עכשיו תכין 3 סטוריבורדים בכיוונים שונים, ואני אבחר.'},
+  say:'סיימתי. עכשיו תכין 3 סטוריבורדים בכיוונים שונים, ואני אבחר.'},
  {id:'lq',t:'איכות נמוכה עד שמרוצים',s:'איכות גבוהה רק פעם אחת, בסוף',
   d:'כל סבב תיקונים מרונדר באיכות נמוכה, וזה לוקח דקות. רק כשאתם מרוצים, רינדור אחד באיכות גבוהה.',
   say:'תרנדר באיכות נמוכה עד שאני מרוצה, ובאיכות גבוהה רק בסוף.'},
@@ -580,7 +580,9 @@ const ILL={
 const KEY='vcheck-v1';
 function loadDone(){try{return new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){return new Set()}}
 function saveDone(s){try{localStorage.setItem(KEY,JSON.stringify([...s]))}catch(e){}}
-function copyBtn(b,txt){navigator.clipboard&&navigator.clipboard.writeText(txt).catch(()=>{});b.textContent='הועתק ✓';b.classList.add('ok');setTimeout(()=>{b.textContent='העתקה';b.classList.remove('ok')},1600)}
+function copyBtn(b,txt){const ok=()=>{b.textContent='הועתק ✓';b.classList.add('ok');setTimeout(()=>{b.textContent='העתקה';b.classList.remove('ok')},1800)};
+ const old=()=>{const t=document.createElement('textarea');t.value=txt;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:0;opacity:0;font-size:16px';document.body.append(t);t.select();t.setSelectionRange(0,txt.length);let r=false;try{r=document.execCommand('copy')}catch(e){}t.remove();if(r)ok()};
+ if(navigator.clipboard&&isSecureContext)navigator.clipboard.writeText(txt).then(ok,old);else old()}
 </script>
 <style>
 .narrow{max-width:900px}
@@ -644,6 +646,10 @@ function copyBtn(b,txt){navigator.clipboard&&navigator.clipboard.writeText(txt).
 .i-hook .pill{display:block;white-space:normal;border:0}
 .i-lq{justify-items:stretch}.i-lq .lb{text-align:center}
 .i-trial .phone b{color:var(--turq)}
+.intro>div{flex:1;min-width:0}
+.intro .prompt .copy{min-height:34px;padding:5px 16px;font-size:.85rem}
+@media(max-width:640px){.intro{flex-wrap:wrap}.intro>div{display:contents}.intro>div>b{flex:1;align-self:center}.intro>div>p,.intro>div>.prompt{flex:0 0 100%;margin-top:0}}
+.intro .prompt .lbl{margin-bottom:14px}
 
 /* community cards */
 .rgcm{display:block;font-weight:400;text-decoration:none;margin-top:22px;border-radius:26px}
@@ -672,7 +678,7 @@ function copyBtn(b,txt){navigator.clipboard&&navigator.clipboard.writeText(txt).
 <p class="lead">11 שלבים, בסדר שבו אני עובדת: קודם הנראות, אחר כך החומרים, ורק אז עריכה. זה צ'קליסט לעריכות הראשונות. אחרי כמה סרטונים קלוד כבר לומד אתכם, ומכיר את הטעם ואת שיטת העבודה שלכם. לחצו על שלב להסבר, וסמנו אותו כשהוא מוכן.</p>
 </section>
 <a class="rgcm slim" href="https://roni-green.com/community/" data-rgcm="guide-video-checklist-top"><span class="ci"><svg class="rgwa" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></span><span class="tx"><b>עוד הרבה מדריכים לייעול העסק עם AI</b><span class="s">מחכים לכם בתיאור הקהילה שלי</span></span><span class="go">להצטרפות</span></a>
-<div class="intro"><span class="k0">0</span><div><b>לפני הכל: תגידו לו מה התוכנית</b><p>ככה הוא יודע מההתחלה שכל מה שתיתנו לו בדרך הוא בשביל הסטוריבורדים, ולא מתחיל לערוך לבד.</p><div class="say"><small>ככה אני אומרת לו</small><span id="introq"></span></div></div></div>
+<div class="intro"><span class="k0">0</span><div><b>לפני הכל: תגידו לו מה התוכנית</b><p>ככה הוא יודע מההתחלה שכל מה שתיתנו לו בדרך הוא בשביל הסטוריבורדים, ולא מתחיל לערוך לבד.</p><div class="prompt"><span class="lbl">ההודעה הראשונה לקלוד</span><span id="introq"></span><button class="copy" id="introc" type="button">העתקה</button></div></div></div>
 <div class="wrapb"><div class="path" id="path"><div class="fill" id="fill"></div></div><div class="panel" id="panel"></div></div>
 <a class="rgcm navy" href="https://roni-green.com/community/" data-rgcm="guide-video-checklist-end"><div class="k"><svg class="rgwa" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>קהילת ה-AI שלי</div><h2>אהבתם? יש עוד הרבה כאלה</h2><p>בתיאור הקהילה מחכים עוד הרבה מדריכים לייעול העסק עם AI, וכל מדריך חדש מגיע ישר לוואטסאפ.</p><span class="go"><svg class="rgwa" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>להצטרפות לקהילה</span><p class="mi">חינם · קבוצה שקטה · יוצאים מתי שרוצים</p></a>
 </div>
@@ -682,7 +688,7 @@ function copyBtn(b,txt){navigator.clipboard&&navigator.clipboard.writeText(txt).
 const hdr=document.getElementById('hdr');addEventListener('scroll',()=>hdr.classList.toggle('on',scrollY>30));
 function prog(done){document.getElementById('cnt').textContent=done.size+' מתוך 11';document.getElementById('pb').style.width=(done.size/11*100)+'%'}
 </script>
-<script>document.getElementById('introq').textContent='"'+INTRO+'"';
+<script>document.getElementById('introq').textContent=INTRO;document.getElementById('introc').onclick=e=>copyBtn(e.currentTarget,INTRO);
 const done=loadDone(),P=document.getElementById('path'),PN=document.getElementById('panel');let cur=0;
 P.insertAdjacentHTML('beforeend',GROUPS.map(([g,ids])=>`<div class="phs">${g}</div>`+ids.map(i=>`<div class="st" data-i="${i}"><span class="dot">${i+1}</span><span class="nm">${ITEMS[i].t}</span><span class="cbx" role="checkbox" aria-label="סימון"></span></div>`).join('')).join(''));
 function draw(){P.querySelectorAll('.st').forEach(s=>{const it=ITEMS[s.dataset.i];s.classList.toggle('done',done.has(it.id));s.classList.toggle('cur',+s.dataset.i===cur);s.querySelector('.cbx').classList.toggle('on',done.has(it.id))});
