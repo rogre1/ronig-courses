@@ -516,6 +516,14 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
 .i-mat .tl{display:flex;gap:4px;width:70%;height:24px}
 .i-mat .tl i{border-radius:5px;background:#9DB0C6}.i-mat .tl i.pick{background:#27415E}
 .i-mat .stop{font-size:12px;font-weight:800;background:#27415E;color:#7FE3D8;padding:3px 12px;border-radius:99px;animation:pop 3.6s 1.4s infinite both}
+.i-mem{align-content:center;justify-items:center;gap:12px}
+.i-mem .bk{width:44%;min-width:150px;background:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 8px 20px rgba(39,65,94,.12);border-right:6px solid #27415E}
+.i-mem .bk b{display:block;font-size:14px;margin-bottom:4px}
+.i-mem .bk span{display:flex;align-items:center;gap:8px;font-size:13px;margin-top:7px;animation:note 4s infinite both}
+.i-mem .bk u{text-decoration:none;width:18px;height:18px;border-radius:50%;background:#7FE3D8;display:grid;place-items:center;font-size:11px;font-weight:800}
+.i-mem .m1{animation-delay:.35s!important}.i-mem .m2{animation-delay:.7s!important}
+.i-mem .nxt{font-size:13px;font-weight:800;background:#27415E;color:#7FE3D8;padding:4px 14px;border-radius:99px;animation:pop 4s 1.2s infinite both}
+@media(max-width:640px){.i-mem{gap:7px}.i-mem .bk{padding:8px 14px}.i-mem .bk b{font-size:13px;margin-bottom:0}.i-mem .bk span{margin-top:4px;font-size:12px}.i-mem .nxt{font-size:12px;padding:3px 12px}}
 </style>
 <script>// 11 steps, shared by all three directions
 const DS_URL='https://roni-green.com/design-system/';
@@ -545,22 +553,23 @@ const ITEMS=[
  {id:'hook',t:'הוק כתוב בהתחלה',s:'משפט גדול ומודגש בשנייה הראשונה',
   d:'כותרת על המסך בשנייה הראשונה, שעוצרת את הגלילה עוד לפני שמישהו שומע מילה.',
   say:'בהתחלה אני רוצה הוק כתוב, גדול ומודגש.'},
- {id:'mat',t:'התסריט והסרטון הגולמי',s:'ושוב: עדיין לא עורכים',
-  d:'עכשיו שולחים את התסריט ואת כל הצילום, גם עם טייקים חוזרים. הוא ימצא את הטייק השלם והנקי. ומזכירים לו שעדיין לא עורכים.',
-  say:'זה התסריט וזה הסרטון הגולמי. עדיין לא לערוך.'},
+ {id:'mat',t:'התסריט והסרטון הגולמי',s:'רק חותכים, עדיין לא עורכים',
+  d:'עכשיו שולחים את התסריט ואת כל הצילום, גם עם טייקים חוזרים. הוא בוחר את הטייק השלם והנקי לכל משפט ומוחק שתיקות, מראה לכם את החיתוך ומחכה.',
+  say:'זה התסריט וזה הסרטון הגולמי. קודם כל רק תחתוך: תבחר את הטייק הכי טוב לכל משפט בתסריט, ותמחק את השתיקות בלי לחתוך מילים. תראה לי את החיתוך ברינדור באיכות נמוכה, ותחכה.'},
  {id:'sb',t:'3 סטוריבורדים',s:'בוחרים כיוון לפני שהוא עורך',
   d:'עכשיו, כשהוא יודע הכל על הנראות ועל התוכן, הוא מכין 3 כיוונים שונים כתמונות. בוחרים אחד, ורק אז הוא מתחיל לערוך. חוסך המון סבבי תיקונים.',
-  say:'סיימתי. עכשיו תכין 3 סטוריבורדים בכיוונים שונים, ואני אבחר.'},
+  say:'סיימתי. עכשיו תכין 3 סטוריבורדים בכיוונים שונים, לפי החיתוך וכל מה ששלחתי לך: הפונט, הכתוביות, האנימציות וההשראות. אני אבחר אחד, ורק אז תתחיל לערוך.'},
  {id:'lq',t:'איכות נמוכה עד שמרוצים',s:'איכות גבוהה רק פעם אחת, בסוף',
   d:'כל סבב תיקונים מרונדר באיכות נמוכה, וזה לוקח דקות. רק כשאתם מרוצים, רינדור אחד באיכות גבוהה.',
   say:'תרנדר באיכות נמוכה עד שאני מרוצה, ובאיכות גבוהה רק בסוף.'},
- {id:'trial',t:'עוד 2 גרסאות לטריאל',s:'אותו סרטון, הוק אחר',
-  d:'כשהסרטון מוכן, בקשו עוד 2 גרסאות עם פתיחה אחרת, ותעלו אותן כטריאל רילס. כך רואים מה עובד הכי טוב.',
-  say:'עכשיו תכין עוד 2 גרסאות של הסרטון עם הוק אחר.'},
+ {id:'mem',t:'שיזכור לפעם הבאה',s:'התהליך נשמר, ולא מתחילים מאפס',
+  d:'קלוד שומר את כל מה שעשיתם כסקיל: הוראות עבודה קבועות שהוא חוזר אליהן. בסרטון הבא שולחים רק תסריט וסרטון גולמי, בלי להסביר הכל מחדש.',
+  say:'הסרטון מוכן. תשמור את כל התהליך שעשינו כסקיל בשם "עריכת וידאו": הסדר, העיצוב, מה אהבתי ומה תיקנתי. בפעם הבאה אשלח לך רק תסריט וסרטון גולמי, ותעבוד לפיו.'},
 ];
 
 // small looping illustrations
 const ILL={
+ mem:`<div class="ill i-mem"><div class="bk"><b>עריכת וידאו</b>${['הסדר','העיצוב','התיקונים'].map((x,i)=>`<span class="m${i}"><u>✓</u>${x}</span>`).join('')}</div><div class="nxt">סרטון הבא ▶</div></div>`,
  ds:`<div class="ill i-ds"><div class="sw"><i style="background:#27415E"></i><i style="background:#4F7DB0"></i><i style="background:#7FE3D8"></i><i style="background:#9DB0C6"></i></div><div class="aa">Aa<small>הפונט שלי</small></div><b class="ok">✓</b></div>`,
  insp:`<div class="ill i-insp"><div class="fold"></div>${[0,1,2].map(i=>`<div class="ph p${i}"><span>▶</span><em>${['אהבתי את הקצב','אהבתי את הכתוביות','אהבתי את המעברים'][i]}</em></div>`).join('')}</div>`,
  raw:`<div class="ill i-raw"><div class="tl">${[30,18,26,14,34,20].map((w,i)=>`<i class="${[1,4].includes(i)?'pick':''}" style="flex:${w}"></i>`).join('')}</div><div class="lb">טייק 1 · טייק 2 · <b>הטייק הנקי ✓</b></div></div>`,
@@ -572,13 +581,12 @@ const ILL={
  cut:`<div class="ill i-cut"><div class="phone"><div class="bgw">WOW</div><div class="pers"></div></div></div>`,
  lq:`<div class="ill i-lq"><div class="row"><span>טיוטה · נמוכה</span><div class="m"><i class="f1"></i></div></div><div class="row"><span>סופי · גבוהה</span><div class="m"><i class="f2"></i></div></div><div class="lb">רק פעם אחת, בסוף</div></div>`,
  broll:`<div class="ill i-broll"><div class="phone"></div>${[0,1,2].map(i=>`<div class="shot s${i}"></div>`).join('')}</div>`,
- mat:`<div class="ill i-mat"><div class="doc"><b>תסריט</b><i style="--w:90%;--d:0s"></i><i style="--w:70%;--d:.4s"></i><i style="--w:80%;--d:.8s"></i></div><div class="tl">${[30,18,26,14].map((w,i)=>`<i class="${i==1?'pick':''}" style="flex:${w}"></i>`).join('')}</div><div class="stop">עדיין לא עורכים ✋</div></div>`,
- trial:`<div class="ill i-trial"><div class="phone v0"><b>A</b></div><div class="phone v1"><b>B</b></div><div class="phone v2"><b>C</b></div></div>`,
+ mat:`<div class="ill i-mat"><div class="doc"><b>תסריט</b><i style="--w:90%;--d:0s"></i><i style="--w:70%;--d:.4s"></i><i style="--w:80%;--d:.8s"></i></div><div class="tl">${[30,18,26,14].map((w,i)=>`<i class="${i==1?'pick':''}" style="flex:${w}"></i>`).join('')}</div><div class="stop">רק חותכים ✋</div></div>`,
 };
 
 // saved checks (per viewer, optional)
 const KEY='vcheck-v1';
-function loadDone(){try{return new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){return new Set()}}
+function loadDone(){try{return new Set(JSON.parse(localStorage.getItem(KEY)||'[]').filter(id=>ITEMS.some(x=>x.id===id)))}catch(e){return new Set()}}
 function saveDone(s){try{localStorage.setItem(KEY,JSON.stringify([...s]))}catch(e){}}
 function copyBtn(b,txt){const ok=()=>{b.textContent='הועתק ✓';b.classList.add('ok');setTimeout(()=>{b.textContent='העתקה';b.classList.remove('ok')},1800)};
  const old=()=>{const t=document.createElement('textarea');t.value=txt;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:0;opacity:0;font-size:16px';document.body.append(t);t.select();t.setSelectionRange(0,txt.length);let r=false;try{r=document.execCommand('copy')}catch(e){}t.remove();if(r)ok()};
