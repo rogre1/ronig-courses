@@ -560,8 +560,8 @@ const ITEMS=[
   d:'עכשיו, כשהוא יודע הכל על הנראות ועל התוכן, הוא מכין 3 כיוונים שונים כתמונות. בוחרים אחד, ורק אז הוא מתחיל לערוך. חוסך המון סבבי תיקונים.',
   say:'סיימתי. עכשיו תכין 3 סטוריבורדים בכיוונים שונים, לפי החיתוך וכל מה ששלחתי לך: הפונט, הכתוביות, האנימציות וההשראות. אני אבחר אחד, ורק אז תתחיל לערוך.'},
  {id:'lq',t:'איכות נמוכה עד שמרוצים',s:'איכות גבוהה רק פעם אחת, בסוף',
-  d:'כל סבב תיקונים מרונדר באיכות נמוכה, וזה לוקח דקות. רק כשאתם מרוצים, רינדור אחד באיכות גבוהה.',
-  say:'תרנדר באיכות נמוכה עד שאני מרוצה, ובאיכות גבוהה רק בסוף.'},
+  d:'קודם מקבלים את כל הסרטון באיכות נמוכה, וזה לוקח דקות. צופים, כותבים את כל ההערות בהודעה אחת, וחוזרים על זה עד שמרוצים. רק אז רינדור אחד באיכות גבוהה.',
+  say:'<b>קודם</b>בחרתי בסטוריבורד ___. תכין לפיו את כל הסרטון, ברינדור באיכות נמוכה.<b>אחרי שצפיתם</b>אלה כל ההערות שלי, לפי שניות: בשנייה ___ לשנות ___. תתקן הכל ביחד ותרנדר שוב באיכות נמוכה.<b>כשמרוצים</b>מעולה. עכשיו רינדור סופי באיכות גבוהה.'},
  {id:'mem',t:'שיזכור לפעם הבאה',s:'התהליך נשמר, ולא מתחילים מאפס',
   d:'קלוד שומר את כל מה שעשיתם כסקיל: הוראות עבודה קבועות שהוא חוזר אליהן. בסרטון הבא שולחים רק תסריט וסרטון גולמי, בלי להסביר הכל מחדש.',
   say:'הסרטון מוכן. תשמור את כל התהליך שעשינו כסקיל בשם "עריכת וידאו": הסדר, העיצוב, מה אהבתי ומה תיקנתי. בפעם הבאה אשלח לך רק תסריט וסרטון גולמי, ותעבוד לפיו.'},
@@ -656,6 +656,7 @@ function copyBtn(b,txt){const ok=()=>{b.textContent='הועתק ✓';b.classList
 @media(max-width:640px){.intro{flex-wrap:wrap}.intro>div{display:contents}.intro>div>b{flex:1;align-self:center}.intro>div>p,.intro>div>.prompt{flex:0 0 100%;margin-top:0}}
 .intro .prompt .lbl{margin-bottom:14px}
 .rgcm.slim .me{flex:none;width:56px;height:56px;border-radius:50%;object-fit:cover;display:block}
+.say b{display:block;font-size:.82rem;font-weight:800;color:var(--blue);margin-top:10px;line-height:1.3}.say small+b{margin-top:4px}
 
 /* community cards */
 .rgcm{display:block;font-weight:400;text-decoration:none;margin-top:22px;border-radius:26px}
@@ -697,15 +698,19 @@ function prog(done){document.getElementById('cnt').textContent=done.size+' מת�
 <script>document.getElementById('introq').textContent=INTRO;document.getElementById('introc').onclick=e=>copyBtn(e.currentTarget,INTRO);
 const done=loadDone(),P=document.getElementById('path'),PN=document.getElementById('panel');let cur=0;
 P.insertAdjacentHTML('beforeend',GROUPS.map(([g,ids])=>`<div class="phs">${g}</div>`+ids.map(i=>`<div class="st" data-i="${i}"><span class="dot">${i+1}</span><span class="nm">${ITEMS[i].t}</span><span class="cbx" role="checkbox" aria-label="סימון"></span></div>`).join('')).join(''));
-function draw(){P.querySelectorAll('.st').forEach(s=>{const it=ITEMS[s.dataset.i];s.classList.toggle('done',done.has(it.id));s.classList.toggle('cur',+s.dataset.i===cur);s.querySelector('.cbx').classList.toggle('on',done.has(it.id))});
+const mobQ=matchMedia('(max-width:820px)');
+function draw(){if(cur<0&&!mobQ.matches)cur=0;P.querySelectorAll('.st').forEach(s=>{const it=ITEMS[s.dataset.i];s.classList.toggle('done',done.has(it.id));s.classList.toggle('cur',+s.dataset.i===cur);s.querySelector('.cbx').classList.toggle('on',done.has(it.id))});
  const sts=[...P.querySelectorAll('.st')],last=sts.filter(s=>s.classList.contains('done')).pop();
  document.getElementById('fill').style.height=last?(last.offsetTop+20-20)+'px':'0';
+ if(cur<0){PN.remove();prog(done);return}
  const it=ITEMS[cur];PN.innerHTML=`<div class="k">שלב ${cur+1} מתוך 11</div><h2>${it.t}</h2><p>${it.d}</p>${it.tip?`<p class="tipline">💡 ${it.tip}</p>`:''}${it.link?`<a class="mlink" href="${it.link[1]}" target="_blank">${it.link[0]} ←</a>`:''}${ILL[it.id]}<div class="say"><small>ככה אני אומרת לו</small>${it.say.replace(/___/g,'<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')}</div>
  <div class="pbtns"><button class="btn mk" aria-pressed="${done.has(it.id)}">${done.has(it.id)?'בוצע ✓':'סמנו שבוצע'}</button>${cur<10?'<button class="btn ghost nx">לשלב הבא ←</button>':''}</div>`;prog(done);
- const mob=matchMedia('(max-width:820px)').matches;if(mob){P.querySelector(`.st[data-i="${cur}"]`).after(PN)}else if(PN.parentNode!==P.parentNode)P.parentNode.append(PN)}
-P.onclick=e=>{if(e.target.closest('#panel'))return;const s=e.target.closest('.st');if(!s)return;if(e.target.closest('.cbx')){const id=ITEMS[s.dataset.i].id;done.has(id)?done.delete(id):done.add(id);saveDone(done);draw();return}cur=+s.dataset.i;draw()};
+ if(mobQ.matches){P.querySelector(`.st[data-i="${cur}"]`).after(PN)}else if(PN.parentNode!==P.parentNode)P.parentNode.append(PN)}
+mobQ.addEventListener('change',draw);
+P.onclick=e=>{if(e.target.closest('#panel'))return;const s=e.target.closest('.st');if(!s)return;if(e.target.closest('.cbx')){const id=ITEMS[s.dataset.i].id;done.has(id)?done.delete(id):done.add(id);saveDone(done);draw();return}const i=+s.dataset.i,y=s.getBoundingClientRect().top;cur=i===cur&&mobQ.matches?-1:i;draw();
+ if(mobQ.matches)scrollBy({top:s.getBoundingClientRect().top-y,behavior:'instant'})};
 PN.onclick=e=>{const it=ITEMS[cur];if(e.target.closest('.mk')){done.has(it.id)?done.delete(it.id):done.add(it.id);saveDone(done);draw()}
- if(e.target.closest('.nx')){cur++;draw()}};
+ if(e.target.closest('.nx')){cur++;draw();if(mobQ.matches){const s=P.querySelector(`.st[data-i="${cur}"]`);scrollBy({top:s.getBoundingClientRect().top-90,behavior:'smooth'})}}};
 draw();
 
 </script><script>document.querySelectorAll('[data-rgcm]').forEach(function(a){a.addEventListener('click',function(){var n=a.getAttribute('data-rgcm');if(typeof fbq==='function')fbq('track','ViewContent',{content_name:n});if(typeof gtag==='function')gtag('event','select_content',{content_name:n});});});</script></body></html>
