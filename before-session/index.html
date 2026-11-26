@@ -215,7 +215,7 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
 .hero .hring{width:220px;top:-70px;left:-60px;margin-top:0;opacity:.35}
 @media (max-width:640px){.hero .hring{width:150px;top:-55px;left:-55px;opacity:.28}}
 .mtabs{display:inline-flex;width:max-content;align-self:flex-start;direction:ltr;gap:4px;background:var(--cream-deep);border:1px solid var(--line);border-radius:12px;padding:4px;margin:4px 0 10px}
-.mtabs span{font-size:.85rem;font-weight:800;color:var(--ink-3);padding:4px 12px;border-radius:8px}
+.mtabs span{display:grid;place-items:center;width:40px;height:34px;color:var(--ink-3);border-radius:8px}
 .mtabs .on{background:#fff;color:var(--navy);box-shadow:0 0 0 2px var(--turq)}
 </style>
 <meta property="og:site_name" content="Ronig.ai">
@@ -299,8 +299,8 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
         <input type="checkbox" id="c4">
         <div class="body">
           <h3>פתחתם את Claude מראש, ושלחתם הודעת בדיקה</h3>
-          <p>פותחים את Claude, ולמעלה לוחצים על הלשונית <b>Code</b>:</p>
-          <div class="mtabs" aria-hidden="true"><span>Chat</span><span>Cowork</span><span class="on">Code</span></div>
+          <p>פותחים את Claude, ולמעלה לוחצים על הסמל <b dir="ltr">&lt;/&gt;</b> של Code:</p>
+          <div class="mtabs" aria-hidden="true"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 1 0-3.6 6.4L20 19l-1-3.2a7.4 7.4 0 0 0 1-4.3z"/><circle cx="17.5" cy="17.5" r="2.2" fill="var(--cream-deep)"/></svg></span><span class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 5l-3 14"/></svg></span></div>
           <p>בוחרים ב-<b>Select folder</b> את התיקייה <b>ליווי AI</b> שיצרתם, ושולחים:</p>
           <div class="prompt"><button class="copy" type="button">העתקה</button><span class="txt">תענה לי בעברית ותגיד לי אילו קבצים יש בתיקייה הזו. אל תשנה שום דבר.</span></div>
         </div>
