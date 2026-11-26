@@ -243,14 +243,7 @@ header.on .hwrap{max-width:1040px;border-radius:99px;padding:9px;padding-inline-
     <!-- 1 -->
     <section class="card on" data-title="פרטים">
       <div class="step-head"><div class="num">1</div><div><h2>נתחיל בפרטים</h2><p>כדי שאדע של מי התשובות</p></div></div>
-      <div class="row2">
-        <div class="q"><label for="fa">שם מלא <span class="req">*</span></label><input type="text" id="fa" name="fld_a" data-k="name" autocomplete="off" autocorrect="off" data-lpignore="true" required></div>
-        <div class="q"><label for="fb">שם העסק</label><input type="text" id="fb" name="fld_b" data-k="business" autocomplete="off" data-lpignore="true"></div>
-      </div>
-      <div class="row2">
-        <div class="q"><label for="fc">טלפון <span class="req">*</span></label><input type="text" inputmode="tel" id="fc" name="fld_c" data-k="phone" autocomplete="off" data-lpignore="true" dir="ltr" required></div>
-        <div class="q"><label for="fd">מייל <span class="req">*</span></label><input type="text" inputmode="email" autocapitalize="off" spellcheck="false" id="fd" name="fld_d" data-k="email" autocomplete="off" data-lpignore="true" dir="ltr" required></div>
-      </div>
+      <div class="q"><label for="fa">שם מלא <span class="req">*</span></label><input type="text" id="fa" name="fld_a" data-k="name" autocomplete="off" autocorrect="off" data-lpignore="true" required></div>
     </section>
 
     <!-- 2 -->
@@ -273,10 +266,6 @@ header.on .hwrap{max-width:1040px;border-radius:99px;padding:9px;padding-inline-
           <button type="button">מייל (ג'ימייל / אאוטלוק)</button><button type="button">וואטסאפ</button><button type="button">גוגל שיטס / אקסל</button><button type="button">גוגל דרייב</button><button type="button">גוגל יומן</button><button type="button">מערכת חשבוניות</button><button type="button">CRM / מערכת לקוחות</button><button type="button">קנבה</button><button type="button">אתר / חנות</button><button type="button">אינסטגרם / פייסבוק</button><button type="button">זום</button><button type="button">נושן / מאנדיי</button><button type="button">ChatGPT</button>
         </div>
         <input type="text" name="tools_other" placeholder="משהו נוסף? כתבו כאן" style="margin-top:10px"></div>
-      <div class="q"><span class="lbl">על איזה מחשב אתם עובדים? <span class="req">*</span></span>
-        <div class="chips" data-name="computer" data-single data-required>
-          <button type="button">מק</button><button type="button">ווינדוס</button><button type="button">לא בטוח/ה</button>
-        </div></div>
       <div class="q"><span class="lbl">יש לכם מנוי בתשלום לקלוד? <span class="req">*</span></span>
         <div class="chips" data-name="claude" data-single data-required>
           <button type="button">כן, יש לי מנוי</button><button type="button">יש לי חשבון חינמי</button><button type="button">אין לי</button><button type="button">לא בטוח/ה</button>
@@ -291,9 +280,6 @@ header.on .hwrap{max-width:1040px;border-radius:99px;padding:9px;padding-inline-
       <div class="q"><label for="timeSink">מה לוקח לכם הכי הרבה זמן בשבוע? <span class="req">*</span></label>
         <span class="hint">למשל: להכין הצעות מחיר, לסדר מסמכים או לחשוב מה להעלות לאינסטגרם</span>
         <textarea id="timeSink" name="timeSink" required></textarea></div>
-      <div class="q"><label for="repeat">אילו משימות חוזרות על עצמן כל שבוע, כמעט באותה צורה?</label>
-        <span class="hint">דברים שאתם עושים שוב ושוב, ומרגישים שאפשר היה לעשות אותם בעיניים עצומות</span>
-        <textarea id="repeat" name="repeat"></textarea></div>
       <div class="q"><label for="hours">כמה שעות בשבוע הולכות על משימות שחוזרות על עצמן?</label>
         <span class="hint">הערכה גסה מספיקה</span>
         <div class="calc">
@@ -320,17 +306,9 @@ header.on .hwrap{max-width:1040px;border-radius:99px;padding:9px;padding-inline-
     <!-- 6 -->
     <section class="card" data-title="ניסיון עם AI">
       <div class="step-head"><div class="num">6</div><div><h2>ואיפה אתם עם AI?</h2><p>כדי שאדע מאיפה להתחיל</p></div></div>
-      <div class="q"><span class="lbl">כמה אתם משתמשים היום ב-AI? <span class="req">*</span></span>
-        <div class="scale" data-name="aiLevel" data-required>
-          <button type="button"><b>1</b><span>אף פעם</span></button>
-          <button type="button"><b>2</b><span>ניסיתי פעם-פעמיים</span></button>
-          <button type="button"><b>3</b><span>מדי פעם</span></button>
-          <button type="button"><b>4</b><span>כל שבוע</span></button>
-          <button type="button"><b>5</b><span>כל יום</span></button>
-        </div></div>
-      <div class="q"><label for="aiTried">מה ניסיתם עד היום, ואיפה נתקעתם?</label>
-        <span class="hint">למשל: "כותבת פוסטים עם ChatGPT אבל זה יוצא גנרי"</span>
-        <textarea id="aiTried" name="aiTried"></textarea></div>
+      <div class="q"><label for="aiTried">באילו כלי AI אתם משתמשים, ולמה? ואיפה נתקעתם? <span class="req">*</span></label>
+        <span class="hint">למשל: "ChatGPT לכתיבת פוסטים, אבל זה יוצא גנרי"</span>
+        <textarea id="aiTried" name="aiTried" required></textarea></div>
     </section>
 
     <!-- 7 -->
