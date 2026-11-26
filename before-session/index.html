@@ -221,6 +221,9 @@ footer .logo{display:flex;width:fit-content;--li:#4F7DB0;color:var(--navy);margi
 @media (max-width:420px){.os-switch button{padding:5px 9px}.hend .progress{padding:5px 10px}}
 body.os-win .mac-only{display:none!important}
 body:not(.os-win) .win-only{display:none!important}
+.mtabs{display:inline-flex;width:max-content;align-self:flex-start;direction:ltr;gap:4px;background:var(--cream-deep);border:1px solid var(--line);border-radius:12px;padding:4px;margin:4px 0 10px}
+.mtabs span{font-size:.85rem;font-weight:800;color:var(--ink-3);padding:4px 12px;border-radius:8px}
+.mtabs .on{background:#fff;color:var(--navy);box-shadow:0 0 0 2px var(--turq)}
 </style>
 <meta property="og:site_name" content="Ronig.ai">
 <meta property="og:url" content="https://roni-green.com/before-session/">
@@ -307,7 +310,9 @@ body:not(.os-win) .win-only{display:none!important}
         <input type="checkbox" id="c4">
         <div class="body">
           <h3>פתחתם את Claude מראש, ושלחתם הודעת בדיקה</h3>
-          <p>פותחים את Claude, בוחרים ב-<b>Select folder</b> את התיקייה <b>קלוד</b> שיצרתם, ושולחים בלשונית <b>Code</b>:</p>
+          <p>פותחים את Claude, ולמעלה לוחצים על הלשונית <b>Code</b>:</p>
+          <div class="mtabs" aria-hidden="true"><span>Chat</span><span>Cowork</span><span class="on">Code</span></div>
+          <p>בוחרים ב-<b>Select folder</b> את התיקייה <b>קלוד</b> שיצרתם, ושולחים:</p>
           <div class="prompt"><button class="copy" type="button">העתקה</button><span class="txt">תענה לי בעברית ותגיד לי אילו קבצים יש בתיקייה הזו. אל תשנה שום דבר.</span></div>
         </div>
       </label>
