@@ -1,0 +1,59 @@
+// שאלון "בואו נכיר": מציג את השאלון ושולח כל פנייה במייל לבעל/ת העסק.
+// המייל נשלח לחשבון הגוגל שמפעיל את הסקריפט, אז לא צריך לכתוב כאן כתובת.
+// משנים רק את השורה הבאה:
+const BUSINESS = 'שם העסק';
+
+// אם השאלון נמצא בתוך הפרויקט הזה כקובץ HTML בשם index, הקישור של הסקריפט מציג אותו
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('index')
+    .setTitle('בואו נכיר · ' + BUSINESS)
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+}
+
+// השאלון שולח לכאן כשהוא רץ מתוך גוגל
+function submit(d) {
+  sendLead(d);
+  return 'ok';
+}
+
+// ולכאן כשהוא רץ מאתר אחר (Netlify, GitHub Pages וכו')
+function doPost(e) {
+  sendLead(JSON.parse(e.postData.contents));
+  return ContentService.createTextOutput('ok');
+}
+
+function sendLead(d) {
+  const rows = [['שם', d.name], ['טלפון', d.phone]].concat(d.answers || []);
+  const tel = String(d.phone || '').replace(/\D/g, '');
+  const wa = tel ? 'https://wa.me/972' + tel.replace(/^0/, '') : '';
+  const first = (d.answers && d.answers[0] && d.answers[0][1]) || '';
+
+  const html =
+    '<div dir="rtl" style="font-family:Arial,sans-serif;background:#EEF3F8;padding:24px">' +
+    '<div style="max-width:520px;margin:0 auto;background:#fff;border-radius:18px;overflow:hidden">' +
+    '<div style="background:#27415E;color:#fff;padding:20px 24px">' +
+    '<div style="font-size:13px;color:#7FE3D8;font-weight:bold">' + esc(BUSINESS) + '</div>' +
+    '<div style="font-size:22px;font-weight:bold;margin-top:4px">פנייה חדשה מ' + esc(d.name) + '</div></div>' +
+    '<table style="width:100%;border-collapse:collapse;font-size:15px;color:#27415E">' +
+    rows.map(function (r, i) {
+      return '<tr style="background:' + (i % 2 ? '#fff' : '#F5F8FB') + '">' +
+        '<td style="padding:12px 24px;color:#6E86A1;width:140px">' + esc(r[0]) + '</td>' +
+        '<td style="padding:12px 24px;font-weight:bold">' + esc(r[1]) + '</td></tr>';
+    }).join('') +
+    '</table>' +
+    (wa ? '<div style="padding:18px 24px 24px"><a href="' + wa + '" style="display:inline-block;background:#7FE3D8;color:#1F3550;text-decoration:none;font-weight:bold;padding:12px 22px;border-radius:99px">לחזור בוואטסאפ ←</a></div>' : '') +
+    '</div></div>';
+
+  MailApp.sendEmail({
+    to: Session.getEffectiveUser().getEmail(),
+    subject: 'פנייה חדשה: ' + (d.name || 'ללא שם') + (first ? ' · ' + first : ''),
+    htmlBody: html,
+    name: BUSINESS,
+  });
+}
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+  });
+}
