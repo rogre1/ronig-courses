@@ -31,9 +31,9 @@ body{font-family:'Assistant',system-ui,sans-serif;background:var(--pale);color:v
 h2{text-align:center;font-weight:800;font-size:1.5rem;margin-top:12px;color:var(--navy-d)}
 .sub{text-align:center;color:var(--ink2);font-size:.9rem;margin:4px 18px 0}
 
-.card{background:#fff;border-radius:20px;margin:10px 14px 0;padding:14px 14px 13px;box-shadow:0 8px 20px rgba(39,65,94,.06);border:2px solid transparent;transition:border-color .25s,box-shadow .25s,opacity .25s;opacity:.55}
-.card.cur{opacity:1;border-color:var(--turq);box-shadow:0 12px 28px rgba(79,125,176,.16)}
-.card.done{opacity:1}
+.card{background:#fff;border-radius:20px;margin:10px 14px 0;padding:14px 14px 13px;box-shadow:0 8px 20px rgba(39,65,94,.06);border:2px solid transparent;transition:border-color .25s,box-shadow .25s;border-color:#E4EBF2}
+.card.cur{border-color:var(--turq);box-shadow:0 12px 28px rgba(79,125,176,.16)}
+
 .qh{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .n{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:800;background:#fff;box-shadow:inset 0 0 0 2px var(--line);color:var(--ink3);transition:.25s}
 .card.cur .n{box-shadow:inset 0 0 0 2px var(--turq);color:var(--navy)}
@@ -64,12 +64,13 @@ input[type=range]{padding:0;border:0;accent-color:var(--blue)}
 .thanks h3{font-weight:800;font-size:1.6rem;color:var(--navy-d)}
 .thanks p{color:var(--ink2);margin-top:6px}
 .again{margin-top:20px;font:inherit;font-size:.85rem;font-weight:600;color:var(--blue);background:none;border:0;cursor:pointer}
+.cover{background:url(cover.jpg) center/cover!important}.cover::before,.cover::after{display:none!important}.cover small{background:rgba(255,255,255,.92);color:var(--navy);font-weight:700;top:50px;bottom:auto}
 </style>
 </head>
 <body>
 <div class="phone"><div class="scr" id="S">
  <div class="prog" id="P"><div class="tr"><i id="bar"></i></div><b id="cnt">0 מתוך 5</b></div>
- <div class="cover"><small>כאן התמונה של העסק</small></div>
+ <div class="cover"><small>📷 כאן התמונה של העסק שלכם</small></div>
  <div class="lgw" data-logo></div>
  <div class="head"><small>חיפה והצפון</small></div>
  <h2>בואו נכיר 👋</h2>
